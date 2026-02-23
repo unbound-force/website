@@ -1,7 +1,7 @@
 # Implementation Plan: Site Scaffold and Deployment
 
-**Branch**: `001-site-scaffold` | **Date**: 2026-02-23 | **Spec**: `.specify/specs/001-site-scaffold/spec.md`
-**Input**: Feature specification from `.specify/specs/001-site-scaffold/spec.md`
+**Branch**: `001-site-scaffold` | **Date**: 2026-02-23 | **Spec**: `specs/001-site-scaffold/spec.md`
+**Input**: Feature specification from `specs/001-site-scaffold/spec.md`
 
 ## Summary
 
