@@ -5,6 +5,14 @@
 **Status**: Draft
 **Input**: User description: "Build the Hugo + Doks site infrastructure, homepage, CI/CD pipeline, and custom domain configuration for unboundforce.dev. Adapt from complytime-website reference implementation."
 
+## Clarifications
+
+### Session 2026-02-23
+
+- Q: What Lighthouse performance score target should the site meet? → A: >= 90
+- Q: What accessibility compliance level should the site target? → A: WCAG 2.1 AA
+- Q: How should domain redirects (theunbound.dev, theunboundforce.dev, thegaze.dev) be implemented? → A: DNS registrar forwarding (fully out of scope for this repo)
+
 ## User Scenarios & Testing *(mandatory)*
 
 ### User Story 1 - Site Builds and Deploys (Priority: P1)
@@ -121,7 +129,8 @@ As a visitor, I want the site to have a distinctive visual identity with the Unb
 - **FR-014**: The CI/CD workflow MUST be at `.github/workflows/deploy-gh-pages.yml`, triggered on push to `main`, using SHA-pinned GitHub Actions.
 - **FR-015**: The workflow MUST install Node.js (>= 20), Hugo (extended edition >= 0.155.1), run `npm ci`, and build with `hugo --minify --gc --baseURL "https://unboundforce.dev/"`.
 - **FR-016**: A `CNAME` file containing `unboundforce.dev` MUST be placed in `static/` for GitHub Pages custom domain configuration.
-- **FR-017**: Domain redirects MUST be documented: `theunbound.dev` and `theunboundforce.dev` redirect to `unboundforce.dev`; `thegaze.dev` redirects to the Gaze project page. DNS configuration is out of scope for this spec (manual setup required by the domain owner).
+- **FR-017**: Domain redirects MUST be documented: `theunbound.dev` and `theunboundforce.dev` redirect to `unboundforce.dev`; `thegaze.dev` redirects to the Gaze project page. Redirects are handled via DNS registrar URL forwarding and are fully out of scope for this repository. No redirect logic, Hugo aliases, or additional GitHub Pages repos are required.
+- **FR-018**: The site MUST meet WCAG 2.1 AA accessibility standards. All images MUST have alt text, all interactive elements MUST be keyboard-navigable, and color contrast MUST meet the 4.5:1 minimum ratio for normal text.
 
 ### Key Entities
 
@@ -142,3 +151,5 @@ As a visitor, I want the site to have a distinctive visual identity with the Unb
 - **SC-006**: The Gaze project card description on the homepage is accurate when cross-referenced against the Gaze repository README.
 - **SC-007**: No external font requests appear in the browser network tab when loading the site.
 - **SC-008**: Custom SCSS is confined to exactly two files (`_variables-custom.scss` and `_custom.scss`) with no unnecessary overrides of Doks defaults.
+- **SC-009**: The deployed homepage achieves a Lighthouse performance score of >= 90 on mobile and desktop.
+- **SC-010**: The deployed site meets WCAG 2.1 AA compliance (minimum 4.5:1 color contrast for text, keyboard navigability, alt text on all images, valid ARIA landmarks).
