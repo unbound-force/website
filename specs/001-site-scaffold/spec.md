@@ -113,15 +113,15 @@ As a visitor, I want the site to have a distinctive visual identity with the Unb
 
 ### Functional Requirements
 
-- **FR-001**: The repository MUST contain a valid `package.json` with `dev`, `build`, `preview`, and `format` scripts that work with the Doks/Thulite stack.
+- **FR-001**: The repository MUST contain a valid `package.json` with `dev`, `build`, `preview`, and `format` scripts that work with the Doks/Thulite stack. Required dependencies and versions are specified in plan.md Technical Context.
 - **FR-002**: The repository MUST contain a `go.mod` with module path `github.com/unbound-force/website` and Go version 1.23.
 - **FR-003**: The repository MUST contain a `.gitignore` that excludes `public/`, `resources/_gen/`, `.hugo_build.lock`, `hugo_stats.json`, `node_modules/`, and OS-specific files.
-- **FR-004**: Hugo configuration MUST be in `config/_default/` using TOML format, with `hugo.toml` for core settings and `params.toml` for Doks theme parameters.
+- **FR-004**: Hugo configuration MUST be in `config/_default/` using TOML format, with `hugo.toml` for core settings, `params.toml` for Doks theme parameters, and `module.toml` for Hugo module mounts that wire Thulite npm packages into Hugo's virtual filesystem.
 - **FR-005**: The `hugo.toml` MUST set `title` to "Unbound Force" and `baseurl` to `https://unboundforce.dev/`.
 - **FR-006**: The `params.toml` MUST configure Doks with auto color mode, sticky navbar, flex search enabled, and the correct `docsRepo` URL (`https://github.com/unbound-force/website`).
 - **FR-007**: The `params.toml` MUST set brand colors: `textDark = "#e2e8f0"`, `accentDark = "#818cf8"`, `textLight = "#0f172a"`, `accentLight = "#3b82f6"`.
 - **FR-008**: The `menus/menus.en.toml` MUST define initial navigation sections (Getting Started, Projects, Team, Contributing) in `[[docs]]` entries, a top-level nav in `[[main]]`, a GitHub social link in `[[social]]`, and footer links in `[[footer]]`.
-- **FR-009**: The homepage MUST be composed of `content/_index.md` (frontmatter only) and `layouts/home.html` (full HTML template).
+- **FR-009**: The homepage MUST be composed of `content/_index.md` (frontmatter only) and `layouts/home.html` (full HTML template). The `module.toml` MUST exclude Doks' default `home.html` from the doks-core layouts mount (`excludeFiles = "home.html"`) to prevent conflicts with the custom homepage.
 - **FR-010**: The homepage template MUST include four sections: hero (badge, title, lead, CTA buttons), features (3-4 cards), projects (Gaze card), and closing CTA.
 - **FR-011**: The Gaze project card on the homepage MUST accurately describe Gaze based on the actual repository README (side effect detection + CRAP scores for Go).
 - **FR-012**: Custom SCSS MUST be limited to `assets/scss/common/_variables-custom.scss` (brand colors) and `assets/scss/common/_custom.scss` (homepage card and section styles).
