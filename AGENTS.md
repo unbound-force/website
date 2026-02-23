@@ -34,9 +34,11 @@ website/
 ├── .specify/
 │   ├── memory/
 │   │   └── constitution.md        # Governance document (highest authority)
-│   ├── specs/                     # Feature specifications (numbered)
 │   ├── templates/                 # Templates for spec artifacts
 │   └── scripts/bash/              # Automation scripts
+├── specs/                         # Feature specifications (numbered)
+│   ├── 001-feature-name/          # spec.md, plan.md, tasks.md
+│   └── 002-another-feature/       # spec.md
 ├── assets/scss/common/
 │   ├── _variables-custom.scss     # Theme colors, fonts (Bootstrap vars)
 │   └── _custom.scss               # Additional custom CSS rules
@@ -180,15 +182,16 @@ constitution → specify → clarify → plan → tasks → analyze → checklis
 
 ### Spec Organization
 
-Specs are numbered with 3-digit zero-padded prefixes and stored under `.specify/specs/`:
+Specs are numbered with 3-digit zero-padded prefixes and stored under `specs/`:
 
 ```
+specs/
+  001-feature-name/              # spec.md, plan.md, tasks.md
+  002-another-feature/           # spec.md
+
 .specify/
   memory/
     constitution.md              # Governance document (highest authority)
-  specs/
-    001-feature-name/            # spec.md, plan.md, tasks.md
-    002-another-feature/         # spec.md
   templates/                     # Templates for all artifact types
   scripts/bash/                  # Automation scripts
 ```
@@ -201,7 +204,7 @@ When a task from `tasks.md` is completed during implementation, its checkbox **m
 
 ### Spec Commit Gate
 
-All spec artifacts (`spec.md`, `plan.md`, `tasks.md`, and any other files under `.specify/specs/`) **must** be committed and pushed before implementation begins. This ensures the planning record is preserved in version control before code changes start, and provides a clean baseline to diff against if implementation drifts from the plan. Run `/speckit.implement` only after the spec commit is on the remote.
+All spec artifacts (`spec.md`, `plan.md`, `tasks.md`, and any other files under `specs/`) **must** be committed and pushed before implementation begins. This ensures the planning record is preserved in version control before code changes start, and provides a clean baseline to diff against if implementation drifts from the plan. Run `/speckit.implement` only after the spec commit is on the remote.
 
 ### Constitution Check
 
@@ -247,3 +250,10 @@ GitHub Pages deployment via `.github/workflows/deploy-gh-pages.yml`:
 1. For color/font changes: edit `assets/scss/common/_variables-custom.scss`.
 2. For custom rules: edit `assets/scss/common/_custom.scss`.
 3. Always verify both light and dark mode rendering after style changes.
+
+## Active Technologies
+- Hugo (via npm/thulite) + Go 1.23 (module resolution) + Node.js >= 20.11.0 + `thulite ^2.6.3`, `@thulite/doks-core ^1.8.3`, `@thulite/images ^3.3.1`, `@thulite/inline-svg ^1.2.0`, `@thulite/seo ^2.4.1`, `@tabler/icons ^3.34.1` (001-site-scaffold)
+- N/A (static site, no database) (001-site-scaffold)
+
+## Recent Changes
+- 001-site-scaffold: Added Hugo (via npm/thulite) + Go 1.23 (module resolution) + Node.js >= 20.11.0 + `thulite ^2.6.3`, `@thulite/doks-core ^1.8.3`, `@thulite/images ^3.3.1`, `@thulite/inline-svg ^1.2.0`, `@thulite/seo ^2.4.1`, `@tabler/icons ^3.34.1`

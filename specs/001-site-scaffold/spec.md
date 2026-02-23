@@ -5,6 +5,14 @@
 **Status**: Draft
 **Input**: User description: "Build the Hugo + Doks site infrastructure, homepage, CI/CD pipeline, and custom domain configuration for unboundforce.dev. Adapt from complytime-website reference implementation."
 
+## Clarifications
+
+### Session 2026-02-23
+
+- Q: What Lighthouse performance score target should the site meet? → A: >= 90
+- Q: What accessibility compliance level should the site target? → A: WCAG 2.1 AA
+- Q: How should domain redirects (theunbound.dev, theunboundforce.dev, thegaze.dev) be implemented? → A: DNS registrar forwarding (fully out of scope for this repo)
+
 ## User Scenarios & Testing *(mandatory)*
 
 ### User Story 1 - Site Builds and Deploys (Priority: P1)
@@ -105,15 +113,15 @@ As a visitor, I want the site to have a distinctive visual identity with the Unb
 
 ### Functional Requirements
 
-- **FR-001**: The repository MUST contain a valid `package.json` with `dev`, `build`, `preview`, and `format` scripts that work with the Doks/Thulite stack.
+- **FR-001**: The repository MUST contain a valid `package.json` with `dev`, `build`, `preview`, and `format` scripts that work with the Doks/Thulite stack. Required dependencies and versions are specified in plan.md Technical Context.
 - **FR-002**: The repository MUST contain a `go.mod` with module path `github.com/unbound-force/website` and Go version 1.23.
 - **FR-003**: The repository MUST contain a `.gitignore` that excludes `public/`, `resources/_gen/`, `.hugo_build.lock`, `hugo_stats.json`, `node_modules/`, and OS-specific files.
-- **FR-004**: Hugo configuration MUST be in `config/_default/` using TOML format, with `hugo.toml` for core settings and `params.toml` for Doks theme parameters.
+- **FR-004**: Hugo configuration MUST be in `config/_default/` using TOML format, with `hugo.toml` for core settings, `params.toml` for Doks theme parameters, and `module.toml` for Hugo module mounts that wire Thulite npm packages into Hugo's virtual filesystem.
 - **FR-005**: The `hugo.toml` MUST set `title` to "Unbound Force" and `baseurl` to `https://unboundforce.dev/`.
 - **FR-006**: The `params.toml` MUST configure Doks with auto color mode, sticky navbar, flex search enabled, and the correct `docsRepo` URL (`https://github.com/unbound-force/website`).
 - **FR-007**: The `params.toml` MUST set brand colors: `textDark = "#e2e8f0"`, `accentDark = "#818cf8"`, `textLight = "#0f172a"`, `accentLight = "#3b82f6"`.
 - **FR-008**: The `menus/menus.en.toml` MUST define initial navigation sections (Getting Started, Projects, Team, Contributing) in `[[docs]]` entries, a top-level nav in `[[main]]`, a GitHub social link in `[[social]]`, and footer links in `[[footer]]`.
-- **FR-009**: The homepage MUST be composed of `content/_index.md` (frontmatter only) and `layouts/home.html` (full HTML template).
+- **FR-009**: The homepage MUST be composed of `content/_index.md` (frontmatter only) and `layouts/home.html` (full HTML template). The `module.toml` MUST exclude Doks' default `home.html` from the doks-core layouts mount (`excludeFiles = "home.html"`) to prevent conflicts with the custom homepage.
 - **FR-010**: The homepage template MUST include four sections: hero (badge, title, lead, CTA buttons), features (3-4 cards), projects (Gaze card), and closing CTA.
 - **FR-011**: The Gaze project card on the homepage MUST accurately describe Gaze based on the actual repository README (side effect detection + CRAP scores for Go).
 - **FR-012**: Custom SCSS MUST be limited to `assets/scss/common/_variables-custom.scss` (brand colors) and `assets/scss/common/_custom.scss` (homepage card and section styles).
@@ -121,7 +129,8 @@ As a visitor, I want the site to have a distinctive visual identity with the Unb
 - **FR-014**: The CI/CD workflow MUST be at `.github/workflows/deploy-gh-pages.yml`, triggered on push to `main`, using SHA-pinned GitHub Actions.
 - **FR-015**: The workflow MUST install Node.js (>= 20), Hugo (extended edition >= 0.155.1), run `npm ci`, and build with `hugo --minify --gc --baseURL "https://unboundforce.dev/"`.
 - **FR-016**: A `CNAME` file containing `unboundforce.dev` MUST be placed in `static/` for GitHub Pages custom domain configuration.
-- **FR-017**: Domain redirects MUST be documented: `theunbound.dev` and `theunboundforce.dev` redirect to `unboundforce.dev`; `thegaze.dev` redirects to the Gaze project page. DNS configuration is out of scope for this spec (manual setup required by the domain owner).
+- **FR-017**: Domain redirects MUST be documented: `theunbound.dev` and `theunboundforce.dev` redirect to `unboundforce.dev`; `thegaze.dev` redirects to the Gaze project page. Redirects are handled via DNS registrar URL forwarding and are fully out of scope for this repository. No redirect logic, Hugo aliases, or additional GitHub Pages repos are required.
+- **FR-018**: The site MUST meet WCAG 2.1 AA accessibility standards. All images MUST have alt text, all interactive elements MUST be keyboard-navigable, and color contrast MUST meet the 4.5:1 minimum ratio for normal text.
 
 ### Key Entities
 
@@ -142,3 +151,5 @@ As a visitor, I want the site to have a distinctive visual identity with the Unb
 - **SC-006**: The Gaze project card description on the homepage is accurate when cross-referenced against the Gaze repository README.
 - **SC-007**: No external font requests appear in the browser network tab when loading the site.
 - **SC-008**: Custom SCSS is confined to exactly two files (`_variables-custom.scss` and `_custom.scss`) with no unnecessary overrides of Doks defaults.
+- **SC-009**: The deployed homepage achieves a Lighthouse performance score of >= 90 on mobile and desktop.
+- **SC-010**: The deployed site meets WCAG 2.1 AA compliance (minimum 4.5:1 color contrast for text, keyboard navigability, alt text on all images, valid ARIA landmarks).

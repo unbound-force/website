@@ -1,0 +1,32 @@
+{
+  "name": "unbound-force-website",
+  "version": "1.0.0",
+  "description": "Unbound Force website - Hugo + Doks/Thulite",
+  "author": "Unbound Force",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/unbound-force/website.git"
+  },
+  "scripts": {
+    "dev": "hugo server --disableFastRender --noHTTPCache",
+    "build": "hugo --minify --gc",
+    "preview": "vite preview --outDir public",
+    "format": "prettier **/** -w -c"
+  },
+  "dependencies": {
+    "@tabler/icons": "^3.34.1",
+    "@thulite/doks-core": "^1.8.3",
+    "@thulite/images": "^3.3.1",
+    "@thulite/inline-svg": "^1.2.0",
+    "@thulite/seo": "^2.4.1",
+    "thulite": "^2.6.3"
+  },
+  "devDependencies": {
+    "prettier": "^3.6.2",
+    "vite": "^7.0.6"
+  },
+  "engines": {
+    "node": ">=20.11.0"
+  }
+}
