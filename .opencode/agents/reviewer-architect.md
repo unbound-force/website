@@ -21,7 +21,7 @@ Before reviewing, read:
 
 1. `AGENTS.md` — Project Structure, Content Conventions, Code Style Guidelines
 2. `.specify/memory/constitution.md` — Core Principles
-3. The relevant `plan.md` and `tasks.md` under `.specify/specs/` for the current work
+3. The relevant `plan.md` and `tasks.md` under `specs/` for the current work
 
 ## Review Scope
 

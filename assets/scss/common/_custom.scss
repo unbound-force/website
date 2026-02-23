@@ -1,0 +1,134 @@
+// Unbound Force Custom Styles
+// Only styles that Doks does not provide natively.
+// No external fonts (FR-013).
+
+// Feature card styling
+.feature-card {
+  background: var(--bs-body-bg);
+  border: 1px solid var(--bs-border-color);
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    border-color: var(--bs-primary);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px -5px rgba($blue-500, 0.15);
+  }
+
+  .feature-icon {
+    color: var(--bs-primary);
+  }
+}
+
+// Project card styling
+.project-card {
+  background: var(--bs-body-bg);
+  border: 1px solid var(--bs-border-color);
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    border-color: var(--bs-primary);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px -5px rgba($blue-500, 0.15);
+  }
+}
+
+// Badge accent colors
+.bg-accent-subtle {
+  background-color: rgba($blue-500, 0.1) !important;
+}
+
+.text-accent-emphasis {
+  color: $blue-500 !important;
+}
+
+// Dark mode overrides
+[data-bs-theme="dark"] {
+  .bg-accent-subtle {
+    background-color: rgba($violet-400, 0.15) !important;
+  }
+
+  .text-accent-emphasis {
+    color: $violet-400 !important;
+  }
+
+  .feature-card,
+  .project-card {
+    &:hover {
+      box-shadow: 0 8px 25px -5px rgba($violet-400, 0.2);
+    }
+  }
+
+  .feature-icon {
+    color: $violet-400;
+  }
+}
+
+// Hero section
+.section-hero {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+
+  .badge {
+    font-weight: 500;
+    font-size: 0.85rem;
+  }
+
+  .display-4 {
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  .lead {
+    font-weight: 400;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+// Features section
+.section-features {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+
+// Projects section
+.section-projects {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+
+// CTA section
+.section-cta {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+
+// Smooth scrolling
+html {
+  scroll-behavior: smooth;
+}
+
+// Code blocks
+pre {
+  border-radius: 0.5rem;
+}
+
+// Responsive adjustments
+@media (max-width: 991.98px) {
+  .section-hero {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+
+  .section-features,
+  .section-projects,
+  .section-cta {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+
+  .display-4 {
+    font-size: 2rem;
+  }
+}

@@ -21,7 +21,7 @@ Before reviewing, read:
 
 1. `AGENTS.md` — Behavioral Constraints, Code Style Guidelines, Content Conventions
 2. `.specify/memory/constitution.md` — Core Principles
-3. The relevant spec, plan, and tasks files under `.specify/specs/` for the current work
+3. The relevant spec, plan, and tasks files under `specs/` for the current work
 
 ## Review Scope
 
