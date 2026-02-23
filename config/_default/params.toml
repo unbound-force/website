@@ -1,0 +1,134 @@
+# Hugo
+title = "Unbound Force"
+description = "The AI Agent Swarm for Software Engineering. Purpose-built agent personas, structured workflows, and quality-first development."
+images = ["favicon-512x512.png"]
+
+# mainSections
+mainSections = ["docs"]
+
+[social]
+  github = "unbound-force"
+
+# Doks (@thulite/doks-core)
+[doks]
+  # Color mode
+  colorMode = "auto"
+  colorModeToggler = true
+
+  # Navbar
+  navbarSticky = true
+  containerBreakpoint = "lg"
+
+  ## Button — disabled until docs content exists (spec 002)
+  navBarButton = false
+  navBarButtonUrl = "/docs/getting-started/"
+  navBarButtonText = "Get Started"
+
+  # FlexSearch
+  flexSearch = true
+  searchExclKinds = []
+  searchExclTypes = []
+  showSearch = []
+  indexSummary = false
+
+  ## Search results
+  showDate = false
+  showSummary = true
+  searchLimit = 99
+
+  # Global alert
+  alert = false
+  alertDismissable = true
+
+  # Bootstrap
+  bootstrapJavascript = false
+
+  # Nav
+  sectionNav = ["docs"]
+  toTopButton = true
+  breadcrumbTrail = true
+  headlineHash = true
+  scrollSpy = true
+
+  # Multilingual
+  multilingualMode = false
+  showMissingLanguages = true
+
+  # Versioning
+  docsVersioning = false
+  docsVersion = "1.0"
+
+  # UX
+  headerBar = false
+  backgroundDots = true
+
+  # Homepage
+  sectionFooter = true
+
+  # Content
+  relatedPosts = false
+  imageList = true
+  imageSingle = true
+
+  # Repository — editPage disabled until branch is merged to main
+  editPage = false
+  lastMod = true
+  repoHost = "GitHub"
+  docsRepo = "https://github.com/unbound-force/website"
+  docsRepoBranch = "main"
+  docsRepoSubPath = ""
+
+  krokiURL = "https://kroki.io"
+
+  # SCSS colors - Unbound Force brand
+  ## Dark theme
+  textDark = "#e2e8f0"
+  accentDark = "#818cf8"
+  ## Light theme
+  textLight = "#0f172a"
+  accentLight = "#3b82f6"
+
+# Debug
+[render_hooks.image]
+  errorLevel = 'ignore'
+
+[render_hooks.link]
+  errorLevel = 'warning'
+  highlightBroken = false
+
+# Images (@thulite/images)
+[thulite_images]
+  [thulite_images.defaults]
+    decoding = "async"
+    fetchpriority = "auto"
+    loading = "lazy"
+    widths = [480, 576, 768, 1025, 1200, 1440]
+    sizes = "auto"
+    process = ""
+    lqip = "16x webp q20"
+
+# Inline SVG (@thulite/inline-svg)
+[inline_svg]
+  iconSetDir = "tabler-icons"
+
+# SEO (@thulite/seo)
+[seo]
+  [seo.title]
+    separator = " | "
+    suffix = ""
+  [seo.favicons]
+    sizes = []
+    icon = "favicon.png"
+    svgIcon = ""
+    maskIcon = ""
+    maskIconColor = ""
+  [seo.schemas]
+    type = "Organization"
+    logo = "favicon-512x512.png"
+    name = "Unbound Force"
+    sameAs = ["https://github.com/unbound-force"]
+    images = ["favicon-512x512.png"]
+    article = []
+    newsArticle = []
+    blogPosting = []
+    product = []
