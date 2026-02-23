@@ -24,10 +24,10 @@
 
 **Purpose**: Initialize the Hugo + Doks/Thulite project with all package dependencies and core project files.
 
-- [ ] T001 Create `package.json` at repository root with Doks/Thulite dependencies (`thulite ^2.6.3`, `@thulite/doks-core ^1.8.3`, `@thulite/images ^3.3.1`, `@thulite/inline-svg ^1.2.0`, `@thulite/seo ^2.4.1`, `@tabler/icons ^3.34.1`), dev dependencies (`prettier ^3.6.2`, `vite ^7.0.6`), and npm scripts (`dev`, `build`, `preview`, `format`). Use exact values from research.md Section 1.
-- [ ] T002 Create `go.mod` at repository root with module path `github.com/unbound-force/website`, Go version 1.23, and `gopkg.in/yaml.v3 v3.0.1` dependency. Create corresponding `go.sum` with checksums from research.md Section 1.
-- [ ] T003 Create `.gitignore` at repository root excluding `public/`, `resources/_gen/`, `.hugo_build.lock`, `hugo_stats.json`, `node_modules/`, `.DS_Store`, `Thumbs.db`, `.idea/`, `*.swp`, `*.swo`, `*~`, `.env`, `.netlify`. Adapt from complytime-website pattern in research.md Section 8, removing complytime-specific entries.
-- [ ] T004 Run `npm install` to generate `node_modules/` and `package-lock.json`. Verify all dependencies install without errors.
+- [x] T001 Create `package.json` at repository root with Doks/Thulite dependencies (`thulite ^2.6.3`, `@thulite/doks-core ^1.8.3`, `@thulite/images ^3.3.1`, `@thulite/inline-svg ^1.2.0`, `@thulite/seo ^2.4.1`, `@tabler/icons ^3.34.1`), dev dependencies (`prettier ^3.6.2`, `vite ^7.0.6`), and npm scripts (`dev`, `build`, `preview`, `format`). Use exact values from research.md Section 1.
+- [x] T002 Create `go.mod` at repository root with module path `github.com/unbound-force/website`, Go version 1.23, and `gopkg.in/yaml.v3 v3.0.1` dependency. Create corresponding `go.sum` with checksums from research.md Section 1.
+- [x] T003 Create `.gitignore` at repository root excluding `public/`, `resources/_gen/`, `.hugo_build.lock`, `hugo_stats.json`, `node_modules/`, `.DS_Store`, `Thumbs.db`, `.idea/`, `*.swp`, `*.swo`, `*~`, `.env`, `.netlify`. Adapt from complytime-website pattern in research.md Section 8, removing complytime-specific entries.
+- [x] T004 Run `npm install` to generate `node_modules/` and `package-lock.json`. Verify all dependencies install without errors.
 
 **Checkpoint**: Project dependencies installed. `node_modules/` populated. No Hugo config yet — site will not build.
 
@@ -39,12 +39,12 @@
 
 **CRITICAL**: No user story work can begin until this phase is complete. Hugo cannot build without these files.
 
-- [ ] T005 Create `config/_default/hugo.toml` with core settings: `title = "Unbound Force"`, `baseurl = "https://unboundforce.dev/"`, `disableAliases = true`, `disableHugoGeneratorInject = true`, `enableEmoji = true`, `enableGitInfo = false`, `enableRobotsTXT = true`, `languageCode = "en-US"`, `copyRight`, multilingual config (disable de/nl), output formats (`searchIndex`, `SITEMAP`), sitemap, caches, taxonomies, permalinks, minify, pagination, related content, and imaging settings. Use data-model.md Entity 1 and research.md Section 1 hugo.toml reference as source.
-- [ ] T006 Create `config/_default/module.toml` with Hugo module mount declarations for all Thulite packages: content, data (doks-core + local), layouts (local + doks-core with `excludeFiles = "home.html"` + thulite core + seo + images + inline-svg), i18n, archetypes, assets (thulite core + doks-core + tabler icons + images + local), and static (doks-core + local). Use exact mount structure from research.md Section 2.
-- [ ] T007 Create `config/_default/params.toml` with Doks theme parameters: `title = "Unbound Force"`, description, `[doks]` section with `colorMode = "auto"`, `navbarSticky = true`, `flexSearch = true`, `docsRepo = "https://github.com/unbound-force/website"`, brand colors (`textDark = "#e2e8f0"`, `accentDark = "#818cf8"`, `textLight = "#0f172a"`, `accentLight = "#3b82f6"`), and all other Doks settings. Use data-model.md Entity 2 and research.md Section 1 params.toml reference. Do NOT include Google Fonts import (FR-013 prohibits external fonts).
-- [ ] T008 Create `config/_default/menus/menus.en.toml` with navigation menus: `[[main]]` (Docs link), `[[social]]` (GitHub org link to `https://github.com/unbound-force`), `[[docs]]` entries (Getting Started, Projects, Team, Contributing with appropriate weights and identifiers), and `[[footer]]` links. Use data-model.md Entity 3.
-- [ ] T009 Create `content/_index.md` with homepage frontmatter only (title: "Unbound Force", description, lead text, date, `draft: false`). No body content — the homepage template handles all rendering. Use data-model.md Entity 4.
-- [ ] T010 Verify Hugo builds successfully by running `npm run build`. The build should complete without errors and produce output in `public/`. This validates that module mounts, config, and minimal content are correctly wired.
+- [x] T005 Create `config/_default/hugo.toml` with core settings: `title = "Unbound Force"`, `baseurl = "https://unboundforce.dev/"`, `disableAliases = true`, `disableHugoGeneratorInject = true`, `enableEmoji = true`, `enableGitInfo = false`, `enableRobotsTXT = true`, `languageCode = "en-US"`, `copyRight`, multilingual config (disable de/nl), output formats (`searchIndex`, `SITEMAP`), sitemap, caches, taxonomies, permalinks, minify, pagination, related content, and imaging settings. Use data-model.md Entity 1 and research.md Section 1 hugo.toml reference as source.
+- [x] T006 Create `config/_default/module.toml` with Hugo module mount declarations for all Thulite packages: content, data (doks-core + local), layouts (local + doks-core with `excludeFiles = "home.html"` + thulite core + seo + images + inline-svg), i18n, archetypes, assets (thulite core + doks-core + tabler icons + images + local), and static (doks-core + local). Use exact mount structure from research.md Section 2.
+- [x] T007 Create `config/_default/params.toml` with Doks theme parameters: `title = "Unbound Force"`, description, `[doks]` section with `colorMode = "auto"`, `navbarSticky = true`, `flexSearch = true`, `docsRepo = "https://github.com/unbound-force/website"`, brand colors (`textDark = "#e2e8f0"`, `accentDark = "#818cf8"`, `textLight = "#0f172a"`, `accentLight = "#3b82f6"`), and all other Doks settings. Use data-model.md Entity 2 and research.md Section 1 params.toml reference. Do NOT include Google Fonts import (FR-013 prohibits external fonts).
+- [x] T008 Create `config/_default/menus/menus.en.toml` with navigation menus: `[[main]]` (Docs link), `[[social]]` (GitHub org link to `https://github.com/unbound-force`), `[[docs]]` entries (Getting Started, Projects, Team, Contributing with appropriate weights and identifiers), and `[[footer]]` links. Use data-model.md Entity 3.
+- [x] T009 Create `content/_index.md` with homepage frontmatter only (title: "Unbound Force", description, lead text, date, `draft: false`). No body content — the homepage template handles all rendering. Use data-model.md Entity 4.
+- [x] T010 Verify Hugo builds successfully by running `npm run build`. The build should complete without errors and produce output in `public/`. This validates that module mounts, config, and minimal content are correctly wired.
 
 **Checkpoint**: Foundation ready — Hugo builds successfully with Doks theme. Default Doks homepage renders (no custom template yet). User story implementation can now begin.
 
@@ -58,10 +58,10 @@
 
 ### Implementation for User Story 1
 
-- [ ] T011 [US1] Verify `npm run build` produces a clean production build in `public/` with zero errors and zero warnings. If any warnings appear from Phase 2 config, fix them now.
-- [ ] T012 [US1] Verify `npm run dev` starts a local dev server at `http://localhost:1313/` with live reload functional. If errors occur, fix Hugo config or module mount issues.
-- [ ] T013 [US1] Verify `npm run preview` previews the production build locally via Vite. Run `npm run build` first, then `npm run preview`.
-- [ ] T014 [US1] Verify `npm run format` runs Prettier without errors across all project files.
+- [x] T011 [US1] Verify `npm run build` produces a clean production build in `public/` with zero errors and zero warnings. If any warnings appear from Phase 2 config, fix them now.
+- [x] T012 [US1] Verify `npm run dev` starts a local dev server at `http://localhost:1313/` with live reload functional. If errors occur, fix Hugo config or module mount issues.
+- [x] T013 [US1] Verify `npm run preview` previews the production build locally via Vite. Run `npm run build` first, then `npm run preview`.
+- [x] T014 [US1] Verify `npm run format` runs Prettier without errors across all project files.
 
 **Checkpoint**: User Story 1 complete. All four npm scripts work. A contributor can clone, install, build, dev, preview, and format without errors.
 
@@ -75,9 +75,9 @@
 
 ### Implementation for User Story 2
 
-- [ ] T015 [US2] Create `layouts/home.html` with the homepage template using three Hugo blocks: `{{ define "main" }}` (hero section with badge "Open Source AI Agent Swarm", title from frontmatter `{{ .Title }}`, lead from `{{ .Params.lead }}`, CTA buttons "Get Started" and "View on GitHub"), `{{ define "sidebar-prefooter" }}` (features section with 4 cards — Agent Personas, Speckit Workflow, Quality-First, Open Source; projects section with 1 Gaze card; closing CTA section), and `{{ define "sidebar-footer" }}` (conditional footer CTA). Use research.md Section 3 for block structure and Section 4 for Gaze description accuracy. Gaze card MUST describe: "Static analysis for Go that detects observable side effects in functions and computes CRAP scores combining cyclomatic complexity with test coverage." Do NOT mention GazeCRAP, transitive analysis, or P3-P4 detection. Use Tabler icons via `{{ partial "inline-svg" (dict "src" "tabler-icons/outline/icon-name") }}`. All elements MUST have WCAG 2.1 AA compliant markup (alt text, ARIA labels, keyboard-navigable interactive elements, semantic HTML).
-- [ ] T016 [US2] Verify the homepage renders all four sections correctly in a browser by running `npm run dev` and navigating to `http://localhost:1313/`. Check: hero has title + lead + 2 CTA buttons, features shows 4 cards, projects shows Gaze card, CTA section has action links.
-- [ ] T017 [US2] Verify dark mode rendering by toggling the Doks color mode switch. All sections should render correctly with appropriate colors in both light and dark themes. No elements should become invisible or unreadable.
+- [x] T015 [US2] Create `layouts/home.html` with the homepage template using three Hugo blocks: `{{ define "main" }}` (hero section with badge "Open Source AI Agent Swarm", title from frontmatter `{{ .Title }}`, lead from `{{ .Params.lead }}`, CTA buttons "Get Started" and "View on GitHub"), `{{ define "sidebar-prefooter" }}` (features section with 4 cards — Agent Personas, Speckit Workflow, Quality-First, Open Source; projects section with 1 Gaze card; closing CTA section), and `{{ define "sidebar-footer" }}` (conditional footer CTA). Use research.md Section 3 for block structure and Section 4 for Gaze description accuracy. Gaze card MUST describe: "Static analysis for Go that detects observable side effects in functions and computes CRAP scores combining cyclomatic complexity with test coverage." Do NOT mention GazeCRAP, transitive analysis, or P3-P4 detection. Use Tabler icons via `{{ partial "inline-svg" (dict "src" "tabler-icons/outline/icon-name") }}`. All elements MUST have WCAG 2.1 AA compliant markup (alt text, ARIA labels, keyboard-navigable interactive elements, semantic HTML).
+- [x] T016 [US2] Verify the homepage renders all four sections correctly in a browser by running `npm run dev` and navigating to `http://localhost:1313/`. Check: hero has title + lead + 2 CTA buttons, features shows 4 cards, projects shows Gaze card, CTA section has action links.
+- [x] T017 [US2] Verify dark mode rendering by toggling the Doks color mode switch. All sections should render correctly with appropriate colors in both light and dark themes. No elements should become invisible or unreadable.
 
 **Checkpoint**: User Story 2 complete. Homepage communicates value with all four sections. Both light and dark mode work correctly.
 
@@ -91,8 +91,8 @@
 
 ### Implementation for User Story 3
 
-- [ ] T018 [US3] Create `.github/workflows/deploy-gh-pages.yml` with GitHub Actions workflow: trigger on push to `main` + `workflow_dispatch`, permissions (`contents: read`, `pages: write`, `id-token: write`), concurrency group `"pages"`, build job (checkout with SHA `de0fac2e4500dabe0009e67214ff5f5447ce83dd`, setup-node with SHA `6044e13b5dc448c55e2357c09f80417699197238` for Node 22, peaceiris/actions-hugo with SHA `75d2e84710de30f6ff7268e08f310b60ef14033f` for Hugo 0.155.1 extended, `npm ci`, `hugo --minify --gc --baseURL "https://unboundforce.dev/"`, upload-pages-artifact with SHA `7b1f4a764d45c48632c6b24a0339c27f5614fb0b`), and deploy job (deploy-pages with SHA `d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e`). Use exact SHA pins from research.md Section 5.
-- [ ] T019 [US3] Verify all GitHub Action references in the workflow use SHA-pinned versions (no mutable tags like `@v4`). Inspect each `uses:` line and confirm it contains a full 40-character SHA hash.
+- [x] T018 [US3] Create `.github/workflows/deploy-gh-pages.yml` with GitHub Actions workflow: trigger on push to `main` + `workflow_dispatch`, permissions (`contents: read`, `pages: write`, `id-token: write`), concurrency group `"pages"`, build job (checkout with SHA `de0fac2e4500dabe0009e67214ff5f5447ce83dd`, setup-node with SHA `6044e13b5dc448c55e2357c09f80417699197238` for Node 22, peaceiris/actions-hugo with SHA `75d2e84710de30f6ff7268e08f310b60ef14033f` for Hugo 0.155.1 extended, `npm ci`, `hugo --minify --gc --baseURL "https://unboundforce.dev/"`, upload-pages-artifact with SHA `7b1f4a764d45c48632c6b24a0339c27f5614fb0b`), and deploy job (deploy-pages with SHA `d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e`). Use exact SHA pins from research.md Section 5.
+- [x] T019 [US3] Verify all GitHub Action references in the workflow use SHA-pinned versions (no mutable tags like `@v4`). Inspect each `uses:` line and confirm it contains a full 40-character SHA hash.
 
 **Checkpoint**: User Story 3 complete. CI/CD workflow is ready. Deployment will activate when code is pushed to `main`.
 
@@ -106,8 +106,8 @@
 
 ### Implementation for User Story 4
 
-- [ ] T020 [US4] Create `static/CNAME` containing exactly one line: `unboundforce.dev` (no trailing newline or whitespace). This configures GitHub Pages to serve the site on the custom domain.
-- [ ] T021 [US4] Verify the CNAME file is included in the build output by running `npm run build` and checking that `public/CNAME` exists with correct content.
+- [x] T020 [US4] Create `static/CNAME` containing exactly one line: `unboundforce.dev` (no trailing newline or whitespace). This configures GitHub Pages to serve the site on the custom domain.
+- [x] T021 [US4] Verify the CNAME file is included in the build output by running `npm run build` and checking that `public/CNAME` exists with correct content.
 
 **Checkpoint**: User Story 4 complete. Custom domain configuration is in place. DNS configuration and redirect setup for alternative domains are out of scope (handled via DNS registrar per clarification).
 
@@ -121,10 +121,10 @@
 
 ### Implementation for User Story 5
 
-- [ ] T022 [P] [US5] Create `assets/scss/common/_variables-custom.scss` with Bootstrap variable overrides: `$primary: #3b82f6` (electric blue). Define brand color variables for use in custom styles. Include `.feature-card` and `.project-card` component styles with hover effects (border highlight, subtle translateY, box-shadow) for both light and dark modes using `[data-bs-theme="dark"]` selector. Keep scope minimal — only variables and card component styles. Do NOT add Google Fonts imports or external font references. Use data-model.md Entity 6 and research.md Section 6.
-- [ ] T023 [P] [US5] Create `assets/scss/common/_custom.scss` with homepage section styles: hero section spacing, features section padding, projects section styling, CTA section layout, and responsive adjustments. Only include styles that Doks does not provide natively. Do NOT import external fonts. Keep scope minimal per Constitution Principle II (Minimal Footprint).
-- [ ] T024 [US5] Verify brand colors render correctly in both light and dark modes by running `npm run dev` and inspecting the site. Confirm: primary color is electric blue (#3b82f6) in light mode, accent elements use violet, dark mode adjusts appropriately. Check that no external font requests appear in the browser network tab.
-- [ ] T025 [US5] Run a final `npm run build` and verify zero errors, zero warnings. The build confirms all SCSS compiles correctly and no broken references exist.
+- [x] T022 [P] [US5] Create `assets/scss/common/_variables-custom.scss` with Bootstrap variable overrides: `$primary: #3b82f6` (electric blue). Define brand color variables for use in custom styles. Include `.feature-card` and `.project-card` component styles with hover effects (border highlight, subtle translateY, box-shadow) for both light and dark modes using `[data-bs-theme="dark"]` selector. Keep scope minimal — only variables and card component styles. Do NOT add Google Fonts imports or external font references. Use data-model.md Entity 6 and research.md Section 6.
+- [x] T023 [P] [US5] Create `assets/scss/common/_custom.scss` with homepage section styles: hero section spacing, features section padding, projects section styling, CTA section layout, and responsive adjustments. Only include styles that Doks does not provide natively. Do NOT import external fonts. Keep scope minimal per Constitution Principle II (Minimal Footprint).
+- [x] T024 [US5] Verify brand colors render correctly in both light and dark modes by running `npm run dev` and inspecting the site. Confirm: primary color is electric blue (#3b82f6) in light mode, accent elements use violet, dark mode adjusts appropriately. Check that no external font requests appear in the browser network tab.
+- [x] T025 [US5] Run a final `npm run build` and verify zero errors, zero warnings. The build confirms all SCSS compiles correctly and no broken references exist.
 
 **Checkpoint**: User Story 5 complete. Brand styling applied, both modes work, no external fonts loaded.
 
@@ -134,11 +134,11 @@
 
 **Purpose**: Final validation, static assets, and cross-cutting quality checks.
 
-- [ ] T026 [P] Create `static/favicon.png` and `static/favicon-512x512.png` placeholder favicons for the site. These should be simple Unbound Force-branded icons (can be minimal/geometric for now).
-- [ ] T027 Verify WCAG 2.1 AA compliance: check all homepage elements for alt text on images, keyboard navigability of interactive elements (CTA buttons, dark mode toggle, nav links), and color contrast ratio >= 4.5:1 for all text against backgrounds in both light and dark modes. Fix any violations found.
-- [ ] T028 Run `npm run build` one final time and verify: zero errors, zero warnings, `public/` contains all expected files (index.html, CNAME, favicons, CSS, search index).
-- [ ] T029 Run `npm run dev` and perform a full visual walkthrough: homepage hero, features, projects, CTA sections render correctly. Navigation works. Dark mode toggle works. Search is functional (though no docs content yet). No console errors.
-- [ ] T030 Run quickstart.md verification checklist: confirm all items pass (npm install, npm run build, npm run dev, homepage sections visible, dark mode works, no external fonts). Note: Lighthouse >= 90 (SC-009) requires a running server + Chrome and is deferred to post-deployment validation. Verify locally if possible by running `npx lighthouse http://localhost:1313 --output=json` during `npm run dev`, otherwise validate after first GitHub Pages deployment.
+- [x] T026 [P] Create `static/favicon.png` and `static/favicon-512x512.png` placeholder favicons for the site. These should be simple Unbound Force-branded icons (can be minimal/geometric for now).
+- [x] T027 Verify WCAG 2.1 AA compliance: check all homepage elements for alt text on images, keyboard navigability of interactive elements (CTA buttons, dark mode toggle, nav links), and color contrast ratio >= 4.5:1 for all text against backgrounds in both light and dark modes. Fix any violations found.
+- [x] T028 Run `npm run build` one final time and verify: zero errors, zero warnings, `public/` contains all expected files (index.html, CNAME, favicons, CSS, search index).
+- [x] T029 Run `npm run dev` and perform a full visual walkthrough: homepage hero, features, projects, CTA sections render correctly. Navigation works. Dark mode toggle works. Search is functional (though no docs content yet). No console errors.
+- [x] T030 Run quickstart.md verification checklist: confirm all items pass (npm install, npm run build, npm run dev, homepage sections visible, dark mode works, no external fonts). Note: Lighthouse >= 90 (SC-009) requires a running server + Chrome and is deferred to post-deployment validation. Verify locally if possible by running `npx lighthouse http://localhost:1313 --output=json` during `npm run dev`, otherwise validate after first GitHub Pages deployment.
 
 **Checkpoint**: All stories complete. Site is ready for deployment to GitHub Pages.
 

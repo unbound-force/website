@@ -1,0 +1,15 @@
+// Unbound Force Brand Variables
+// Only $variable declarations belong here. Component rules go in _custom.scss.
+
+// Brand Colors - Electric blue + Violet
+$blue-500: #3b82f6;
+$violet-400: #a78bfa;
+$violet-500: #8b5cf6;
+$violet-600: #7c3aed;
+
+// Slate for neutrals
+$slate-200: #e2e8f0;
+$slate-900: #0f172a;
+
+// Primary color — Bootstrap generates all .btn-primary variants from this
+$primary: $blue-500;
