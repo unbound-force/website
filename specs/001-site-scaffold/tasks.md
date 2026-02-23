@@ -138,7 +138,7 @@
 - [ ] T027 Verify WCAG 2.1 AA compliance: check all homepage elements for alt text on images, keyboard navigability of interactive elements (CTA buttons, dark mode toggle, nav links), and color contrast ratio >= 4.5:1 for all text against backgrounds in both light and dark modes. Fix any violations found.
 - [ ] T028 Run `npm run build` one final time and verify: zero errors, zero warnings, `public/` contains all expected files (index.html, CNAME, favicons, CSS, search index).
 - [ ] T029 Run `npm run dev` and perform a full visual walkthrough: homepage hero, features, projects, CTA sections render correctly. Navigation works. Dark mode toggle works. Search is functional (though no docs content yet). No console errors.
-- [ ] T030 Run quickstart.md verification checklist: confirm all items pass (npm install, npm run build, npm run dev, homepage sections visible, dark mode works, no external fonts, Lighthouse >= 90 target achievable).
+- [ ] T030 Run quickstart.md verification checklist: confirm all items pass (npm install, npm run build, npm run dev, homepage sections visible, dark mode works, no external fonts). Note: Lighthouse >= 90 (SC-009) requires a running server + Chrome and is deferred to post-deployment validation. Verify locally if possible by running `npx lighthouse http://localhost:1313 --output=json` during `npm run dev`, otherwise validate after first GitHub Pages deployment.
 
 **Checkpoint**: All stories complete. Site is ready for deployment to GitHub Pages.
 
