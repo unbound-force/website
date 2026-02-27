@@ -254,6 +254,8 @@ GitHub Pages deployment via `.github/workflows/deploy-gh-pages.yml`:
 ## Active Technologies
 - Hugo (via npm/thulite) + Go 1.23 (module resolution) + Node.js >= 20.11.0 + `thulite ^2.6.3`, `@thulite/doks-core ^1.8.3`, `@thulite/images ^3.3.1`, `@thulite/inline-svg ^1.2.0`, `@thulite/seo ^2.4.1`, `@tabler/icons ^3.34.1` (001-site-scaffold)
 - N/A (static site, no database) (001-site-scaffold)
+- Hugo (via npm/thulite) + Go 1.23 + Node.js >= 20.11.0 + `thulite ^2.6.3`, `@thulite/doks-core ^1.8.3`, `@thulite/images ^3.3.1`, `@thulite/inline-svg ^1.2.0`, `@thulite/seo ^2.4.1`, `@tabler/icons ^3.34.1` (003-blog-why-gaze)
+- N/A (static site, Markdown files) (003-blog-why-gaze)
 
 ## Recent Changes
 - 001-site-scaffold: Added Hugo (via npm/thulite) + Go 1.23 (module resolution) + Node.js >= 20.11.0 + `thulite ^2.6.3`, `@thulite/doks-core ^1.8.3`, `@thulite/images ^3.3.1`, `@thulite/inline-svg ^1.2.0`, `@thulite/seo ^2.4.1`, `@tabler/icons ^3.34.1`
