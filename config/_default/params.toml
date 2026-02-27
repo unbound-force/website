@@ -4,7 +4,7 @@ description = "The AI Agent Swarm for Software Engineering. Purpose-built agent 
 images = ["favicon-512x512.png"]
 
 # mainSections
-mainSections = ["docs"]
+mainSections = ["docs", "blog"]
 
 [social]
   github = "unbound-force"
