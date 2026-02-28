@@ -19,8 +19,8 @@ mainSections = ["docs", "blog"]
   navbarSticky = true
   containerBreakpoint = "lg"
 
-  ## Button — disabled until docs content exists (spec 002)
-  navBarButton = false
+  ## Button
+  navBarButton = true
   navBarButtonUrl = "/docs/getting-started/"
   navBarButtonText = "Get Started"
 

@@ -5,7 +5,17 @@
 **Status**: Draft
 **Input**: User description: "Create all documentation sections with real content adapted from source repositories: Getting Started, Projects (Gaze), Team (5 agent personas), and Contributing."
 
-## User Scenarios & Testing *(mandatory)*
+## Clarifications
+
+### Session 2026-02-27
+
+- Q: Should the trading card images be displayed on the team persona pages? → A: Each persona page displays its trading card image; team index page displays the composite image.
+- Q: Should the Gaze project page focus on CLI commands or the OpenCode integration? → A: Only the `/gaze` OpenCode command — no mention of the CLI.
+- Q: Is there documentation for the `/gaze` OpenCode command, or should it be researched during planning? → A: Defer to planning phase research.
+- Q: What should the Quick Start page cover as the "get started" path? → A: Cover all three tools equally (Specify, OpenCode, Swarm).
+- Q: Should the Gaze project page link to the "Why Contract Coverage" blog article? → A: Yes, link to the blog article from the Gaze project page.
+
+## User Scenarios & Testing _(mandatory)_
 
 ### User Story 1 - Getting Started Guide (Priority: P1)
 
@@ -35,10 +45,11 @@ As a developer interested in test quality, I want to read about the Gaze project
 **Acceptance Scenarios**:
 
 1. **Given** I navigate to the Projects section, **When** I see the projects overview page, **Then** it lists available projects with brief descriptions.
-2. **Given** I click on the Gaze project, **When** the page loads, **Then** I see a description of Gaze covering: what it does (side effect detection + CRAP scores for Go), installation (`go install`), key commands (`gaze analyze`, `gaze crap`), output formats (text + JSON), and architecture overview.
+2. **Given** I click on the Gaze project, **When** the page loads, **Then** I see a description of Gaze covering: what it does (side effect detection, Contract Coverage, and CRAP scores for Go), how to use it via the `/gaze` OpenCode command, and an architecture overview.
 3. **Given** the Gaze project page content, **When** I cross-reference it against the Gaze repository README, **Then** all facts are accurate — no fabricated features, no overstated capabilities.
-4. **Given** the Gaze project page, **When** I look for known limitations, **Then** the page honestly lists current limitations (direct function body only, P3-P4 not yet detected, line coverage fallback, no CGo/unsafe, single package for analyze).
+4. **Given** the Gaze project page, **When** I look for known limitations, **Then** the page honestly lists current limitations.
 5. **Given** I am on the Gaze project page, **When** I check for a link to the Gaze repository, **Then** a prominent link to `https://github.com/unbound-force/gaze` is present.
+6. **Given** I am on the Gaze project page, **When** I look for deeper technical content, **Then** I find a link to the "Why Contract Coverage" blog article at `/blog/why-contract-coverage/`.
 
 ---
 
@@ -52,13 +63,14 @@ As a visitor curious about how the AI agent swarm works, I want to read about ea
 
 **Acceptance Scenarios**:
 
-1. **Given** I navigate to the Team section, **When** I see the overview page, **Then** it introduces "The Heroes" concept and lists all 5 agent personas with brief descriptions.
+1. **Given** I navigate to the Team section, **When** I see the overview page, **Then** it introduces "The Heroes" concept, displays the team composite image (`static/images/team/the-unbound-force.jpeg`), and lists all 5 agent personas with brief descriptions.
 2. **Given** I click on Muti-Mind, **When** the page loads, **Then** I see a description of the Product Owner persona covering vision keeping, prioritization, backlog ownership, and acceptance authority — adapted from `unbound-force.md`.
 3. **Given** I click on Cobalt-Crush, **When** the page loads, **Then** I see a description of the Developer persona covering high-velocity implementation, CI/CD focus, architectural adherence, and tight feedback loops.
 4. **Given** I click on Gaze (Tester), **When** the page loads, **Then** I see a description of the Tester persona covering proactive test strategies, CI/CV pipelines, intelligent defect detection, and risk-based testing.
 5. **Given** I click on The Divisor, **When** the page loads, **Then** I see a description of the PR Reviewer persona covering the three-persona council (The Guard, The Architect, The Adversary) and collective merge authority.
 6. **Given** I click on Mx F, **When** the page loads, **Then** I see a description of the Manager persona covering servant leadership, flow facilitation, continuous improvement coaching, and obstacle removal.
 7. **Given** any persona page, **When** I cross-reference the content against `unbound-force.md`, **Then** the descriptions are accurate but adapted for a website audience.
+8. **Given** any persona page, **When** the page loads, **Then** the persona's trading card image is displayed prominently (e.g., `multi-mind.png`, `cobalt-crush.png`, `gaze.png`, `the-divisor.png`, `mx-f.png` from `static/images/team/`).
 
 ---
 
@@ -102,18 +114,18 @@ As a visitor browsing the site, I want all documentation sections to appear in t
 - What if a content page is added without updating `menus.en.toml`? It will appear in the sidebar via Hugo's automatic section detection but may not appear in the top nav. All pages must be verified against navigation.
 - What if two pages have the same `weight` value? Hugo uses alphabetical ordering as a tiebreaker, which may produce unexpected sidebar ordering. Each page must have a unique weight within its section.
 
-## Requirements *(mandatory)*
+## Requirements _(mandatory)_
 
 ### Functional Requirements
 
 - **FR-001**: The Getting Started section MUST contain an index page (`content/docs/getting-started/_index.md`) explaining what Unbound Force is, adapted from the `unbound-force/unbound-force.md` overview section.
-- **FR-002**: The Getting Started section MUST contain a Quick Start page (`content/docs/getting-started/quick-start.md`) explaining how to get started with the tools (Specify, OpenCode, and optionally Swarm).
+- **FR-002**: The Getting Started section MUST contain a Quick Start page (`content/docs/getting-started/quick-start.md`) explaining how to get started with all three tools equally: Specify, OpenCode, and Swarm.
 - **FR-003**: The Projects section MUST contain an index page (`content/docs/projects/_index.md`) with a brief overview of available projects.
-- **FR-004**: The Projects section MUST contain a Gaze project page (`content/docs/projects/gaze.md`) adapted from the Gaze repository README, covering: description, installation, key commands (`gaze analyze`, `gaze crap`), output formats, architecture overview, and known limitations.
+- **FR-004**: The Projects section MUST contain a Gaze project page (`content/docs/projects/gaze.md`) adapted from the Gaze repository README, covering: description, usage via the `/gaze` OpenCode command, architecture overview, and known limitations. The page MUST NOT document CLI commands directly — Gaze is presented as an OpenCode-integrated tool. The page MUST include a link to the "Why Contract Coverage" blog article (`/blog/why-contract-coverage/`) for visitors who want a deeper technical explanation.
 - **FR-005**: The Gaze project page MUST NOT fabricate features or omit known limitations. Content MUST be cross-referenced against the Gaze README.
-- **FR-006**: The Team section MUST contain an index page (`content/docs/team/_index.md`) introducing the "Heroes" concept and listing all 5 personas.
+- **FR-006**: The Team section MUST contain an index page (`content/docs/team/_index.md`) introducing the "Heroes" concept, displaying the team composite image (`/images/team/the-unbound-force.jpeg`), and listing all 5 personas.
 - **FR-007**: The Team section MUST contain individual pages for each persona: `muti-mind.md` (Product Owner), `cobalt-crush.md` (Developer), `gaze-tester.md` (Tester), `the-divisor.md` (PR Reviewer), `mx-f.md` (Manager).
-- **FR-008**: Each persona page MUST be adapted from the `unbound-force/unbound-force.md` Heroes section. Content MUST be rewritten for a website audience — not copied verbatim.
+- **FR-008**: Each persona page MUST be adapted from the `unbound-force/unbound-force.md` Heroes section. Content MUST be rewritten for a website audience — not copied verbatim. Each persona page MUST display its corresponding trading card image from `static/images/team/` (`multi-mind.png`, `cobalt-crush.png`, `gaze.png`, `the-divisor.png`, `mx-f.png`).
 - **FR-009**: The Divisor page MUST describe the three sub-personas (The Guard, The Architect, The Adversary) and the collective approval requirement.
 - **FR-010**: The Contributing section MUST contain an index page (`content/docs/contributing/_index.md`) with guidelines for reporting issues, submitting PRs, following Conventional Commits, and using the Speckit workflow.
 - **FR-011**: Every content page MUST include all required YAML frontmatter fields: `title`, `description`, `lead`, `date`, `draft: false`, `weight`, `toc: true`.
@@ -130,11 +142,11 @@ As a visitor browsing the site, I want all documentation sections to appear in t
 - **Navigation Menu**: The `menus.en.toml` configuration that defines sidebar sections, top nav links, and footer links.
 - **Source Repository**: An upstream Unbound Force repository (Gaze, unbound-force) from which website content is derived and must be kept in sync.
 
-## Success Criteria *(mandatory)*
+## Success Criteria _(mandatory)_
 
 ### Measurable Outcomes
 
-- **SC-001**: All 14 content pages exist and render without errors: 2 Getting Started, 2 Projects, 6 Team (1 index + 5 personas), 1 Contributing, plus the docs-level `_index.md`.
+- **SC-001**: All 12 content pages exist and render without errors: 2 Getting Started (index + Quick Start), 2 Projects (index + Gaze), 6 Team (index + 5 personas), 1 Contributing (index), plus the docs-level `_index.md`.
 - **SC-002**: Every page is reachable from the homepage within two clicks via sidebar navigation.
 - **SC-003**: `npm run build` succeeds with zero errors after all content is added.
 - **SC-004**: Cross-referencing the Gaze project page against the Gaze README confirms all facts are accurate and no features are fabricated.
