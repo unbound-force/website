@@ -87,6 +87,13 @@
   source = "assets"
   target = "assets"
 
+# Mount static to assets so the image render hook can process static images
+# (resize, convert to webp, responsive srcset). Without this, Markdown images
+# referencing /images/... in static/ would bypass Hugo's image pipeline.
+[[mounts]]
+  source = "static"
+  target = "assets"
+
 ## static
 [[mounts]]
   source = "node_modules/@thulite/doks-core/static"
