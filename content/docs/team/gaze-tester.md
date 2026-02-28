@@ -16,8 +16,6 @@ Gaze is the Tester of the Unbound Force swarm — the ultimate quality guardian 
 
 Operating as the Quality Sentinel, Gaze moves beyond mere reactive testing of completed code to proactive, continuous validation throughout the development lifecycle. Quality is built in, not inspected on.
 
-> **Note:** This page describes Gaze the _persona_ — the tester role within the swarm. For the Gaze _tool_ (test quality analysis via side effect detection for Go), see the [Gaze project page](/docs/projects/gaze/).
-
 ## Key Responsibilities
 
 ### Proactive Test Strategy
