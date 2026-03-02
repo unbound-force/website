@@ -122,6 +122,32 @@ The `/gaze` command routes to a quality reporting agent that runs the analysis, 
 
 A companion command, `/classify-docs`, enhances classification by combining mechanical signals with project documentation analysis.
 
+## Sample Output
+
+Here is what a full Gaze report looks like on a real Go project — [gcal-organizer](https://github.com/jflowers/gcal-organizer), analyzed with Gaze v1.2.3.
+
+### Overall Health Assessment
+
+| Dimension | Grade | Details |
+|-----------|-------|---------|
+| CRAPload | 🔴 D | 40/137 functions (29.2%) above threshold |
+| GazeCRAPload | 🟢 A- | 5/17 analyzed functions above threshold |
+| Avg Line Coverage | 🔴 D | 26.2% — 101 of 137 functions have 0% coverage |
+| Contract Coverage | 🟡 C | 52.9% avg across 17 quality-analyzed functions |
+| Complexity | 🟢 B+ | Average 4.9, but 40 functions exceed threshold |
+
+### Top 5 Worst CRAP Scores
+
+| Function | CRAP | Complexity | Coverage | File |
+|----------|-----:|----------:|---------:|------|
+| (\*Service).CreateDecisionsTab | 650.0 | 25 | 0.0% | internal/docs/service.go:460 |
+| runBrowserScript | 342.0 | 18 | 0.0% | cmd/gcal-organizer/assign_tasks.go:237 |
+| loadDotEnv | 240.0 | 15 | 0.0% | cmd/gcal-organizer/main.go:382 |
+| (\*Service).ListMeetingDocuments | 210.0 | 14 | 0.0% | internal/drive/service.go:113 |
+| (\*Organizer).printSummary | 156.0 | 12 | 0.0% | internal/organizer/organizer.go:227 |
+
+For a section-by-section walkthrough of the full report — including GazeCRAP quadrants, quality analysis, classification, and prioritized recommendations — see [Gaze in Practice](/blog/gaze-in-practice/).
+
 ## Architecture
 
 Gaze is structured as a set of focused packages:
