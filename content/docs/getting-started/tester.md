@@ -91,7 +91,7 @@ Gaze is stage 3 (validate) in the [hero lifecycle](/docs/getting-started/common-
 1. **Gaze produces** a quality report with contract coverage, CRAP scores, and over-specification findings
 2. **The Divisor consumes** the report during code review -- the Testing persona uses it as evidence for coverage assessment
 3. **Muti-Mind consumes** the report during acceptance -- the PO compares quality metrics against the backlog item's acceptance criteria
-4. **Mx F consumes** the report for metrics -- quality trends feed into sprint health dashboards and coaching observations
+4. **Mx F consumes** the report during the reflect stage -- quality trends feed into the retrospective analysis, sprint health dashboards, and coaching observations
 
 ## Running the Review Council
 

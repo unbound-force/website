@@ -113,7 +113,7 @@ When a technical question arises, Mx F redirects: "That's a question for Cobalt-
 
 ## Integration with Other Heroes
 
-Mx F is stage 6 (measure) in the [hero lifecycle](/docs/getting-started/common-workflows/#new-feature-end-to-end) -- the final stage that captures a metrics snapshot after each completed workflow.
+Mx F is stage 6 (reflect) in the [hero lifecycle](/docs/getting-started/common-workflows/#new-feature-end-to-end) -- the final stage that runs a retrospective analysis with empirical data from all heroes after each completed workflow. This stage runs autonomously as part of the swarm delegation workflow.
 
 ### Mx F and Muti-Mind
 
@@ -123,16 +123,18 @@ Backlog velocity data informs priority decisions. When Mx F observes that veloci
 
 Quality metrics from Gaze feed directly into Mx F's dashboards and coaching observations. Rising CRAP scores or declining contract coverage become coaching discussion topics in retrospectives.
 
-### The Measure Stage
+### The Reflect Stage
 
-After a feature is accepted (stage 5), Mx F:
+After a feature is accepted (stage 5), Mx F runs the reflect stage autonomously:
 
 1. Collects a metrics snapshot capturing velocity, quality, review efficiency, and CI health
-2. Updates the dashboard with the latest data
-3. Identifies improvement opportunities for the next retrospective
+2. Consumes Gaze's quality report and the Divisor's review verdict as empirical data
+3. Runs cross-hero learning analysis to detect recurring patterns across completed workflows
+4. Produces learning feedback with actionable recommendations
+5. Updates the dashboard and identifies improvements for the next retrospective
 
 ## Next Steps
 
-- Read [Common Workflows](/docs/getting-started/common-workflows/) to see how measurement fits the full lifecycle
+- Read [Common Workflows](/docs/getting-started/common-workflows/) to see how the reflect stage fits the full lifecycle
 - Explore the [Mx F](/docs/team/mx-f/) team page for the complete persona details
 - Try `mxf dashboard` to see the current state of your project metrics
