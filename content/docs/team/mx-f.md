@@ -28,7 +28,7 @@ Mx F is responsible for identifying and aggressively removing internal and exter
 
 ### Process Stewardship
 
-Mx F owns continuous process improvement. They facilitate the swarm's regular retrospectives and leverage data — velocity, defect rates, cycle time, The Divisor's review feedback — to help the team define, implement, and measure iterative process changes.
+Mx F owns continuous process improvement. They facilitate the swarm's regular retrospectives and leverage data — velocity, defect rates, cycle time, The Divisor's review feedback — to help the team define, implement, and reflect on iterative process changes. Mx F runs the final "reflect" stage of the hero lifecycle, consuming empirical data from Gaze's quality reports and the Divisor's review verdicts to produce learning feedback and a retrospective summary.
 
 ### Stakeholder Liaison
 

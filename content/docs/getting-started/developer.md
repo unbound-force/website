@@ -92,6 +92,10 @@ Swarm analyzes the task, decomposes it into subtasks, reserves files for each wo
 
 When a `tasks.md` file exists from the Speckit pipeline, Swarm uses it as the authoritative task decomposition instead of generating its own. It maps each phase to a Swarm epic and respects the `[P]` parallel markers and phase dependencies.
 
+### Swarm Delegation
+
+The hero lifecycle supports **autonomous swarm delegation**. After the Product Owner completes the define stage (specify + clarify), the swarm takes over and runs the implement, validate, and review stages without human intervention. The workflow pauses automatically before the accept stage, returning control to the Product Owner. After acceptance, the swarm runs the final reflect stage (Mx F) autonomously. This means the developer's work -- planning, implementation, and quality validation -- runs as part of the swarm's autonomous stages.
+
 ### File Reservations
 
 Before editing any file under Swarm coordination, always reserve it first:
