@@ -258,6 +258,7 @@ GitHub Pages deployment via `.github/workflows/deploy-gh-pages.yml`:
 - N/A (static site, Markdown files) (003-blog-why-gaze)
 - Markdown (Hugo content files) + Hugo (via @thulite), Doks theme (005-getting-started-guides)
 - N/A (static Markdown files) (005-getting-started-guides)
+- Hugo (Go-based SSG) via `@thulite` npm packages; Node.js >= 20.11.0; Go >= 1.23 + `thulite ^2.6.3`, `@thulite/doks-core ^1.8.3` (006-binary-rename)
 
 ## Recent Changes
 - 001-site-scaffold: Added Hugo (via npm/thulite) + Go 1.23 (module resolution) + Node.js >= 20.11.0 + `thulite ^2.6.3`, `@thulite/doks-core ^1.8.3`, `@thulite/images ^3.3.1`, `@thulite/inline-svg ^1.2.0`, `@thulite/seo ^2.4.1`, `@tabler/icons ^3.34.1`
