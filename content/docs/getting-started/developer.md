@@ -10,14 +10,14 @@ toc: true
 
 ## Prerequisites
 
-Everything starts with one command. Install the `unbound` CLI, then run setup to install the full tool chain:
+Everything starts with one command. Install the `uf` CLI (short for `unbound-force`), then run setup to install the full tool chain:
 
 ```bash
-brew install unbound-force/tap/unbound
-unbound setup
+brew install unbound-force/tap/unbound-force
+uf setup
 ```
 
-`unbound setup` detects your existing version managers (goenv, nvm, pyenv, Homebrew) and installs through them:
+`uf setup` detects your existing version managers (goenv, nvm, pyenv, Homebrew) and installs through them:
 
 - **OpenCode** -- the AI coding environment where you work
 - **Gaze** -- quality analysis for your Go code
@@ -27,7 +27,7 @@ unbound setup
 After setup, verify everything is working:
 
 ```bash
-unbound doctor
+uf doctor
 ```
 
 Doctor checks 7 areas: your detected environment (version managers), core tools, Swarm plugin health, scaffolded files, hero availability, MCP server config, and agent/skill integrity. Every failed check includes a copy-pasteable install command to fix it.
@@ -36,7 +36,7 @@ Doctor checks 7 areas: your detected environment (version managers), core tools,
 
 A typical development session follows this progression:
 
-1. **Check your environment**: Run `unbound doctor` to verify all tools are healthy
+1. **Check your environment**: Run `uf doctor` to verify all tools are healthy
 2. **Open OpenCode**: Start your AI coding environment
 3. **Check for work**: Run `hive_ready()` to see what tasks are available
 4. **Work**: Use `/swarm "task"` for parallel task execution, or code directly with Cobalt-Crush
@@ -135,7 +135,7 @@ Cobalt-Crush loads coding conventions from `.opencode/unbound/packs/`. These are
 - `[SHOULD]` -- Strong recommendations
 - `[MAY]` -- Optional improvements
 
-Packs come in pairs: a tool-owned canonical pack (e.g., `go.md`) and a user-owned customization file (e.g., `go-custom.md`). The canonical packs are updated by `unbound init`; your customizations are preserved.
+Packs come in pairs: a tool-owned canonical pack (e.g., `go.md`) and a user-owned customization file (e.g., `go-custom.md`). The canonical packs are updated by `uf init`; your customizations are preserved.
 
 ### Feedback Loops
 
@@ -160,4 +160,4 @@ The plane is not landed until `git push` succeeds. This ensures your work items,
 
 - Read the [Common Workflows](/docs/getting-started/common-workflows/) page to understand how your work flows through the full hero lifecycle
 - Explore the [Cobalt-Crush](/docs/team/cobalt-crush/) team page for the full persona details
-- Run `unbound doctor` to verify your environment, then try `/swarm "your first task"`
+- Run `uf doctor` to verify your environment, then try `/swarm "your first task"`
