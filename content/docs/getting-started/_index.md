@@ -40,4 +40,10 @@ Together, they cover the full software development lifecycle — from requiremen
 
 ## Get Started
 
-Ready to dive in? Head to the [Quick Start](/docs/getting-started/quick-start/) guide to install the tools and start using the swarm.
+Ready to dive in? Start with the [Quick Start](/docs/getting-started/quick-start/) guide to install the tools, then pick the guide for your role:
+
+- **[Developer / Engineer](/docs/getting-started/developer/)** -- Daily workflow, Speckit pipeline, Swarm coordination, convention packs
+- **[Tester](/docs/getting-started/tester/)** -- Gaze quality analysis, CRAP scores, coverage ratchets, CI integration
+- **[Product Owner](/docs/getting-started/product-owner/)** -- Muti-Mind backlog management, priority scoring, acceptance decisions
+- **[Product Manager](/docs/getting-started/product-manager/)** -- Mx F metrics, dashboards, coaching, retrospectives
+- **[Common Workflows](/docs/getting-started/common-workflows/)** -- End-to-end flows for features, bug fixes, code reviews, and setup
