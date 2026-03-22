@@ -41,7 +41,7 @@ The composite score (0-100) maps to priority levels: P1 (highest urgency) throug
 
 When a feature is complete and validated by Gaze, the PO makes a structured acceptance decision:
 
-- **Accept**: The increment meets all acceptance criteria. Work proceeds to the measure stage.
+- **Accept**: The increment meets all acceptance criteria. Work proceeds to the reflect stage.
 - **Reject**: The increment fails one or more criteria. A new backlog item is created with the rejection rationale.
 - **Conditional**: Partial acceptance with specific conditions that must be met.
 
@@ -72,7 +72,7 @@ Then the response includes their name, email, and preferences.
 
 ### Stage 5: Accept
 
-After implementation (stage 2), validation (stage 3), and review (stage 4), the increment returns to you for acceptance:
+After implementation (stage 2), validation (stage 3), and review (stage 4) -- all run autonomously by the swarm -- the workflow pauses and the increment returns to you for acceptance:
 
 1. Review the **Gaze quality report** -- check contract coverage, CRAP scores, and over-specification
 2. Review the **Divisor review verdict** -- check that all 5 personas approved (or understand why they didn't)

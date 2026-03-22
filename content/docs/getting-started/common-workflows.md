@@ -10,9 +10,9 @@ toc: true
 
 ## New Feature (End-to-End)
 
-The full hero lifecycle for a new feature follows six stages. Each stage is owned by a specific hero, and each produces artifacts consumed by the next.
+The full hero lifecycle for a new feature follows six stages. Each stage is owned by a specific hero, and each produces artifacts consumed by the next. Every stage has an **execution mode** -- either `[human]` (driven by the operator) or `[swarm]` (run autonomously by the agent swarm).
 
-### 1. Define (Product Owner)
+### 1. Define (Product Owner) `[human]`
 
 The [Product Owner (Muti-Mind)](/docs/getting-started/product-owner/) creates a backlog item and drives specification creation.
 
@@ -23,30 +23,24 @@ The [Product Owner (Muti-Mind)](/docs/getting-started/product-owner/) creates a 
 
 **Output**: Backlog item + feature specification
 
-### 2. Specify and Plan (Developer)
+After the human completes this stage, the swarm takes over automatically.
 
-The [Developer (Cobalt-Crush)](/docs/getting-started/developer/) creates the technical plan and task breakdown.
+### 2. Implement (Developer) `[swarm]`
+
+The [Developer (Cobalt-Crush)](/docs/getting-started/developer/) creates the technical plan and implements the feature.
 
 - Generate the implementation plan: `/speckit.plan`
 - Generate tasks: `/speckit.tasks`
 - Run cross-artifact analysis: `/speckit.analyze`
 - Validate checklists: `/speckit.checklist`
-- Commit and push all spec artifacts before implementation
-
-**Output**: plan.md + tasks.md + research.md
-
-### 3. Implement (Developer)
-
-The Developer implements the feature following the task plan.
-
 - Execute implementation: `/speckit.implement` or `/cobalt-crush`
 - For parallel work: `/swarm "implement spec NNN"`
 - Mark each task `[x]` in tasks.md as it completes
 - Run tests after each phase checkpoint
 
-**Output**: Code + tests
+**Output**: plan.md + tasks.md + code + tests
 
-### 4. Validate (Tester)
+### 3. Validate (Tester) `[swarm]`
 
 [Gaze](/docs/getting-started/tester/) runs quality analysis on the implemented code.
 
@@ -57,7 +51,7 @@ The Developer implements the feature following the task plan.
 
 **Output**: Quality report (contract coverage, CRAP scores, over-specification)
 
-### 5. Review (Reviewer Council)
+### 4. Review (Reviewer Council) `[swarm]`
 
 [The Divisor](/docs/team/the-divisor/) reviews the code through five specialized personas.
 
@@ -73,26 +67,40 @@ If the council returns REQUEST CHANGES, the developer addresses findings and re-
 
 **Output**: Review verdict (APPROVE or REQUEST CHANGES)
 
-### 6. Accept (Product Owner)
+After the swarm completes review, the workflow pauses and returns control to the human.
+
+### 5. Accept (Product Owner) `[human]`
 
 The Product Owner evaluates the completed increment against acceptance criteria.
 
 - Reviews the Gaze quality report
+- Reviews the Divisor review verdict
 - Compares results against the backlog item's acceptance criteria
 - Makes a decision: accept, reject, or conditional
 - If rejected: a new backlog item is created with the rejection rationale
 
 **Output**: Acceptance decision
 
-### 7. Measure (Manager)
+### 6. Reflect (Manager) `[swarm]`
 
-[Mx F](/docs/getting-started/product-manager/) captures a metrics snapshot and identifies improvement opportunities.
+[Mx F](/docs/getting-started/product-manager/) runs a retrospective analysis with empirical data from all heroes.
 
-- Collects velocity, quality trends, review efficiency, and CI health
-- Updates the team dashboard
-- Identifies patterns for the next retrospective
+- Collects a metrics snapshot: velocity, quality trends, review efficiency, and CI health
+- Consumes Gaze's quality report and the Divisor's review verdict
+- Runs cross-hero learning analysis to detect recurring patterns across workflows
+- Produces learning feedback with actionable recommendations (e.g., convention pack updates for repeated review findings)
+- Updates the team dashboard and identifies improvements for the next retrospective
 
-**Output**: Metrics snapshot
+**Output**: Metrics snapshot + learning feedback + retrospective summary
+
+### Swarm Delegation
+
+The workflow is designed for **autonomous swarm delegation**. After the human completes the define stage (specify + clarify), the swarm runs implementation through review without human intervention. The workflow pauses automatically before the accept stage, returning control to the human for an acceptance decision. After acceptance, the swarm runs the final reflect stage autonomously.
+
+This means a complete feature workflow requires only **two human decision points**:
+
+1. **After define**: Hand off to the swarm
+2. **At accept**: Review the increment and accept or reject
 
 ## Bug Fix (Tactical)
 
