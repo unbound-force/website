@@ -190,14 +190,16 @@ The one-time setup for a new developer or a new project.
 
 ### 1. Install the CLI
 
+Install `uf` (short for `unbound-force`):
+
 ```bash
-brew install unbound-force/tap/unbound
+brew install unbound-force/tap/unbound-force
 ```
 
 ### 2. Run Setup
 
 ```bash
-unbound setup
+uf setup
 ```
 
 This installs everything in one command:
@@ -208,14 +210,14 @@ This installs everything in one command:
 - Installs the Swarm plugin (via npm)
 - Configures `opencode.json` with the Swarm plugin
 - Initializes `.hive/` for work tracking
-- Runs `unbound init` to scaffold project files
+- Runs `uf init` to scaffold project files
 
 Use `--dry-run` to preview what would be installed without making changes.
 
 ### 3. Verify
 
 ```bash
-unbound doctor
+uf doctor
 ```
 
 Doctor checks 7 areas and shows pass/warn/fail for each with install hints. Fix any failures by copying the suggested command from the output.
