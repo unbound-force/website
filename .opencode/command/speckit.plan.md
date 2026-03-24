@@ -9,6 +9,8 @@ handoffs:
     agent: speckit.checklist
     prompt: Create a checklist for the following domain...
 ---
+<!-- scaffolded by uf vdev -->
+<!-- scaffolded by uf vdev -->
 
 ## User Input
 
@@ -71,7 +73,8 @@ You **MUST** consider the user input before proceeding (if not empty).
 
 2. **Define interface contracts** (if project has external interfaces) → `/contracts/`:
    - Identify what interfaces the project exposes to users or other systems
-   - Document the contract format appropriate for the project type
+   - If `.specify/config.yaml` exists, read `project_type` to determine the contract format (library → public API, cli → command schema, web → endpoints, mobile → screens)
+   - Otherwise, infer the contract format from the project type
    - Examples: public APIs for libraries, command schemas for CLI tools, endpoints for web services, grammars for parsers, UI contracts for applications
    - Skip if project is purely internal (build scripts, one-off tools, etc.)
 

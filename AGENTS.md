@@ -198,6 +198,24 @@ specs/
 
 Branch names follow the same numbering pattern (e.g., `001-feature-name`).
 
+### Branch Conventions
+
+Both tiers enforce branch-based workflows:
+
+- **Speckit** branches: `NNN-<short-name>`
+  (e.g., `013-binary-rename`). Created automatically by
+  `/speckit.specify`. Validated by `check-prerequisites.sh`
+  at every pipeline step (hard gate).
+- **OpenSpec** branches: `opsx/<change-name>`
+  (e.g., `opsx/doctor-ux-improvement`). Created by
+  `/opsx-propose`. Validated by `/opsx-apply` before
+  implementation (hard gate).
+
+The `opsx/` prefix namespace ensures OpenSpec branches
+are visually distinct from Speckit branches in
+`git branch` output and do not collide with the
+`NNN-*` numbering pattern.
+
 ### Task Completion Bookkeeping
 
 When a task from `tasks.md` is completed during implementation, its checkbox **must** be updated from `- [ ]` to `- [x]` immediately. Do not defer this — mark tasks complete as they are finished, not in a batch after all work is done. This keeps the task list an accurate, real-time view of progress and prevents drift between the codebase and the plan.

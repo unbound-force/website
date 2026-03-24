@@ -1,6 +1,8 @@
 ---
 description: Execute the implementation plan by processing and executing all tasks defined in tasks.md
 ---
+<!-- scaffolded by uf vdev -->
+<!-- scaffolded by uf vdev -->
 
 ## User Input
 
