@@ -33,3 +33,11 @@ _The Architectural Conscience and Code Integrity Guardian._ The Divisor operates
 ### [Mx F](/docs/team/mx-f/) — Manager
 
 _The Flow Facilitator and Continuous Improvement Coach._ Mx F serves as a servant leader and coach, maximizing the team's flow and self-organization. They guide through reflective questions rather than direct solutions, making the swarm a learning organization.
+
+## Infrastructure
+
+Beyond the five hero personas, the swarm relies on infrastructure tools that provide shared capabilities to all heroes.
+
+### [Dewey](/docs/team/dewey/) — Semantic Knowledge Layer
+
+Dewey is the knowledge backbone of the swarm — a per-repository MCP server that combines structured knowledge graph traversal with vector-based semantic search. It indexes local Markdown files, GitHub issues and PRs from across the organization, and toolstack documentation from the web. Every hero uses Dewey for context retrieval, and every hero functions without it — Dewey is an enhancement, not a dependency.

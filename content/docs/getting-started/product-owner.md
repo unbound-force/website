@@ -81,6 +81,18 @@ After implementation (stage 2), validation (stage 3), and review (stage 4) -- al
 
 If you reject, provide clear rationale. A new backlog item is created automatically with the rejection details so the developer knows exactly what to address.
 
+## Knowledge Retrieval with Dewey
+
+When [Dewey](/docs/getting-started/knowledge/) is configured, Muti-Mind uses it to make better-informed product decisions. Dewey's semantic search surfaces related context from across the organization — past specifications, GitHub issues from other repositories, acceptance criteria patterns, and learning feedback from previous development cycles.
+
+This is particularly valuable during the define stage. Instead of asking the human for context about related features or past decisions, Muti-Mind queries Dewey:
+
+- **Cross-repo issue discovery**: Find related bugs and feature requests across all whitelisted repositories, even when they use different terminology
+- **Past acceptance criteria**: Surface acceptance scenarios from similar features to inform new specifications
+- **Backlog pattern analysis**: Identify recurring themes across the organization's backlog items to spot dependencies and opportunities
+
+When Dewey is not available, Muti-Mind works with the local backlog files and direct GitHub queries. The backlog management workflow is unchanged — Dewey adds broader organizational context but is never required. See the [graceful degradation tiers](/docs/getting-started/knowledge/#graceful-degradation) for details.
+
 ## Working with Specifications
 
 Speckit specifications are the bridge between your product vision and the developer's implementation plan. Understanding how to read and contribute to specs makes the workflow more effective.

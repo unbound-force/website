@@ -140,6 +140,18 @@ gaze report ./... --ai=claude \
 
 Gaze detects the `$GITHUB_STEP_SUMMARY` environment variable and automatically appends its report to the GitHub Actions job summary. No additional configuration needed.
 
+## Knowledge Retrieval with Dewey
+
+When [Dewey](/docs/getting-started/knowledge/) is configured, Gaze uses it to inform quality analysis with cross-repository context. Instead of evaluating code quality in isolation, Gaze can reference patterns and baselines from across the organization.
+
+Dewey enables three capabilities for the tester role:
+
+- **Quality pattern discovery**: Search for test patterns and quality strategies used in other repositories — how did another project achieve high contract coverage for a similar code structure?
+- **CRAP score baselines**: Compare CRAP scores and complexity trends across repositories to establish organizational quality baselines and identify outliers
+- **Known failure modes**: Surface past test failures, bug reports, and quality findings for similar code patterns — if a particular design pattern has historically caused issues, Gaze can flag it proactively
+
+When Dewey is not available, Gaze operates on local code analysis and coverage data. All core capabilities — side effect detection, contract coverage, CRAP scoring, and quality reports — work without Dewey. Cross-repo quality context is an enhancement that improves the depth of analysis but is never required. See the [graceful degradation tiers](/docs/getting-started/knowledge/#graceful-degradation) for details.
+
 ## Next Steps
 
 - Explore the full [Gaze documentation](/docs/projects/gaze/) for detailed command reference

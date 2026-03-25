@@ -102,6 +102,14 @@ This means a complete feature workflow requires only **two human decision points
 1. **After define**: Hand off to the swarm
 2. **At accept**: Review the increment and accept or reject
 
+### Knowledge Context
+
+Throughout the hero lifecycle, [Dewey](/docs/getting-started/knowledge/) provides semantic context to every hero during their stage. When Muti-Mind writes a specification, Dewey surfaces related issues and past acceptance criteria from across the organization. When Cobalt-Crush implements a feature, Dewey provides toolstack API documentation and implementation patterns from other repositories. When Gaze validates code quality, Dewey offers cross-repo quality baselines and known failure modes.
+
+This context is automatic — heroes query Dewey's MCP tools as part of their normal workflow. No additional steps are required from the operator.
+
+Dewey operates on a [3-tier graceful degradation](/docs/getting-started/knowledge/#graceful-degradation) model: full semantic search when Dewey and Ollama are available, structured graph queries when only the knowledge graph is indexed, and direct file reads when Dewey is not configured. Every hero functions at all three tiers — Dewey enriches the workflow but never blocks it.
+
 ## Bug Fix (Tactical)
 
 For bug fixes and small changes (fewer than 3 user stories), use the OpenSpec tactical workflow instead of the full Speckit pipeline.
