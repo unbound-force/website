@@ -133,6 +133,18 @@ After a feature is accepted (stage 5), Mx F runs the reflect stage autonomously:
 4. Produces learning feedback with actionable recommendations
 5. Updates the dashboard and identifies improvements for the next retrospective
 
+## Knowledge Retrieval with Dewey
+
+When [Dewey](/docs/getting-started/knowledge/) is configured, Mx F uses it to enrich retrospective analysis with cross-repository data. Instead of analyzing metrics from a single project in isolation, Mx F can surface patterns spanning the entire organization.
+
+Dewey enables three capabilities for the manager role:
+
+- **Cross-repo velocity trends**: Compare velocity and quality metrics across repositories to identify organizational patterns — is a declining velocity trend isolated to one project or systemic?
+- **Retrospective outcomes**: Search past retrospective summaries and action items from other projects to find proven improvement strategies
+- **Coaching pattern discovery**: Surface learning feedback and coaching records from across the organization to inform coaching conversations with richer context
+
+When Dewey is not available, Mx F works with local metrics data and the current project's history. The dashboard, retrospective protocol, and coaching techniques all function without Dewey — cross-repo context is an enhancement, not a dependency. See the [graceful degradation tiers](/docs/getting-started/knowledge/#graceful-degradation) for details.
+
 ## Next Steps
 
 - Read [Common Workflows](/docs/getting-started/common-workflows/) to see how the reflect stage fits the full lifecycle

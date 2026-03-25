@@ -96,6 +96,18 @@ When a `tasks.md` file exists from the Speckit pipeline, Swarm uses it as the au
 
 The hero lifecycle supports **autonomous swarm delegation**. After the Product Owner completes the define stage (specify + clarify), the swarm takes over and runs the implement, validate, and review stages without human intervention. The workflow pauses automatically before the accept stage, returning control to the Product Owner. After acceptance, the swarm runs the final reflect stage (Mx F) autonomously. This means the developer's work -- planning, implementation, and quality validation -- runs as part of the swarm's autonomous stages.
 
+### Knowledge Retrieval with Dewey
+
+When [Dewey](/docs/getting-started/knowledge/) is configured, Cobalt-Crush uses it to pull in context that would otherwise require manual research. Dewey's semantic search finds conceptually related content even when different terminology is used — so a query about "adding a CLI subcommand" finds Cobra framework documentation, past implementation patterns from other repos, and related spec artifacts.
+
+Example queries Cobalt-Crush makes during implementation:
+
+- `dewey_semantic_search("how to validate JSON schema in Go")` — finds toolstack documentation and implementation patterns from other repositories
+- `dewey_similar("specs/005-getting-started-guides/plan.md")` — finds related planning artifacts to inform the current implementation approach
+- `dewey_semantic_search_filtered("error handling patterns", source: "github")` — finds error handling discussions in GitHub issues and PRs across the organization
+
+When Dewey is not available, Cobalt-Crush falls back to direct file reads and CLI queries. The implementation workflow is the same — just with narrower context. See the [graceful degradation tiers](/docs/getting-started/knowledge/#graceful-degradation) for details.
+
 ### File Reservations
 
 Before editing any file under Swarm coordination, always reserve it first:

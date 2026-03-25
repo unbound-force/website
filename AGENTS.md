@@ -22,6 +22,7 @@ npm run format             # Format all files with Prettier
 Hugo is installed via npm (through `@thulite`). Go >= 1.23 is required for Hugo module resolution.
 
 There is no test suite. Validation is manual:
+
 1. `npm run build` must succeed without errors
 2. `npm run dev` -- visually verify pages render correctly
 3. Check for broken links, missing images, correct navigation
@@ -100,6 +101,7 @@ Edit `config/_default/menus/menus.en.toml` to add or modify top-level navigation
 ### Homepage
 
 The homepage is built from two files:
+
 1. `content/_index.md` -- frontmatter only (title, description, lead text)
 2. `layouts/home.html` -- full HTML template (hero, features, projects, CTA)
 
@@ -112,6 +114,7 @@ Use Conventional Commits: `type: description`
 Valid types: `feat:`, `fix:`, `docs:`, `chore:`, `style:`, `refactor:`, `ci:`
 
 Examples:
+
 - `feat: add Gaze project page`
 - `fix: correct broken link in team navigation`
 - `docs: update getting started guide`
@@ -158,17 +161,17 @@ The workflow is a strict, sequential pipeline. Each stage has a corresponding `/
 constitution → specify → clarify → plan → tasks → analyze → checklist → implement
 ```
 
-| Command | Purpose |
-|---------|---------|
-| `/speckit.constitution` | Create or update the project constitution |
-| `/speckit.specify` | Create a feature specification from a description |
-| `/speckit.clarify` | Reduce ambiguity in the spec before planning |
-| `/speckit.plan` | Generate the technical implementation plan |
-| `/speckit.tasks` | Generate actionable, dependency-ordered task list |
-| `/speckit.analyze` | Non-destructive cross-artifact consistency analysis |
-| `/speckit.checklist` | Generate requirement quality validation checklists |
-| `/speckit.implement` | Execute the implementation plan task by task |
-| `/speckit.taskstoissues` | Convert tasks.md into GitHub Issues |
+| Command                  | Purpose                                             |
+| ------------------------ | --------------------------------------------------- |
+| `/speckit.constitution`  | Create or update the project constitution           |
+| `/speckit.specify`       | Create a feature specification from a description   |
+| `/speckit.clarify`       | Reduce ambiguity in the spec before planning        |
+| `/speckit.plan`          | Generate the technical implementation plan          |
+| `/speckit.tasks`         | Generate actionable, dependency-ordered task list   |
+| `/speckit.analyze`       | Non-destructive cross-artifact consistency analysis |
+| `/speckit.checklist`     | Generate requirement quality validation checklists  |
+| `/speckit.implement`     | Execute the implementation plan task by task        |
+| `/speckit.taskstoissues` | Convert tasks.md into GitHub Issues                 |
 
 ### Ordering Constraints
 
@@ -232,10 +235,11 @@ A mandatory gate at the planning phase. The constitution's core principles must 
 
 Project content is sourced from upstream repositories. Cross-reference before updating:
 
-| Project | Repository | Key Files |
-|---------|------------|-----------|
-| Gaze | `unbound-force/gaze` | `README.md`, `AGENTS.md`, `.specify/` specs |
-| Unbound Force (personas) | `unbound-force/unbound-force` | `unbound-force.md` |
+| Project                  | Repository                    | Key Files                                        |
+| ------------------------ | ----------------------------- | ------------------------------------------------ |
+| Gaze                     | `unbound-force/gaze`          | `README.md`, `AGENTS.md`, `.specify/` specs      |
+| Dewey                    | `unbound-force/dewey`         | `README.md`, `dewey-design-paper.md` (org-level) |
+| Unbound Force (personas) | `unbound-force/unbound-force` | `unbound-force.md`                               |
 
 Adapt content for a website audience -- less raw technical detail, more "why should I care" framing. Do not copy READMEs verbatim.
 
@@ -270,6 +274,7 @@ GitHub Pages deployment via `.github/workflows/deploy-gh-pages.yml`:
 3. Always verify both light and dark mode rendering after style changes.
 
 ## Active Technologies
+
 - Hugo (via npm/thulite) + Go 1.23 (module resolution) + Node.js >= 20.11.0 + `thulite ^2.6.3`, `@thulite/doks-core ^1.8.3`, `@thulite/images ^3.3.1`, `@thulite/inline-svg ^1.2.0`, `@thulite/seo ^2.4.1`, `@tabler/icons ^3.34.1` (001-site-scaffold)
 - N/A (static site, no database) (001-site-scaffold)
 - Hugo (via npm/thulite) + Go 1.23 + Node.js >= 20.11.0 + `thulite ^2.6.3`, `@thulite/doks-core ^1.8.3`, `@thulite/images ^3.3.1`, `@thulite/inline-svg ^1.2.0`, `@thulite/seo ^2.4.1`, `@tabler/icons ^3.34.1` (003-blog-why-gaze)
@@ -277,6 +282,8 @@ GitHub Pages deployment via `.github/workflows/deploy-gh-pages.yml`:
 - Markdown (Hugo content files) + Hugo (via @thulite), Doks theme (005-getting-started-guides)
 - N/A (static Markdown files) (005-getting-started-guides)
 - Hugo (Go-based SSG) via `@thulite` npm packages; Node.js >= 20.11.0; Go >= 1.23 + `thulite ^2.6.3`, `@thulite/doks-core ^1.8.3` (006-binary-rename)
+- Hugo (via npm/thulite) + Go 1.23 + `thulite ^2.6.3`, (007-dewey-docs)
 
 ## Recent Changes
+
 - 001-site-scaffold: Added Hugo (via npm/thulite) + Go 1.23 (module resolution) + Node.js >= 20.11.0 + `thulite ^2.6.3`, `@thulite/doks-core ^1.8.3`, `@thulite/images ^3.3.1`, `@thulite/inline-svg ^1.2.0`, `@thulite/seo ^2.4.1`, `@tabler/icons ^3.34.1`

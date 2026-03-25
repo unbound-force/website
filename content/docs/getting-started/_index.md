@@ -47,3 +47,4 @@ Ready to dive in? Start with the [Quick Start](/docs/getting-started/quick-start
 - **[Product Owner](/docs/getting-started/product-owner/)** -- Muti-Mind backlog management, priority scoring, acceptance decisions
 - **[Product Manager](/docs/getting-started/product-manager/)** -- Mx F metrics, dashboards, coaching, retrospectives
 - **[Common Workflows](/docs/getting-started/common-workflows/)** -- End-to-end flows for features, bug fixes, code reviews, and setup
+- **[Knowledge Retrieval with Dewey](/docs/getting-started/knowledge/)** -- Install and configure Dewey for semantic search across your repositories
