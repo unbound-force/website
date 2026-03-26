@@ -57,6 +57,14 @@ Indexes persist to `.dewey/graph.db` across sessions. Subsequent startups load f
 
 Dewey is an enhancement, not a requirement. Every hero in the swarm functions without Dewey, falling back to direct file reads. Semantic search requires Ollama; structured graph queries work without it.
 
+## Workflow Impact
+
+Dewey's semantic context enables a fundamental shift in how the Unbound Force swarm operates. With Dewey configured, the [Product Owner (Muti-Mind)](/docs/getting-started/product-owner/) can draft specifications autonomously -- retrieving related context from across the organization, writing the spec with acceptance criteria, self-clarifying using Dewey instead of asking the human, and validating against historical patterns.
+
+This reduces human checkpoints from two to one. Instead of writing specifications and accepting results, the human provides a short seed (1-2 sentences of intent) and reviews the completed increment. Everything between seed and accept -- specification, planning, implementation, testing, and review -- is handled by the swarm.
+
+See [Common Workflows](/docs/getting-started/common-workflows/#new-feature-end-to-end) for the full hero lifecycle with autonomous define.
+
 ## Architecture
 
 Dewey runs as an MCP server alongside your AI coding environment. It combines:

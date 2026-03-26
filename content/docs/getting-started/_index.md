@@ -36,7 +36,7 @@ The swarm consists of five personas, each representing the pinnacle archetype of
 - **[The Divisor](/docs/team/the-divisor/)** — PR Reviewer Council. The Architectural Conscience and Code Integrity Guardian.
 - **[Mx F](/docs/team/mx-f/)** — Manager. The Flow Facilitator and Continuous Improvement Coach.
 
-Together, they cover the full software development lifecycle — from requirements and planning through implementation, testing, review, acceptance, and reflection. The swarm runs autonomously from implementation through review, pausing for human acceptance before completing the cycle.
+Together, they cover the full software development lifecycle -- from requirements and planning through implementation, testing, review, acceptance, and reflection. With [Dewey](/docs/getting-started/knowledge/) configured, the swarm runs autonomously from define through review -- the human provides a short seed (1-2 sentences of intent) and reviews the completed increment. Without Dewey, the human drives the define stage and the swarm runs implementation through review.
 
 ## Get Started
 

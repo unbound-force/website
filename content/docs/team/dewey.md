@@ -114,13 +114,13 @@ embedding:
 
 Every hero in the swarm benefits from Dewey, but in different ways. Dewey is always optional — all heroes function without it, falling back to direct file reads and CLI queries.
 
-| Hero                                              | Role             | How They Use Dewey                                                                             |
-| ------------------------------------------------- | ---------------- | ---------------------------------------------------------------------------------------------- |
-| [Muti-Mind](/docs/getting-started/product-owner/) | Product Owner    | Cross-repo issue discovery, past acceptance criteria, backlog pattern analysis                 |
-| [Cobalt-Crush](/docs/getting-started/developer/)  | Developer        | Toolstack API documentation, implementation patterns from other repos, related spec artifacts  |
-| [Gaze](/docs/getting-started/tester/)             | Tester           | Quality patterns across repos, CRAP score baselines, known failure modes for similar code      |
-| [The Divisor](/docs/team/the-divisor/)            | Reviewer Council | Convention pack context enriched with framework docs, recurring review findings across the org |
-| [Mx F](/docs/getting-started/product-manager/)    | Manager          | Cross-repo velocity trends, retrospective outcomes, coaching pattern discovery                 |
+| Hero                                              | Role             | How They Use Dewey                                                                                                                                             |
+| ------------------------------------------------- | ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Muti-Mind](/docs/getting-started/product-owner/) | Product Owner    | Autonomous specification drafting (retrieve context, draft spec, self-clarify, validate against history), cross-repo issue discovery, backlog pattern analysis |
+| [Cobalt-Crush](/docs/getting-started/developer/)  | Developer        | Toolstack API documentation, implementation patterns from other repos, related spec artifacts                                                                  |
+| [Gaze](/docs/getting-started/tester/)             | Tester           | Quality patterns across repos, CRAP score baselines, known failure modes for similar code                                                                      |
+| [The Divisor](/docs/team/the-divisor/)            | Reviewer Council | Convention pack context enriched with framework docs, recurring review findings across the org                                                                 |
+| [Mx F](/docs/getting-started/product-manager/)    | Manager          | Cross-repo velocity trends, retrospective outcomes, coaching pattern discovery                                                                                 |
 
 ## Next Steps
 

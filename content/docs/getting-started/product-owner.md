@@ -53,22 +53,45 @@ Muti-Mind keeps backlog items synchronized with GitHub Issues through bidirectio
 
 The Product Owner participates in two of the six [hero lifecycle stages](/docs/getting-started/common-workflows/#new-feature-end-to-end):
 
-### Stage 1: Define
+### Stage 1: Seed
 
-You start the workflow by creating a backlog item and driving specification creation:
+You start the workflow by expressing your intent in 1-2 sentences. This is the **seed** -- a short description of what you want built or fixed. Muti-Mind takes the seed and uses [Dewey](/docs/getting-started/knowledge/) to create the full specification autonomously: retrieving related context from across the organization, drafting the spec with acceptance criteria, self-clarifying using Dewey instead of asking you questions, and validating against historical patterns.
+
+Good seeds are specific enough to convey intent but don't need to be detailed:
+
+- "Fix the authentication timeout bug that users are reporting in issue #142"
+- "Add CSV export for the quality dashboard so teams can analyze trends offline"
+- "Refactor the webhook handler to support configurable retry logic with exponential backoff"
+- "Create a getting-started guide for new contributors to the website project"
+
+The swarm handles everything from here -- specification, planning, implementation, testing, and review -- pausing only at the accept stage for your decision.
+
+#### Manual Define Mode
+
+For projects without [Dewey](/docs/getting-started/knowledge/) configured, the define stage runs in manual mode. You drive specification creation directly:
 
 1. Create or select a backlog item with clear acceptance criteria
 2. Initiate specification: `/speckit.specify`
 3. Participate in clarification: `/speckit.clarify` -- answer questions about scope, user expectations, and edge cases
 4. Review the specification before it proceeds to planning
 
-Your acceptance criteria become the standard against which the completed work is evaluated. Write them in Given/When/Then format for clarity:
+Write acceptance criteria in Given/When/Then format for clarity:
 
 ```
 Given a user with a valid session,
 When they request their profile data,
 Then the response includes their name, email, and preferences.
 ```
+
+#### Optional: Specification Review
+
+For high-stakes features or domains you are unfamiliar with, you can enable a specification review checkpoint. When enabled, Muti-Mind drafts the spec and then pauses for you to scan it before implementation begins. This is a lightweight review -- check for intent alignment and scope accuracy, not implementation details:
+
+- Does the spec address what you actually wanted?
+- Is the scope correct -- nothing critical missing, nothing out of scope included?
+- Are the acceptance criteria reasonable?
+
+If the spec looks right, approve it and the swarm proceeds. If intent drifted, provide a short correction and Muti-Mind revises. The specification review checkpoint is off by default -- enable it per-workflow when the cost of misalignment outweighs the benefit of full autonomy.
 
 ### Stage 5: Accept
 
@@ -83,9 +106,9 @@ If you reject, provide clear rationale. A new backlog item is created automatica
 
 ## Knowledge Retrieval with Dewey
 
-When [Dewey](/docs/getting-started/knowledge/) is configured, Muti-Mind uses it to make better-informed product decisions. Dewey's semantic search surfaces related context from across the organization — past specifications, GitHub issues from other repositories, acceptance criteria patterns, and learning feedback from previous development cycles.
+When [Dewey](/docs/getting-started/knowledge/) is configured, Muti-Mind uses it to draft specifications autonomously. Dewey's semantic search surfaces related context from across the organization -- past specifications, GitHub issues from other repositories, acceptance criteria patterns, and learning feedback from previous development cycles.
 
-This is particularly valuable during the define stage. Instead of asking the human for context about related features or past decisions, Muti-Mind queries Dewey:
+This is what makes the seed interaction possible. Instead of asking you for context about related features or past decisions, Muti-Mind queries Dewey:
 
 - **Cross-repo issue discovery**: Find related bugs and feature requests across all whitelisted repositories, even when they use different terminology
 - **Past acceptance criteria**: Surface acceptance scenarios from similar features to inform new specifications
