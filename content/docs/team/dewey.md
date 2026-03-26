@@ -122,4 +122,8 @@ Every hero in the swarm benefits from Dewey, but in different ways. Dewey is alw
 | [The Divisor](/docs/team/the-divisor/)            | Reviewer Council | Convention pack context enriched with framework docs, recurring review findings across the org |
 | [Mx F](/docs/getting-started/product-manager/)    | Manager          | Cross-repo velocity trends, retrospective outcomes, coaching pattern discovery                 |
 
-For installation and configuration, see the [Dewey getting-started guide](/docs/getting-started/knowledge/).
+## Next Steps
+
+- Follow the [Dewey getting-started guide](/docs/getting-started/knowledge/) for installation and configuration
+- Browse the [Dewey project page](/docs/projects/dewey/) for version history and key features
+- See [Common Workflows](/docs/getting-started/common-workflows/) for how Dewey provides context during the hero lifecycle

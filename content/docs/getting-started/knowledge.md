@@ -8,7 +8,7 @@ weight: 80
 toc: true
 ---
 
-## What is Dewey?
+## What Dewey Does
 
 Dewey is a semantic knowledge layer that gives AI agents rich, cross-repository context. It combines a structured knowledge graph (page traversal, tag queries, wikilink navigation) with vector-based semantic search — so agents can find conceptually related content even when different terminology is used. A search for "authentication timeout" finds an issue titled "login session expiry" because Dewey understands meaning, not just keywords.
 
@@ -37,7 +37,7 @@ If the Homebrew formula is not yet available, install from source:
 go install github.com/unbound-force/dewey@latest
 ```
 
-## Getting Started
+## Initialize Your Repository
 
 Initialize Dewey in your repository:
 
@@ -60,7 +60,7 @@ The `dewey status` command reports index health: page count, block count, embedd
 
 After initialization, Dewey persists its indexes to `.dewey/graph.db` (SQLite). Subsequent sessions load from the persistent index and only re-process changed files — startup is near-instant after the first index.
 
-## Source Configuration
+## Configure Content Sources
 
 Dewey indexes content from three pluggable source types. Configure them in `.dewey/sources.yaml`:
 

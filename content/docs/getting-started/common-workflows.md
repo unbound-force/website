@@ -222,7 +222,25 @@ This installs everything in one command:
 
 Use `--dry-run` to preview what would be installed without making changes.
 
-### 3. Verify
+### 3. Install Dewey (Knowledge Retrieval)
+
+Install [Dewey](/docs/getting-started/knowledge/) for semantic knowledge retrieval across your repositories:
+
+```bash
+# Install Dewey
+brew install --cask unbound-force/tap/dewey
+
+# Install Ollama and pull the embedding model
+brew install --cask ollama
+ollama pull granite-embedding:30m
+
+# Initialize Dewey in your project
+dewey init
+```
+
+Dewey is optional — all heroes function without it. See the [knowledge retrieval guide](/docs/getting-started/knowledge/) for source configuration and OpenCode integration.
+
+### 4. Verify
 
 ```bash
 uf doctor
@@ -230,7 +248,7 @@ uf doctor
 
 Doctor checks 7 areas and shows pass/warn/fail for each with install hints. Fix any failures by copying the suggested command from the output.
 
-### 4. Start Working
+### 5. Start Working
 
 Open OpenCode and try your first task:
 
