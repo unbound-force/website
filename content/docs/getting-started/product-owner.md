@@ -66,6 +66,14 @@ Good seeds are specific enough to convey intent but don't need to be detailed:
 
 The swarm handles everything from here -- specification, planning, implementation, testing, and review -- pausing only at the accept stage for your decision.
 
+To seed a feature, use the `/workflow seed` command:
+
+```text
+/workflow seed "Add CSV export for the quality dashboard"
+```
+
+This creates a backlog item and starts a workflow with `define=swarm` in one operation. Add `--spec-review` to enable the optional specification review checkpoint. This is equivalent to creating a backlog item and running `/workflow start --define-mode=swarm`.
+
 #### Manual Define Mode
 
 For projects without [Dewey](/docs/getting-started/knowledge/) configured, the define stage runs in manual mode. You drive specification creation directly:

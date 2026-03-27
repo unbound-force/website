@@ -28,7 +28,7 @@ We follow the standard GitHub pull request workflow:
 4. Submit a pull request against the `main` branch
 5. Address any review feedback from The Divisor council
 
-All pull requests are reviewed by The Divisor — a council of three sub-personas (The Guard, The Architect, and The Adversary) that evaluate intent, structure, and resilience. Collective approval from all three is required before merge.
+All pull requests are reviewed by The Divisor — a council of five sub-personas (The Guard, The Architect, The Adversary, The Operator (SRE), and The Tester) that evaluate intent, structure, resilience, operational readiness, and test quality. Collective approval from all five is required before merge.
 
 ## Conventional Commits
 

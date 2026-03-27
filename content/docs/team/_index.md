@@ -28,7 +28,7 @@ _The Quality Sentinel and Predictive Validation Engine._ Gaze protects the produ
 
 ### [The Divisor](/docs/team/the-divisor/) — PR Reviewer Council
 
-_The Architectural Conscience and Code Integrity Guardian._ The Divisor operates as a council of three sub-personas — The Guard, The Architect, and The Adversary — providing comprehensive, multi-faceted validation of every code submission.
+_The Architectural Conscience and Code Integrity Guardian._ The Divisor operates as a council of five sub-personas — The Guard, The Architect, The Adversary, The Operator (SRE), and The Tester — providing comprehensive, multi-faceted validation of every code submission.
 
 ### [Mx F](/docs/team/mx-f/) — Manager
 
