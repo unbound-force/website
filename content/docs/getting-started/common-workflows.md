@@ -136,6 +136,42 @@ For projects without Dewey configured, the define stage runs in manual mode (`[h
 
 The swarm still runs implementation through review autonomously -- the only difference is who drives the specification.
 
+### Workflow Commands
+
+To seed a feature from a single description (autonomous define):
+
+```text
+/workflow seed "Add CSV export for the quality dashboard" [--spec-review]
+```
+
+This creates a backlog item and starts a workflow with `define=swarm` in one operation. Add `--spec-review` to enable the optional specification review checkpoint.
+
+For explicit control over the define mode, use `/workflow start` with flags:
+
+```text
+/workflow start --define-mode=swarm --spec-review
+```
+
+| Flag            | Values           | Default | Description                                  |
+| --------------- | ---------------- | ------- | -------------------------------------------- |
+| `--define-mode` | `human`, `swarm` | `human` | Who drives specification creation            |
+| `--spec-review` | _(flag)_         | off     | Pause for human review after spec is drafted |
+
+### Workflow Configuration
+
+Set project-level defaults in `.unbound-force/config.yaml` so you don't need to pass flags on every workflow start:
+
+```yaml
+workflow:
+  execution_modes:
+    define: swarm # or "human" (default)
+  spec_review: false
+```
+
+Config values are the base defaults; CLI flags override them. For spec review, OR logic applies -- either the config or the CLI flag being true enables it.
+
+This file is created by `uf init` with all values commented out (defaults apply). Edit it to set your team's preferred workflow behavior.
+
 ### Knowledge Context
 
 [Dewey](/docs/getting-started/knowledge/) is what makes autonomous define possible. By providing org-wide semantic context -- past specifications, GitHub issues from across the organization, toolstack documentation, and learning feedback -- Dewey gives Muti-Mind enough information to draft specifications without asking the human for context. This is the key capability that reduces human checkpoints from two to one.
@@ -164,6 +200,8 @@ This creates `openspec/changes/fix-auth-timeout/` with:
 - `design.md` -- Technical approach
 - `tasks.md` -- Implementation steps
 
+This creates an `opsx/fix-auth-timeout` branch and checks it out automatically. The `opsx/` prefix distinguishes OpenSpec branches from Speckit branches (`NNN-<short-name>`) in `git branch` output.
+
 ### 2. Apply
 
 Implement the tasks:
@@ -172,7 +210,7 @@ Implement the tasks:
 /opsx-apply
 ```
 
-Works through each task in the tasks.md file, making code changes and marking tasks complete.
+Works through each task in the tasks.md file, making code changes and marking tasks complete. Before proceeding, `/opsx-apply` validates that you are on the correct `opsx/<name>` branch -- this is a hard gate to prevent implementing changes on the wrong branch.
 
 ### 3. Review
 
@@ -192,7 +230,7 @@ After the fix is merged, archive the change:
 /opsx-archive
 ```
 
-Moves the change to `openspec/changes/archive/` with a date prefix for historical reference.
+Moves the change to `openspec/changes/archive/` with a date prefix for historical reference, then returns to the `main` branch.
 
 ## Code Review
 
@@ -246,37 +284,31 @@ brew install unbound-force/tap/unbound-force
 uf setup
 ```
 
-This installs everything in one command:
+This installs the full toolchain in one command:
 
-- Detects your version managers (goenv, nvm, pyenv, Homebrew)
-- Installs OpenCode (via Homebrew or curl)
-- Installs Gaze (via Homebrew)
-- Installs the Swarm plugin (via npm)
-- Configures `opencode.json` with the Swarm plugin
-- Initializes `.hive/` for work tracking
-- Runs `uf init` to scaffold project files
+- **Core tools** -- OpenCode (AI coding environment), Gaze (quality analysis), Mx F (manager hero), GitHub CLI
+- **Development tools** -- Node.js, Bun, OpenSpec CLI, Swarm plugin (multi-agent coordination), Swarm configuration and `.hive/` initialization
+- **Knowledge layer** -- Ollama (local model runtime), Dewey (semantic search), IBM Granite embedding model, Dewey workspace initialization and index build
+- **Project scaffolding** -- `uf init` to deploy agents, commands, convention packs, templates, and workflow configuration
 
-Use `--dry-run` to preview what would be installed without making changes.
+Setup detects your version managers (goenv, nvm, fnm, Homebrew) and installs through them. Use `--dry-run` to preview what would be installed without making changes.
 
-### 3. Install Dewey (Knowledge Retrieval)
+If you previously ran `uf setup` before v0.5.0, re-run it to pick up the new tools (Mx F, GitHub CLI, OpenSpec CLI, Ollama, and Dewey). Existing installations are detected and skipped.
 
-Install [Dewey](/docs/getting-started/knowledge/) for semantic knowledge retrieval across your repositories:
+After setup completes, add these environment variables to your shell profile (e.g., `~/.zshrc` or `~/.bashrc`) for embedding model alignment between the swarm and Dewey:
 
 ```bash
-# Install Dewey
-brew install --cask unbound-force/tap/dewey
-
-# Install Ollama and pull the embedding model
-brew install --cask ollama
-ollama pull granite-embedding:30m
-
-# Initialize Dewey in your project
-dewey init
+export OLLAMA_MODEL=granite-embedding:30m
+export OLLAMA_EMBED_DIM=256
 ```
 
-Dewey is optional — all heroes function without it. See the [knowledge retrieval guide](/docs/getting-started/knowledge/) for source configuration and OpenCode integration.
+`uf setup` sets these during installation, but they must be in your shell profile for processes spawned outside of setup (e.g., `dewey serve`, manual `swarm init`).
 
-### 4. Verify
+Dewey is optional -- all heroes function without it. See the [knowledge retrieval guide](/docs/getting-started/knowledge/) for source configuration and OpenCode integration.
+
+As the final step of setup, `uf init` scaffolds your project files and performs sub-tool initialization: it creates `.unbound-force/config.yaml` for [workflow configuration](#workflow-configuration) and runs `dewey init` + `dewey index` when Dewey is available.
+
+### 3. Verify
 
 ```bash
 uf doctor
@@ -284,7 +316,7 @@ uf doctor
 
 Doctor checks 7 areas and shows pass/warn/fail for each with install hints. Fix any failures by copying the suggested command from the output.
 
-### 5. Start Working
+### 4. Start Working
 
 Open OpenCode and try your first task:
 

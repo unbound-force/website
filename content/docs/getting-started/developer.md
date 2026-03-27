@@ -17,12 +17,12 @@ brew install unbound-force/tap/unbound-force
 uf setup
 ```
 
-`uf setup` detects your existing version managers (goenv, nvm, pyenv, Homebrew) and installs through them:
+`uf setup` detects your existing version managers (goenv, nvm, fnm, Homebrew) and installs through them:
 
-- **OpenCode** -- the AI coding environment where you work
-- **Gaze** -- quality analysis for your Go code
-- **Swarm plugin** -- multi-agent coordination for parallel work
-- **Project scaffolding** -- agents, commands, convention packs, and templates
+- **Core tools** -- OpenCode (AI coding environment), Gaze (quality analysis), Mx F (manager hero), GitHub CLI
+- **Development tools** -- Node.js, Bun, OpenSpec CLI, Swarm plugin (multi-agent coordination)
+- **Knowledge layer** -- Ollama (local model runtime), Dewey (semantic search), IBM Granite embedding model
+- **Project scaffolding** -- agents, commands, convention packs, templates, and workflow configuration via `uf init`
 
 After setup, verify everything is working:
 
@@ -70,6 +70,8 @@ Each stage produces artifacts that feed the next. Specs must be committed and pu
 | Needs formal review                 | Quick tactical changes |
 
 **OpenSpec** is the tactical workflow for smaller changes. It uses `/opsx-propose` to create a change with proposal, design, and tasks artifacts, then `/opsx-apply` to implement. See [Common Workflows](/docs/getting-started/common-workflows/) for the full flow.
+
+Both workflows enforce branch conventions: Speckit uses `NNN-<short-name>` branches (created by `/speckit.specify`), and OpenSpec uses `opsx/<change-name>` branches (created by `/opsx-propose`). Branch validation is a hard gate at each pipeline step.
 
 ## Working with Swarm
 

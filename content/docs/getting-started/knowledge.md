@@ -31,6 +31,17 @@ ollama pull granite-embedding:30m
 
 The `granite-embedding:30m` model is IBM's Granite Embedding — a 63 MB model licensed under Apache 2.0 with full training data transparency. It runs locally via Ollama; no data leaves your machine.
 
+### Embedding Model Alignment
+
+The Unbound Force swarm and Dewey are aligned on the same embedding model (IBM Granite `granite-embedding:30m`). To ensure consistency for processes spawned outside of `uf setup` (e.g., `dewey serve`, manual `swarm init`), add these environment variables to your shell profile (`~/.zshrc` or `~/.bashrc`):
+
+```bash
+export OLLAMA_MODEL=granite-embedding:30m
+export OLLAMA_EMBED_DIM=256
+```
+
+`uf setup` sets these automatically during installation. The shell profile entries ensure they persist across terminal sessions. Without them, child processes may use different embedding models, causing inconsistent search results between the swarm and Dewey.
+
 If the Homebrew formula is not yet available, install from source:
 
 ```bash

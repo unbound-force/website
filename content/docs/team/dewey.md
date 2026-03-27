@@ -32,7 +32,7 @@ Existing agent configurations that use graphthulhu can migrate to Dewey by chang
 
 ## Query Capabilities
 
-Dewey exposes 40+ MCP tools across 10 categories. For knowledge retrieval, agents primarily use 9 query tools across two search modes.
+Dewey exposes 40 MCP tools across 10 categories. For knowledge retrieval, agents primarily use 9 query tools across two search modes.
 
 ### Structured Queries
 
@@ -83,7 +83,7 @@ Fetches issues, pull requests, READMEs, and documentation directories from white
 
 Fetches and indexes documentation from toolstack websites — Go standard library docs, framework documentation, tool references. Crawls respect `robots.txt`, impose configurable rate limiting, and cache content locally. HTML is converted to Markdown for consistent indexing.
 
-See the [getting-started guide](/docs/getting-started/knowledge/#source-configuration) for YAML configuration examples for each source type.
+See the [getting-started guide](/docs/getting-started/knowledge/#configure-content-sources) for YAML configuration examples for each source type.
 
 ## Embedding Model
 
