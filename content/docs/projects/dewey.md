@@ -14,7 +14,7 @@ AI agents make better decisions when they have better context. Dewey is an MCP s
 
 A search for "authentication timeout" finds an issue titled "login session expiry" because Dewey understands meaning, not just keywords. Agents start with a vague concept and refine their understanding through structured navigation, discovering related specifications, past decisions, and connected documentation they did not know to ask for.
 
-Dewey is a hard fork of [graphthulhu](https://github.com/skridlevsky/graphthulhu), preserving all 37 existing MCP tools and adding persistent storage, semantic search, and pluggable content sources.
+Dewey is a hard fork of [graphthulhu](https://github.com/skridlevsky/graphthulhu), building on its knowledge graph foundation and adding persistent storage, semantic search, and pluggable content sources. Dewey now provides 40 MCP tools across 10 categories.
 
 ## Installation
 
@@ -35,9 +35,9 @@ go install github.com/unbound-force/dewey@latest
 
 ## Key Features
 
-### 40 MCP Tools Across 9 Categories
+### 40 MCP Tools Across 10 Categories
 
-Dewey exposes tools for navigate, search, analyze, write, decision, journal, flashcard, whiteboard, and semantic search. Agents use these tools through the standard MCP protocol — no custom integrations required.
+Dewey exposes tools for navigate, search, analyze, write, decision, journal, flashcard, whiteboard, semantic search, and health. Agents use these tools through the standard MCP protocol — no custom integrations required.
 
 ### Semantic Search
 
