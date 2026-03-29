@@ -1,77 +1,69 @@
 ---
 title: "Quick Start"
-description: "Get started with the Unbound Force tools — install OpenCode, Specify, and Swarm to begin using the AI agent swarm for software engineering."
-lead: "Install the tools, set up the workflow, and start building with the swarm."
+description: "Install the Unbound Force toolchain in one command and start using the AI agent swarm for software engineering."
+lead: "One command to install everything. Then start building."
 date: 2026-02-23T00:00:00+00:00
 draft: false
 weight: 20
 toc: true
 ---
 
+## Install
+
+Install the `uf` CLI and run setup to install the full toolchain:
+
+```bash
+brew install unbound-force/tap/unbound-force
+uf setup
+```
+
+`uf setup` installs everything in one command:
+
+- **Core tools** -- OpenCode (AI coding environment), Gaze (quality analysis), Mx F (manager hero), GitHub CLI
+- **Development tools** -- Node.js, Bun, OpenSpec CLI, Swarm plugin (multi-agent coordination)
+- **Knowledge layer** -- Ollama (local model runtime), Dewey (semantic search), IBM Granite embedding model
+- **Project scaffolding** -- agents, commands, convention packs, templates, and workflow configuration via `uf init`
+
+Setup detects your version managers (goenv, nvm, fnm, Homebrew) and installs through them. Use `--dry-run` to preview what would be installed without making changes.
+
+## Verify
+
+```bash
+uf doctor
+```
+
+Doctor checks 7 areas and shows pass/warn/fail for each with install hints. Fix any failures by copying the suggested command from the output.
+
+## Start Working
+
+Open OpenCode and try your first task:
+
+```text
+/swarm "your first task description"
+```
+
+Or start with the Speckit pipeline for a new feature:
+
+```text
+/speckit.specify
+```
+
 ## The Stack
 
-Unbound Force runs on three tools that form a layered stack. You can adopt them incrementally — each is useful on its own — but they work best together.
+Unbound Force runs on three tools that form a layered stack. `uf setup` installs all of them, but each is independently useful:
 
-## OpenCode — The Agent Layer
+| Layer            | Tool                                                     | What It Does                                                                                                    |
+| ---------------- | -------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| **Agent**        | [OpenCode](https://opencode.ai)                          | The AI coding environment where you interact, write code, and run commands. The personas run inside OpenCode.   |
+| **Planning**     | [Speckit](https://github.com/github/spec-kit) (spec-kit) | A specification pipeline that turns ideas into structured specs, plans, and tasks before implementation begins. |
+| **Coordination** | [Swarm](https://www.swarmtools.ai/)                      | An OpenCode plugin that enables multi-agent parallelism and learning amongst team members.                      |
 
-OpenCode is the AI coding environment where you interact, write code, and run commands. The Unbound Force personas run inside OpenCode as agents with specialized instructions, tools, and commands.
+Each tool is independently useful, but they compose into the full Unbound Force workflow: plan with Speckit, execute with OpenCode, coordinate with Swarm.
 
-### Install OpenCode
+## Next Steps
 
-```bash
-curl -fsSL https://opencode.ai/install | bash
-```
-
-### Why OpenCode?
-
-OpenCode provides the runtime for AI-powered development. When you work inside OpenCode, you get access to slash commands (like `/gaze` for test quality analysis), agent personas (like Cobalt-Crush for development), and tool integrations that connect the swarm to your codebase.
-
-## Specify — The Planning Layer
-
-Specify is a specification pipeline that turns ideas into structured specs, plans, and tasks before a single line of code is written. It enforces a sequential workflow: specify, clarify, plan, then implement.
-
-### Install Specify
-
-```bash
-uv tool install specify-cli --from git+https://github.com/github/spec-kit.git
-```
-
-Then initialize it in your project:
-
-```bash
-specify init <project> --ai opencode
-```
-
-### Why Specify?
-
-Without structured planning, AI agents tend to build the wrong thing or drift from the original intent. Specify solves this by creating a pipeline — constitution, specification, clarification, plan, tasks — that each agent follows. The result: less rework, clearer requirements, and implementations that match what was actually requested.
-
-## Swarm — The Coordination Layer
-
-Swarm is an OpenCode plugin that enables multi-agent parallelism. It spawns workers, coordinates tasks via file reservations, and enables learning amongst team members.
-
-### Install Swarm
-
-```bash
-npm install -g opencode-swarm-plugin@latest
-```
-
-Then set it up:
-
-```bash
-swarm setup
-```
-
-### Why Swarm?
-
-A single AI agent can only do one thing at a time. Swarm lets you run multiple Unbound Force personas in parallel — Cobalt-Crush coding one feature while Gaze writes tests for another — with coordination that prevents conflicts. As the team works together, Swarm captures learnings that make each persona more effective over time.
-
-## Putting It Together
-
-The typical Unbound Force workflow looks like this:
-
-1. **Plan** with Specify — turn your idea into a spec, clarify the requirements, generate a task list
-2. **Execute** with OpenCode — the personas implement, test, and review the tasks
-3. **Coordinate** with Swarm — run multiple personas in parallel for faster delivery
-
-Start with OpenCode to get comfortable with the agent environment, add Specify when you want structured planning, and bring in Swarm when you are ready for multi-agent parallelism.
+- **[Developer Guide](/docs/getting-started/developer/)** -- Daily workflow, Speckit pipeline, Swarm coordination, convention packs
+- **[Tester Guide](/docs/getting-started/tester/)** -- Gaze quality analysis, CRAP scores, coverage ratchets, CI integration
+- **[Product Owner Guide](/docs/getting-started/product-owner/)** -- Muti-Mind backlog management, priority scoring, acceptance decisions
+- **[Product Manager Guide](/docs/getting-started/product-manager/)** -- Mx F metrics, dashboards, coaching, retrospectives
+- **[Common Workflows](/docs/getting-started/common-workflows/)** -- End-to-end flows for features, bug fixes, code reviews, and setup

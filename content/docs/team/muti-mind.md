@@ -41,3 +41,9 @@ Muti-Mind serves as the acceptance authority, inspecting the outcome of every sp
 **For Testers (Gaze):** Testers rely on clear, well-defined acceptance criteria to design effective test cases. Muti-Mind ensures backlog items are ready with unambiguous criteria. When a test result is unclear or a boundary condition is undocumented, Muti-Mind provides the clarification needed to determine if a behavior is a bug or an intended feature.
 
 **For Reviewers (The Divisor):** Reviewers need a clear baseline against which to judge the increment. Muti-Mind's prioritized vision and expressed acceptance criteria provide that baseline, allowing reviewers to focus on architectural quality and completeness knowing the correct scope and functional requirements are already defined.
+
+## Next Steps
+
+- Read the [Product Owner getting-started guide](/docs/getting-started/product-owner/) for backlog management, priority scoring, and acceptance decisions
+- See [Common Workflows](/docs/getting-started/common-workflows/) for how Muti-Mind fits into the hero lifecycle
+- Learn about [Dewey](/docs/getting-started/knowledge/) and how it enables autonomous specification drafting

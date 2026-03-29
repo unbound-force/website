@@ -143,13 +143,55 @@ Every session follows this ritual:
 
 ### Convention Packs
 
-Cobalt-Crush loads coding conventions from `.opencode/unbound/packs/`. These are shared standards files with rule severity tags:
+Convention packs are shared coding standards files stored in `.opencode/unbound/packs/`. Cobalt-Crush follows these conventions during implementation, and The Divisor enforces them during review. Every rule in a pack has a severity tag that determines how violations are handled.
 
-- `[MUST]` -- Mandatory requirements (violations block review)
-- `[SHOULD]` -- Strong recommendations
-- `[MAY]` -- Optional improvements
+#### Pack Files
 
-Packs come in pairs: a tool-owned canonical pack (e.g., `go.md`) and a user-owned customization file (e.g., `go-custom.md`). The canonical packs are updated by `uf init`; your customizations are preserved.
+Packs are organized by language, with each language having a tool-owned canonical pack and a user-owned customization file:
+
+| File                   | Ownership  | Purpose                                                                               |
+| ---------------------- | ---------- | ------------------------------------------------------------------------------------- |
+| `default.md`           | Tool-owned | Language-agnostic rules: coding style, architecture, security, testing, documentation |
+| `default-custom.md`    | User-owned | Project-specific conventions extending the default pack                               |
+| `go.md`                | Tool-owned | Go-specific rules: gofmt, error handling, GoDoc, Cobra patterns                       |
+| `go-custom.md`         | User-owned | Project-specific Go conventions                                                       |
+| `typescript.md`        | Tool-owned | TypeScript-specific rules: ESLint, Prettier, strict typing, architectural patterns    |
+| `typescript-custom.md` | User-owned | Project-specific TypeScript conventions                                               |
+
+#### Ownership Model
+
+- **Tool-owned** files (`default.md`, `go.md`, `typescript.md`) are automatically updated by `uf init` when the embedded version changes. You should not edit these directly -- your changes will be overwritten on the next `uf init` run.
+- **User-owned** files (`*-custom.md`) are never overwritten by `uf init`. Your customizations are preserved across updates. These are the files you edit to add project-specific conventions.
+
+#### Rule Severity Tags
+
+Every rule in a pack is tagged with a severity level:
+
+- `[MUST]` -- Mandatory requirements. Violations block the review (The Divisor will issue REQUEST CHANGES).
+- `[SHOULD]` -- Strong recommendations. Violations are flagged but do not block.
+- `[MAY]` -- Optional improvements. Noted as suggestions.
+
+These tags map directly to review finding severity -- a `[MUST]` violation produces a CRITICAL or HIGH finding, while a `[MAY]` suggestion produces a LOW finding.
+
+#### Language Auto-Detection
+
+When you run `uf init`, it detects your project's language from marker files and deploys only the matching language pack (plus the default pack):
+
+- `go.mod` detected: deploys `go.md` + `go-custom.md`
+- `tsconfig.json` or `package.json` detected: deploys `typescript.md` + `typescript-custom.md`
+- No language detected: deploys only the default pack
+
+Override auto-detection with the `--lang` flag: `uf init --lang go`.
+
+#### Adding Custom Rules
+
+To add project-specific conventions:
+
+1. Edit the appropriate `*-custom.md` file (e.g., `go-custom.md` for Go projects)
+2. Use the `CR-NNN` prefix for custom rule IDs (e.g., `CR-001`)
+3. Tag each rule with a severity level (`[MUST]`, `[SHOULD]`, or `[MAY]`)
+
+Custom rules are loaded by Cobalt-Crush during implementation and by all Divisor personas during review, alongside the canonical pack rules.
 
 ### Feedback Loops
 
@@ -157,6 +199,57 @@ Cobalt-Crush integrates with two feedback systems:
 
 - **Gaze feedback**: After writing code, checks `.unbound-force/artifacts/quality-report/` for quality findings. High CRAP scores trigger complexity reduction; low contract coverage triggers test improvements.
 - **Divisor feedback**: Before submitting for review, validates against a pre-review checklist. After review, addresses findings by persona and severity (CRITICAL and HIGH first).
+
+## Project Scaffolding with `uf init`
+
+`uf init` scaffolds the project files needed to work with the Unbound Force swarm -- agents, commands, templates, scripts, convention packs, OpenSpec schema, and skills. It runs automatically as the final step of `uf setup`, but you can also run it independently to re-scaffold, initialize a new project, or deploy a subset of the swarm.
+
+### Usage
+
+```bash
+uf init [--divisor] [--lang go|typescript] [--force]
+```
+
+### Flags
+
+| Flag        | Description                                                                                                                                                  |
+| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `--divisor` | Deploy only PR review agents (Divisor personas) and convention packs. For projects that only want code review, not the full swarm workflow.                  |
+| `--lang`    | Override language auto-detection for convention pack selection. Auto-detects from `go.mod`, `tsconfig.json`, `package.json`, `pyproject.toml`, `Cargo.toml`. |
+| `--force`   | Overwrite user-owned files that would normally be skipped. Use with caution -- this will replace your customizations.                                        |
+
+### What Gets Deployed
+
+`uf init` deploys approximately 50 files across these categories:
+
+| Category         | Files | Examples                                                                  |
+| ---------------- | ----- | ------------------------------------------------------------------------- |
+| Agents           | ~12   | 5 Divisor personas, Cobalt-Crush, Constitution Check, Mx F Coach          |
+| Commands         | ~15   | 9 Speckit commands, review-council, constitution-check, cobalt-crush      |
+| Convention Packs | 6     | default, go, typescript (each with tool-owned and user-owned variants)    |
+| Templates        | ~6    | spec, plan, tasks, checklist, constitution, agent-file templates          |
+| Scripts          | ~5    | check-prerequisites, setup-plan, create-new-feature, update-agent-context |
+| OpenSpec         | ~6    | config, schema, 4 templates (design, proposal, spec, tasks)               |
+
+File counts are approximate and may change between versions.
+
+### File Ownership Model
+
+Files deployed by `uf init` fall into two ownership categories:
+
+- **Tool-owned** (commands, skills, canonical convention packs, OpenSpec schemas): Automatically updated when the embedded version changes. On re-run, if the file content differs from the embedded version, it is silently updated. Tool-owned files carry a version marker: `<!-- scaffolded by uf v{version} -->`.
+- **User-owned** (agent files, custom convention packs `*-custom.md`, specify configs): Never overwritten on re-run. If the file already exists, it is skipped. This preserves your customizations across `uf init` updates. Use `--force` to overwrite if needed.
+
+### Sub-Tool Initialization
+
+After deploying files, `uf init` performs sub-tool initialization:
+
+- Creates `.unbound-force/config.yaml` for [workflow configuration](/docs/getting-started/common-workflows/#workflow-configuration) (skipped if it already exists)
+- If [Dewey](/docs/getting-started/knowledge/) is available: creates the `.dewey/` workspace, auto-detects multi-repo sources, and builds the initial index
+
+### Summary Output
+
+After completion, `uf init` shows a summary with file dispositions (`+` created, `~` updated, `!` overwritten, `-` skipped) and context-aware next-step guidance based on what tools are available in your environment.
 
 ## Session Ritual
 

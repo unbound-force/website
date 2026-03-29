@@ -14,6 +14,7 @@ Found a bug or have a feature request? Open an issue on the relevant GitHub repo
 
 - [Unbound Force Website](https://github.com/unbound-force/website/issues) — this website
 - [Gaze](https://github.com/unbound-force/gaze/issues) — test quality analysis tool
+- [Dewey](https://github.com/unbound-force/dewey/issues) — semantic knowledge retrieval
 - [Unbound Force](https://github.com/unbound-force/unbound-force/issues) — agent personas and roles
 
 Include steps to reproduce, expected behavior, and actual behavior. For feature requests, describe the problem you are trying to solve.
@@ -52,7 +53,7 @@ Valid types:
 
 ## The Speckit Workflow
 
-All non-trivial feature work goes through the [Specify](https://github.com/github/spec-kit) pipeline. This ensures structured planning before implementation:
+All non-trivial feature work goes through the [Speckit](https://github.com/github/spec-kit) pipeline. This ensures structured planning before implementation:
 
 ```text
 constitution -> specify -> clarify -> plan -> tasks -> analyze -> checklist -> implement
@@ -76,4 +77,5 @@ The constitution (`.specify/memory/constitution.md`) is the highest-authority do
 - [Unbound Force GitHub Organization](https://github.com/unbound-force)
 - [Website Repository](https://github.com/unbound-force/website)
 - [Gaze Repository](https://github.com/unbound-force/gaze)
-- [Specify (spec-kit)](https://github.com/github/spec-kit)
+- [Dewey Repository](https://github.com/unbound-force/dewey)
+- [Speckit (spec-kit)](https://github.com/github/spec-kit)
