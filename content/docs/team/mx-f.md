@@ -45,3 +45,9 @@ Mx F monitors the overall health of the team — detecting burnout, managing res
 **For the Product Owner (Muti-Mind):** Mx F partners with Muti-Mind to ensure the backlog process — refinement, prioritization, communication — is running efficiently and that Muti-Mind is not overloaded. Mx F's process data is critical input for prioritization, allowing Muti-Mind to factor in team capacity and efficiency gains when setting goals.
 
 **For the Reviewer (The Divisor):** Mx F uses The Divisor's data — common architectural pitfalls, repetitive review feedback — as key metrics for process improvement. If The Divisor frequently requests the same type of change, Mx F facilitates a process change or training session to integrate that learning into the upstream workflow, making the review process faster and more effective over time.
+
+## Next Steps
+
+- Read the [Product Manager getting-started guide](/docs/getting-started/product-manager/) for dashboard metrics, coaching techniques, and retrospective facilitation
+- See [Common Workflows](/docs/getting-started/common-workflows/#new-feature-end-to-end) for Mx F's role in the reflect stage
+- Learn about [hero artifacts](/docs/getting-started/artifacts/) that Mx F consumes and produces

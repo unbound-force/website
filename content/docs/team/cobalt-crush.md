@@ -41,3 +41,9 @@ While The Divisor sets the architectural blueprint, Cobalt-Crush ensures the cod
 **For the Tester (Gaze):** The relationship between Cobalt-Crush and Gaze is highly collaborative and iterative. Cobalt-Crush actively consumes instant feedback from Gaze's CI pipeline to immediately fix defects. They also implement testability requests from Gaze, ensuring the code is designed to be easily validated.
 
 **For the Reviewer (The Divisor):** Cobalt-Crush ensures that code delivered for review is functionally complete (validated by Gaze) and adheres to architectural standards (set by The Divisor). By addressing quality proactively through Gaze's pipeline, Cobalt-Crush allows The Divisor to focus on high-level architectural integrity rather than simple defect finding.
+
+## Next Steps
+
+- Read the [Developer getting-started guide](/docs/getting-started/developer/) for daily workflow, Speckit pipeline, and Swarm coordination
+- See [Common Workflows](/docs/getting-started/common-workflows/) for how Cobalt-Crush fits into the full hero lifecycle
+- Learn about [convention packs](/docs/getting-started/developer/#convention-packs) that govern coding standards

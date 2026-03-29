@@ -78,3 +78,9 @@ This structure ensures that only code which passes all five lenses — intent, a
 **For the Tester (Gaze):** Gaze relies on The Divisor to establish the architectural and non-functional requirements against which testability must be measured. Gaze's green light on functional tests is the entry criterion for The Divisor's review, ensuring review time is spent on high-level risk and structure rather than defect finding.
 
 **For the Product Owner and Manager (Muti-Mind and Mx F):** Muti-Mind and Mx F are assured that every merged feature is technically sound, secure, and scalable. The Divisor acts as the ultimate guarantor of technical quality, ensuring that the velocity gained through prioritization and execution is sustainable and does not accrue crippling technical debt.
+
+## Next Steps
+
+- See [Common Workflows: Code Review](/docs/getting-started/common-workflows/#code-review) for how to invoke the review council and the review loop
+- Read the [Developer getting-started guide](/docs/getting-started/developer/#convention-packs) for convention packs that The Divisor enforces
+- Learn about [hero artifacts](/docs/getting-started/artifacts/) -- The Divisor produces `review-verdict` artifacts consumed by other heroes

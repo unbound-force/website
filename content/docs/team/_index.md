@@ -1,7 +1,7 @@
 ---
 title: "The Team"
 description: "Meet the Unbound Force heroes — five AI agent personas that form a superhero-themed software engineering swarm."
-lead: "The Heroes of the Unbound Force — A.G.I. Development Squad."
+lead: "Meet the five AI agent personas and the infrastructure that powers the swarm."
 date: 2026-02-23T00:00:00+00:00
 draft: false
 weight: 10

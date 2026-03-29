@@ -172,6 +172,59 @@ Config values are the base defaults; CLI flags override them. For spec review, O
 
 This file is created by `uf init` with all values commented out (defaults apply). Edit it to set your team's preferred workflow behavior.
 
+### Workflow Management
+
+Once a workflow is running, use these commands to monitor progress and manage stage transitions.
+
+#### `/workflow status`
+
+Check the current workflow state:
+
+```text
+/workflow status [workflow-id]
+```
+
+If no workflow ID is provided, the command auto-detects the active workflow from your current git branch. The output shows the workflow ID, branch, backlog item, status, start time, and iteration count, followed by a stage-by-stage breakdown.
+
+Each stage displays its execution mode (`[human]` or `[swarm]`), the assigned hero, elapsed time, and one of these status indicators:
+
+| Indicator | Meaning                                       |
+| --------- | --------------------------------------------- |
+| `✓`       | Completed                                     |
+| `◉`       | Active (currently running)                    |
+| `○`       | Pending (not yet started)                     |
+| `⏸`       | Awaiting human (paused at a human checkpoint) |
+| `⊘`       | Skipped                                       |
+| `✗`       | Failed                                        |
+
+When a workflow is awaiting a human checkpoint, the status output shows the `⏸` indicator on the next pending human-mode stage and prompts: "Run `/workflow advance` to resume."
+
+#### `/workflow list`
+
+List all workflows:
+
+```text
+/workflow list [--status active|completed|all]
+```
+
+Displays a table with columns: ID, Branch, Status, and Started. Sorted by start time (most recent first). The default filter shows all workflows.
+
+#### `/workflow advance`
+
+Advance a workflow to the next stage or resume from a human checkpoint:
+
+```text
+/workflow advance [workflow-id]
+```
+
+The command handles several scenarios:
+
+- **Normal advance**: Completes the current stage with timestamps and produced artifacts, then activates the next non-skipped stage.
+- **Checkpoint**: If the completed stage is swarm-mode and the next stage is human-mode, the workflow pauses automatically (status changes to `awaiting_human`). This is how the workflow returns control to the human at the accept stage.
+- **Resume**: If the workflow is in `awaiting_human` status, the command activates the next pending human-mode stage and sets the status back to `active`.
+- **Escalation**: If the review stage has reached 3 iterations without full approval, the command escalates to human review rather than looping indefinitely.
+- **Completion**: If no more stages remain, the workflow is marked `completed` and a `workflow-record` [artifact](/docs/getting-started/artifacts/) is generated with the full workflow trace.
+
 ### Knowledge Context
 
 [Dewey](/docs/getting-started/knowledge/) is what makes autonomous define possible. By providing org-wide semantic context -- past specifications, GitHub issues from across the organization, toolstack documentation, and learning feedback -- Dewey gives Muti-Mind enough information to draft specifications without asking the human for context. This is the key capability that reduces human checkpoints from two to one.

@@ -76,6 +76,6 @@ Dewey runs as an MCP server alongside your AI coding environment. It combines:
 
 ## Learn More
 
-- [Getting Started Guide](/docs/getting-started/knowledge/) — install, configure, and start using Dewey
-- [Dewey Team Page](/docs/team/dewey/) — architecture details, query capabilities, and how each hero uses Dewey
+- [Getting Started Guide](/docs/getting-started/knowledge/) — install, configure sources, and integrate with OpenCode
+- [Dewey Team Page](/docs/team/dewey/) — query capabilities, embedding model details, and how each hero uses Dewey
 - [GitHub Repository](https://github.com/unbound-force/dewey) — source code, issues, and releases

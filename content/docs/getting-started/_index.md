@@ -18,13 +18,13 @@ But these are not just instruction files. Each hero can include LSP servers, MCP
 
 Unbound Force is built on three complementary tools that form a layered stack:
 
-| Layer            | Tool                                          | What It Does                                                                                                    |
-| ---------------- | --------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
-| **Agent**        | [OpenCode](https://opencode.ai)               | The AI coding environment where you interact, write code, and run commands. The personas run inside OpenCode.   |
-| **Planning**     | [Specify](https://github.com/github/spec-kit) | A specification pipeline that turns ideas into structured specs, plans, and tasks before implementation begins. |
-| **Coordination** | [Swarm](https://www.swarmtools.ai/)           | An OpenCode plugin that enables multi-agent parallelism and learning amongst team members.                      |
+| Layer            | Tool                                                     | What It Does                                                                                                    |
+| ---------------- | -------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| **Agent**        | [OpenCode](https://opencode.ai)                          | The AI coding environment where you interact, write code, and run commands. The personas run inside OpenCode.   |
+| **Planning**     | [Speckit](https://github.com/github/spec-kit) (spec-kit) | A specification pipeline that turns ideas into structured specs, plans, and tasks before implementation begins. |
+| **Coordination** | [Swarm](https://www.swarmtools.ai/)                      | An OpenCode plugin that enables multi-agent parallelism and learning amongst team members.                      |
 
-Each tool is independently useful, but they compose into the full Unbound Force workflow: plan with Specify, execute with OpenCode, coordinate with Swarm.
+Each tool is independently useful, but they compose into the full Unbound Force workflow: plan with Speckit, execute with OpenCode, coordinate with Swarm.
 
 ## The Heroes
 
@@ -47,4 +47,6 @@ Ready to dive in? Start with the [Quick Start](/docs/getting-started/quick-start
 - **[Product Owner](/docs/getting-started/product-owner/)** -- Muti-Mind backlog management, priority scoring, acceptance decisions
 - **[Product Manager](/docs/getting-started/product-manager/)** -- Mx F metrics, dashboards, coaching, retrospectives
 - **[Common Workflows](/docs/getting-started/common-workflows/)** -- End-to-end flows for features, bug fixes, code reviews, and setup
+- **[Hero Artifacts](/docs/getting-started/artifacts/)** -- Inter-hero communication: envelope format, artifact types, and lifecycle data flow
 - **[Knowledge Retrieval with Dewey](/docs/getting-started/knowledge/)** -- Install and configure Dewey for semantic search across your repositories
+- **[Constitution](/docs/getting-started/constitution/)** -- The 4 core principles that govern all heroes and the governance model
