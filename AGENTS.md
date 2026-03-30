@@ -283,6 +283,8 @@ GitHub Pages deployment via `.github/workflows/deploy-gh-pages.yml`:
 - N/A (static Markdown files) (005-getting-started-guides)
 - Hugo (Go-based SSG) via `@thulite` npm packages; Node.js >= 20.11.0; Go >= 1.23 + `thulite ^2.6.3`, `@thulite/doks-core ^1.8.3` (006-binary-rename)
 - Hugo (via npm/thulite) + Go 1.23 + `thulite ^2.6.3`, (007-dewey-docs)
+- Markdown (Hugo content files) + Hugo (via @thulite), Doks theme (012-project-docs-update)
+- N/A (static Markdown files) (012-project-docs-update)
 
 ## Recent Changes
 

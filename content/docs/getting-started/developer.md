@@ -149,14 +149,15 @@ Convention packs are shared coding standards files stored in `.opencode/unbound/
 
 Packs are organized by language, with each language having a tool-owned canonical pack and a user-owned customization file:
 
-| File                   | Ownership  | Purpose                                                                               |
-| ---------------------- | ---------- | ------------------------------------------------------------------------------------- |
-| `default.md`           | Tool-owned | Language-agnostic rules: coding style, architecture, security, testing, documentation |
-| `default-custom.md`    | User-owned | Project-specific conventions extending the default pack                               |
-| `go.md`                | Tool-owned | Go-specific rules: gofmt, error handling, GoDoc, Cobra patterns                       |
-| `go-custom.md`         | User-owned | Project-specific Go conventions                                                       |
-| `typescript.md`        | Tool-owned | TypeScript-specific rules: ESLint, Prettier, strict typing, architectural patterns    |
-| `typescript-custom.md` | User-owned | Project-specific TypeScript conventions                                               |
+| File                   | Ownership  | Purpose                                                                                                           |
+| ---------------------- | ---------- | ----------------------------------------------------------------------------------------------------------------- |
+| `default.md`           | Tool-owned | Language-agnostic rules: coding style, architecture, security, testing, documentation                             |
+| `default-custom.md`    | User-owned | Project-specific conventions extending the default pack                                                           |
+| `go.md`                | Tool-owned | Go-specific rules: gofmt, error handling, GoDoc, Cobra patterns                                                   |
+| `go-custom.md`         | User-owned | Project-specific Go conventions                                                                                   |
+| `typescript.md`        | Tool-owned | TypeScript-specific rules: ESLint, Prettier, strict typing, architectural patterns                                |
+| `typescript-custom.md` | User-owned | Project-specific TypeScript conventions                                                                           |
+| `severity.md`          | Tool-owned | Shared severity definitions for all Divisor personas (calibration standard for CRITICAL/HIGH/MEDIUM/LOW findings) |
 
 #### Ownership Model
 
@@ -212,24 +213,24 @@ uf init [--divisor] [--lang go|typescript] [--force]
 
 ### Flags
 
-| Flag        | Description                                                                                                                                                  |
-| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `--divisor` | Deploy only PR review agents (Divisor personas) and convention packs. For projects that only want code review, not the full swarm workflow.                  |
-| `--lang`    | Override language auto-detection for convention pack selection. Auto-detects from `go.mod`, `tsconfig.json`, `package.json`, `pyproject.toml`, `Cargo.toml`. |
-| `--force`   | Overwrite user-owned files that would normally be skipped. Use with caution -- this will replace your customizations.                                        |
+| Flag        | Description                                                                                                                                                                          |
+| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `--divisor` | Deploy only PR review agents (Divisor personas) and convention packs. For projects that only want code review, not the full swarm workflow.                                          |
+| `--lang`    | Override language auto-detection for convention pack selection. Auto-detects from `go.mod`, `tsconfig.json`, `package.json`, `pyproject.toml`, `Cargo.toml`.                         |
+| `--force`   | Overwrite user-owned files that would normally be skipped, re-index Dewey workspace, and refresh `opencode.json` entries. Use with caution -- this will replace your customizations. |
 
 ### What Gets Deployed
 
 `uf init` deploys approximately 50 files across these categories:
 
-| Category         | Files | Examples                                                                  |
-| ---------------- | ----- | ------------------------------------------------------------------------- |
-| Agents           | ~12   | 5 Divisor personas, Cobalt-Crush, Constitution Check, Mx F Coach          |
-| Commands         | ~15   | 9 Speckit commands, review-council, constitution-check, cobalt-crush      |
-| Convention Packs | 6     | default, go, typescript (each with tool-owned and user-owned variants)    |
-| Templates        | ~6    | spec, plan, tasks, checklist, constitution, agent-file templates          |
-| Scripts          | ~5    | check-prerequisites, setup-plan, create-new-feature, update-agent-context |
-| OpenSpec         | ~6    | config, schema, 4 templates (design, proposal, spec, tasks)               |
+| Category         | Files | Examples                                                                          |
+| ---------------- | ----- | --------------------------------------------------------------------------------- |
+| Agents           | ~12   | 5 Divisor personas, Cobalt-Crush, Constitution Check, Mx F Coach                  |
+| Commands         | ~15   | 9 Speckit commands, review-council, constitution-check, cobalt-crush              |
+| Convention Packs | 7     | default, go, typescript (each with tool-owned and user-owned variants) + severity |
+| Templates        | ~6    | spec, plan, tasks, checklist, constitution, agent-file templates                  |
+| Scripts          | ~5    | check-prerequisites, setup-plan, create-new-feature, update-agent-context         |
+| OpenSpec         | ~6    | config, schema, 4 templates (design, proposal, spec, tasks)                       |
 
 File counts are approximate and may change between versions.
 
@@ -245,7 +246,12 @@ Files deployed by `uf init` fall into two ownership categories:
 After deploying files, `uf init` performs sub-tool initialization:
 
 - Creates `.unbound-force/config.yaml` for [workflow configuration](/docs/getting-started/common-workflows/#workflow-configuration) (skipped if it already exists)
-- If [Dewey](/docs/getting-started/knowledge/) is available: creates the `.dewey/` workspace, auto-detects multi-repo sources, and builds the initial index
+- If [Dewey](/docs/getting-started/knowledge/) is available: creates the `.dewey/` workspace, auto-detects multi-repo sources, and builds the initial index. With `--force`, re-indexes an existing Dewey workspace.
+- Configures `opencode.json` with MCP and plugin entries:
+  - **Dewey MCP entry**: When `dewey` is in PATH, adds the `mcp.dewey` entry for the Dewey MCP server
+  - **Swarm plugin entry**: When `.hive/` directory exists, adds `opencode-swarm-plugin` to the plugin array
+  - Idempotent — checks for existing entries before adding. Use `--force` to overwrite stale entries.
+  - Preserves user-added keys (custom MCP servers, custom config) — only manages the entries it owns
 
 ### Summary Output
 

@@ -98,7 +98,13 @@ Then scaffold the OpenCode integration in your Go project:
 gaze init
 ```
 
-This creates four files in `.opencode/` that wire up the `/gaze` command and a quality reporting agent.
+This creates 8 files across 3 directories in `.opencode/` that wire up the `/gaze` command, a quality reporting agent, and AI-assisted test generation:
+
+| Directory               | Files                                                               |
+| ----------------------- | ------------------------------------------------------------------- |
+| `.opencode/agents/`     | `gaze-reporter.md`, `gaze-test-generator.md`, `reviewer-testing.md` |
+| `.opencode/command/`    | `gaze.md`, `gaze-fix.md`, `speckit.testreview.md`                   |
+| `.opencode/references/` | `doc-scoring-model.md`, `example-report.md`                         |
 
 ### The `/gaze` Command
 
@@ -110,17 +116,39 @@ Inside OpenCode, use `/gaze` to get AI-assisted quality reports:
 /gaze quality ./pkg/api         # Contract Coverage metrics only
 ```
 
-### Three Modes
+### CLI Usage
 
-| Mode           | What You Get                                                                |
-| -------------- | --------------------------------------------------------------------------- |
-| Full (default) | CRAP Summary + Quality Summary + Classification Summary + Health Assessment |
-| `crap`         | CRAPload count, top 5 worst scores, GazeCRAP quadrant distribution          |
-| `quality`      | Contract coverage, gaps, over-specification, worst tests                    |
+Gaze can also be run directly from the command line:
 
-The `/gaze` command routes to a quality reporting agent that runs the analysis, interprets the JSON output, and produces human-readable markdown summaries with tables, key metrics, and actionable recommendations.
+```bash
+gaze report ./... --ai=opencode   # Full report using OpenCode adapter
+gaze report ./... --ai=claude     # Full report using Claude adapter
+```
 
-A companion command, `/classify-docs`, enhances classification by combining mechanical signals with project documentation analysis.
+Both `--ai=opencode` and `--ai=claude` are fully supported AI backends for `gaze report`.
+
+### The `/gaze fix` Command
+
+The `/gaze fix` command provides AI-assisted test generation to close coverage gaps. It reads quality data — contract coverage gaps and fix strategy labels — and generates Go test functions using the `gaze-test-generator` agent.
+
+```text
+/gaze fix                       # Fix coverage gaps for the module
+```
+
+The command is scaffolded by `gaze init` (as `.opencode/command/gaze-fix.md`) and works alongside the `/gaze` report command. Use `/gaze` to identify gaps, then `/gaze fix` to generate tests that close them.
+
+### Fix Strategy Labels
+
+Each function in a Gaze report carries a remediation label that tells you _how_ to improve it. These labels appear in both text and JSON output:
+
+| Label                | Meaning                                             |
+| -------------------- | --------------------------------------------------- |
+| `add_tests`          | Function has no tests — write tests                 |
+| `add_assertions`     | Tests exist but don't assert on contractual effects |
+| `decompose`          | Function is too complex — split it                  |
+| `decompose_and_test` | Both too complex and undertested                    |
+
+The `/gaze fix` command uses these labels to determine the appropriate test generation strategy for each function.
 
 ## Sample Output
 
@@ -128,23 +156,23 @@ Here is what a full Gaze report looks like on a real Go project — [gcal-organi
 
 ### Overall Health Assessment
 
-| Dimension | Grade | Details |
-|-----------|-------|---------|
-| CRAPload | 🔴 D | 40/137 functions (29.2%) above threshold |
-| GazeCRAPload | 🟢 A- | 5/17 analyzed functions above threshold |
-| Avg Line Coverage | 🔴 D | 26.2% — 101 of 137 functions have 0% coverage |
-| Contract Coverage | 🟡 C | 52.9% avg across 17 quality-analyzed functions |
-| Complexity | 🟢 B+ | Average 4.9, but 40 functions exceed threshold |
+| Dimension         | Grade | Details                                        |
+| ----------------- | ----- | ---------------------------------------------- |
+| CRAPload          | 🔴 D  | 40/137 functions (29.2%) above threshold       |
+| GazeCRAPload      | 🟢 A- | 5/17 analyzed functions above threshold        |
+| Avg Line Coverage | 🔴 D  | 26.2% — 101 of 137 functions have 0% coverage  |
+| Contract Coverage | 🟡 C  | 52.9% avg across 17 quality-analyzed functions |
+| Complexity        | 🟢 B+ | Average 4.9, but 40 functions exceed threshold |
 
 ### Top 5 Worst CRAP Scores
 
-| Function | CRAP | Complexity | Coverage | File |
-|----------|-----:|----------:|---------:|------|
-| (\*Service).CreateDecisionsTab | 650.0 | 25 | 0.0% | internal/docs/service.go:460 |
-| runBrowserScript | 342.0 | 18 | 0.0% | cmd/gcal-organizer/assign_tasks.go:237 |
-| loadDotEnv | 240.0 | 15 | 0.0% | cmd/gcal-organizer/main.go:382 |
-| (\*Service).ListMeetingDocuments | 210.0 | 14 | 0.0% | internal/drive/service.go:113 |
-| (\*Organizer).printSummary | 156.0 | 12 | 0.0% | internal/organizer/organizer.go:227 |
+| Function                         |  CRAP | Complexity | Coverage | File                                   |
+| -------------------------------- | ----: | ---------: | -------: | -------------------------------------- |
+| (\*Service).CreateDecisionsTab   | 650.0 |         25 |     0.0% | internal/docs/service.go:460           |
+| runBrowserScript                 | 342.0 |         18 |     0.0% | cmd/gcal-organizer/assign_tasks.go:237 |
+| loadDotEnv                       | 240.0 |         15 |     0.0% | cmd/gcal-organizer/main.go:382         |
+| (\*Service).ListMeetingDocuments | 210.0 |         14 |     0.0% | internal/drive/service.go:113          |
+| (\*Organizer).printSummary       | 156.0 |         12 |     0.0% | internal/organizer/organizer.go:227    |
 
 For a section-by-section walkthrough of the full report — including GazeCRAP quadrants, quality analysis, classification, and prioritized recommendations — see [Gaze in Practice](/blog/gaze-in-practice/).
 
@@ -163,6 +191,7 @@ Gaze is structured as a set of focused packages:
 | `crap`     | CRAP score computation and reporting                              |
 | `quality`  | Test quality assessment — contract coverage and assertion mapping |
 | `docscan`  | Documentation file scanner for enhanced classification            |
+| `aireport` | AI CLI adapter integration for `gaze report` AI pipeline          |
 | `scaffold` | OpenCode file scaffolding for `/gaze` command setup               |
 
 The analysis engine detects side effects across three implemented tiers (P0, P1, P2), covering the most common and impactful effect types — from return values and error returns through mutations, I/O, channel operations, and more.
@@ -172,10 +201,10 @@ The analysis engine detects side effects across three implemented tiers (P0, P1,
 Gaze is actively developed. The current scope has known boundaries:
 
 - **Direct function body only.** Gaze analyzes the immediate function body. Transitive side effects (effects produced by called functions) are out of scope for v1.
-- **P3-P4 side effects not yet detected.** The taxonomy defines types for stdout/stderr writes, environment mutations, mutex operations, reflection, and unsafe, but detection logic for these tiers is not yet implemented.
-- **Assertion mapping accuracy is ~78.8%.** The target is 90%. Accuracy is primarily limited by helper function assertions and testify field-access patterns (tracked as [GitHub Issue #6](https://github.com/unbound-force/gaze/issues/6)).
+- **P3-P4 side effects not yet detected.** P0 through P2 are fully implemented — covering return values, error returns, mutations, I/O, channel operations, file system operations, database writes, goroutine spawns, panics, and context cancellation. P3-P4 side effects (stdout/stderr, environment mutations, mutex operations, reflection, unsafe) are not yet detected.
+- **Assertion mapping accuracy is ~84.7%** (83/98 mapped assertions, ratchet floor 84.0%). The target is 90%. Accuracy is primarily limited by helper function assertions and testify field-access patterns (tracked as [GitHub Issue #6](https://github.com/unbound-force/gaze/issues/6)).
 - **No CGo or unsafe analysis.** Functions using `cgo` or `unsafe.Pointer` are not analyzed for their specific side effects.
-- **Single package loading.** The `analyze` command processes one package at a time.
+- **Single package loading.** The `analyze` and `quality` commands process one package at a time. The `crap` and `report` commands process the entire module (`./...`).
 
 ## Learn More
 
