@@ -65,6 +65,48 @@ The Tester focuses on _"Are the tests meaningful?"_ They ensure tests are not ju
 - Verifying test isolation (no shared mutable state, no execution order dependencies, no external network access)
 - Ensuring regression protection (spec-critical behavior locked down, known-good and known-bad scenarios covered)
 
+## Exclusive Ownership Boundaries
+
+Each review dimension is owned by exactly one Divisor persona, eliminating duplicate findings across personas:
+
+| Dimension                                   | Owner     |
+| ------------------------------------------- | --------- |
+| Secrets/credentials                         | Adversary |
+| Dependency CVEs/supply chain                | Adversary |
+| Error handling/resilience                   | Adversary |
+| Test isolation/coverage/depth               | Tester    |
+| Plan alignment/intent drift                 | Guard     |
+| Zero-waste mandate                          | Guard     |
+| Constitution alignment                      | Guard     |
+| File permissions/hardcoded config           | SRE       |
+| Efficiency/performance (O(n²), allocations) | SRE       |
+| Architectural patterns/conventions          | Architect |
+
+This ownership model ensures that a finding like "missing error handling" is raised by exactly one persona (Adversary), not duplicated across Adversary and Architect.
+
+## Shared Severity Standard
+
+All 5 personas share a calibration standard defined in the `severity.md` convention pack (`.opencode/unbound/packs/severity.md`):
+
+| Level        | Definition                                                                           | Auto-Fix?                    |
+| ------------ | ------------------------------------------------------------------------------------ | ---------------------------- |
+| **CRITICAL** | Data loss, security breach, build failure, constitutional violation. MUST NOT merge. | Report only                  |
+| **HIGH**     | Significant risk or tech debt. Blocks review.                                        | Report only                  |
+| **MEDIUM**   | Quality issue, should be addressed. Non-blocking.                                    | Auto-fix in Spec Review Mode |
+| **LOW**      | Minor style or documentation improvement. Non-blocking.                              | Auto-fix in Spec Review Mode |
+
+Each level includes domain-specific examples per persona — for example, an Adversary CRITICAL is "hardcoded production secret" while a Guard CRITICAL is "constitutional violation."
+
+## Prior Learnings Integration
+
+All 5 Divisor personas include a "Prior Learnings" step at the start of their review workflow:
+
+1. Search Hivemind for learnings tagged with the repo name and relevant file paths
+2. Include found learnings as prior knowledge in the review context
+3. Graceful degradation when Hivemind is not available — the step is skipped with an informational note
+
+This means the review council learns from past reviews. If a particular pattern has been flagged before, the relevant persona will reference that history when evaluating new code.
+
 ## Collective Approval
 
 The Divisor holds the ultimate authority to approve and merge code into the main branch. Approval requires collective consensus — **no outstanding REQUEST CHANGES from any persona** is mandatory. Gaze's functional validation serves as a prerequisite: the CI pipeline must be green before The Divisor begins review.

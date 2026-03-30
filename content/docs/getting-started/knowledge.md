@@ -77,7 +77,31 @@ Dewey indexes content from three pluggable source types. Configure them in `.dew
 
 ### Local Disk
 
-The foundational source — indexes all Markdown files in your repository, including hidden directories (`.opencode/`, `.specify/`, `.muti-mind/`). This is enabled by default after `dewey init`.
+The foundational source — indexes Markdown files in your repository. This is enabled by default after `dewey init`.
+
+Dewey automatically respects `.gitignore` at the source root — no configuration needed. Directories like `node_modules/`, `vendor/`, and other `.gitignore`-excluded paths are skipped during indexing. Hidden directories used by tools (`.git/`, `.obsidian/`, `.dewey/`) are always skipped regardless of `.gitignore`. Dewey-specific directories (`.opencode/`, `.specify/`, `.muti-mind/`) are indexed normally unless excluded by `.gitignore`.
+
+You can add additional ignore patterns and control recursion depth via `sources.yaml`:
+
+```yaml
+sources:
+  - id: disk-local
+    type: disk
+    name: my-project
+    config:
+      path: "."
+      ignore:
+        - "*.generated.go"
+        - "testdata/"
+      recursive: true
+```
+
+| Field       | Type       | Default | Description                                                 |
+| ----------- | ---------- | ------- | ----------------------------------------------------------- |
+| `ignore`    | `[]string` | `[]`    | Additional ignore patterns (union-merged with `.gitignore`) |
+| `recursive` | `bool`     | `true`  | When `false`, restricts indexing to top-level files only    |
+
+The `ignore` patterns use the same syntax as `.gitignore` — directory names, globs, negation, and comments are all supported.
 
 Local files are watched for changes in real time. When you save a file, Dewey re-indexes only the changed content.
 
@@ -163,6 +187,47 @@ If you use `uf init` to scaffold your project, this configuration is generated a
 
 Once configured, all hero agents can use Dewey's MCP tools for knowledge retrieval. The tools include structured queries (`search`, `find_by_tag`, `query_properties`, `get_page`, `traverse`, `find_connections`) and semantic queries (`dewey_semantic_search`, `dewey_similar`, `dewey_semantic_search_filtered`).
 
+## Diagnostic and Maintenance Commands
+
+### `dewey doctor`
+
+Run `dewey doctor` to check the health of your Dewey installation. It reports on 7 diagnostic sections:
+
+| Section                 | What It Checks                                             |
+| ----------------------- | ---------------------------------------------------------- |
+| **Environment**         | Vault path, dewey binary location                          |
+| **Workspace**           | `.dewey/` directory, config files, `sources.yaml`          |
+| **Database**            | `graph.db` health, page/block/embedding counts             |
+| **Sources in Database** | Per-source page counts                                     |
+| **Embedding Layer**     | Ollama availability, model status                          |
+| **MCP Server**          | Lock file, `opencode.json` configuration                   |
+| **Summary**             | Overall health with emoji markers (✓ pass, ⚠ warn, ✗ fail) |
+
+```bash
+dewey doctor
+```
+
+### `dewey reindex`
+
+Deletes `graph.db` and re-indexes from scratch. Use when the index is corrupted or stale:
+
+```bash
+dewey reindex
+```
+
+This is a destructive operation — the existing index is deleted before rebuilding. For incremental updates, use `dewey index` instead.
+
+### Global CLI Flags
+
+These flags are available on all Dewey commands:
+
+| Flag              | Short | Description                                                            |
+| ----------------- | ----- | ---------------------------------------------------------------------- |
+| `--verbose`       | `-v`  | Enable debug logging                                                   |
+| `--log-file PATH` |       | Write logs to file (auto-logging to `.dewey/dewey.log` also available) |
+| `--no-embeddings` |       | Skip embedding generation (useful for quick indexing without Ollama)   |
+| `--vault PATH`    |       | Specify vault directory (default: current directory)                   |
+
 ## Graceful Degradation
 
 Dewey is an enhancement, not a requirement. Per the Unbound Force constitution's Composability First principle, every hero functions without Dewey — they just have less context to work with.
@@ -174,6 +239,20 @@ Dewey is an enhancement, not a requirement. Per the Unbound Force constitution's
 | **No Dewey**   | Direct file reads and CLI queries                         | Heroes read local files directly. Functional but with narrower context — no cross-repo awareness, no semantic search |
 
 All heroes check for Dewey's availability at runtime. If Dewey is not configured or not running, they fall back gracefully — reduced context quality, but fully functional. You can adopt Dewey incrementally: start with local disk indexing, add GitHub sources when you want cross-repo context, add web crawl when you want toolstack docs.
+
+## Troubleshooting
+
+Common issues and how to resolve them:
+
+| Issue                  | Symptoms                               | Resolution                                                                                                                                  |
+| ---------------------- | -------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| MCP server timeout     | OpenCode shows connection timeout      | Check `.gitignore` for large directories being indexed; run `dewey reindex`                                                                 |
+| Ollama not running     | `dewey doctor` shows embedding layer ✗ | Run `ollama serve` or install Ollama (`brew install --cask ollama`)                                                                         |
+| Lock file conflicts    | "Another dewey instance is running"    | Only one `dewey serve` per vault; check for stale `.dewey/dewey.lock`                                                                       |
+| Low embedding coverage | Semantic search returns few results    | Run `dewey index` to generate embeddings for new content                                                                                    |
+| Slow startup           | First `dewey serve` takes minutes      | Normal for large repos on first index; subsequent startups are near-instant. Check `.gitignore` to exclude `node_modules/`, `vendor/`, etc. |
+
+If `dewey doctor` shows failures, start by addressing the ✗ items — each diagnostic section includes enough context to identify the root cause.
 
 ## Next Steps
 

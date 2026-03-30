@@ -70,7 +70,7 @@ The [Developer (Cobalt-Crush)](/docs/getting-started/developer/) creates the tec
 - Analyze side effects: `gaze analyze --classify ./...`
 - Assess test quality: `gaze quality ./...`
 - Compute risk scores: `gaze crap ./...`
-- Generate comprehensive report: `gaze report ./... --ai=claude`
+- Generate comprehensive report: `gaze report ./... --ai=opencode` (or `--ai=claude`)
 
 **Output**: Quality report (contract coverage, CRAP scores, over-specification)
 
@@ -285,6 +285,66 @@ After the fix is merged, archive the change:
 
 Moves the change to `openspec/changes/archive/` with a date prefix for historical reference, then returns to the `main` branch.
 
+## Autonomous Pipeline (`/unleash`)
+
+`/unleash` is the autonomous Speckit pipeline execution command. It takes a spec from draft to demo-ready code in a single command, orchestrating 8 steps with graceful exit points and full resumability.
+
+### The 8-Step Pipeline
+
+| Step | Name              | Description                                                                                                                                                                   |
+| ---- | ----------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1    | **Clarify**       | Scans spec.md for `[NEEDS CLARIFICATION]` markers. Uses Dewey semantic search to auto-resolve. Exits to human only for unanswerable questions.                                |
+| 2    | **Plan**          | Delegates to Cobalt-Crush to generate `plan.md` via `/speckit.plan`                                                                                                           |
+| 3    | **Tasks**         | Delegates to Cobalt-Crush to generate `tasks.md` via `/speckit.tasks`                                                                                                         |
+| 4    | **Spec Review**   | Runs the review council in Spec Review Mode. Auto-fixes LOW/MEDIUM findings. Exits on HIGH/CRITICAL.                                                                          |
+| 5    | **Implement**     | Parses `tasks.md` for phases. `[P]` parallel tasks run via Swarm worktrees (up to 4 concurrent workers). Phase checkpoints run CI commands derived from `.github/workflows/`. |
+| 6    | **Code Review**   | Runs the review council in Code Review Mode. Includes Phase 1a CI hard gate, Phase 1b Gaze quality analysis, and Divisor agent reviews. Up to 3 fix iterations.               |
+| 7    | **Retrospective** | Analyzes the session and stores learnings in Hivemind semantic memory.                                                                                                        |
+| 8    | **Demo**          | Presents structured demo instructions: what was built, how to verify, key files changed, and next steps.                                                                      |
+
+### Key Capabilities
+
+- **Dewey-powered clarification**: Auto-resolves spec ambiguities using semantic search. Falls back to human input when Dewey is unavailable or results are insufficient.
+- **Parallel Swarm workers**: `[P]`-marked tasks execute in parallel via git worktrees (up to 4 concurrent). Falls back to sequential when the Swarm plugin is not installed.
+- **Resumability**: Probes filesystem state on startup to detect completed steps. Resumes from the first incomplete step. All progress is persisted in spec artifacts (plan.md, tasks.md checkboxes, spec-review marker).
+- **Graceful exit points**: Every exit (unanswerable questions, HIGH/CRITICAL findings, worker failures, merge conflicts, test failures, review exhaustion) includes actionable next steps and resume instructions.
+- **CI command derivation**: Build and test commands are derived from `.github/workflows/` files, not hardcoded.
+
+### Branch Safety
+
+`/unleash` requires a Speckit feature branch (`NNN-*`). It never runs on `main` and rejects `opsx/*` branches (use `/opsx-apply` instead). It validates that `spec.md` exists before proceeding.
+
+After `/unleash` completes, the demo step suggests running `/finale` to commit, push, create a PR, and merge.
+
+## End-of-Branch Workflow (`/finale`)
+
+`/finale` automates the end-of-branch workflow — one command to stage, commit, push, create a PR, watch CI, merge, and return to main.
+
+### The 9-Step Workflow
+
+| Step | Name                        | Description                                                                         |
+| ---- | --------------------------- | ----------------------------------------------------------------------------------- |
+| 1    | **Branch Safety Gate**      | Verifies not on `main`. Notes the branch name.                                      |
+| 2    | **Check for Changes**       | Inspects working tree. If clean, checks for unpushed commits or existing PR.        |
+| 3    | **Generate Commit Message** | Analyzes staged changes, generates conventional commit message, shows for approval. |
+| 4    | **Push to Remote**          | Sets upstream if needed (`git push -u origin <branch>`).                            |
+| 5    | **Create or Find PR**       | Creates PR via `gh pr create` or finds existing one.                                |
+| 6    | **Watch CI Checks**         | `gh pr checks --watch`. Stops on failure with options.                              |
+| 7    | **Merge PR**                | `gh pr merge --rebase --delete-branch`. Always uses rebase merge strategy.          |
+| 8    | **Return to Main**          | `git checkout main && git pull`.                                                    |
+| 9    | **Summary**                 | Displays completion report: branch, commit, PR, checks, status.                     |
+
+### Guardrails
+
+- Never runs on `main`
+- Never merges with failing CI checks
+- Never stages secret files (`.env`, `credentials.json`, `*.key`, `*.pem`) without warning
+- Never commits without user approval of the commit message
+- Always uses rebase merge strategy (no squash or merge commits)
+- If any step fails, stops immediately with context and options
+
+`/finale` works with both Speckit (`NNN-*`) and OpenSpec (`opsx/*`) branches. It is the natural complement to `/unleash` — `/unleash` builds, `/finale` ships.
+
 ## Code Review
 
 The review council brings five specialized perspectives to every code review.
@@ -307,13 +367,22 @@ The council discovers available Divisor persona agents in `.opencode/agents/divi
 | **Testing**   | Test architecture, coverage strategy, assertion depth, test isolation                    |
 | **SRE**       | Release pipeline, dependency health, configuration, runtime observability                |
 
+### CI Gate (Phase 1a and 1b)
+
+Before delegating to Divisor agents, the review council runs a two-phase CI gate:
+
+**Phase 1a — CI Hard Gate**: Derives build, test, vet, lint, and vulnerability check commands from `.github/workflows/` files and executes them locally. Any non-zero exit code is a gate failure — the review stops before invoking Divisor agents. This ensures the code compiles, tests pass, and static analysis is clean before spending review tokens.
+
+**Phase 1b — Conditional Gaze Quality Analysis**: If Gaze is installed, runs `gaze report` to generate CRAP scores, contract coverage, and quality findings. The results are passed as context to Divisor agents — the Testing persona uses Gaze data as evidence for coverage assessment. If Gaze is not installed, Phase 1b is skipped with an informational note.
+
 ### The Review Loop
 
-1. All personas review in parallel and return APPROVE or REQUEST CHANGES
-2. If any persona returns REQUEST CHANGES, the developer addresses the findings
-3. All personas re-review after fixes
-4. This loop repeats up to 3 iterations
-5. After 3 iterations without full approval, the issue escalates to human review
+1. Phase 1a CI gate must pass before reviews begin
+2. All personas review in parallel and return APPROVE or REQUEST CHANGES
+3. If any persona returns REQUEST CHANGES, the developer addresses the findings
+4. All personas re-review after fixes
+5. This loop repeats up to 3 iterations
+6. After 3 iterations without full approval, the issue escalates to human review
 
 ### Verdict
 
@@ -359,7 +428,7 @@ export OLLAMA_EMBED_DIM=256
 
 Dewey is optional -- all heroes function without it. See the [knowledge retrieval guide](/docs/getting-started/knowledge/) for source configuration and OpenCode integration.
 
-As the final step of setup, `uf init` scaffolds your project files and performs sub-tool initialization: it creates `.unbound-force/config.yaml` for [workflow configuration](#workflow-configuration) and runs `dewey init` + `dewey index` when Dewey is available.
+As the final step of setup, `uf init` scaffolds your project files and performs sub-tool initialization: it creates `.unbound-force/config.yaml` for [workflow configuration](#workflow-configuration), runs `dewey init` + `dewey index` when Dewey is available, and configures `opencode.json` with Dewey MCP server and Swarm plugin entries when those tools are detected.
 
 ### 3. Verify
 
