@@ -148,6 +148,7 @@ These rules are non-negotiable:
 2. **Neighborhood Rule**: Changes to navigation, layout, or styling must be verified against ALL existing pages. Run `npm run build` and check for regressions.
 3. **Content Accuracy**: Project descriptions must be derived from actual repository content (README.md, AGENTS.md, specs). Never fabricate features or overstate maturity.
 4. **Minimal Maintenance**: Prefer Markdown over custom HTML. Use Doks built-in features before writing custom layouts or CSS.
+5. **Dewey-First Exploration**: When exploring cross-repo content, researching upstream tool behavior, or searching for context across sibling repositories, prefer Dewey MCP tools (`dewey_dewey_semantic_search`, `dewey_get_page`, `dewey_search`, `dewey_find_by_tag`) over grep, glob, or spawning explore subagents. Dewey indexes all sibling repos (`../gaze`, `../dewey`, `../unbound-force`), the org workspace (`../`), and GitHub issues/PRs — grep only sees the current repo. Use Dewey for discovery, then Read for targeted file access once you know the path.
 
 ## Speckit Workflow (Mandatory)
 
@@ -274,6 +275,7 @@ GitHub Pages deployment via `.github/workflows/deploy-gh-pages.yml`:
 3. Always verify both light and dark mode rendering after style changes.
 
 ## Active Technologies
+
 - Hugo (Go-based SSG) via `@thulite` npm packages + `thulite ^2.6.3`, `@thulite/doks-core ^1.8.3` (013-unleash-visibility)
 
 - Hugo (via npm/thulite) + Go 1.23 (module resolution) + Node.js >= 20.11.0 + `thulite ^2.6.3`, `@thulite/doks-core ^1.8.3`, `@thulite/images ^3.3.1`, `@thulite/inline-svg ^1.2.0`, `@thulite/seo ^2.4.1`, `@tabler/icons ^3.34.1` (001-site-scaffold)

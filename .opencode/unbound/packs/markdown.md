@@ -290,6 +290,43 @@ Markdown formatting.
 
 ---
 
+## Research and Source Verification
+
+- **RS-001** [SHOULD] When researching upstream tool
+  behavior, feature capabilities, or cross-repo context
+  for documentation accuracy, agents SHOULD use Dewey
+  MCP tools (`dewey_dewey_semantic_search`,
+  `dewey_get_page`, `dewey_search`, `dewey_find_by_tag`)
+  as the primary discovery mechanism. Dewey indexes all
+  sibling repositories, the org workspace, and GitHub
+  issues/PRs -- grep and glob only see the current repo.
+
+- **RS-002** [SHOULD] After discovering relevant content
+  via Dewey, agents SHOULD use the Read tool for targeted
+  file access when exact line-level content is needed.
+  Dewey finds the right document; Read gets the precise
+  text.
+
+- **RS-003** [MUST] All factual claims about upstream
+  tools (feature descriptions, CLI flags, file counts,
+  accuracy numbers) MUST be verified against the
+  authoritative source before writing. Use Dewey to
+  locate the source, then Read to confirm the exact
+  content. Do not rely on memory or prior conversation
+  context for specific numbers or capabilities.
+
+- **RS-004** [SHOULD] When writing documentation about
+  features that span multiple repositories (e.g., how
+  `uf init` configures Dewey, how `/unleash` invokes
+  Speckit commands), agents SHOULD use
+  `dewey_dewey_semantic_search` to find the relevant
+  specs, design documents, and PRs across repos before
+  synthesizing the documentation. This ensures the
+  documentation reflects the actual implementation, not
+  an assumption about it.
+
+---
+
 ## Custom Rules
 
 <!-- This section is intentionally empty in the canonical
