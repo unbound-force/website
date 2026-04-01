@@ -64,7 +64,7 @@ Good seeds are specific enough to convey intent but don't need to be detailed:
 - "Refactor the webhook handler to support configurable retry logic with exponential backoff"
 - "Create a getting-started guide for new contributors to the website project"
 
-The swarm handles everything from here -- specification, planning, implementation, testing, and review -- pausing only at the accept stage for your decision.
+The swarm handles everything from here -- specification, planning, implementation, testing, and review -- pausing only at the accept stage for your decision. Developers can run the full pipeline with [`/unleash`](/docs/getting-started/common-workflows/#autonomous-pipeline-unleash), which orchestrates all stages autonomously and exits when human judgment is needed.
 
 To seed a feature, use the `/workflow seed` command:
 

@@ -36,16 +36,25 @@ Doctor checks 7 areas and shows pass/warn/fail for each with install hints. Fix 
 
 ## Start Working
 
-Open OpenCode and try your first task:
+For the fastest path -- one command from spec to demo-ready code:
 
 ```text
-/swarm "your first task description"
+/speckit.specify    # describe what you want to build
+/unleash            # the swarm takes it from here
 ```
 
-Or start with the Speckit pipeline for a new feature:
+`/unleash` runs the entire pipeline autonomously: clarify, plan, implement, test, and review. It pauses when it needs you and resumes where it left off. See the [blog post](/blog/unleash-in-practice/) for a walkthrough of the pipeline.
+
+For step-by-step control over each stage:
 
 ```text
-/speckit.specify
+/speckit.specify    # then /speckit.plan, /speckit.tasks, /speckit.implement
+```
+
+For parallel task execution without the full pipeline:
+
+```text
+/swarm "your task description"
 ```
 
 ## The Stack

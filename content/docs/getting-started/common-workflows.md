@@ -1,6 +1,6 @@
 ---
 title: "Common Workflows"
-description: "Step-by-step reference for common Unbound Force workflows: new features, bug fixes, code reviews, and environment setup."
+description: "The /unleash autonomous pipeline, /finale shipping workflow, manual feature flows, bug fixes, code reviews, and environment setup."
 lead: "End-to-end workflows that show how all five heroes collaborate across the development lifecycle."
 date: 2026-03-22T00:00:00+00:00
 draft: false
@@ -8,7 +8,71 @@ weight: 70
 toc: true
 ---
 
-## New Feature (End-to-End)
+## Autonomous Pipeline (`/unleash`)
+
+`/unleash` is the autonomous Speckit pipeline execution command. It takes a spec from draft to demo-ready code in a single command, orchestrating the full pipeline with graceful exit points and full resumability.
+
+### The Pipeline
+
+| Step | Name              | Description                                                                                                                                                                   |
+| ---- | ----------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1    | **Clarify**       | Scans spec.md for `[NEEDS CLARIFICATION]` markers. Uses Dewey semantic search to auto-resolve. Exits to human only for unanswerable questions.                                |
+| 2    | **Plan**          | Delegates to Cobalt-Crush to generate `plan.md` via `/speckit.plan`                                                                                                           |
+| 3    | **Tasks**         | Delegates to Cobalt-Crush to generate `tasks.md` via `/speckit.tasks`                                                                                                         |
+| 4    | **Spec Review**   | Runs the review council in Spec Review Mode. Auto-fixes LOW/MEDIUM findings. Exits on HIGH/CRITICAL.                                                                          |
+| 5    | **Implement**     | Parses `tasks.md` for phases. `[P]` parallel tasks run via Swarm worktrees (up to 4 concurrent workers). Phase checkpoints run CI commands derived from `.github/workflows/`. |
+| 6    | **Code Review**   | Runs the review council in Code Review Mode. Includes Phase 1a CI hard gate, Phase 1b Gaze quality analysis, and Divisor agent reviews. Up to 3 fix iterations.               |
+| 7    | **Retrospective** | Analyzes the session and stores learnings in Hivemind semantic memory.                                                                                                        |
+| 8    | **Demo**          | Presents structured demo instructions: what was built, how to verify, key files changed, and next steps.                                                                      |
+
+### Key Capabilities
+
+- **Dewey-powered clarification**: Auto-resolves spec ambiguities using semantic search. Falls back to human input when Dewey is unavailable or results are insufficient.
+- **Parallel Swarm workers**: `[P]`-marked tasks execute in parallel via git worktrees (up to 4 concurrent). Falls back to sequential when the Swarm plugin is not installed.
+- **Resumability**: Probes filesystem state on startup to detect completed steps. Resumes from the first incomplete step. All progress is persisted in spec artifacts (plan.md, tasks.md checkboxes, spec-review marker).
+- **Graceful exit points**: Every exit (unanswerable questions, HIGH/CRITICAL findings, worker failures, merge conflicts, test failures, review exhaustion) includes actionable next steps and resume instructions.
+- **CI command derivation**: Build and test commands are derived from `.github/workflows/` files, not hardcoded.
+
+### Branch Safety
+
+`/unleash` requires a Speckit feature branch (`NNN-*`). It never runs on `main` and rejects `opsx/*` branches (use `/opsx-apply` instead). It validates that `spec.md` exists before proceeding.
+
+After `/unleash` completes, the demo step suggests running `/finale` to commit, push, create a PR, and merge.
+
+See also: [From Spec to Demo in One Command](/blog/unleash-in-practice/) — a narrative walkthrough of the pipeline.
+
+## End-of-Branch Workflow (`/finale`)
+
+`/finale` automates the end-of-branch workflow — one command to stage, commit, push, create a PR, watch CI, merge, and return to main.
+
+### The 9-Step Workflow
+
+| Step | Name                        | Description                                                                         |
+| ---- | --------------------------- | ----------------------------------------------------------------------------------- |
+| 1    | **Branch Safety Gate**      | Verifies not on `main`. Notes the branch name.                                      |
+| 2    | **Check for Changes**       | Inspects working tree. If clean, checks for unpushed commits or existing PR.        |
+| 3    | **Generate Commit Message** | Analyzes staged changes, generates conventional commit message, shows for approval. |
+| 4    | **Push to Remote**          | Sets upstream if needed (`git push -u origin <branch>`).                            |
+| 5    | **Create or Find PR**       | Creates PR via `gh pr create` or finds existing one.                                |
+| 6    | **Watch CI Checks**         | `gh pr checks --watch`. Stops on failure with options.                              |
+| 7    | **Merge PR**                | `gh pr merge --rebase --delete-branch`. Always uses rebase merge strategy.          |
+| 8    | **Return to Main**          | `git checkout main && git pull`.                                                    |
+| 9    | **Summary**                 | Displays completion report: branch, commit, PR, checks, status.                     |
+
+### Guardrails
+
+- Never runs on `main`
+- Never merges with failing CI checks
+- Never stages secret files (`.env`, `credentials.json`, `*.key`, `*.pem`) without warning
+- Never commits without user approval of the commit message
+- Always uses rebase merge strategy (no squash or merge commits)
+- If any step fails, stops immediately with context and options
+
+`/finale` works with both Speckit (`NNN-*`) and OpenSpec (`opsx/*`) branches. It is the natural complement to `/unleash` — `/unleash` builds, `/finale` ships.
+
+## New Feature (End-to-End) {#new-feature-end-to-end}
+
+> For autonomous execution of this entire workflow in one command, use [`/unleash`](#autonomous-pipeline-unleash). The manual flow below gives you step-by-step control over each stage.
 
 The full hero lifecycle for a new feature follows six stages. Each stage is owned by a specific hero, and each produces artifacts consumed by the next. Every stage has an **execution mode** -- either `[human]` (driven by the operator) or `[swarm]` (run autonomously by the agent swarm).
 
@@ -243,7 +307,7 @@ For bug fixes and small changes (fewer than 3 user stories), use the OpenSpec ta
 
 Create a change with proposal, design, and task artifacts in one step:
 
-```
+```text
 /opsx-propose fix-auth-timeout
 ```
 
@@ -259,7 +323,7 @@ This creates an `opsx/fix-auth-timeout` branch and checks it out automatically. 
 
 Implement the tasks:
 
-```
+```text
 /opsx-apply
 ```
 
@@ -269,7 +333,7 @@ Works through each task in the tasks.md file, making code changes and marking ta
 
 Run the review council to validate the fix:
 
-```
+```text
 /review-council
 ```
 
@@ -279,71 +343,11 @@ The five Divisor personas review the changes. Address any REQUEST CHANGES findin
 
 After the fix is merged, archive the change:
 
-```
+```text
 /opsx-archive
 ```
 
 Moves the change to `openspec/changes/archive/` with a date prefix for historical reference, then returns to the `main` branch.
-
-## Autonomous Pipeline (`/unleash`)
-
-`/unleash` is the autonomous Speckit pipeline execution command. It takes a spec from draft to demo-ready code in a single command, orchestrating 8 steps with graceful exit points and full resumability.
-
-### The 8-Step Pipeline
-
-| Step | Name              | Description                                                                                                                                                                   |
-| ---- | ----------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 1    | **Clarify**       | Scans spec.md for `[NEEDS CLARIFICATION]` markers. Uses Dewey semantic search to auto-resolve. Exits to human only for unanswerable questions.                                |
-| 2    | **Plan**          | Delegates to Cobalt-Crush to generate `plan.md` via `/speckit.plan`                                                                                                           |
-| 3    | **Tasks**         | Delegates to Cobalt-Crush to generate `tasks.md` via `/speckit.tasks`                                                                                                         |
-| 4    | **Spec Review**   | Runs the review council in Spec Review Mode. Auto-fixes LOW/MEDIUM findings. Exits on HIGH/CRITICAL.                                                                          |
-| 5    | **Implement**     | Parses `tasks.md` for phases. `[P]` parallel tasks run via Swarm worktrees (up to 4 concurrent workers). Phase checkpoints run CI commands derived from `.github/workflows/`. |
-| 6    | **Code Review**   | Runs the review council in Code Review Mode. Includes Phase 1a CI hard gate, Phase 1b Gaze quality analysis, and Divisor agent reviews. Up to 3 fix iterations.               |
-| 7    | **Retrospective** | Analyzes the session and stores learnings in Hivemind semantic memory.                                                                                                        |
-| 8    | **Demo**          | Presents structured demo instructions: what was built, how to verify, key files changed, and next steps.                                                                      |
-
-### Key Capabilities
-
-- **Dewey-powered clarification**: Auto-resolves spec ambiguities using semantic search. Falls back to human input when Dewey is unavailable or results are insufficient.
-- **Parallel Swarm workers**: `[P]`-marked tasks execute in parallel via git worktrees (up to 4 concurrent). Falls back to sequential when the Swarm plugin is not installed.
-- **Resumability**: Probes filesystem state on startup to detect completed steps. Resumes from the first incomplete step. All progress is persisted in spec artifacts (plan.md, tasks.md checkboxes, spec-review marker).
-- **Graceful exit points**: Every exit (unanswerable questions, HIGH/CRITICAL findings, worker failures, merge conflicts, test failures, review exhaustion) includes actionable next steps and resume instructions.
-- **CI command derivation**: Build and test commands are derived from `.github/workflows/` files, not hardcoded.
-
-### Branch Safety
-
-`/unleash` requires a Speckit feature branch (`NNN-*`). It never runs on `main` and rejects `opsx/*` branches (use `/opsx-apply` instead). It validates that `spec.md` exists before proceeding.
-
-After `/unleash` completes, the demo step suggests running `/finale` to commit, push, create a PR, and merge.
-
-## End-of-Branch Workflow (`/finale`)
-
-`/finale` automates the end-of-branch workflow — one command to stage, commit, push, create a PR, watch CI, merge, and return to main.
-
-### The 9-Step Workflow
-
-| Step | Name                        | Description                                                                         |
-| ---- | --------------------------- | ----------------------------------------------------------------------------------- |
-| 1    | **Branch Safety Gate**      | Verifies not on `main`. Notes the branch name.                                      |
-| 2    | **Check for Changes**       | Inspects working tree. If clean, checks for unpushed commits or existing PR.        |
-| 3    | **Generate Commit Message** | Analyzes staged changes, generates conventional commit message, shows for approval. |
-| 4    | **Push to Remote**          | Sets upstream if needed (`git push -u origin <branch>`).                            |
-| 5    | **Create or Find PR**       | Creates PR via `gh pr create` or finds existing one.                                |
-| 6    | **Watch CI Checks**         | `gh pr checks --watch`. Stops on failure with options.                              |
-| 7    | **Merge PR**                | `gh pr merge --rebase --delete-branch`. Always uses rebase merge strategy.          |
-| 8    | **Return to Main**          | `git checkout main && git pull`.                                                    |
-| 9    | **Summary**                 | Displays completion report: branch, commit, PR, checks, status.                     |
-
-### Guardrails
-
-- Never runs on `main`
-- Never merges with failing CI checks
-- Never stages secret files (`.env`, `credentials.json`, `*.key`, `*.pem`) without warning
-- Never commits without user approval of the commit message
-- Always uses rebase merge strategy (no squash or merge commits)
-- If any step fails, stops immediately with context and options
-
-`/finale` works with both Speckit (`NNN-*`) and OpenSpec (`opsx/*`) branches. It is the natural complement to `/unleash` — `/unleash` builds, `/finale` ships.
 
 ## Code Review
 
@@ -351,7 +355,7 @@ The review council brings five specialized perspectives to every code review.
 
 ### Invoking the Council
 
-```
+```text
 /review-council
 ```
 
@@ -442,13 +446,13 @@ Doctor checks 7 areas and shows pass/warn/fail for each with install hints. Fix 
 
 Open OpenCode and try your first task:
 
-```
+```text
 /swarm "your first task description"
 ```
 
 Or start with the Speckit pipeline for a new feature:
 
-```
+```text
 /speckit.specify
 ```
 
