@@ -262,7 +262,7 @@ Files deployed by `uf init` fall into two ownership categories:
 After deploying files, `uf init` performs sub-tool initialization:
 
 - Creates `.unbound-force/config.yaml` for [workflow configuration](/docs/getting-started/common-workflows/#workflow-configuration) (skipped if it already exists)
-- If [Dewey](/docs/getting-started/knowledge/) is available: creates the `.dewey/` workspace, auto-detects multi-repo sources, and builds the initial index. With `--force`, re-indexes an existing Dewey workspace.
+- If [Dewey](/docs/getting-started/knowledge/) is available: creates the `.dewey/` workspace, auto-detects sibling repos and your GitHub org to generate a [multi-repo source config](/docs/getting-started/knowledge/#what-uf-init-creates), and builds the initial index. After setup, you can [extend sources with web crawls](/docs/getting-started/knowledge/#extending-your-sources) for your project's toolstack documentation. With `--force`, re-indexes an existing Dewey workspace.
 - Configures `opencode.json` with MCP and plugin entries:
   - **Dewey MCP entry**: When `dewey` is in PATH, adds the `mcp.dewey` entry for the Dewey MCP server
   - **Swarm plugin entry**: When `.hive/` directory exists, adds `opencode-swarm-plugin` to the plugin array
