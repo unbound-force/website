@@ -46,7 +46,7 @@ Ready to dive in? Start with the [Quick Start](/docs/getting-started/quick-start
 - **[Tester](/docs/getting-started/tester/)** -- Gaze quality analysis, CRAP scores, coverage ratchets, CI integration
 - **[Product Owner](/docs/getting-started/product-owner/)** -- Muti-Mind backlog management, priority scoring, acceptance decisions
 - **[Product Manager](/docs/getting-started/product-manager/)** -- Mx F metrics, dashboards, coaching, retrospectives
-- **[Common Workflows](/docs/getting-started/common-workflows/)** -- End-to-end flows for features, bug fixes, code reviews, and setup
+- **[Common Workflows](/docs/getting-started/common-workflows/)** -- The `/unleash` autonomous pipeline, `/finale` shipping workflow, manual feature flows, bug fixes, and code reviews
 - **[Hero Artifacts](/docs/getting-started/artifacts/)** -- Inter-hero communication: envelope format, artifact types, and lifecycle data flow
 - **[Knowledge Retrieval with Dewey](/docs/getting-started/knowledge/)** -- Install and configure Dewey for semantic search across your repositories
 - **[Constitution](/docs/getting-started/constitution/)** -- The 4 core principles that govern all heroes and the governance model

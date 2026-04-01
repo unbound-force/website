@@ -34,21 +34,37 @@ Doctor checks 7 areas: your detected environment (version managers), core tools,
 
 ## Daily Workflow
 
-A typical development session follows this progression:
+A typical development session follows the specify-unleash-finale loop:
 
-1. **Check your environment**: Run `uf doctor` to verify all tools are healthy
-2. **Open OpenCode**: Start your AI coding environment
-3. **Check for work**: Run `hive_ready()` to see what tasks are available
-4. **Work**: Use `/swarm "task"` for parallel task execution, or code directly with Cobalt-Crush
-5. **End your session**: Run `hive_sync()` then `git push`
+1. **Specify**: Describe what you want to build
 
-The session lifecycle is critical -- **the plane is not landed until `git push` succeeds**. This ensures your work items, learnings, and file reservations are persisted for the next session.
+   ```text
+   /speckit.specify
+   ```
+
+2. **Unleash**: The swarm takes it from here -- clarification, planning, implementation, testing, and review
+
+   ```text
+   /unleash
+   ```
+
+   If `/unleash` pauses (unanswerable question, spec finding, build failure), fix the issue and re-run. If the spec needs refinement, run `/speckit.clarify` then `/unleash` again.
+
+3. **Finale**: Ship it -- commit, push, PR, merge, return to main
+
+   ```text
+   /finale
+   ```
+
+That is the complete loop. For smaller changes that don't need the full Speckit pipeline, use the [OpenSpec tactical workflow](/docs/getting-started/common-workflows/#bug-fix-tactical) (`/opsx-propose` -> `/opsx-apply` -> `/finale`). For parallel task execution without a spec, use `/swarm "task description"` directly.
 
 ## Working with Speckit
 
-Speckit is the strategic specification pipeline for features that need architectural planning. It follows a strict sequential flow:
+Speckit is the strategic specification pipeline for features that need architectural planning. For autonomous execution of the entire pipeline, run [`/unleash`](/docs/getting-started/common-workflows/#autonomous-pipeline-unleash) -- it handles clarification, planning, implementation, testing, and review in a single command, pausing only when human judgment is needed.
 
-```
+For step-by-step control, use the individual commands:
+
+```text
 /speckit.specify    Create the feature specification
 /speckit.clarify    Reduce ambiguity (interactive Q&A)
 /speckit.plan       Generate the technical implementation plan
@@ -108,7 +124,7 @@ Example queries Cobalt-Crush makes during implementation:
 - `dewey_similar("specs/005-getting-started-guides/plan.md")` — finds related planning artifacts to inform the current implementation approach
 - `dewey_semantic_search_filtered("error handling patterns", source: "github")` — finds error handling discussions in GitHub issues and PRs across the organization
 
-When Dewey is not available, Cobalt-Crush falls back to direct file reads and CLI queries. The implementation workflow is the same — just with narrower context. See the [graceful degradation tiers](/docs/getting-started/knowledge/#graceful-degradation) for details.
+When Dewey is not available, Cobalt-Crush falls back to direct file reads and CLI queries. The implementation workflow is the same — with narrower context. See the [graceful degradation tiers](/docs/getting-started/knowledge/#graceful-degradation) for details.
 
 ### File Reservations
 
