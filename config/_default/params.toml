@@ -63,7 +63,7 @@ mainSections = ["docs", "blog"]
   backgroundDots = true
 
   # Homepage
-  sectionFooter = true
+  sectionFooter = false
 
   # Content
   relatedPosts = false

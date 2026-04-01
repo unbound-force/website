@@ -5,6 +5,7 @@ disableHugoGeneratorInject = true
 enableEmoji = true
 enableGitInfo = false
 enableRobotsTXT = true
+googleAnalytics = "G-969E28NTFN"
 languageCode = "en-US"
 rssLimit = 10
 summarylength = 20

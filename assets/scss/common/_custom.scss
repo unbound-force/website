@@ -61,6 +61,14 @@
   .feature-icon {
     color: $violet-400;
   }
+
+  .feature-card-featured {
+    border-left-color: $violet-400;
+  }
+
+  .step-number {
+    background-color: $violet-400;
+  }
 }
 
 // Hero section
@@ -84,6 +92,35 @@
     margin-left: auto;
     margin-right: auto;
   }
+}
+
+// Featured card — visually prominent /unleash card
+.feature-card-featured {
+  border-left: 4px solid var(--bs-primary);
+  text-align: left;
+
+  .feature-icon {
+    color: var(--bs-primary);
+  }
+}
+
+// How It Works section
+.section-how-it-works {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+
+.step-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background-color: var(--bs-primary);
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.1rem;
 }
 
 // Features section
@@ -121,6 +158,7 @@ pre {
     padding-bottom: 2rem;
   }
 
+  .section-how-it-works,
   .section-features,
   .section-projects,
   .section-cta {
