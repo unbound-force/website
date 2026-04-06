@@ -22,7 +22,7 @@ toc: true
 | 4    | **Spec Review**   | Runs the review council in Spec Review Mode. Auto-fixes LOW/MEDIUM findings. Exits on HIGH/CRITICAL.                                                                               |
 | 5    | **Implement**     | Parses `tasks.md` for phases. `[P]` parallel tasks run via Replicator worktrees (up to 4 concurrent workers). Phase checkpoints run CI commands derived from `.github/workflows/`. |
 | 6    | **Code Review**   | Runs the review council in Code Review Mode. Includes Phase 1a CI hard gate, Phase 1b Gaze quality analysis, and Divisor agent reviews. Up to 3 fix iterations.                    |
-| 7    | **Retrospective** | Analyzes the session and stores learnings in Hivemind semantic memory.                                                                                                             |
+| 7    | **Retrospective** | Analyzes the session and stores learnings in Dewey semantic memory.                                                                                                                |
 | 8    | **Demo**          | Presents structured demo instructions: what was built, how to verify, key files changed, and next steps.                                                                           |
 
 ### Key Capabilities
@@ -140,10 +140,10 @@ The [Developer (Cobalt-Crush)](/docs/getting-started/developer/) creates the tec
 
 ### 4. Review (Reviewer Council) `[swarm]`
 
-[The Divisor](/docs/team/the-divisor/) reviews the code through five specialized personas.
+[The Divisor](/docs/team/the-divisor/) reviews the code through its specialized personas.
 
 - Invoke the review council: `/review-council`
-- Five personas evaluate in parallel:
+- Review personas evaluate in parallel:
   - **Guard**: Intent drift, constitution alignment, zero-waste
   - **Architect**: Coding conventions, pattern adherence, DRY
   - **Adversary**: Security, resilience, error handling
@@ -337,7 +337,7 @@ Run the review council to validate the fix:
 /review-council
 ```
 
-The five Divisor personas review the changes. Address any REQUEST CHANGES findings.
+The Divisor personas review the changes. Address any REQUEST CHANGES findings.
 
 ### 4. Archive
 
@@ -351,7 +351,7 @@ Moves the change to `openspec/changes/archive/` with a date prefix for historica
 
 ## Code Review
 
-The review council brings five specialized perspectives to every code review.
+The review council brings multiple specialized perspectives to every code review.
 
 ### Invoking the Council
 
@@ -413,7 +413,7 @@ uf setup
 This installs the full toolchain in one command:
 
 - **Core tools** -- OpenCode (AI coding environment), Gaze (quality analysis), Mx F (manager hero), GitHub CLI
-- **Development tools** -- Node.js, Bun, OpenSpec CLI, Replicator (multi-agent coordination), `.hive/` initialization
+- **Development tools** -- Node.js, OpenSpec CLI, Replicator (multi-agent coordination)
 - **Knowledge layer** -- Ollama (local model runtime), Dewey (semantic search), IBM Granite embedding model, Dewey workspace initialization and index build
 - **Project scaffolding** -- `uf init` to deploy agents, commands, convention packs, templates, and workflow configuration
 

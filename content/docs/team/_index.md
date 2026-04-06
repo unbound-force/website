@@ -1,7 +1,7 @@
 ---
 title: "The Team"
 description: "Meet the Unbound Force heroes — five AI agent personas that form a superhero-themed software engineering swarm."
-lead: "Meet the five AI agent personas and the infrastructure that powers the swarm."
+lead: "Meet the five hero personas and the infrastructure that powers the swarm."
 date: 2026-02-23T00:00:00+00:00
 draft: false
 weight: 10
@@ -28,7 +28,7 @@ _The Quality Sentinel and Predictive Validation Engine._ Gaze protects the produ
 
 ### [The Divisor](/docs/team/the-divisor/) — PR Reviewer Council
 
-_The Architectural Conscience and Code Integrity Guardian._ The Divisor operates as a council of five sub-personas — The Guard, The Architect, The Adversary, The Operator (SRE), and The Tester — providing comprehensive, multi-faceted validation of every code submission.
+_The Architectural Conscience and Code Integrity Guardian._ The Divisor operates as a council of eight sub-personas — five for code review (The Guard, The Architect, The Adversary, The Operator (SRE), and The Tester) and three for content creation (The Scribe, The Herald, and The Envoy) — providing comprehensive, multi-faceted validation of every code and content submission.
 
 ### [Mx F](/docs/team/mx-f/) — Manager
 

@@ -100,9 +100,9 @@ If findings exist, the pipeline attempts to fix them and re-review, up to 3 iter
 
 ### 7. Retrospective
 
-Analyzes the session — what was built, what the review council found, what patterns emerged — and stores learnings in semantic memory via [Hivemind](https://github.com/unbound-force/unbound-force). These learnings surface in future sessions when similar problems arise.
+Analyzes the session — what was built, what the review council found, what patterns emerged — and stores learnings in Dewey semantic memory. These learnings surface in future sessions when similar problems arise.
 
-If Hivemind is not available, learnings are displayed in the output instead of stored.
+If Dewey is not available, learnings are displayed in the output instead of stored.
 
 ### 8. Demo
 
@@ -148,7 +148,7 @@ After `/unleash` presents demo instructions, run `/finale` to automate the end-o
 | Dewey      | Auto-resolves clarification questions | Questions exit for human input |
 | Replicator | Parallel task execution in worktrees  | Sequential execution           |
 | Gaze       | Quality analysis in code review       | Code review skips quality data |
-| Hivemind   | Stores retrospective learnings        | Displays learnings in output   |
+| Dewey      | Stores retrospective learnings        | Displays learnings in output   |
 
 The pipeline works with all four tools, with none of them, or with any combination. You get the most autonomous experience with the full stack, but the pipeline never fails because a tool is missing.
 

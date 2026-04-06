@@ -15,6 +15,7 @@ Found a bug or have a feature request? Open an issue on the relevant GitHub repo
 - [Unbound Force Website](https://github.com/unbound-force/website/issues) — this website
 - [Gaze](https://github.com/unbound-force/gaze/issues) — test quality analysis tool
 - [Dewey](https://github.com/unbound-force/dewey/issues) — semantic knowledge retrieval
+- [Replicator](https://github.com/unbound-force/replicator/issues) — multi-agent coordination
 - [Unbound Force](https://github.com/unbound-force/unbound-force/issues) — agent personas and roles
 
 Include steps to reproduce, expected behavior, and actual behavior. For feature requests, describe the problem you are trying to solve.
@@ -29,7 +30,7 @@ We follow the standard GitHub pull request workflow:
 4. Submit a pull request against the `main` branch
 5. Address any review feedback from The Divisor council
 
-All pull requests are reviewed by The Divisor — a council of five sub-personas (The Guard, The Architect, The Adversary, The Operator (SRE), and The Tester) that evaluate intent, structure, resilience, operational readiness, and test quality. Collective approval from all five is required before merge.
+All pull requests are reviewed by The Divisor — a council of eight sub-personas. Five review personas (The Guard, The Architect, The Adversary, The Operator (SRE), and The Tester) evaluate intent, structure, resilience, operational readiness, and test quality. Three content personas (The Scribe, The Herald, and The Envoy) ensure documentation, blog posts, and public communications meet quality standards. Collective approval from all active personas is required before merge.
 
 ## Conventional Commits
 
@@ -78,4 +79,5 @@ The constitution (`.specify/memory/constitution.md`) is the highest-authority do
 - [Website Repository](https://github.com/unbound-force/website)
 - [Gaze Repository](https://github.com/unbound-force/gaze)
 - [Dewey Repository](https://github.com/unbound-force/dewey)
+- [Replicator Repository](https://github.com/unbound-force/replicator)
 - [Speckit (spec-kit)](https://github.com/github/spec-kit)

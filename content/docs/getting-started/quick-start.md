@@ -20,7 +20,7 @@ uf setup
 `uf setup` installs everything in one command:
 
 - **Core tools** -- OpenCode (AI coding environment), Gaze (quality analysis), Mx F (manager hero), GitHub CLI
-- **Development tools** -- Node.js, Bun, OpenSpec CLI, Replicator (multi-agent coordination)
+- **Development tools** -- Node.js, OpenSpec CLI, Replicator (multi-agent coordination)
 - **Knowledge layer** -- Ollama (local model runtime), Dewey (semantic search), IBM Granite embedding model
 - **Project scaffolding** -- agents, commands, convention packs, templates, and workflow configuration via `uf init`
 
