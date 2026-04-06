@@ -20,7 +20,7 @@ uf setup
 `uf setup` detects your existing version managers (goenv, nvm, fnm, Homebrew) and installs through them:
 
 - **Core tools** -- OpenCode (AI coding environment), Gaze (quality analysis), Mx F (manager hero), GitHub CLI
-- **Development tools** -- Node.js, Bun, OpenSpec CLI, Replicator (multi-agent coordination)
+- **Development tools** -- Node.js, OpenSpec CLI, Replicator (multi-agent coordination)
 - **Knowledge layer** -- Ollama (local model runtime), Dewey (semantic search), IBM Granite embedding model
 - **Project scaffolding** -- agents, commands, convention packs, templates, and workflow configuration via `uf init`
 
@@ -175,11 +175,11 @@ This prevents conflicts when multiple workers are active. Reservations auto-rele
 
 Every session follows this ritual:
 
-| Step      | Command                     | Purpose                          |
-| --------- | --------------------------- | -------------------------------- |
-| **Start** | `hive_ready()`              | Get the next unblocked work item |
-| **Work**  | `/unleash` or direct coding | Execute the work                 |
-| **End**   | `hive_sync()` + `git push`  | Persist work items and learnings |
+| Step      | Command                               | Purpose                                 |
+| --------- | ------------------------------------- | --------------------------------------- |
+| **Start** | `/speckit.specify` or `/opsx-propose` | Define the work                         |
+| **Work**  | `/unleash` or `/cobalt-crush`         | Execute the work                        |
+| **End**   | `/finale`                             | Commit, push, PR, merge, return to main |
 
 ## Cobalt-Crush Persona
 
@@ -209,6 +209,8 @@ Packs are organized by language, with each language having a tool-owned canonica
 | `typescript.md`        | Tool-owned | TypeScript-specific rules: ESLint, Prettier, strict typing, architectural patterns                                |
 | `typescript-custom.md` | User-owned | Project-specific TypeScript conventions                                                                           |
 | `severity.md`          | Tool-owned | Shared severity definitions for all Divisor personas (calibration standard for CRITICAL/HIGH/MEDIUM/LOW findings) |
+| `content.md`           | Tool-owned | Language-agnostic writing standards for documentation, blog posts, and website content                            |
+| `content-custom.md`    | User-owned | Project-specific writing conventions                                                                              |
 
 #### Ownership Model
 
@@ -274,14 +276,14 @@ uf init [--divisor] [--lang go|typescript] [--force]
 
 `uf init` deploys approximately 50 files across these categories:
 
-| Category         | Files | Examples                                                                          |
-| ---------------- | ----- | --------------------------------------------------------------------------------- |
-| Agents           | ~12   | 5 Divisor personas, Cobalt-Crush, Constitution Check, Mx F Coach                  |
-| Commands         | ~15   | 9 Speckit commands, review-council, constitution-check, cobalt-crush              |
-| Convention Packs | 7     | default, go, typescript (each with tool-owned and user-owned variants) + severity |
-| Templates        | ~6    | spec, plan, tasks, checklist, constitution, agent-file templates                  |
-| Scripts          | ~5    | check-prerequisites, setup-plan, create-new-feature, update-agent-context         |
-| OpenSpec         | ~6    | config, schema, 4 templates (design, proposal, spec, tasks)                       |
+| Category         | Files | Examples                                                                                   |
+| ---------------- | ----- | ------------------------------------------------------------------------------------------ |
+| Agents           | ~12   | 5 Divisor personas, Cobalt-Crush, Constitution Check, Mx F Coach                           |
+| Commands         | ~15   | 9 Speckit commands, review-council, constitution-check, cobalt-crush                       |
+| Convention Packs | 9     | default, go, typescript, content (each with tool-owned and user-owned variants) + severity |
+| Templates        | ~6    | spec, plan, tasks, checklist, constitution, agent-file templates                           |
+| Scripts          | ~5    | check-prerequisites, setup-plan, create-new-feature, update-agent-context                  |
+| OpenSpec         | ~6    | config, schema, 4 templates (design, proposal, spec, tasks)                                |
 
 File counts are approximate and may change between versions.
 
@@ -310,15 +312,13 @@ After completion, `uf init` shows a summary with file dispositions (`+` created,
 
 ## Session Ritual
 
-The most important habit: **always end your session properly**.
+The most important habit: **always end your session properly**. The daily workflow follows a specify → unleash → finale loop. When you are done working, run `/finale` to commit, push, create a PR, and merge:
 
-```
-1. hive_sync()     # Persist work items to git
-2. git push        # Push to remote
-3. Verify          # "Your branch is up to date with origin"
+```text
+/finale        # commit → push → PR → merge → main
 ```
 
-The plane is not landed until `git push` succeeds. This ensures your work items, semantic memory learnings, and file reservation state are available for your next session -- and for other team members who may pick up where you left off.
+`/finale` handles the full end-of-branch workflow: staging changes, generating a conventional commit message, pushing to remote, creating a PR, watching CI checks, rebase-merging, and returning to `main`. The session is not complete until `git push` succeeds — this ensures your work items, semantic memory learnings, and file reservation state are available for your next session and for other team members who may pick up where you left off.
 
 ## Next Steps
 

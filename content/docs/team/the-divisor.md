@@ -1,6 +1,6 @@
 ---
 title: "The Divisor"
-description: "The Divisor is the PR Reviewer Council — five sub-personas (Guard, Architect, Adversary, SRE, Testing) serving as the Code Integrity Guardian."
+description: "The Divisor is the PR Reviewer Council — eight sub-personas for code review and content creation, serving as the Code Integrity Guardian."
 lead: "The Architectural Conscience and Code Integrity Guardian"
 date: 2026-02-23T00:00:00+00:00
 draft: false
@@ -14,7 +14,7 @@ toc: true
 
 The Divisor is the PR Reviewer of the Unbound Force swarm — the architectural conscience and code integrity guardian. Their mission is to ensure that all code changes proposed by Cobalt-Crush, once validated by Gaze, adhere strictly to established architectural standards, best practices, security policies, and maintainability requirements.
 
-The Divisor acts as the final technical gate before integration, translating high-level architectural standards into actionable review criteria. What makes The Divisor unique is its structure: it operates as a **council of five dynamically discovered personas** -- five canonical roles ship by default, with users able to add or remove personas freely. Each provides a different lens on every code submission.
+The Divisor acts as the final technical gate before integration, translating high-level architectural standards into actionable review criteria. What makes The Divisor unique is its structure: it operates as a **council of eight dynamically discovered personas** -- eight canonical roles ship by default (five review, three content creation), with users able to add or remove personas freely. Each provides a different lens on every code submission.
 
 ## The Council
 
@@ -65,6 +65,43 @@ The Tester focuses on _"Are the tests meaningful?"_ They ensure tests are not ju
 - Verifying test isolation (no shared mutable state, no execution order dependencies, no external network access)
 - Ensuring regression protection (spec-critical behavior locked down, known-good and known-bad scenarios covered)
 
+## Content Creation Personas
+
+Beyond code review, The Divisor includes three content creation personas that apply the same council-based quality model to written output. Each operates at a different temperature to match its domain — lower temperatures for precision-critical documentation, higher temperatures for creative public communication.
+
+### The Scribe — Technical Documentation
+
+The Scribe focuses on _"Does the documentation match the code?"_ They produce and review technical documentation with precision:
+
+- READMEs, specification artifacts, CLI help text, and API reference documentation
+- Ensuring documentation claims are verifiable against the actual codebase
+- Maintaining terminology consistency across all documentation pages
+- Flagging stale content that no longer reflects the current implementation
+
+Temperature: **0.1** (precision). Technical documentation demands accuracy over creativity — every claim must be traceable to code.
+
+### The Herald — Blog Posts and Announcements
+
+The Herald focuses on _"Does this tell a compelling technical story?"_ They produce and review narrative content:
+
+- Blog posts, release notes, changelogs, and feature announcements
+- Structuring content with a narrative arc: problem, approach, evidence, conclusion
+- Balancing technical depth with accessibility for a mid-level developer audience
+- Avoiding time-sensitive language that becomes stale ("recently," "new," "just launched")
+
+Temperature: **0.4** (controlled creativity). Blog posts need enough creative latitude to engage readers while staying grounded in technical accuracy.
+
+### The Envoy — Public Relations and Communications
+
+The Envoy focuses on _"Does this build trust?"_ They produce and review public-facing communications:
+
+- Press releases, social media posts, community updates, and partnership announcements
+- Calibrating claims to match the project's actual maturity level — never overstating capabilities
+- Building credibility through honest scoping and transparent limitation acknowledgment
+- Adapting tone for different audiences while maintaining the Unbound Force voice
+
+Temperature: **0.5** (most creative). Public communications benefit from the most creative latitude, but The Envoy's credibility constraints prevent overclaims.
+
 ## Exclusive Ownership Boundaries
 
 Each review dimension is owned by exactly one Divisor persona, eliminating duplicate findings across personas:
@@ -86,7 +123,7 @@ This ownership model ensures that a finding like "missing error handling" is rai
 
 ## Shared Severity Standard
 
-All 5 personas share a calibration standard defined in the `severity.md` convention pack (`.opencode/unbound/packs/severity.md`):
+All eight personas share a calibration standard defined in the `severity.md` convention pack (`.opencode/unbound/packs/severity.md`):
 
 | Level        | Definition                                                                           | Auto-Fix?                    |
 | ------------ | ------------------------------------------------------------------------------------ | ---------------------------- |
@@ -99,11 +136,11 @@ Each level includes domain-specific examples per persona — for example, an Adv
 
 ## Prior Learnings Integration
 
-All 5 Divisor personas include a "Prior Learnings" step at the start of their review workflow:
+All eight Divisor personas include a "Prior Learnings" step at the start of their review workflow:
 
-1. Search Hivemind for learnings tagged with the repo name and relevant file paths
+1. Search Dewey for learnings tagged with the repo name and relevant file paths
 2. Include found learnings as prior knowledge in the review context
-3. Graceful degradation when Hivemind is not available — the step is skipped with an informational note
+3. Graceful degradation when Dewey is not available — the step is skipped with an informational note
 
 This means the review council learns from past reviews. If a particular pattern has been flagged before, the relevant persona will reference that history when evaluating new code.
 
@@ -111,11 +148,11 @@ This means the review council learns from past reviews. If a particular pattern 
 
 The Divisor holds the ultimate authority to approve and merge code into the main branch. Approval requires collective consensus — **no outstanding REQUEST CHANGES from any persona** is mandatory. Gaze's functional validation serves as a prerequisite: the CI pipeline must be green before The Divisor begins review.
 
-This structure ensures that only code which passes all five lenses — intent, architecture, resilience, operational readiness, and test quality — is deployed.
+This structure ensures that only code which passes all eight lenses — intent, architecture, resilience, operational readiness, test quality, documentation accuracy, narrative clarity, and public communication — is deployed.
 
 ## How The Divisor Serves the Team
 
-**For Developers (Cobalt-Crush):** Cobalt-Crush relies on The Divisor for the final technical sign-off. The multi-faceted feedback from the five personas provides a holistic critique covering intent, structure, security, operational readiness, and test quality. Clear architectural standards minimize uncertainty, allowing Cobalt-Crush to code with confidence.
+**For Developers (Cobalt-Crush):** Cobalt-Crush relies on The Divisor for the final technical sign-off. The multi-faceted feedback from the eight personas provides a holistic critique covering intent, structure, security, operational readiness, test quality, and content accuracy. Clear architectural standards minimize uncertainty, allowing Cobalt-Crush to code with confidence.
 
 **For the Tester (Gaze):** Gaze relies on The Divisor to establish the architectural and non-functional requirements against which testability must be measured. Gaze's green light on functional tests is the entry criterion for The Divisor's review, ensuring review time is spent on high-level risk and structure rather than defect finding.
 
