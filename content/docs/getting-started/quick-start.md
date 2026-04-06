@@ -36,19 +36,31 @@ Doctor checks 7 areas and shows pass/warn/fail for each with install hints. Fix 
 
 ## Start Working
 
-For the fastest path -- one command from spec to demo-ready code:
+OpenCode has two modes -- switch between them with **Tab**:
+
+- **Plan mode**: Read-only. Explore ideas, analyze code, think through your approach.
+- **Build mode**: Full access. Create files, run commands, execute pipelines.
+
+### Large Tasks
+
+Start in plan mode to explore your idea, then switch to build mode:
 
 ```text
 /speckit.specify    # describe what you want to build
 /unleash            # the swarm takes it from here
+/finale             # ship it
 ```
 
-`/unleash` runs the entire pipeline autonomously: clarify, plan, implement, test, and review. It pauses when it needs you and resumes where it left off. See the [blog post](/blog/unleash-in-practice/) for a walkthrough of the pipeline.
+`/unleash` runs the entire pipeline autonomously: clarify, plan, implement, test, and review. It pauses when it needs you and resumes where it left off. See the [blog post](/blog/unleash-in-practice/) for a walkthrough.
 
-For step-by-step control over each stage:
+### Small Tasks
+
+For bug fixes and tactical changes:
 
 ```text
-/speckit.specify    # then /speckit.plan, /speckit.tasks, /speckit.implement
+/opsx-propose fix-the-bug    # create proposal + design + tasks
+/cobalt-crush                # implement with convention pack adherence
+/finale                      # ship it
 ```
 
 ## The Stack

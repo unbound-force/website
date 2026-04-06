@@ -319,15 +319,15 @@ This creates `openspec/changes/fix-auth-timeout/` with:
 
 This creates an `opsx/fix-auth-timeout` branch and checks it out automatically. The `opsx/` prefix distinguishes OpenSpec branches from Speckit branches (`NNN-<short-name>`) in `git branch` output.
 
-### 2. Apply
+### 2. Implement
 
-Implement the tasks:
+Invoke Cobalt-Crush to implement with convention pack adherence:
 
 ```text
-/opsx-apply
+/cobalt-crush
 ```
 
-Works through each task in the tasks.md file, making code changes and marking tasks complete. Before proceeding, `/opsx-apply` validates that you are on the correct `opsx/<name>` branch -- this is a hard gate to prevent implementing changes on the wrong branch.
+`/cobalt-crush` detects the active OpenSpec change and implements the tasks through the `cobalt-crush-dev` agent, which loads [convention packs](/docs/getting-started/developer/#convention-packs) and applies the project's coding standards. This gives you the quality enforcement that a bare `/opsx-apply` would skip. Before proceeding, it validates that you are on the correct `opsx/<name>` branch.
 
 ### 3. Review
 

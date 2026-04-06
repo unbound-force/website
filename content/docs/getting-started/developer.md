@@ -32,17 +32,32 @@ uf doctor
 
 Doctor checks 7 areas: your detected environment (version managers), core tools, Replicator health, scaffolded files, hero availability, MCP server config, and agent/skill integrity. Every failed check includes a copy-pasteable install command to fix it.
 
+## OpenCode Modes
+
+OpenCode has two primary modes you switch between with the **Tab** key:
+
+- **Plan mode** -- Read-only. File edits and shell commands require approval. Use this to explore ideas, analyze code, and think through an approach before committing to it.
+- **Build mode** -- Full tool access. File edits, shell commands, and all MCP tools are enabled. Use this when you're ready to make changes.
+
+Start every task in plan mode to think, then switch to build mode to execute.
+
 ## Daily Workflow
 
-A typical development session follows the specify-unleash-finale loop:
+Two main workflows for large and small tasks:
 
-1. **Specify**: Describe what you want to build
+### Large Tasks (Strategic)
+
+For features that need architectural planning:
+
+1. **Explore** (plan mode): Think through the idea, investigate the codebase, clarify requirements
+
+2. **Specify** (build mode): Create a structured specification
 
    ```text
    /speckit.specify
    ```
 
-2. **Unleash**: The swarm takes it from here -- clarification, planning, implementation, testing, and review
+3. **Unleash** (build mode): The swarm takes it from here -- clarification, planning, implementation, testing, and review
 
    ```text
    /unleash
@@ -50,13 +65,37 @@ A typical development session follows the specify-unleash-finale loop:
 
    If `/unleash` pauses (unanswerable question, spec finding, build failure), fix the issue and re-run. If the spec needs refinement, run `/speckit.clarify` then `/unleash` again.
 
-3. **Finale**: Ship it -- commit, push, PR, merge, return to main
+4. **Finale** (build mode): Ship it -- commit, push, PR, merge, return to main
 
    ```text
    /finale
    ```
 
-That is the complete loop. For smaller changes that don't need the full Speckit pipeline, use the [OpenSpec tactical workflow](/docs/getting-started/common-workflows/#bug-fix-tactical) (`/opsx-propose` -> `/opsx-apply` -> `/finale`).
+### Small Tasks (Tactical)
+
+For bug fixes and changes that don't need the full Speckit pipeline:
+
+1. **Explore** (plan mode): Think through the fix, understand the problem
+
+2. **Propose** (build mode): Create a change with proposal, design, and tasks in one step
+
+   ```text
+   /opsx-propose fix-auth-timeout
+   ```
+
+3. **Implement** (build mode): Invoke Cobalt-Crush to implement with convention pack adherence
+
+   ```text
+   /cobalt-crush
+   ```
+
+   `/cobalt-crush` delegates to the `cobalt-crush-dev` agent, which loads [convention packs](/docs/getting-started/developer/#convention-packs) and applies the project's coding standards. This gives you the quality enforcement that a bare `/opsx-apply` would skip.
+
+4. **Finale** (build mode): Ship it
+
+   ```text
+   /finale
+   ```
 
 ## Working with Speckit
 
