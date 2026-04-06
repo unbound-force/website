@@ -2,10 +2,11 @@
 description: >
   Run the full Speckit pipeline autonomously: clarify
   ambiguities with Dewey, generate plan and tasks, review
-  specs, implement with parallel Swarm workers, review code,
+  specs,   implement with parallel Replicator workers, review code,
   store learnings, and present demo instructions. Exits to
   the human only when it genuinely needs human judgment.
 ---
+
 <!-- scaffolded by uf vdev -->
 <!-- scaffolded by uf vdev -->
 
@@ -40,7 +41,7 @@ previous interrupted runs:
    plan.md, tasks.md, and task checkboxes live in the main
    working directory, not in worktrees.
 
-If `swarm_worktree_list` is not available (Swarm plugin
+If `swarm_worktree_list` is not available (Replicator
 not installed), skip this step silently.
 
 ### 1. Branch Safety Gate
@@ -52,11 +53,13 @@ git rev-parse --abbrev-ref HEAD
 ```
 
 - If on `main`: **STOP** with error:
+
   > "Cannot run /unleash on main. Must be on a Speckit
   > feature branch (`NNN-*`). Run `/speckit.specify`
   > first."
 
 - If on `opsx/*`: **STOP** with error:
+
   > "/unleash is for Speckit strategic specs only. Use
   > `/opsx:apply` for OpenSpec tactical changes."
 
@@ -75,6 +78,7 @@ root:
 
 If the script fails or no spec.md is found: **STOP**
 with error:
+
 > "No spec.md found in the feature directory. Run
 > `/speckit.specify` first."
 
@@ -249,9 +253,11 @@ analysis + quality validation) in a single pass.
 
 - If all reviewers APPROVE: write the spec review marker
   to `tasks.md`:
+
   ```
   <!-- spec-review: passed -->
   ```
+
   Append this marker at the very end of `tasks.md`.
   Proceed to step 5.
 
@@ -308,90 +314,92 @@ of truth. This is the same pattern used by
 3. **Parallel execution**: check if
    `swarm_worktree_create` is available.
 
-   **If Swarm worktrees are available**:
+   **If Replicator worktrees are available**:
 
    a. Get the current commit hash:
-      ```bash
-      git rev-parse HEAD
-      ```
+
+   ```bash
+   git rev-parse HEAD
+   ```
 
    b. Limit concurrent workers to 4. If more than 4
-      `[P]` tasks exist in the phase, batch them: run
-      the first 4, wait for all to complete, then run
-      the next batch.
+   `[P]` tasks exist in the phase, batch them: run
+   the first 4, wait for all to complete, then run
+   the next batch.
 
    c. For each `[P]` task in the current batch:
-      - Call `swarm_worktree_create` with the project
-        path, task ID, and current commit hash to create
-        a dedicated worktree.
-      - Call `swarm_spawn_subtask` with the task
-        description, files from the task, and the
-        worktree path.
+   - Call `swarm_worktree_create` with the project
+     path, task ID, and current commit hash to create
+     a dedicated worktree.
+   - Call `swarm_spawn_subtask` with the task
+     description, files from the task, and the
+     worktree path.
 
    d. Wait for all workers in the batch to complete.
 
    e. **If any worker fails**: stop spawning new workers
-      (do not start the next batch). Wait for any
-      already-running workers to complete or fail. Then
-      call `swarm_worktree_cleanup` with `cleanup_all:
-      true` to remove all worktrees. **EXIT** with error
-      context:
+   (do not start the next batch). Wait for any
+   already-running workers to complete or fail. Then
+   call `swarm_worktree_cleanup` with `cleanup_all:
+true` to remove all worktrees. **EXIT** with error
+   context:
 
-      ```
-      ## /unleash paused at: implement (Phase N)
+   ```
+   ## /unleash paused at: implement (Phase N)
 
-      **Reason**: Parallel worker failed
+   **Reason**: Parallel worker failed
 
-      **Failed task**: [task ID and description]
-      **Error**: [error details from worker]
+   **Failed task**: [task ID and description]
+   **Error**: [error details from worker]
 
-      ### What to do next
-      Fix the issue described above, then re-run
-      `/unleash`.
+   ### What to do next
+   Fix the issue described above, then re-run
+   `/unleash`.
 
-      ### Then resume
-      Run `/unleash` to continue from the failed phase.
-      ```
+   ### Then resume
+   Run `/unleash` to continue from the failed phase.
+   ```
 
    f. After all workers in a batch complete successfully,
-      merge each worktree back:
-      - Call `swarm_worktree_merge` for each worktree.
-        This uses cherry-pick to apply the worker's
-        commits to the main branch.
-      - After each merge, check for conflict markers
-        (`<<<<<<<`, `=======`, `>>>>>>>`) in the
-        affected files.
-      - If NO conflict markers remain: merge succeeded.
-        Call `swarm_worktree_cleanup` for that worktree.
-      - If conflict markers remain: auto-resolution
-        failed. Call `swarm_worktree_cleanup` with
-        `cleanup_all: true`. **EXIT** with conflict
-        details:
+   merge each worktree back:
+   - Call `swarm_worktree_merge` for each worktree.
+     This uses cherry-pick to apply the worker's
+     commits to the main branch.
+   - After each merge, check for conflict markers
+     (`<<<<<<<`, `=======`, `>>>>>>>`) in the
+     affected files.
+   - If NO conflict markers remain: merge succeeded.
+     Call `swarm_worktree_cleanup` for that worktree.
+   - If conflict markers remain: auto-resolution
+     failed. Call `swarm_worktree_cleanup` with
+     `cleanup_all: true`. **EXIT** with conflict
+     details:
 
-        ```
-        ## /unleash paused at: implement (Phase N)
+     ```
+     ## /unleash paused at: implement (Phase N)
 
-        **Reason**: Worktree merge conflict
+     **Reason**: Worktree merge conflict
 
-        **Conflicting files**:
-        [list files with conflict markers]
+     **Conflicting files**:
+     [list files with conflict markers]
 
-        ### What to do next
-        Resolve the merge conflicts manually, then
-        re-run `/unleash`.
+     ### What to do next
+     Resolve the merge conflicts manually, then
+     re-run `/unleash`.
 
-        ### Then resume
-        Run `/unleash` to continue from the current
-        phase.
-        ```
+     ### Then resume
+     Run `/unleash` to continue from the current
+     phase.
+     ```
 
    g. Mark each successfully merged `[P]` task as `[x]`
-      in `tasks.md`.
+   in `tasks.md`.
 
-   **If Swarm worktrees are NOT available**: fall back to
+   **If Replicator worktrees are NOT available**: fall back to
    sequential execution for `[P]` tasks. Announce:
-   > "Swarm worktrees not available -- executing parallel
-   > tasks sequentially. Install the Swarm plugin for
+
+   > "Replicator worktrees not available -- executing parallel
+   > tasks sequentially. Install Replicator for
    > parallel execution."
 
    Execute each `[P]` task sequentially via the
@@ -512,8 +520,9 @@ memory.
 
 4. **If Hivemind is NOT available**: skip the storage
    step with an informational note:
+
    > "Hivemind not available -- retrospective learnings
-   > not stored. Install the Swarm plugin for semantic
+   > not stored. Install Replicator for semantic
    > memory."
 
    Display the learnings in the output so they are not
@@ -533,9 +542,11 @@ Present structured demo instructions to the developer.
    spec.md.
 
 3. **Key Files Changed**: run:
+
    ```bash
    git diff --name-only main...HEAD
    ```
+
    List the changed files grouped by directory.
 
 4. **Test Results**: summarize the test output from the

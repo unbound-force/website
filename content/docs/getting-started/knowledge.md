@@ -33,7 +33,7 @@ The `granite-embedding:30m` model is IBM's Granite Embedding — a 63 MB model l
 
 ### Embedding Model Alignment
 
-The Unbound Force swarm and Dewey are aligned on the same embedding model (IBM Granite `granite-embedding:30m`). To ensure consistency for processes spawned outside of `uf setup` (e.g., `dewey serve`, manual `swarm init`), add these environment variables to your shell profile (`~/.zshrc` or `~/.bashrc`):
+The Unbound Force swarm and Dewey are aligned on the same embedding model (IBM Granite `granite-embedding:30m`). To ensure consistency for processes spawned outside of `uf setup` (e.g., `dewey serve`, manual `replicator init`), add these environment variables to your shell profile (`~/.zshrc` or `~/.bashrc`):
 
 ```bash
 export OLLAMA_MODEL=granite-embedding:30m

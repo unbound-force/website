@@ -20,7 +20,7 @@ uf setup
 `uf setup` installs everything in one command:
 
 - **Core tools** -- OpenCode (AI coding environment), Gaze (quality analysis), Mx F (manager hero), GitHub CLI
-- **Development tools** -- Node.js, Bun, OpenSpec CLI, Swarm plugin (multi-agent coordination)
+- **Development tools** -- Node.js, Bun, OpenSpec CLI, Replicator (multi-agent coordination)
 - **Knowledge layer** -- Ollama (local model runtime), Dewey (semantic search), IBM Granite embedding model
 - **Project scaffolding** -- agents, commands, convention packs, templates, and workflow configuration via `uf init`
 
@@ -51,27 +51,21 @@ For step-by-step control over each stage:
 /speckit.specify    # then /speckit.plan, /speckit.tasks, /speckit.implement
 ```
 
-For parallel task execution without the full pipeline:
-
-```text
-/swarm "your task description"
-```
-
 ## The Stack
 
 Unbound Force runs on three tools that form a layered stack. `uf setup` installs all of them, but each is independently useful:
 
-| Layer            | Tool                                                     | What It Does                                                                                                    |
-| ---------------- | -------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
-| **Agent**        | [OpenCode](https://opencode.ai)                          | The AI coding environment where you interact, write code, and run commands. The personas run inside OpenCode.   |
-| **Planning**     | [Speckit](https://github.com/github/spec-kit) (spec-kit) | A specification pipeline that turns ideas into structured specs, plans, and tasks before implementation begins. |
-| **Coordination** | [Swarm](https://www.swarmtools.ai/)                      | An OpenCode plugin that enables multi-agent parallelism and learning amongst team members.                      |
+| Layer            | Tool                                                      | What It Does                                                                                                               |
+| ---------------- | --------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| **Agent**        | [OpenCode](https://opencode.ai)                           | The AI coding environment where you interact, write code, and run commands. The personas run inside OpenCode.              |
+| **Planning**     | [Speckit](https://github.com/github/spec-kit) (spec-kit)  | A specification pipeline that turns ideas into structured specs, plans, and tasks before implementation begins.            |
+| **Coordination** | [Replicator](https://github.com/unbound-force/replicator) | Multi-agent coordination: parallel workers, git-backed tracking, file reservations, and semantic memory. Single Go binary. |
 
-Each tool is independently useful, but they compose into the full Unbound Force workflow: plan with Speckit, execute with OpenCode, coordinate with Swarm.
+Each tool is independently useful, but they compose into the full Unbound Force workflow: plan with Speckit, execute with OpenCode, coordinate with Replicator.
 
 ## Next Steps
 
-- **[Developer Guide](/docs/getting-started/developer/)** -- Daily workflow, Speckit pipeline, Swarm coordination, convention packs
+- **[Developer Guide](/docs/getting-started/developer/)** -- Daily workflow, Speckit pipeline, Replicator coordination, convention packs
 - **[Tester Guide](/docs/getting-started/tester/)** -- Gaze quality analysis, CRAP scores, coverage ratchets, CI integration
 - **[Product Owner Guide](/docs/getting-started/product-owner/)** -- Muti-Mind backlog management, priority scoring, acceptance decisions
 - **[Product Manager Guide](/docs/getting-started/product-manager/)** -- Mx F metrics, dashboards, coaching, retrospectives
