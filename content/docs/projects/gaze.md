@@ -106,6 +106,11 @@ This creates 8 files across 3 directories in `.opencode/` that wire up the `/gaz
 | `.opencode/command/`    | `gaze.md`, `gaze-fix.md`, `speckit.testreview.md`                   |
 | `.opencode/references/` | `doc-scoring-model.md`, `example-report.md`                         |
 
+Notable scaffolded files:
+
+- **`reviewer-testing.md`** — The Tester Divisor persona for code review. When the review council runs, this agent evaluates test architecture, coverage strategy, assertion depth, and test isolation. It uses Gaze quality data (when available) to ground its findings in concrete CRAP scores and coverage numbers.
+- **`speckit.testreview.md`** — A read-only spec testability analysis command (`/speckit.testreview`). Evaluates whether a spec's requirements are testable before implementation begins — checking that acceptance criteria are specific enough to write tests from.
+
 ### The `/gaze` Command
 
 Inside OpenCode, use `/gaze` to get AI-assisted quality reports:
@@ -126,6 +131,15 @@ gaze report ./... --ai=claude     # Full report using Claude adapter
 ```
 
 Both `--ai=opencode` and `--ai=claude` are fully supported AI backends for `gaze report`.
+
+### CLI Flags
+
+| Flag                   | Commands             | Description                                                                                                                                                    |
+| ---------------------- | -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `--include-unexported` | `analyze`, `quality` | Include unexported functions in the analysis. Auto-detected for `package main` — CLI tools and entry points are analyzed by default without needing this flag. |
+| `--ai-mapper`          | `quality`, `crap`    | Enable AI-assisted assertion mapping as a 5th pass (confidence 50). Uses the configured AI adapter to evaluate structurally disconnected assertions.           |
+| `--max-gaze-crapload`  | `report`             | Fail if more than N functions exceed the GazeCRAP threshold. Similar to `--max-crapload` but uses contract coverage instead of line coverage.                  |
+| `--coverprofile`       | `report`             | Pass a pre-generated `go test -coverprofile` to skip Gaze's internal test run. See the [Tester guide](/docs/getting-started/tester/) for the CI pattern.       |
 
 ### The `/gaze fix` Command
 
@@ -152,7 +166,7 @@ The `/gaze fix` command uses these labels to determine the appropriate test gene
 
 ## Sample Output
 
-Here is what a full Gaze report looks like on a real Go project — [gcal-organizer](https://github.com/jflowers/gcal-organizer), analyzed with Gaze v1.2.3.
+Here is what a full Gaze report looks like on a real Go project — [gcal-organizer](https://github.com/jflowers/gcal-organizer). This sample was generated with an earlier version of Gaze; current output may include additional metrics and formatting improvements.
 
 ### Overall Health Assessment
 
@@ -195,6 +209,17 @@ Gaze is structured as a set of focused packages:
 | `scaffold` | OpenCode file scaffolding for `/gaze` command setup               |
 
 The analysis engine detects side effects across three implemented tiers (P0, P1, P2), covering the most common and impactful effect types — from return values and error returns through mutations, I/O, channel operations, and more.
+
+### Analysis Engine Details
+
+These details are primarily relevant for understanding Gaze's output and accuracy characteristics:
+
+- **SSA degradation diagnostics.** When SSA (Static Single Assignment) construction fails for a package (e.g., due to upstream toolchain issues), Gaze degrades gracefully instead of failing. The CRAP output includes `ssa_degraded_packages` listing affected packages, and the text report shows an SSA diagnostics section. Metrics for degraded packages are based on AST-only analysis with reduced accuracy.
+- **AST mutation fallback.** When SSA analysis fails, Gaze falls back to AST-based mutation detection for side effect identification. This is transparent to users but may affect accuracy for complex data flow patterns. The degradation is surfaced via the SSA diagnostics above.
+- **`no_test_coverage` classification.** Contract coverage distinguishes between functions that have side effects but no test coverage (`no_test_coverage`) and functions that have no detectable effects. This separation ensures the fix strategy labels recommend "write tests" rather than "add assertions" for completely untested functions.
+- **Constructor naming signal.** Functions with `New` or `NewXxx` naming prefixes receive a classification signal that biases toward constructor patterns, improving contractual classification accuracy for factory functions.
+- **Reduced GoDoc signal.** GoDoc keywords contribute a reduced signal (+5) to non-matching effect types, preventing documentation-derived classification from overwhelming mechanical signals.
+- **Container unwrap mapping.** Assertion mapping handles field access and transformation chains (e.g., JSON unmarshal followed by field access followed by type assertion) at confidence 55, improving mapping accuracy for assertions that verify deeply nested return values.
 
 ## Current Limitations
 
