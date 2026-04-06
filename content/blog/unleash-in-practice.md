@@ -82,11 +82,11 @@ LOW and MEDIUM findings are auto-fixed. If HIGH or CRITICAL findings remain, the
 Executes tasks phase by phase. Within each phase:
 
 - **Sequential tasks** run in order via the [Cobalt-Crush](/docs/team/cobalt-crush/) developer agent
-- **Parallel tasks** (marked `[P]`) spawn independent [Swarm](/docs/getting-started/developer/#working-with-swarm) workers, each in a dedicated git worktree, up to 4 concurrent workers
+- **Parallel tasks** (marked `[P]`) spawn independent [Replicator](/docs/getting-started/developer/#working-with-replicator) workers, each in a dedicated git worktree, up to 4 concurrent workers
 
 After each phase, the pipeline runs the CI build and test commands (derived from `.github/workflows/`, not hardcoded). If anything fails, it exits with the failure details.
 
-If Swarm worktrees are not available, parallel tasks fall back to sequential execution. The pipeline adapts to whatever tools are installed.
+If Replicator worktrees are not available, parallel tasks fall back to sequential execution. The pipeline adapts to whatever tools are installed.
 
 ### 6. Code Review
 
@@ -143,12 +143,12 @@ After `/unleash` presents demo instructions, run `/finale` to automate the end-o
 
 `/unleash` is designed for graceful degradation. Every external tool it uses has a fallback:
 
-| Tool     | If Available                          | If Not Available               |
-| -------- | ------------------------------------- | ------------------------------ |
-| Dewey    | Auto-resolves clarification questions | Questions exit for human input |
-| Swarm    | Parallel task execution in worktrees  | Sequential execution           |
-| Gaze     | Quality analysis in code review       | Code review skips quality data |
-| Hivemind | Stores retrospective learnings        | Displays learnings in output   |
+| Tool       | If Available                          | If Not Available               |
+| ---------- | ------------------------------------- | ------------------------------ |
+| Dewey      | Auto-resolves clarification questions | Questions exit for human input |
+| Replicator | Parallel task execution in worktrees  | Sequential execution           |
+| Gaze       | Quality analysis in code review       | Code review skips quality data |
+| Hivemind   | Stores retrospective learnings        | Displays learnings in output   |
 
 The pipeline works with all four tools, with none of them, or with any combination. You get the most autonomous experience with the full stack, but the pipeline never fails because a tool is missing.
 

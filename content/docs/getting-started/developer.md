@@ -1,7 +1,7 @@
 ---
 title: "Getting Started: Developer"
 description: "Set up your environment, learn the daily workflow, and start building with the Unbound Force AI agent swarm as a developer."
-lead: "Install the tools, learn the workflows, and start shipping code with Cobalt-Crush, Speckit, and Swarm."
+lead: "Install the tools, learn the workflows, and start shipping code with Cobalt-Crush, Speckit, and Replicator."
 date: 2026-03-22T00:00:00+00:00
 draft: false
 weight: 30
@@ -20,7 +20,7 @@ uf setup
 `uf setup` detects your existing version managers (goenv, nvm, fnm, Homebrew) and installs through them:
 
 - **Core tools** -- OpenCode (AI coding environment), Gaze (quality analysis), Mx F (manager hero), GitHub CLI
-- **Development tools** -- Node.js, Bun, OpenSpec CLI, Swarm plugin (multi-agent coordination)
+- **Development tools** -- Node.js, Bun, OpenSpec CLI, Replicator (multi-agent coordination)
 - **Knowledge layer** -- Ollama (local model runtime), Dewey (semantic search), IBM Granite embedding model
 - **Project scaffolding** -- agents, commands, convention packs, templates, and workflow configuration via `uf init`
 
@@ -30,7 +30,7 @@ After setup, verify everything is working:
 uf doctor
 ```
 
-Doctor checks 7 areas: your detected environment (version managers), core tools, Swarm plugin health, scaffolded files, hero availability, MCP server config, and agent/skill integrity. Every failed check includes a copy-pasteable install command to fix it.
+Doctor checks 7 areas: your detected environment (version managers), core tools, Replicator health, scaffolded files, hero availability, MCP server config, and agent/skill integrity. Every failed check includes a copy-pasteable install command to fix it.
 
 ## Daily Workflow
 
@@ -56,7 +56,7 @@ A typical development session follows the specify-unleash-finale loop:
    /finale
    ```
 
-That is the complete loop. For smaller changes that don't need the full Speckit pipeline, use the [OpenSpec tactical workflow](/docs/getting-started/common-workflows/#bug-fix-tactical) (`/opsx-propose` -> `/opsx-apply` -> `/finale`). For parallel task execution without a spec, use `/swarm "task description"` directly.
+That is the complete loop. For smaller changes that don't need the full Speckit pipeline, use the [OpenSpec tactical workflow](/docs/getting-started/common-workflows/#bug-fix-tactical) (`/opsx-propose` -> `/opsx-apply` -> `/finale`).
 
 ## Working with Speckit
 
@@ -89,28 +89,24 @@ Each stage produces artifacts that feed the next. Specs must be committed and pu
 
 Both workflows enforce branch conventions: Speckit uses `NNN-<short-name>` branches (created by `/speckit.specify`), and OpenSpec uses `opsx/<change-name>` branches (created by `/opsx-propose`). Branch validation is a hard gate at each pipeline step.
 
-## Working with Swarm
+## Working with Replicator
 
-Swarm coordinates parallel AI agents on your codebase. When you have a task that can be broken into independent pieces, Swarm decomposes it and spawns parallel workers.
+[Replicator](/docs/projects/replicator/) coordinates parallel AI agents on your codebase. It provides 53 MCP tools for work tracking, file reservations, parallel orchestration with git worktrees, and semantic memory -- all in a single Go binary.
 
-### Using `/swarm`
+### Replicator + Speckit Integration
 
-```
-/swarm "Implement the authentication module"
-```
+When a `tasks.md` file exists from the Speckit pipeline, Replicator uses it as the authoritative task decomposition instead of generating its own. It maps each phase to an epic and respects the `[P]` parallel markers and phase dependencies. The `/unleash` command orchestrates this automatically.
 
-Swarm analyzes the task, decomposes it into subtasks, reserves files for each worker to prevent conflicts, and spawns parallel agents. Each worker:
+### Parallel Workers
+
+When `/unleash` encounters `[P]`-marked tasks, Replicator spawns parallel workers in dedicated git worktrees. Each worker:
 
 1. Calls `swarmmail_reserve()` to lock their files
 2. Implements their subtask
 3. Calls `swarm_complete()` when done
 4. Releases file locks automatically
 
-### Swarm + Speckit Integration
-
-When a `tasks.md` file exists from the Speckit pipeline, Swarm uses it as the authoritative task decomposition instead of generating its own. It maps each phase to a Swarm epic and respects the `[P]` parallel markers and phase dependencies.
-
-### Swarm Delegation
+### Autonomous Delegation
 
 The hero lifecycle supports **autonomous swarm delegation**. After the Product Owner completes the define stage (specify + clarify), the swarm takes over and runs the implement, validate, and review stages without human intervention. The workflow pauses automatically before the accept stage, returning control to the Product Owner. After acceptance, the swarm runs the final reflect stage (Mx F) autonomously. This means the developer's work -- planning, implementation, and quality validation -- runs as part of the swarm's autonomous stages.
 
@@ -128,7 +124,7 @@ When Dewey is not available, Cobalt-Crush falls back to direct file reads and CL
 
 ### File Reservations
 
-Before editing any file under Swarm coordination, always reserve it first:
+Before editing any file under Replicator coordination, always reserve it first:
 
 ```
 swarmmail_reserve({ paths: ["internal/auth/handler.go"], reason: "Implementing auth handler" })
@@ -140,11 +136,11 @@ This prevents conflicts when multiple workers are active. Reservations auto-rele
 
 Every session follows this ritual:
 
-| Step      | Command                          | Purpose                          |
-| --------- | -------------------------------- | -------------------------------- |
-| **Start** | `hive_ready()`                   | Get the next unblocked work item |
-| **Work**  | `/swarm "task"` or direct coding | Execute the work                 |
-| **End**   | `hive_sync()` + `git push`       | Persist work items and learnings |
+| Step      | Command                     | Purpose                          |
+| --------- | --------------------------- | -------------------------------- |
+| **Start** | `hive_ready()`              | Get the next unblocked work item |
+| **Work**  | `/unleash` or direct coding | Execute the work                 |
+| **End**   | `hive_sync()` + `git push`  | Persist work items and learnings |
 
 ## Cobalt-Crush Persona
 
@@ -265,7 +261,7 @@ After deploying files, `uf init` performs sub-tool initialization:
 - If [Dewey](/docs/getting-started/knowledge/) is available: creates the `.dewey/` workspace, auto-detects sibling repos and your GitHub org to generate a [multi-repo source config](/docs/getting-started/knowledge/#what-uf-init-creates), and builds the initial index. After setup, you can [extend sources with web crawls](/docs/getting-started/knowledge/#extending-your-sources) for your project's toolstack documentation. With `--force`, re-indexes an existing Dewey workspace.
 - Configures `opencode.json` with MCP and plugin entries:
   - **Dewey MCP entry**: When `dewey` is in PATH, adds the `mcp.dewey` entry for the Dewey MCP server
-  - **Swarm plugin entry**: When `.hive/` directory exists, adds `opencode-swarm-plugin` to the plugin array
+  - **Replicator MCP entry**: When `replicator` is in PATH, adds `mcp.replicator` entry for the Replicator MCP server
   - Idempotent — checks for existing entries before adding. Use `--force` to overwrite stale entries.
   - Preserves user-added keys (custom MCP servers, custom config) — only manages the entries it owns
 
@@ -289,4 +285,4 @@ The plane is not landed until `git push` succeeds. This ensures your work items,
 
 - Read the [Common Workflows](/docs/getting-started/common-workflows/) page to understand how your work flows through the full hero lifecycle
 - Explore the [Cobalt-Crush](/docs/team/cobalt-crush/) team page for the full persona details
-- Run `uf doctor` to verify your environment, then try `/swarm "your first task"`
+- Run `uf doctor` to verify your environment, then try `/unleash` on your first feature

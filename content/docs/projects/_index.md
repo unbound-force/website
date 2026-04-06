@@ -17,3 +17,7 @@ Test quality analysis via side effect detection for Go. Gaze detects every obser
 ### [Dewey](/docs/projects/dewey/)
 
 Semantic knowledge retrieval for AI agents. Dewey combines structured graph traversal with vector-based semantic search to give every hero in the swarm cross-repository context -- local files, GitHub issues, and web documentation searchable through a unified MCP interface. Dewey enables autonomous specification drafting, reducing human checkpoints from two to one.
+
+### [Replicator](/docs/projects/replicator/)
+
+Multi-agent coordination for AI coding agents. Replicator provides 53 MCP tools for work tracking, parallel orchestration with git worktrees, file reservations, and semantic memory -- all in a single Go binary with zero runtime dependencies. Install via Homebrew and connect any MCP-compatible AI agent.

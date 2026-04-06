@@ -1,18 +1,19 @@
 ---
 name: speckit-workflow
-description: "Teaches the Swarm coordinator to follow Speckit's pre-decomposed tasks.md as the authoritative task breakdown instead of generating its own decomposition via CASS."
+description: "Teaches the Replicator coordinator to follow Speckit's pre-decomposed tasks.md as the authoritative task breakdown instead of generating its own decomposition via CASS."
 tags:
   - speckit
   - workflow
   - decomposition
 ---
+
 <!-- scaffolded by uf vdev -->
 <!-- scaffolded by uf vdev -->
 <!-- scaffolded by uf vv0.6.1 -->
 
-# Speckit Workflow — Swarm Skill
+# Speckit Workflow — Replicator Skill
 
-This skill teaches you (the Swarm coordinator) how to work
+This skill teaches you (the Replicator coordinator) how to work
 with Speckit's pre-decomposed task lists. When a `tasks.md`
 file exists for the active feature, it is the authoritative
 decomposition — do NOT re-decompose via CASS.
@@ -44,7 +45,7 @@ Tasks are organized into numbered phases:
 ## Phase N: Polish
 ```
 
-**Map each phase to a Swarm epic.** Phase 1 becomes
+**Map each phase to a Replicator epic.** Phase 1 becomes
 epic "Setup", Phase 2 becomes epic "Foundational", etc.
 
 ### Task Format
@@ -61,7 +62,7 @@ Each task follows this format:
   other `[P]` tasks in the same phase (they touch different
   files). Tasks WITHOUT `[P]` are sequential.
 - **`[US1]` label**: Maps to User Story 1 from the spec.
-  Use as cell metadata when creating Swarm cells.
+  Use as cell metadata when creating Replicator cells.
 - **Description**: What to do and which file to modify.
 
 ### Phase Dependencies
@@ -72,7 +73,7 @@ Each task follows this format:
   as independent in the Dependencies section of tasks.md.
 - **Polish** phase runs after all User Story phases.
 
-## Creating Swarm Work Items
+## Creating Replicator Work Items
 
 1. **Read the full `tasks.md`** to understand all phases.
 

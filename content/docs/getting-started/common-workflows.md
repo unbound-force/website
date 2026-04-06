@@ -14,21 +14,21 @@ toc: true
 
 ### The Pipeline
 
-| Step | Name              | Description                                                                                                                                                                   |
-| ---- | ----------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 1    | **Clarify**       | Scans spec.md for `[NEEDS CLARIFICATION]` markers. Uses Dewey semantic search to auto-resolve. Exits to human only for unanswerable questions.                                |
-| 2    | **Plan**          | Delegates to Cobalt-Crush to generate `plan.md` via `/speckit.plan`                                                                                                           |
-| 3    | **Tasks**         | Delegates to Cobalt-Crush to generate `tasks.md` via `/speckit.tasks`                                                                                                         |
-| 4    | **Spec Review**   | Runs the review council in Spec Review Mode. Auto-fixes LOW/MEDIUM findings. Exits on HIGH/CRITICAL.                                                                          |
-| 5    | **Implement**     | Parses `tasks.md` for phases. `[P]` parallel tasks run via Swarm worktrees (up to 4 concurrent workers). Phase checkpoints run CI commands derived from `.github/workflows/`. |
-| 6    | **Code Review**   | Runs the review council in Code Review Mode. Includes Phase 1a CI hard gate, Phase 1b Gaze quality analysis, and Divisor agent reviews. Up to 3 fix iterations.               |
-| 7    | **Retrospective** | Analyzes the session and stores learnings in Hivemind semantic memory.                                                                                                        |
-| 8    | **Demo**          | Presents structured demo instructions: what was built, how to verify, key files changed, and next steps.                                                                      |
+| Step | Name              | Description                                                                                                                                                                        |
+| ---- | ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1    | **Clarify**       | Scans spec.md for `[NEEDS CLARIFICATION]` markers. Uses Dewey semantic search to auto-resolve. Exits to human only for unanswerable questions.                                     |
+| 2    | **Plan**          | Delegates to Cobalt-Crush to generate `plan.md` via `/speckit.plan`                                                                                                                |
+| 3    | **Tasks**         | Delegates to Cobalt-Crush to generate `tasks.md` via `/speckit.tasks`                                                                                                              |
+| 4    | **Spec Review**   | Runs the review council in Spec Review Mode. Auto-fixes LOW/MEDIUM findings. Exits on HIGH/CRITICAL.                                                                               |
+| 5    | **Implement**     | Parses `tasks.md` for phases. `[P]` parallel tasks run via Replicator worktrees (up to 4 concurrent workers). Phase checkpoints run CI commands derived from `.github/workflows/`. |
+| 6    | **Code Review**   | Runs the review council in Code Review Mode. Includes Phase 1a CI hard gate, Phase 1b Gaze quality analysis, and Divisor agent reviews. Up to 3 fix iterations.                    |
+| 7    | **Retrospective** | Analyzes the session and stores learnings in Hivemind semantic memory.                                                                                                             |
+| 8    | **Demo**          | Presents structured demo instructions: what was built, how to verify, key files changed, and next steps.                                                                           |
 
 ### Key Capabilities
 
 - **Dewey-powered clarification**: Auto-resolves spec ambiguities using semantic search. Falls back to human input when Dewey is unavailable or results are insufficient.
-- **Parallel Swarm workers**: `[P]`-marked tasks execute in parallel via git worktrees (up to 4 concurrent). Falls back to sequential when the Swarm plugin is not installed.
+- **Parallel Replicator workers**: `[P]`-marked tasks execute in parallel via git worktrees (up to 4 concurrent). Falls back to sequential when Replicator is not installed.
 - **Resumability**: Probes filesystem state on startup to detect completed steps. Resumes from the first incomplete step. All progress is persisted in spec artifacts (plan.md, tasks.md checkboxes, spec-review marker).
 - **Graceful exit points**: Every exit (unanswerable questions, HIGH/CRITICAL findings, worker failures, merge conflicts, test failures, review exhaustion) includes actionable next steps and resume instructions.
 - **CI command derivation**: Build and test commands are derived from `.github/workflows/` files, not hardcoded.
@@ -121,7 +121,7 @@ The [Developer (Cobalt-Crush)](/docs/getting-started/developer/) creates the tec
 - Run cross-artifact analysis: `/speckit.analyze`
 - Validate checklists: `/speckit.checklist`
 - Execute implementation: `/speckit.implement` or `/cobalt-crush`
-- For parallel work: `/swarm "implement spec NNN"`
+- For parallel work: use `/unleash` which handles parallel task execution automatically
 - Mark each task `[x]` in tasks.md as it completes
 - Run tests after each phase checkpoint
 
@@ -413,7 +413,7 @@ uf setup
 This installs the full toolchain in one command:
 
 - **Core tools** -- OpenCode (AI coding environment), Gaze (quality analysis), Mx F (manager hero), GitHub CLI
-- **Development tools** -- Node.js, Bun, OpenSpec CLI, Swarm plugin (multi-agent coordination), Swarm configuration and `.hive/` initialization
+- **Development tools** -- Node.js, Bun, OpenSpec CLI, Replicator (multi-agent coordination), `.hive/` initialization
 - **Knowledge layer** -- Ollama (local model runtime), Dewey (semantic search), IBM Granite embedding model, Dewey workspace initialization and index build
 - **Project scaffolding** -- `uf init` to deploy agents, commands, convention packs, templates, and workflow configuration
 
@@ -428,11 +428,11 @@ export OLLAMA_MODEL=granite-embedding:30m
 export OLLAMA_EMBED_DIM=256
 ```
 
-`uf setup` sets these during installation, but they must be in your shell profile for processes spawned outside of setup (e.g., `dewey serve`, manual `swarm init`).
+`uf setup` sets these during installation, but they must be in your shell profile for processes spawned outside of setup (e.g., `dewey serve`, manual `replicator init`).
 
 Dewey is optional -- all heroes function without it. See the [knowledge retrieval guide](/docs/getting-started/knowledge/) for source configuration and OpenCode integration.
 
-As the final step of setup, `uf init` scaffolds your project files and performs sub-tool initialization: it creates `.unbound-force/config.yaml` for [workflow configuration](#workflow-configuration), runs `dewey init` + `dewey index` when Dewey is available, and configures `opencode.json` with Dewey MCP server and Swarm plugin entries when those tools are detected.
+As the final step of setup, `uf init` scaffolds your project files and performs sub-tool initialization: it creates `.unbound-force/config.yaml` for [workflow configuration](#workflow-configuration), runs `dewey init` + `dewey index` when Dewey is available, and configures `opencode.json` with Dewey MCP server and Replicator MCP server entries when those tools are detected.
 
 ### 3. Verify
 
@@ -444,21 +444,21 @@ Doctor checks 7 areas and shows pass/warn/fail for each with install hints. Fix 
 
 ### 4. Start Working
 
-Open OpenCode and try your first task:
-
-```text
-/swarm "your first task description"
-```
-
-Or start with the Speckit pipeline for a new feature:
+Open OpenCode and start with the Speckit pipeline for a new feature:
 
 ```text
 /speckit.specify
 ```
 
+Then run the full autonomous pipeline:
+
+```text
+/unleash
+```
+
 ## Next Steps
 
-- [Developer Guide](/docs/getting-started/developer/) -- Daily workflow, Speckit, Swarm, and Cobalt-Crush
+- [Developer Guide](/docs/getting-started/developer/) -- Daily workflow, Speckit, Replicator, and Cobalt-Crush
 - [Tester Guide](/docs/getting-started/tester/) -- Gaze quality analysis and CI integration
 - [Product Owner Guide](/docs/getting-started/product-owner/) -- Muti-Mind and backlog management
 - [Product Manager Guide](/docs/getting-started/product-manager/) -- Mx F metrics and coaching

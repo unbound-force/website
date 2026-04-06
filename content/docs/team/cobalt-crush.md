@@ -44,6 +44,6 @@ While The Divisor sets the architectural blueprint, Cobalt-Crush ensures the cod
 
 ## Next Steps
 
-- Read the [Developer getting-started guide](/docs/getting-started/developer/) for daily workflow, Speckit pipeline, and Swarm coordination
+- Read the [Developer getting-started guide](/docs/getting-started/developer/) for daily workflow, Speckit pipeline, and Replicator coordination
 - See [Common Workflows](/docs/getting-started/common-workflows/) for how Cobalt-Crush fits into the full hero lifecycle
 - Learn about [convention packs](/docs/getting-started/developer/#convention-packs) that govern coding standards
