@@ -5,7 +5,6 @@ description: >
   correct insertion points. Run after uf init, uf setup, or
   updating the OpenSpec CLI.
 ---
-
 <!-- scaffolded by uf vdev -->
 <!-- scaffolded by uf vdev -->
 <!-- scaffolded by uf vv0.6.1 -->
@@ -31,7 +30,6 @@ or after updating the OpenSpec CLI (`npm update`). Safe to re-run
 Verify the project has been initialized:
 
 1. Check that `.opencode/` directory exists. If not, **STOP** with:
-
    > `.opencode/` not found. Run `uf init` from your terminal first.
 
 2. Check that these 4 OpenSpec skill files exist:
@@ -46,7 +44,6 @@ Verify the project has been initialized:
    - `.opencode/command/opsx-archive.md`
 
 For each missing file, report an error:
-
 > `❌ <path>: file not found`
 > This file should have been created by `openspec init` which
 > runs as part of `uf init`. Run `uf setup` to install OpenSpec,
@@ -82,7 +79,6 @@ customization. For each file:
 #### Branch Enforcement: Propose (Skills + Commands)
 
 **Target files**:
-
 - `.opencode/skills/openspec-propose/SKILL.md`
 - `.opencode/command/opsx-propose.md`
 
@@ -96,7 +92,6 @@ directory (`openspec new change "<name>"`), insert a new step:
 > ```
 >
 > **Guard**: Before creating the branch, check the current branch:
->
 > - If already on `opsx/<name>` (exact match): skip branch creation, proceed.
 > - If on a different `opsx/*` branch: **STOP** with error: "Already on branch `opsx/<other>` -- finish or archive that change first."
 > - If on `main` or any non-opsx branch: create and checkout `opsx/<name>`.
@@ -108,7 +103,6 @@ renumber existing steps (to avoid accidental content loss).
 #### Branch Enforcement: Apply (Skills + Commands)
 
 **Target files**:
-
 - `.opencode/skills/openspec-apply-change/SKILL.md`
 - `.opencode/command/opsx-apply.md`
 
@@ -131,7 +125,6 @@ existing steps.
 #### Branch Enforcement: Archive (Skills + Commands)
 
 **Target files**:
-
 - `.opencode/skills/openspec-archive-change/SKILL.md`
 - `.opencode/command/opsx-archive.md`
 
@@ -141,7 +134,6 @@ branch cleanup step:
 > **Return to main branch**
 >
 > After the archive move completes:
->
 > ```bash
 > git checkout main
 > ```
@@ -178,7 +170,6 @@ instructions. For each file:
 #### Dewey Context: Propose (Skills + Commands)
 
 **Target files**:
-
 - `.opencode/skills/openspec-propose/SKILL.md`
 - `.opencode/command/opsx-propose.md`
 
@@ -210,7 +201,6 @@ of whether branch enforcement was applied.
 #### Dewey Context: Apply (Skills + Commands)
 
 **Target files**:
-
 - `.opencode/skills/openspec-apply-change/SKILL.md`
 - `.opencode/command/opsx-apply.md`
 
@@ -242,7 +232,6 @@ applied.
 #### Dewey Context: Explore (Skills only)
 
 **Target file**:
-
 - `.opencode/skills/openspec-explore/SKILL.md`
 
 **What to insert**: As part of the exploration workflow, add
@@ -288,7 +277,6 @@ degradation pattern. For each file:
    Report `✅ <filename>: inserted`
 
 **Target files**:
-
 - `.opencode/skills/openspec-propose/SKILL.md`
 - `.opencode/skills/openspec-apply-change/SKILL.md`
 - `.opencode/skills/openspec-explore/SKILL.md`
@@ -310,7 +298,6 @@ at each tier:
 > structural queries. Semantic search is unavailable.
 >
 > **Tier 1 (No Dewey)**: Fall back to direct file operations:
->
 > - Use the Read tool to read local specs, backlog items, and
 >   convention packs
 > - Use the Grep tool for keyword search across the codebase
@@ -353,7 +340,6 @@ Applied: N | Already present: N | Errors: N
 ```
 
 Use these status indicators:
-
 - `✅` -- customization was inserted
 - `⊘` -- customization already present (skipped)
 - `❌` -- file not found or error (with fix suggestion)
@@ -369,8 +355,7 @@ modified (had at least one `✅` insertion):
 3. **Verify** no existing content was accidentally removed
    (the file should be longer than before, not shorter)
 4. If verification fails, report: `⚠️ <filename>: verification
-failed -- review with git diff`
+   failed -- review with git diff`
 
 Finally, remind the user:
-
 > Run `git diff` to review all changes before committing.

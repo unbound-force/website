@@ -5,7 +5,6 @@ description: >
   arguments: detects active workflow and runs /speckit.implement or
   /opsx:apply.
 ---
-
 <!-- scaffolded by uf vdev -->
 <!-- scaffolded by uf vdev -->
 <!-- scaffolded by uf vv0.6.1 -->
@@ -76,7 +75,6 @@ implementation command to the `cobalt-crush-dev` agent:
    The current branch must be `opsx/<change-name>` where
    `<change-name>` matches the detected change directory name.
    If not on the correct branch, **STOP** with error:
-
    > "OpenSpec change `<name>` detected but you are on branch
    > `<current-branch>`. Run: `git checkout opsx/<name>`"
 
