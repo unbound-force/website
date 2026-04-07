@@ -53,12 +53,12 @@ go install github.com/unbound-force/dewey@latest
 Initialize Dewey in your repository:
 
 ```bash
-# Create .dewey/ directory with default configuration
+# Create .uf/dewey/ directory with default configuration
 dewey init
 
 # Edit the source configuration
 # (see Source Configuration below for examples)
-$EDITOR .dewey/sources.yaml
+$EDITOR .uf/dewey/sources.yaml
 
 # Build the initial index (local files + any configured sources)
 dewey index
@@ -69,7 +69,7 @@ dewey status
 
 The `dewey status` command reports index health: page count, block count, embedding coverage, and source status. A healthy output shows all configured sources indexed with recent timestamps.
 
-After initialization, Dewey persists its indexes to `.dewey/graph.db` (SQLite). Subsequent sessions load from the persistent index and only re-process changed files — startup is near-instant after the first index.
+After initialization, Dewey persists its indexes to `.uf/dewey/graph.db` (SQLite). Subsequent sessions load from the persistent index and only re-process changed files — startup is near-instant after the first index.
 
 ## What `uf init` Creates
 
@@ -77,7 +77,7 @@ If you used `uf setup` or `uf init` to scaffold your project, Dewey's source con
 
 `uf init` runs three steps for Dewey initialization:
 
-1. `dewey init` — creates the `.dewey/` directory with a bare default config (single disk source pointing to `.`)
+1. `dewey init` — creates the `.uf/dewey/` directory with a bare default config (single disk source pointing to `.`)
 2. `generateDeweySources()` — overwrites `sources.yaml` with an auto-detected multi-repo config
 3. `dewey index` — indexes all configured sources
 
@@ -144,13 +144,13 @@ If you ran `dewey init` directly (without `uf init`), you have the bare default 
 
 ## Configure Content Sources
 
-Dewey indexes content from three pluggable source types. Configure them in `.dewey/sources.yaml`:
+Dewey indexes content from three pluggable source types. Configure them in `.uf/dewey/sources.yaml`:
 
 ### Local Disk
 
 The foundational source — indexes Markdown files in your repository. This is enabled by default after `dewey init`.
 
-Dewey automatically respects `.gitignore` at the source root — no configuration needed. Directories like `node_modules/`, `vendor/`, and other `.gitignore`-excluded paths are skipped during indexing. Hidden directories used by tools (`.git/`, `.obsidian/`, `.dewey/`) are always skipped regardless of `.gitignore`. Dewey-specific directories (`.opencode/`, `.specify/`, `.muti-mind/`) are indexed normally unless excluded by `.gitignore`.
+Dewey automatically respects `.gitignore` at the source root — no configuration needed. Directories like `node_modules/`, `vendor/`, and other `.gitignore`-excluded paths are skipped during indexing. Hidden directories used by tools (`.git/`, `.obsidian/`, `.uf/dewey/`) are always skipped regardless of `.gitignore`. Dewey-specific directories (`.opencode/`, `.specify/`, `.uf/muti-mind/`) are indexed normally unless excluded by `.gitignore`.
 
 You can add additional ignore patterns and control recursion depth via `sources.yaml`:
 
@@ -221,7 +221,7 @@ sources:
     refresh_interval: weekly
 ```
 
-Web crawls respect `robots.txt`, impose a configurable delay between requests, and cache content locally in `.dewey/cache/`. Content is only re-fetched when the refresh interval expires.
+Web crawls respect `robots.txt`, impose a configurable delay between requests, and cache content locally in `.uf/dewey/cache/`. Content is only re-fetched when the refresh interval expires.
 
 ### Updating Sources
 
@@ -354,7 +354,7 @@ Run `dewey doctor` to check the health of your Dewey installation. It reports on
 | Section                 | What It Checks                                             |
 | ----------------------- | ---------------------------------------------------------- |
 | **Environment**         | Vault path, dewey binary location                          |
-| **Workspace**           | `.dewey/` directory, config files, `sources.yaml`          |
+| **Workspace**           | `.uf/dewey/` directory, config files, `sources.yaml`       |
 | **Database**            | `graph.db` health, page/block/embedding counts             |
 | **Sources in Database** | Per-source page counts                                     |
 | **Embedding Layer**     | Ollama availability, model status                          |
@@ -379,12 +379,12 @@ This is a destructive operation — the existing index is deleted before rebuild
 
 These flags are available on all Dewey commands:
 
-| Flag              | Short | Description                                                            |
-| ----------------- | ----- | ---------------------------------------------------------------------- |
-| `--verbose`       | `-v`  | Enable debug logging                                                   |
-| `--log-file PATH` |       | Write logs to file (auto-logging to `.dewey/dewey.log` also available) |
-| `--no-embeddings` |       | Skip embedding generation (useful for quick indexing without Ollama)   |
-| `--vault PATH`    |       | Specify vault directory (default: current directory)                   |
+| Flag              | Short | Description                                                               |
+| ----------------- | ----- | ------------------------------------------------------------------------- |
+| `--verbose`       | `-v`  | Enable debug logging                                                      |
+| `--log-file PATH` |       | Write logs to file (auto-logging to `.uf/dewey/dewey.log` also available) |
+| `--no-embeddings` |       | Skip embedding generation (useful for quick indexing without Ollama)      |
+| `--vault PATH`    |       | Specify vault directory (default: current directory)                      |
 
 ## Graceful Degradation
 
@@ -406,7 +406,7 @@ Common issues and how to resolve them:
 | ---------------------- | -------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
 | MCP server timeout     | OpenCode shows connection timeout      | Check `.gitignore` for large directories being indexed; run `dewey reindex`                                                                 |
 | Ollama not running     | `dewey doctor` shows embedding layer ✗ | Run `ollama serve` or install Ollama (`brew install --cask ollama`)                                                                         |
-| Lock file conflicts    | "Another dewey instance is running"    | Only one `dewey serve` per vault; check for stale `.dewey/dewey.lock`                                                                       |
+| Lock file conflicts    | "Another dewey instance is running"    | Only one `dewey serve` per vault; check for stale `.uf/dewey/.dewey.lock`                                                                   |
 | Low embedding coverage | Semantic search returns few results    | Run `dewey index` to generate embeddings for new content                                                                                    |
 | Slow startup           | First `dewey serve` takes minutes      | Normal for large repos on first index; subsequent startups are near-instant. Check `.gitignore` to exclude `node_modules/`, `vendor/`, etc. |
 

@@ -51,7 +51,7 @@ Vector-based similarity search using IBM Granite embeddings (30M parameters, 63 
 
 ### Persistent SQLite Index
 
-Indexes persist to `.dewey/graph.db` across sessions. Subsequent startups load from the persistent index and only re-process changed files — startup is near-instant after the first index.
+Indexes persist to `.uf/dewey/graph.db` across sessions. Subsequent startups load from the persistent index and only re-process changed files — startup is near-instant after the first index.
 
 ### Graceful Degradation
 
@@ -70,7 +70,7 @@ See [Common Workflows](/docs/getting-started/common-workflows/#new-feature-end-t
 Dewey runs as an MCP server alongside your AI coding environment. It combines:
 
 - **Knowledge graph** — in-memory graph built from Markdown files with wikilink, tag, and property relationships
-- **SQLite persistence** — pages, blocks, links, and embeddings stored in `.dewey/graph.db`
+- **SQLite persistence** — pages, blocks, links, and embeddings stored in `.uf/dewey/graph.db`
 - **Ollama embeddings** — IBM Granite model generates vector embeddings for semantic similarity search
 - **Pluggable sources** — content source interface supports disk, GitHub, and web crawl with configurable refresh intervals
 

@@ -58,7 +58,7 @@ The difference is not always dramatic — sometimes the training data is current
 
 ## Adding Web Sources
 
-Adding web sources to Dewey takes about two minutes. Open `.dewey/sources.yaml` and add entries for your project's key dependencies:
+Adding web sources to Dewey takes about two minutes. Open `.uf/dewey/sources.yaml` and add entries for your project's key dependencies:
 
 ```yaml
 # Go standard library reference
@@ -95,6 +95,6 @@ brew install unbound-force/tap/unbound-force
 uf setup
 ```
 
-`uf setup` installs Dewey and runs `uf init`, which auto-detects sibling repos and your GitHub org to generate a multi-repo source config. To add web sources for your toolstack, edit `.dewey/sources.yaml` and run `dewey index`.
+`uf setup` installs Dewey and runs `uf init`, which auto-detects sibling repos and your GitHub org to generate a multi-repo source config. To add web sources for your toolstack, edit `.uf/dewey/sources.yaml` and run `dewey index`.
 
 See the [Quick Start guide](/docs/getting-started/quick-start/) for detailed installation, or the [knowledge retrieval guide](/docs/getting-started/knowledge/#extending-your-sources) for the full source configuration reference.

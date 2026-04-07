@@ -8,6 +8,7 @@ tools:
   edit: false
   bash: false
 ---
+
 <!-- scaffolded by uf vdev -->
 
 # Role: The Guard
@@ -25,7 +26,7 @@ Before reviewing, read:
 1. `AGENTS.md` -- Project overview, behavioral constraints, and conventions
 2. `.specify/memory/constitution.md` -- Project constitution (core principles)
 3. The relevant `spec.md`, `plan.md`, and `tasks.md` under `specs/` for the current work
-4. All `*.md` files from `.opencode/unbound/packs/` -- active convention pack. If no pack files are found, note this in your findings and proceed with universal checks only.
+4. All `*.md` files from `.opencode/uf/packs/` -- active convention pack. If no pack files are found, note this in your findings and proceed with universal checks only.
 
 ---
 

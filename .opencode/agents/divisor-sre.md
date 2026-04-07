@@ -8,6 +8,7 @@ tools:
   edit: false
   bash: false
 ---
+
 <!-- scaffolded by uf vdev -->
 
 # Role: The Operator
@@ -27,7 +28,7 @@ Before reviewing, read:
 3. The relevant spec, plan, and tasks files under `specs/` for the current work
 4. Release pipeline configs if they exist (e.g., `.goreleaser.yaml`, `.github/workflows/`, `Makefile`, CI configs)
 5. Dependency manifests if they exist (e.g., `go.mod`, `package.json`, `requirements.txt`, `Cargo.toml`)
-6. All `*.md` files from `.opencode/unbound/packs/` -- active convention pack. If no pack files are found, note this in your findings and proceed with universal checks only.
+6. All `*.md` files from `.opencode/uf/packs/` -- active convention pack. If no pack files are found, note this in your findings and proceed with universal checks only.
 
 ---
 

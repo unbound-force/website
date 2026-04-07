@@ -123,7 +123,7 @@ This ownership model ensures that a finding like "missing error handling" is rai
 
 ## Shared Severity Standard
 
-All eight personas share a calibration standard defined in the `severity.md` convention pack (`.opencode/unbound/packs/severity.md`):
+All eight personas share a calibration standard defined in the `severity.md` convention pack (`.opencode/uf/packs/severity.md`):
 
 | Level        | Definition                                                                           | Auto-Fix?                    |
 | ------------ | ------------------------------------------------------------------------------------ | ---------------------------- |

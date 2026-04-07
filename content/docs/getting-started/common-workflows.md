@@ -223,7 +223,7 @@ For explicit control over the define mode, use `/workflow start` with flags:
 
 ### Workflow Configuration
 
-Set project-level defaults in `.unbound-force/config.yaml` so you don't need to pass flags on every workflow start:
+Set project-level defaults in `.uf/config.yaml` so you don't need to pass flags on every workflow start:
 
 ```yaml
 workflow:
@@ -432,7 +432,7 @@ export OLLAMA_EMBED_DIM=256
 
 Dewey is optional -- all heroes function without it. See the [knowledge retrieval guide](/docs/getting-started/knowledge/) for source configuration and OpenCode integration.
 
-As the final step of setup, `uf init` scaffolds your project files and performs sub-tool initialization: it creates `.unbound-force/config.yaml` for [workflow configuration](#workflow-configuration), runs `dewey init` + `dewey index` when Dewey is available, and configures `opencode.json` with Dewey MCP server and Replicator MCP server entries when those tools are detected.
+As the final step of setup, `uf init` scaffolds your project files and performs sub-tool initialization: it creates `.uf/config.yaml` for [workflow configuration](#workflow-configuration), runs `dewey init` + `dewey index` when Dewey is available, and configures `opencode.json` with Dewey MCP server and Replicator MCP server entries when those tools are detected.
 
 ### 3. Verify
 

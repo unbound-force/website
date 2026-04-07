@@ -1,9 +1,11 @@
 ---
 description: Run the reviewer governance council to audit codebase or spec compliance.
 ---
+
 <!-- scaffolded by uf vdev -->
 <!-- scaffolded by uf vdev -->
 <!-- scaffolded by uf vv0.6.1 -->
+
 # Command: /review-council
 
 ## User Input
@@ -35,14 +37,17 @@ When no mode keyword is provided, detect the mode by
 examining the current branch and workspace:
 
 1. **Get the current branch name**:
+
    ```bash
    git rev-parse --abbrev-ref HEAD
    ```
 
 2. **Get the diff against the base branch** (`main`):
+
    ```bash
    git diff --name-only main...HEAD
    ```
+
    This shows all files changed on the current branch
    relative to `main`.
 
@@ -54,7 +59,7 @@ examining the current branch and workspace:
    - **Code files**: everything else (`.go`, `.ts`, `.js`,
      `.py`, `go.mod`, `go.sum`, `Makefile`, `internal/`,
      `cmd/`, `.opencode/agents/`, `.opencode/command/`,
-     `.opencode/skill/`, `.opencode/unbound/packs/`,
+     `.opencode/skill/`, `.opencode/uf/packs/`,
      etc.)
 
 4. **Detect the workflow tier** from the branch name:
@@ -64,12 +69,12 @@ examining the current branch and workspace:
 
 5. **Select mode based on classification**:
 
-   | Condition | Mode | Rationale |
-   |-----------|------|-----------|
-   | Code files changed | **Code Review** | Post-implementation -- review the code |
-   | Only spec files changed | **Spec Review** | Pre-implementation -- review the specs |
+   | Condition                | Mode            | Rationale                               |
+   | ------------------------ | --------------- | --------------------------------------- |
+   | Code files changed       | **Code Review** | Post-implementation -- review the code  |
+   | Only spec files changed  | **Spec Review** | Pre-implementation -- review the specs  |
    | No files changed vs main | **Spec Review** | On main or fresh branch -- review specs |
-   | On `main` branch | **Spec Review** | No feature branch -- review specs |
+   | On `main` branch         | **Spec Review** | No feature branch -- review specs       |
 
 6. **Announce the detected mode**: Always tell the user
    which mode was selected and why, including the
@@ -105,13 +110,13 @@ Before entering either review mode, discover which reviewer agents are available
 
 This table documents known Divisor persona roles and their focus areas. It is used for context when delegating to discovered agents, but the **invocation list comes solely from discovery** — not from this table.
 
-| Agent Name | Persona | Code Review Focus | Spec Review Focus |
-|---|---|---|---|
-| `divisor-adversary` | The Adversary | Security, resilience, efficiency, zero-waste, error handling, universal security, dependency vulnerabilities | Completeness, testability, ambiguity, security gaps, dependency risks, cross-spec consistency |
-| `divisor-architect` | The Architect | Architectural alignment, coding conventions [PACK], pattern adherence, plan alignment, DRY, testing conventions [PACK], documentation [PACK] | Template consistency, spec-to-plan alignment, task coverage, data model coherence, inter-spec architecture |
-| `divisor-guard` | The Guard | Intent drift detection, constitution alignment, neighborhood rule [PACK], zero-waste mandate | Intent fidelity, scope discipline, inter-spec consistency, status accuracy, user value, constitution alignment |
-| `divisor-testing` | The Tester | Test architecture [PACK], coverage strategy, assertion depth, test isolation, regression protection, convention compliance [PACK] | Testability of requirements, test strategy coverage, fixture feasibility, coverage expectations, contract surface |
-| `divisor-sre` | The Operator | Release pipeline [PACK], dependency health [PACK], configuration, runtime observability, upgrade paths, operational docs | Deployment feasibility, operational requirements, config management, dependency risk, maintenance burden |
+| Agent Name          | Persona       | Code Review Focus                                                                                                                            | Spec Review Focus                                                                                                 |
+| ------------------- | ------------- | -------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| `divisor-adversary` | The Adversary | Security, resilience, efficiency, zero-waste, error handling, universal security, dependency vulnerabilities                                 | Completeness, testability, ambiguity, security gaps, dependency risks, cross-spec consistency                     |
+| `divisor-architect` | The Architect | Architectural alignment, coding conventions [PACK], pattern adherence, plan alignment, DRY, testing conventions [PACK], documentation [PACK] | Template consistency, spec-to-plan alignment, task coverage, data model coherence, inter-spec architecture        |
+| `divisor-guard`     | The Guard     | Intent drift detection, constitution alignment, neighborhood rule [PACK], zero-waste mandate                                                 | Intent fidelity, scope discipline, inter-spec consistency, status accuracy, user value, constitution alignment    |
+| `divisor-testing`   | The Tester    | Test architecture [PACK], coverage strategy, assertion depth, test isolation, regression protection, convention compliance [PACK]            | Testability of requirements, test strategy coverage, fixture feasibility, coverage expectations, contract surface |
+| `divisor-sre`       | The Operator  | Release pipeline [PACK], dependency health [PACK], configuration, runtime observability, upgrade paths, operational docs                     | Deployment feasibility, operational requirements, config management, dependency risk, maintenance burden          |
 
 For any discovered agent not in this table, delegate with a generic review prompt appropriate to the current review mode.
 
@@ -131,48 +136,50 @@ Review the current codebase for compliance with the Behavioral Constraints in `A
    #### Phase 1a -- CI Checks (mandatory, hard gate)
 
    a. Read all files in `.github/workflows/` to
-      identify the exact commands CI runs. Do not
-      rely on a memorized list -- the workflow files
-      are the source of truth.
+   identify the exact commands CI runs. Do not
+   rely on a memorized list -- the workflow files
+   are the source of truth.
 
    b. Execute each CI command locally in the order
-      they appear in the workflow (typically:
-      `go build ./...`, `go vet ./...`,
-      `go test -race -count=1 ./...`, plus any
-      coverage ratchet steps).
+   they appear in the workflow (typically:
+   `go build ./...`, `go vet ./...`,
+   `go test -race -count=1 ./...`, plus any
+   coverage ratchet steps).
 
    c. **If any command fails**: **STOP immediately.**
-      Report each failure as a CRITICAL finding with
-      the full error output. Do NOT proceed to Phase
-      1b or to step 2 (Divisor agent delegation).
-      The rationale: reviewing code that doesn't
-      compile or pass tests is wasted work.
+   Report each failure as a CRITICAL finding with
+   the full error output. Do NOT proceed to Phase
+   1b or to step 2 (Divisor agent delegation).
+   The rationale: reviewing code that doesn't
+   compile or pass tests is wasted work.
 
    d. **If all commands pass**: report success and
-      proceed to Phase 1b.
+   proceed to Phase 1b.
 
    #### Phase 1b -- Gaze Quality Analysis (conditional)
 
    a. Check if `gaze` is available:
-      ```bash
-      which gaze
-      ```
+
+   ```bash
+   which gaze
+   ```
 
    b. **If `gaze` is available**: invoke the
-      `gaze-reporter` agent via the Task tool
-      (subagent_type: `gaze-reporter`) with prompt
-      `"full"` to produce a comprehensive quality
-      report (CRAP scores, quality metrics,
-      classification, health assessment). Capture
-      the agent's output as the **Gaze Report**.
+   `gaze-reporter` agent via the Task tool
+   (subagent_type: `gaze-reporter`) with prompt
+   `"full"` to produce a comprehensive quality
+   report (CRAP scores, quality metrics,
+   classification, health assessment). Capture
+   the agent's output as the **Gaze Report**.
 
    c. **If `gaze` is NOT available**: skip with an
-      informational note:
-      > "Gaze not installed -- skipping quality
-      > analysis. Install with
-      > `brew install unbound-force/tap/gaze`."
+   informational note:
 
-      Proceed to step 2 without Gaze data.
+   > "Gaze not installed -- skipping quality
+   > analysis. Install with
+   > `brew install unbound-force/tap/gaze`."
+
+   Proceed to step 2 without Gaze data.
 
 2. Delegate the review to all **discovered** reviewer agents in parallel using the Task tool. For each discovered agent, use the focus area from the Known Reviewer Roles reference table to provide targeted context. For any discovered agent not in the table, use a generic prompt: "Review the current changes for quality, correctness, and compliance. Return your verdict (APPROVE or REQUEST CHANGES) along with all findings."
 

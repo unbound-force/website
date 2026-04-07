@@ -20,8 +20,8 @@ Before writing code, read the following in order:
 1. **`AGENTS.md`** — Project structure, coding conventions, build commands, testing conventions, active technologies
 2. **`.specify/memory/constitution.md`** — The four constitutional principles (Autonomous Collaboration, Composability First, Observable Quality, Testability). All code must align.
 3. **Active spec and plan** — Check `specs/` for the current feature branch's `spec.md`, `plan.md`, and `tasks.md`. Read the user story acceptance criteria you are implementing.
-4. **Convention packs** — Read all `*.md` files from `.opencode/unbound/packs/` to load the active coding conventions. If no pack files are found, note this in your output and apply universal principles only.
-5. **Feedback artifacts** — Check `.unbound-force/artifacts/` for Gaze quality reports and Divisor review verdicts from previous cycles. Read these to learn from past feedback.
+4. **Convention packs** — Read all `*.md` files from `.opencode/uf/packs/` to load the active coding conventions. If no pack files are found, note this in your output and apply universal principles only.
+5. **Feedback artifacts** — Check `.uf/artifacts/` for Gaze quality reports and Divisor review verdicts from previous cycles. Read these to learn from past feedback.
 6. **Knowledge graph** (optional) — If graphthulhu MCP tools are available (`knowledge-graph_search`, `knowledge-graph_get_page`, etc.), use them to search for related specs, past review patterns, and architectural decisions. If MCP tools are unavailable, rely on reading project files directly.
 
 ## Engineering Philosophy
@@ -48,7 +48,7 @@ When making non-trivial design choices:
 
 ### 1. Convention Pack Adherence [PACK]
 
-Before writing code, load the active convention pack from `.opencode/unbound/packs/`. Apply all rules tagged with `[MUST]` as mandatory requirements. Apply `[SHOULD]` rules as strong recommendations. Apply `[MAY]` rules as optional improvements.
+Before writing code, load the active convention pack from `.opencode/uf/packs/`. Apply all rules tagged with `[MUST]` as mandatory requirements. Apply `[SHOULD]` rules as strong recommendations. Apply `[MAY]` rules as optional improvements.
 
 Key areas from convention packs:
 
@@ -86,7 +86,7 @@ Every function you write must be testable. Apply these patterns:
 
 After writing code, check for Gaze quality feedback:
 
-1. **Check for artifacts**: Look in `.unbound-force/artifacts/quality-report/` for recent Gaze reports. Also check for `coverage.out`, Gaze CLI output, or test results in the project root.
+1. **Check for artifacts**: Look in `.uf/artifacts/quality-report/` for recent Gaze reports. Also check for `coverage.out`, Gaze CLI output, or test results in the project root.
 
 2. **Parse findings**: For each finding, categorize by type:
    - **CRAP score > 30**: Refactor to reduce cyclomatic complexity or increase test coverage. Target CRAP < 30.
@@ -115,7 +115,7 @@ Before submitting for review and after receiving review feedback:
 
 ### Addressing Review Findings
 
-1. **Check for artifacts**: Look in `.unbound-force/artifacts/review-verdict/` for Divisor review reports. Also check recent `/review-council` output.
+1. **Check for artifacts**: Look in `.uf/artifacts/review-verdict/` for Divisor review reports. Also check recent `/review-council` output.
 
 2. **Categorize findings**: Group by persona (Guard, Architect, Adversary, SRE, Testing) and severity (CRITICAL, HIGH, MEDIUM, LOW).
 

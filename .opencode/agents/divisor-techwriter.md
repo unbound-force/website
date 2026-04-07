@@ -26,7 +26,7 @@ Before reviewing, read:
 1. `AGENTS.md` -- Behavioral Constraints, Content Conventions, Markdown Rules, Project Structure
 2. `.specify/memory/constitution.md` -- Constitution (if present)
 3. The relevant spec, plan, and tasks files under `specs/` for the current work
-4. `.opencode/unbound/packs/` -- Convention pack for this project (if present). Skip pack-dependent checklist items marked with **[PACK]** if no pack is loaded.
+4. `.opencode/uf/packs/` -- Convention pack for this project (if present). Skip pack-dependent checklist items marked with **[PACK]** if no pack is loaded.
 
 ---
 
