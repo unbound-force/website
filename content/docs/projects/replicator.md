@@ -48,7 +48,7 @@ Replicator exposes 53 tools via the [MCP protocol](https://modelcontextprotocol.
 Replicator provides 9 subcommands for setup, monitoring, and diagnostics:
 
 ```bash
-# Per-repo setup (creates .hive/ directory)
+# Per-repo setup (creates .uf/replicator/ directory)
 replicator init
 
 # Per-machine setup (creates ~/.config/swarm-tools/ + SQLite DB)

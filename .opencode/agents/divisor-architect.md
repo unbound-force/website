@@ -8,6 +8,7 @@ tools:
   edit: false
   bash: false
 ---
+
 <!-- scaffolded by uf vdev -->
 
 # Role: The Architect
@@ -25,7 +26,7 @@ Before reviewing, read:
 1. `AGENTS.md` -- Project Structure, Active Technologies, conventions
 2. `.specify/memory/constitution.md` -- Constitution principles
 3. The relevant spec, plan, and tasks files under `specs/` for the current work
-4. Read all `*.md` files from `.opencode/unbound/packs/` to load the active convention pack. If no pack files are found, note this and proceed with universal checks only.
+4. Read all `*.md` files from `.opencode/uf/packs/` to load the active convention pack. If no pack files are found, note this and proceed with universal checks only.
 
 ---
 
@@ -165,6 +166,7 @@ For each finding, provide:
 Severity levels: CRITICAL, HIGH, MEDIUM, LOW
 
 Also provide an **Architectural Alignment Score** (1-10):
+
 - 9-10: Exemplary alignment with all patterns and conventions
 - 7-8: Minor deviations, no structural concerns
 - 5-6: Notable deviations requiring attention

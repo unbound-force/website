@@ -17,7 +17,7 @@ Dewey is a per-repository MCP server that provides AI agent personas with unifie
 
 Together, these modes let agents start with a vague concept ("authentication timeout issues") and progressively refine their understanding through structured navigation — discovering related specifications, past decisions, and connected documentation they did not know to ask for.
 
-Dewey runs locally as an MCP server alongside your AI coding environment. It persists its indexes to a SQLite database (`.dewey/graph.db`), so subsequent sessions load near-instantly from the persistent index instead of rebuilding from scratch. No data leaves your machine — the embedding model runs locally via Ollama.
+Dewey runs locally as an MCP server alongside your AI coding environment. It persists its indexes to a SQLite database (`.uf/dewey/graph.db`), so subsequent sessions load near-instantly from the persistent index instead of rebuilding from scratch. No data leaves your machine — the embedding model runs locally via Ollama.
 
 ### The graphthulhu Relationship
 
@@ -73,7 +73,7 @@ Dewey indexes content from three pluggable source types. Each source implements 
 
 ### Local Disk
 
-The foundational source, inherited from graphthulhu. Indexes all Markdown files in the repository, including hidden directories (`.opencode/`, `.specify/`, `.muti-mind/`). Files are watched for changes in real time via fsnotify — when you save a file, Dewey re-indexes only the changed content using SHA-256 content hashing for change detection.
+The foundational source, inherited from graphthulhu. Indexes all Markdown files in the repository, including hidden directories (`.opencode/`, `.specify/`, `.uf/muti-mind/`). Files are watched for changes in real time via fsnotify — when you save a file, Dewey re-indexes only the changed content using SHA-256 content hashing for change detection.
 
 ### GitHub API
 
@@ -101,7 +101,7 @@ Dewey uses [IBM Granite Embedding](https://www.ibm.com/granite/docs/models/embed
 
 Enterprise licensing provenance matters. Granite's training data is fully disclosed and permissibly licensed — there are no questions about whether the model was trained on proprietary or restricted content. This is a deliberate choice for organizations where licensing provenance is a compliance requirement.
 
-The embedding model is configurable. While Granite is the recommended default, teams can swap to any Ollama-compatible embedding model by editing `.dewey/config.yaml`:
+The embedding model is configurable. While Granite is the recommended default, teams can swap to any Ollama-compatible embedding model by editing `.uf/dewey/config.yaml`:
 
 ```yaml
 embedding:

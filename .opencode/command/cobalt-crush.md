@@ -5,6 +5,7 @@ description: >
   arguments: detects active workflow and runs /speckit.implement or
   /opsx:apply.
 ---
+
 <!-- scaffolded by uf vdev -->
 <!-- scaffolded by uf vdev -->
 <!-- scaffolded by uf vv0.6.1 -->
@@ -49,8 +50,8 @@ the task prompt. The agent will:
 
 1. Read AGENTS.md, constitution, convention packs, and active specs
 2. Apply its engineering philosophy (clean code, SOLID, TDD awareness)
-3. Load convention packs from `.opencode/unbound/packs/`
-4. Check `.unbound-force/artifacts/` for Gaze/Divisor feedback
+3. Load convention packs from `.opencode/uf/packs/`
+4. Check `.uf/artifacts/` for Gaze/Divisor feedback
 5. Execute the requested task following project conventions
 6. Document design decisions in code comments
 
@@ -75,6 +76,7 @@ implementation command to the `cobalt-crush-dev` agent:
    The current branch must be `opsx/<change-name>` where
    `<change-name>` matches the detected change directory name.
    If not on the correct branch, **STOP** with error:
+
    > "OpenSpec change `<name>` detected but you are on branch
    > `<current-branch>`. Run: `git checkout opsx/<name>`"
 
