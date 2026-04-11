@@ -28,29 +28,64 @@ Enter explore mode. Think deeply. Visualize freely. Follow the conversation wher
 
 ---
 
+### Use Dewey for Investigation
+
+When exploring ideas or investigating problems, use Dewey as the primary context source:
+
+- `dewey_semantic_search` to find conceptually related content across all indexed sources (specs, issues, docs)
+- `dewey_similar` to find documents similar to the one being explored
+- `dewey_traverse` to follow relationships between related documents
+- `dewey_semantic_search_filtered` to narrow searches by source type (e.g., only GitHub issues, only web docs)
+
+Dewey provides cross-repo context that direct file reads cannot — it finds related content even when different terminology is used.
+
+If Dewey is unavailable, fall back to direct file reads using the Read and Grep tools, and reference convention packs for standards.
+
+### Dewey Availability Tiers
+
+Adjust context retrieval based on Dewey availability:
+
+**Tier 3 (Full Dewey)**: Use `dewey_semantic_search`, `dewey_search`, `dewey_traverse`, and `dewey_semantic_search_filtered` for comprehensive cross-repo and toolstack context.
+
+**Tier 2 (Graph-only, no embedding model)**: Use `dewey_search` and `dewey_traverse` for keyword-based and structural queries. Semantic search is unavailable.
+
+**Tier 1 (No Dewey)**: Fall back to direct file operations:
+
+- Use the Read tool to read local specs, backlog items, and convention packs
+- Use the Grep tool for keyword search across the codebase
+- Reference `.opencode/uf/packs/` for coding standards
+
+All tiers produce valid results. Higher tiers provide richer cross-repo context but are never required.
+
+---
+
 ## What You Might Do
 
 Depending on what the user brings, you might:
 
 **Explore the problem space**
+
 - Ask clarifying questions that emerge from what they said
 - Challenge assumptions
 - Reframe the problem
 - Find analogies
 
 **Investigate the codebase**
+
 - Map existing architecture relevant to the discussion
 - Find integration points
 - Identify patterns already in use
 - Surface hidden complexity
 
 **Compare options**
+
 - Brainstorm multiple approaches
 - Build comparison tables
 - Sketch tradeoffs
 - Recommend a path (if asked)
 
 **Visualize**
+
 ```
 ┌─────────────────────────────────────────┐
 │     Use ASCII diagrams liberally        │
@@ -69,6 +104,7 @@ Depending on what the user brings, you might:
 ```
 
 **Surface risks and unknowns**
+
 - Identify what could go wrong
 - Find gaps in understanding
 - Suggest spikes or investigations
@@ -82,11 +118,13 @@ You have full context of the OpenSpec system. Use it naturally, don't force it.
 ### Check for context
 
 At the start, quickly check what exists:
+
 ```bash
 openspec list --json
 ```
 
 This tells you:
+
 - If there are active changes
 - Their names, schemas, and status
 - What the user might be working on
@@ -114,14 +152,14 @@ If the user mentions a change or you detect one is relevant:
 
 3. **Offer to capture when decisions are made**
 
-   | Insight Type | Where to Capture |
-   |--------------|------------------|
+   | Insight Type               | Where to Capture             |
+   | -------------------------- | ---------------------------- |
    | New requirement discovered | `specs/<capability>/spec.md` |
-   | Requirement changed | `specs/<capability>/spec.md` |
-   | Design decision made | `design.md` |
-   | Scope changed | `proposal.md` |
-   | New work identified | `tasks.md` |
-   | Assumption invalidated | Relevant artifact |
+   | Requirement changed        | `specs/<capability>/spec.md` |
+   | Design decision made       | `design.md`                  |
+   | Scope changed              | `proposal.md`                |
+   | New work identified        | `tasks.md`                   |
+   | Assumption invalidated     | Relevant artifact            |
 
    Example offers:
    - "That's a design decision. Capture it in design.md?"
@@ -146,6 +184,7 @@ If the user mentions a change or you detect one is relevant:
 ## Handling Different Entry Points
 
 **User brings a vague idea:**
+
 ```
 User: I'm thinking about adding real-time collaboration
 
@@ -169,6 +208,7 @@ You: Real-time collab is a big space. Let me think about this...
 ```
 
 **User brings a specific problem:**
+
 ```
 User: The auth system is a mess
 
@@ -200,6 +240,7 @@ You: [reads codebase]
 ```
 
 **User is stuck mid-implementation:**
+
 ```
 User: /opsx-explore add-auth-system
       The OAuth integration is more complex than expected
@@ -217,6 +258,7 @@ You: [reads change artifacts]
 ```
 
 **User wants to compare options:**
+
 ```
 User: Should we use Postgres or SQLite?
 

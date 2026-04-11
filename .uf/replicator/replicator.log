@@ -1,3 +1,0 @@
-2026/04/11 13:14:58 INFO tool call tool=comms_init duration=20.445709ms success=true
-2026/04/11 13:15:06 INFO tool call tool=comms_reserve duration=5.752083ms success=true
-2026/04/11 13:16:09 INFO tool call tool=comms_release duration=2.637625ms success=true
