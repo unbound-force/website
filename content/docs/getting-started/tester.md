@@ -101,7 +101,7 @@ As a tester, you can invoke the review council to get a comprehensive code revie
 /review-council
 ```
 
-The council launches 5 Divisor personas in parallel. The **Testing persona** is particularly relevant -- it evaluates:
+The council launches 6 Divisor personas in parallel. The **Testing persona** is particularly relevant -- it evaluates:
 
 - Test architecture and organization
 - Coverage strategy (is the right code being tested?)

@@ -106,7 +106,7 @@ If the spec looks right, approve it and the swarm proceeds. If intent drifted, p
 After implementation (stage 2), validation (stage 3), and review (stage 4) -- all run autonomously by the swarm -- the workflow pauses and the increment returns to you for acceptance:
 
 1. Review the **Gaze quality report** -- check contract coverage, CRAP scores, and over-specification
-2. Review the **Divisor review verdict** -- check that all 5 personas approved (or understand why they didn't)
+2. Review the **Divisor review verdict** -- check that all 6 personas approved (or understand why they didn't)
 3. Compare results against your **acceptance criteria** from stage 1
 4. Make your decision: accept, reject, or conditional
 

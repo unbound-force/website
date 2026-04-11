@@ -1,6 +1,6 @@
 ---
 title: "The Divisor"
-description: "The Divisor is the PR Reviewer Council — eight sub-personas for code review and content creation, serving as the Code Integrity Guardian."
+description: "The Divisor is the PR Reviewer Council — nine sub-personas for code review and content creation, serving as the Code Integrity Guardian."
 lead: "The Architectural Conscience and Code Integrity Guardian"
 date: 2026-02-23T00:00:00+00:00
 draft: false
@@ -14,7 +14,7 @@ toc: true
 
 The Divisor is the PR Reviewer of the Unbound Force swarm — the architectural conscience and code integrity guardian. Their mission is to ensure that all code changes proposed by Cobalt-Crush, once validated by Gaze, adhere strictly to established architectural standards, best practices, security policies, and maintainability requirements.
 
-The Divisor acts as the final technical gate before integration, translating high-level architectural standards into actionable review criteria. What makes The Divisor unique is its structure: it operates as a **council of eight dynamically discovered personas** -- eight canonical roles ship by default (five review, three content creation), with users able to add or remove personas freely. Each provides a different lens on every code submission.
+The Divisor acts as the final technical gate before integration, translating high-level architectural standards into actionable review criteria. What makes The Divisor unique is its structure: it operates as a **council of nine dynamically discovered personas** -- nine canonical roles ship by default (six review, three content creation), with users able to add or remove personas freely. Each provides a different lens on every code submission.
 
 ## The Council
 
@@ -26,6 +26,7 @@ The Guard focuses on the _"Why"_ of the code. They ensure the pull request:
 - Adheres to the original user intent and acceptance criteria
 - Does not introduce feature bloat (**Zero-Waste Mandate**)
 - Is cohesive and does not negatively impact adjacent modules (**Neighborhood Rule**)
+- **Gatekeeping Integrity**: Checks whether any quality gates, thresholds, severity definitions, or governance rules were modified to make an implementation pass. Modifications to gates without human authorization are CRITICAL-severity findings.
 
 ### The Architect — Structure and Sustainability
 
@@ -44,6 +45,7 @@ The Adversary focuses on _"Where it breaks."_ They act as a skeptical auditor:
 - Identifying security vulnerabilities (SQLi, XSS, insecure mTLS)
 - Finding performance bottlenecks (O(n^2) loops, excessive API calls)
 - Enforcing behavioral constraints and robust error handling
+- **Gate Tampering**: Detects unauthorized modifications to coverage thresholds, CRAP scores, convention pack classifications, CI flags, agent temperature/tool-access settings, review iteration limits, or workflow gate markers.
 
 ### The Operator (SRE) — Deployment and Operational Readiness
 
@@ -102,28 +104,47 @@ The Envoy focuses on _"Does this build trust?"_ They produce and review public-f
 
 Temperature: **0.5** (most creative). Public communications benefit from the most creative latitude, but The Envoy's credibility constraints prevent overclaims.
 
+## Triage Persona
+
+### The Curator — Documentation & Content Pipeline Triage
+
+The Curator focuses on _"Is the documentation keeping up with the code?"_ It detects documentation gaps during every code review and files tracking issues for the content agents to fill:
+
+- Checking whether AGENTS.md and README are updated when user-facing code changes
+- Filing `docs`-labeled GitHub issues in the website repository for missing documentation
+- Identifying blog-worthy changes and filing `blog`-labeled issues
+- Identifying tutorial-worthy workflows and filing `tutorial`-labeled issues
+- Checking for duplicate issues before filing new ones
+
+Temperature: **0.2** (judgment-based). The Curator makes classification decisions (is this change user-facing? does documentation exist?) that benefit from consistent, conservative judgment.
+
+The Curator is the first Divisor persona with bash access, restricted to `gh issue list` and `gh issue create`. The Adversary's "Gate Tampering" check monitors for bash misuse — a trust architecture pattern where minimum capability is granted and a peer agent verifies compliance.
+
+**Important**: The Curator triages — it identifies what needs documenting and files tracking issues. It does not write documentation, blog posts, or communications. Those responsibilities belong to The Scribe, The Herald, and The Envoy respectively.
+
 ## Exclusive Ownership Boundaries
 
 Each review dimension is owned by exactly one Divisor persona, eliminating duplicate findings across personas:
 
-| Dimension                                   | Owner     |
-| ------------------------------------------- | --------- |
-| Secrets/credentials                         | Adversary |
-| Dependency CVEs/supply chain                | Adversary |
-| Error handling/resilience                   | Adversary |
-| Test isolation/coverage/depth               | Tester    |
-| Plan alignment/intent drift                 | Guard     |
-| Zero-waste mandate                          | Guard     |
-| Constitution alignment                      | Guard     |
-| File permissions/hardcoded config           | SRE       |
-| Efficiency/performance (O(n²), allocations) | SRE       |
-| Architectural patterns/conventions          | Architect |
+| Dimension                                   | Owner                                                                                                                   |
+| ------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| Secrets/credentials                         | Adversary                                                                                                               |
+| Dependency CVEs/supply chain                | Adversary                                                                                                               |
+| Error handling/resilience                   | Adversary                                                                                                               |
+| Test isolation/coverage/depth               | Tester                                                                                                                  |
+| Plan alignment/intent drift                 | Guard                                                                                                                   |
+| Zero-waste mandate                          | Guard                                                                                                                   |
+| Constitution alignment                      | Guard                                                                                                                   |
+| File permissions/hardcoded config           | SRE                                                                                                                     |
+| Efficiency/performance (O(n²), allocations) | SRE                                                                                                                     |
+| Architectural patterns/conventions          | Architect                                                                                                               |
+| **The Curator**                             | Documentation & content pipeline triage — gap detection, website issue filing, blog/tutorial opportunity identification |
 
 This ownership model ensures that a finding like "missing error handling" is raised by exactly one persona (Adversary), not duplicated across Adversary and Architect.
 
 ## Shared Severity Standard
 
-All eight personas share a calibration standard defined in the `severity.md` convention pack (`.opencode/uf/packs/severity.md`):
+All nine personas share a calibration standard defined in the `severity.md` convention pack (`.opencode/uf/packs/severity.md`):
 
 | Level        | Definition                                                                           | Auto-Fix?                    |
 | ------------ | ------------------------------------------------------------------------------------ | ---------------------------- |
@@ -136,7 +157,7 @@ Each level includes domain-specific examples per persona — for example, an Adv
 
 ## Prior Learnings Integration
 
-All eight Divisor personas include a "Prior Learnings" step at the start of their review workflow:
+All nine Divisor personas include a "Prior Learnings" step at the start of their review workflow:
 
 1. Search Dewey for learnings tagged with the repo name and relevant file paths
 2. Include found learnings as prior knowledge in the review context
@@ -148,11 +169,11 @@ This means the review council learns from past reviews. If a particular pattern 
 
 The Divisor holds the ultimate authority to approve and merge code into the main branch. Approval requires collective consensus — **no outstanding REQUEST CHANGES from any persona** is mandatory. Gaze's functional validation serves as a prerequisite: the CI pipeline must be green before The Divisor begins review.
 
-This structure ensures that only code which passes all eight lenses — intent, architecture, resilience, operational readiness, test quality, documentation accuracy, narrative clarity, and public communication — is deployed.
+This structure ensures that only code which passes all nine lenses — intent, architecture, resilience, operational readiness, test quality, documentation governance, documentation accuracy, narrative clarity, and public communication — is deployed.
 
 ## How The Divisor Serves the Team
 
-**For Developers (Cobalt-Crush):** Cobalt-Crush relies on The Divisor for the final technical sign-off. The multi-faceted feedback from the eight personas provides a holistic critique covering intent, structure, security, operational readiness, test quality, and content accuracy. Clear architectural standards minimize uncertainty, allowing Cobalt-Crush to code with confidence.
+**For Developers (Cobalt-Crush):** Cobalt-Crush relies on The Divisor for the final technical sign-off. The multi-faceted feedback from the nine personas provides a holistic critique covering intent, structure, security, operational readiness, test quality, documentation governance, and content accuracy. Clear architectural standards minimize uncertainty, allowing Cobalt-Crush to code with confidence.
 
 **For the Tester (Gaze):** Gaze relies on The Divisor to establish the architectural and non-functional requirements against which testability must be measured. Gaze's green light on functional tests is the entry criterion for The Divisor's review, ensuring review time is spent on high-level risk and structure rather than defect finding.
 
