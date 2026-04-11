@@ -277,6 +277,7 @@ GitHub Pages deployment via `.github/workflows/deploy-gh-pages.yml`:
 ## Active Technologies
 - Markdown (Hugo content file) + Hugo (via @thulite), Doks theme (`@thulite/doks-core`) (021-dewey-curator-blog)
 - N/A (static Markdown file) (021-dewey-curator-blog)
+- Markdown (Hugo content files) + Hugo (via @thulite), Doks theme (`@thulite/doks-core`) + N/A (static Markdown file edits only) (023-docs-v10-v11-sync)
 
 - Hugo (Go-based SSG) via `@thulite` npm packages + `thulite ^2.6.3`, `@thulite/doks-core ^1.8.3` (013-unleash-visibility)
 

@@ -30,7 +30,7 @@ We follow the standard GitHub pull request workflow:
 4. Submit a pull request against the `main` branch
 5. Address any review feedback from The Divisor council
 
-All pull requests are reviewed by The Divisor — a council of eight sub-personas. Five review personas (The Guard, The Architect, The Adversary, The Operator (SRE), and The Tester) evaluate intent, structure, resilience, operational readiness, and test quality. Three content personas (The Scribe, The Herald, and The Envoy) ensure documentation, blog posts, and public communications meet quality standards. Collective approval from all active personas is required before merge.
+All pull requests are reviewed by The Divisor — a council of nine sub-personas. Six review personas (The Guard, The Architect, The Adversary, The Operator (SRE), The Tester, and The Curator) evaluate intent, structure, resilience, operational readiness, and test quality. Three content personas (The Scribe, The Herald, and The Envoy) ensure documentation, blog posts, and public communications meet quality standards. Collective approval from all active personas is required before merge.
 
 ## Conventional Commits
 

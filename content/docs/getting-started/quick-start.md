@@ -22,7 +22,7 @@ uf setup
 - **Core tools** -- OpenCode (AI coding environment), Gaze (quality analysis), Mx F (manager hero), GitHub CLI
 - **Development tools** -- Node.js, OpenSpec CLI, Replicator (multi-agent coordination)
 - **Knowledge layer** -- Ollama (local model runtime), Dewey (semantic search), IBM Granite embedding model
-- **Project scaffolding** -- agents, commands, convention packs, templates, and workflow configuration via `uf init`
+- **Project scaffolding** -- agents, commands, convention packs, templates, workflow configuration, and `.gitignore` management via `uf init`
 
 Setup detects your version managers (goenv, nvm, fnm, Homebrew) and installs through them. Use `--dry-run` to preview what would be installed without making changes.
 

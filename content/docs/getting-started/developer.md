@@ -254,6 +254,23 @@ Cobalt-Crush integrates with two feedback systems:
 - **Gaze feedback**: After writing code, checks `.uf/artifacts/quality-report/` for quality findings. High CRAP scores trigger complexity reduction; low contract coverage triggers test improvements.
 - **Divisor feedback**: Before submitting for review, validates against a pre-review checklist. After review, addresses findings by persona and severity (CRITICAL and HIGH first).
 
+### Gatekeeping Value Protection
+
+Certain values in the project are protected from modification by AI agents. When an agent encounters a quality gate it cannot meet, it stops and reports the conflict rather than weakening the gate. Modifying a gate without human authorization is a CRITICAL-severity constitution violation.
+
+The eight categories of protected values are:
+
+1. Coverage thresholds and CRAP scores
+2. Severity definitions and auto-fix policies
+3. Convention pack rule classifications (MUST/SHOULD)
+4. CI flags and linter configuration
+5. Agent temperature and tool-access settings
+6. Constitution MUST rules
+7. Review iteration limits and worker concurrency caps
+8. Workflow gate markers (e.g., `<!-- spec-review: passed -->`)
+
+The Guard checks for "Gatekeeping Integrity" during code review and the Adversary checks for "Gate Tampering" — both will flag unauthorized modifications to these values.
+
 ## Project Scaffolding with `uf init`
 
 `uf init` scaffolds the project files needed to work with the Unbound Force swarm -- agents, commands, templates, scripts, convention packs, OpenSpec schema, and skills. It runs automatically as the final step of `uf setup`, but you can also run it independently to re-scaffold, initialize a new project, or deploy a subset of the swarm.
@@ -276,14 +293,17 @@ uf init [--divisor] [--lang go|typescript] [--force]
 
 `uf init` deploys approximately 50 files across these categories:
 
-| Category         | Files | Examples                                                                                   |
-| ---------------- | ----- | ------------------------------------------------------------------------------------------ |
-| Agents           | ~12   | 5 Divisor personas, Cobalt-Crush, Constitution Check, Mx F Coach                           |
-| Commands         | ~15   | 9 Speckit commands, review-council, constitution-check, cobalt-crush                       |
-| Convention Packs | 9     | default, go, typescript, content (each with tool-owned and user-owned variants) + severity |
-| Templates        | ~6    | spec, plan, tasks, checklist, constitution, agent-file templates                           |
-| Scripts          | ~5    | check-prerequisites, setup-plan, create-new-feature, update-agent-context                  |
-| OpenSpec         | ~6    | config, schema, 4 templates (design, proposal, spec, tasks)                                |
+| Category         | Files   | Examples                                                                                   |
+| ---------------- | ------- | ------------------------------------------------------------------------------------------ |
+| Agents           | ~12     | 6 Divisor personas, Cobalt-Crush, Constitution Check, Mx F Coach                           |
+| Commands         | ~15     | 9 Speckit commands, review-council, constitution-check, cobalt-crush                       |
+| Convention Packs | 9       | default, go, typescript, content (each with tool-owned and user-owned variants) + severity |
+| Templates        | ~6      | spec, plan, tasks, checklist, constitution, agent-file templates                           |
+| Scripts          | ~5      | check-prerequisites, setup-plan, create-new-feature, update-agent-context                  |
+| OpenSpec         | ~6      | config, schema, 4 templates (design, proposal, spec, tasks)                                |
+| `.gitignore`     | Managed | UF runtime and legacy tool ignore patterns                                                 |
+
+`uf init` also manages `.gitignore` entries. It appends a standard Unbound Force ignore block (marked with `# Unbound Force — managed by uf init`) that covers `.uf/` runtime data (databases, caches, locks, logs) and legacy tool directories (`.dewey/`, `.hive/`, `.unbound-force/`, `.muti-mind/`, `.mx-f/`). The behavior is append-only — existing `.gitignore` content is never modified or removed. If `.gitignore` does not exist, it is created. The operation is idempotent: running `uf init` multiple times does not duplicate the ignore block.
 
 File counts are approximate and may change between versions.
 

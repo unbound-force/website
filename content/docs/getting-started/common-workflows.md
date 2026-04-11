@@ -370,6 +370,7 @@ The council discovers available Divisor persona agents in `.opencode/agents/divi
 | **Adversary** | Security vulnerabilities, error handling, resilience, dependency risks                   |
 | **Testing**   | Test architecture, coverage strategy, assertion depth, test isolation                    |
 | **SRE**       | Release pipeline, dependency health, configuration, runtime observability                |
+| **Curator**   | Documentation gaps, blog/tutorial opportunities, website issue filing                    |
 
 ### CI Gate (Phase 1a and 1b)
 
