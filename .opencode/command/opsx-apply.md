@@ -20,16 +20,29 @@ Implement tasks from an OpenSpec change.
 2. **Validate branch**
 
    Run `git rev-parse --abbrev-ref HEAD` to get the current branch.
-
    - If the current branch is `opsx/<change-name>`: proceed.
    - If the current branch is NOT `opsx/<change-name>`: **STOP** with error:
      > "Must be on branch `opsx/<change-name>` to implement this change.
      > Run: `git checkout opsx/<change-name>`"
 
+### Retrieve Implementation Context from Dewey
+
+Before implementing, query Dewey for relevant patterns:
+
+- `dewey_semantic_search` with the task description to find similar implementations in other repos
+- `dewey_semantic_search_filtered` with `source_type: "web"` to find relevant toolstack documentation
+- `dewey_search` for convention pack references related to the task's domain
+
+Use the retrieved context to follow established patterns and avoid reinventing solutions that already exist in the ecosystem.
+
+If Dewey is unavailable, proceed with direct file reads of convention packs and local code examples.
+
 3. **Check status to understand the schema**
+
    ```bash
    openspec status --change "<name>" --json
    ```
+
    Parse the JSON to understand:
    - `schemaName`: The workflow being used (e.g., "spec-driven")
    - Which artifact contains the tasks (typically "tasks" for spec-driven, check status for others)
@@ -141,6 +154,7 @@ What would you like to do?
 ```
 
 **Guardrails**
+
 - Keep going through tasks until done or blocked
 - Always read context files before starting (from the apply instructions output)
 - If task is ambiguous, pause and ask before implementing
