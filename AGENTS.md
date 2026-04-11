@@ -275,6 +275,8 @@ GitHub Pages deployment via `.github/workflows/deploy-gh-pages.yml`:
 3. Always verify both light and dark mode rendering after style changes.
 
 ## Active Technologies
+- Markdown (Hugo content file) + Hugo (via @thulite), Doks theme (`@thulite/doks-core`) (021-dewey-curator-blog)
+- N/A (static Markdown file) (021-dewey-curator-blog)
 
 - Hugo (Go-based SSG) via `@thulite` npm packages + `thulite ^2.6.3`, `@thulite/doks-core ^1.8.3` (013-unleash-visibility)
 
