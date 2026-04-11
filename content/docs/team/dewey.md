@@ -32,7 +32,7 @@ Existing agent configurations that use graphthulhu can migrate to Dewey by chang
 
 ## Query Capabilities
 
-Dewey exposes 40 MCP tools across 10 categories. For knowledge retrieval, agents primarily use 9 query tools across two search modes.
+Dewey exposes 48 MCP tools across 12 categories. For knowledge retrieval, agents primarily use 9 query tools across two search modes.
 
 ### Structured Queries
 
@@ -57,6 +57,24 @@ New in Dewey, these tools use vector embeddings for conceptual similarity:
 | `dewey_similar`                  | Given a document ID, find the most similar documents in the index                            |
 | `dewey_semantic_search_filtered` | Semantic search constrained by source type, repository, or property values                   |
 
+### Knowledge Management
+
+New in Dewey v3.0.0, these tools manage the knowledge lifecycle:
+
+| Tool      | What It Does                                                                                 |
+| --------- | -------------------------------------------------------------------------------------------- |
+| `compile` | Cluster stored learnings by topic and synthesize them into current-state articles via LLM    |
+| `lint`    | Detect quality issues: stale decisions, uncompiled learnings, embedding gaps, contradictions |
+| `promote` | Move content between trust tiers (draft to validated to authored) after human review         |
+
+### Learning
+
+These tools manage individual learnings and the index:
+
+| Tool             | What It Does                                                              |
+| ---------------- | ------------------------------------------------------------------------- |
+| `store_learning` | Store a learning with a required tag and optional category classification |
+
 ### Combined Queries
 
 The most powerful retrieval pattern combines both modes:
@@ -69,7 +87,7 @@ This pattern enables agents to start with a vague concept and progressively refi
 
 ## Content Sources
 
-Dewey indexes content from three pluggable source types. Each source implements a common interface, so adding new source types (Confluence, Notion, S3) is a matter of implementing the interface — not modifying core indexing logic.
+Dewey indexes content from four pluggable source types. Each source implements a common interface, so adding new source types (Confluence, Notion, S3) is a matter of implementing the interface — not modifying core indexing logic.
 
 ### Local Disk
 
@@ -82,6 +100,10 @@ Fetches issues, pull requests, READMEs, and documentation directories from white
 ### Web Crawl
 
 Fetches and indexes documentation from toolstack websites — Go standard library docs, framework documentation, tool references. Crawls respect `robots.txt`, impose configurable rate limiting, and cache content locally. HTML is converted to Markdown for consistent indexing.
+
+### Code
+
+Go AST parsing extracts function signatures, CLI commands, MCP tool registrations, and package documentation directly from Go source files. This gives agents access to the actual API surface of Go projects without relying on external documentation. Code sources are configured in `sources.yaml` with the type `code` and a path to the Go module root.
 
 See the [getting-started guide](/docs/getting-started/knowledge/#configure-content-sources) for YAML configuration examples for each source type.
 
