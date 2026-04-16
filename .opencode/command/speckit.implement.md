@@ -1,6 +1,7 @@
 ---
 description: Execute the implementation plan by processing and executing all tasks defined in tasks.md
 ---
+
 <!-- scaffolded by uf vdev -->
 <!-- scaffolded by uf vdev -->
 <!-- scaffolded by uf vdev -->
@@ -68,12 +69,12 @@ You **MUST** consider the user input before proceeding (if not empty).
      git rev-parse --git-dir 2>/dev/null
      ```
 
-   - Check if Dockerfile* exists or Docker in plan.md → create/verify .dockerignore
-   - Check if .eslintrc* exists → create/verify .eslintignore
-   - Check if eslint.config.* exists → ensure the config's `ignores` entries cover required patterns
-   - Check if .prettierrc* exists → create/verify .prettierignore
+   - Check if Dockerfile\* exists or Docker in plan.md → create/verify .dockerignore
+   - Check if .eslintrc\* exists → create/verify .eslintignore
+   - Check if eslint.config.\* exists → ensure the config's `ignores` entries cover required patterns
+   - Check if .prettierrc\* exists → create/verify .prettierignore
    - Check if .npmrc or package.json exists → create/verify .npmignore (if publishing)
-   - Check if terraform files (*.tf) exist → create/verify .terraformignore
+   - Check if terraform files (\*.tf) exist → create/verify .terraformignore
    - Check if .helmignore needed (helm charts present) → create/verify .helmignore
 
    **If ignore file already exists**: Verify it contains essential patterns, append missing critical patterns only
@@ -110,7 +111,7 @@ You **MUST** consider the user input before proceeding (if not empty).
 
 6. Execute implementation following the task plan:
    - **Phase-by-phase execution**: Complete each phase before moving to the next
-   - **Respect dependencies**: Run sequential tasks in order, parallel tasks [P] can run together  
+   - **Respect dependencies**: Run sequential tasks in order, parallel tasks [P] can run together
    - **Follow TDD approach**: Execute test tasks before their corresponding implementation tasks
    - **File-based coordination**: Tasks affecting the same files must run sequentially
    - **Validation checkpoints**: Verify each phase completion before proceeding
@@ -138,19 +139,34 @@ You **MUST** consider the user input before proceeding (if not empty).
    - Report final status with summary of completed work
 
 10. **Commit and push gate**:
-   - **CRITICAL**: When all tasks are complete, all changes MUST
-     be committed and pushed on the current feature branch
-     BEFORE suggesting any next steps (PR creation, merging,
-     or branch switching).
-   - Run `git status --short` to check for uncommitted changes.
-   - If uncommitted changes exist, prompt the user to commit
-     and push before proceeding.
-   - Do NOT suggest switching to `main` or any other branch
-     until the working tree is clean and changes are pushed.
-   - The recommended completion flow is:
-     1. Commit all changes on the feature branch
-     2. Push to remote
-     3. Create PR (if desired)
-     4. Then merge and switch branches
+
+- **CRITICAL**: When all tasks are complete, all changes MUST
+  be committed and pushed on the current feature branch
+  BEFORE suggesting any next steps (PR creation, merging,
+  or branch switching).
+- Run `git status --short` to check for uncommitted changes.
+- If uncommitted changes exist, prompt the user to commit
+  and push before proceeding.
+- Do NOT suggest switching to `main` or any other branch
+  until the working tree is clean and changes are pushed.
+- The recommended completion flow is:
+  1.  Commit all changes on the feature branch
+  2.  Push to remote
+  3.  Create PR (if desired)
+  4.  Then merge and switch branches
 
 Note: This command assumes a complete task breakdown exists in tasks.md. If tasks are incomplete or missing, suggest running `/speckit.tasks` first to regenerate the task list.
+
+## Guardrails
+
+- **NEVER modify source code** — this command updates
+  spec artifacts ONLY. Implementation changes belong in
+  `/speckit.implement`, `/unleash`, or `/cobalt-crush`.
+- **NEVER modify test files, Go source, Markdown agents,
+  convention packs, or config files** outside the
+  `specs/NNN-*/` feature directory.
+- The ONLY files this command may write are:
+  - `FEATURE_SPEC` (the spec.md file)
+  - Files within `FEATURE_DIR` (spec artifacts:
+    plan.md, tasks.md, research.md, data-model.md,
+    quickstart.md, contracts/, checklists/)
