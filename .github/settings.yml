@@ -1,0 +1,34 @@
+_extends: .github
+
+repository:
+  has_wiki: true
+
+# Website-specific labels for content pipeline
+labels:
+  - name: blog
+    color: e4e669
+    description: Blog post opportunity
+
+  - name: docs
+    color: 0075ca
+    description: Documentation updates needed
+
+  - name: tutorial
+    color: '7057ff'
+    description: Tutorial opportunity
+
+# No PR-triggered CI — branch protection without status checks
+branches:
+  - name: main
+    protection:
+      required_pull_request_reviews:
+        required_approving_review_count: 1
+        dismiss_stale_reviews: true
+        require_code_owner_reviews: true
+        dismissal_restrictions:
+          users: []
+          teams: []
+      required_status_checks: null
+      enforce_admins: false
+      required_linear_history: false
+      restrictions: null
