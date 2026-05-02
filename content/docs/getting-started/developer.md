@@ -65,7 +65,7 @@ For features that need architectural planning:
 
    If `/unleash` pauses (unanswerable question, spec finding, build failure), fix the issue and re-run. If the spec needs refinement, run `/speckit.clarify` then `/unleash` again.
 
-4. **Finale** (build mode): Ship it -- commit, push, PR, merge, return to main
+4. **Finale** (build mode): Wrap up -- commit, push, and create a PR for review
 
    ```text
    /finale
@@ -179,7 +179,7 @@ Every session follows this ritual:
 | --------- | ------------------------------------- | --------------------------------------- |
 | **Start** | `/speckit.specify` or `/opsx-propose` | Define the work                         |
 | **Work**  | `/unleash` or `/cobalt-crush`         | Execute the work                        |
-| **End**   | `/finale`                             | Commit, push, PR, merge, return to main |
+| **End**   | `/finale`                             | Commit, push, create PR for review      |
 
 ## Cobalt-Crush Persona
 
@@ -291,17 +291,16 @@ uf init [--divisor] [--lang go|typescript] [--force]
 
 ### What Gets Deployed
 
-`uf init` deploys approximately 50 files across these categories:
+`uf init` deploys approximately 35 user-owned files plus tool-owned files (Speckit commands, OpenSpec schemas, etc.) across these categories:
 
-| Category         | Files   | Examples                                                                                   |
-| ---------------- | ------- | ------------------------------------------------------------------------------------------ |
-| Agents           | ~12     | 6 Divisor personas, Cobalt-Crush, Constitution Check, Mx F Coach                           |
-| Commands         | ~15     | 9 Speckit commands, review-council, constitution-check, cobalt-crush                       |
-| Convention Packs | 9       | default, go, typescript, content (each with tool-owned and user-owned variants) + severity |
-| Templates        | ~6      | spec, plan, tasks, checklist, constitution, agent-file templates                           |
-| Scripts          | ~5      | check-prerequisites, setup-plan, create-new-feature, update-agent-context                  |
-| OpenSpec         | ~6      | config, schema, 4 templates (design, proposal, spec, tasks)                                |
-| `.gitignore`     | Managed | UF runtime and legacy tool ignore patterns                                                 |
+| Category         | Files   | Examples                                                                                                     |
+| ---------------- | ------- | ------------------------------------------------------------------------------------------------------------ |
+| Agents           | ~12     | 9 Divisor personas (6 review + 3 content), Cobalt-Crush, Constitution Check, Mx F Coach                     |
+| Commands         | ~8      | review-council, review-pr, constitution-check, cobalt-crush, unleash, uf-init, agent-brief, finale           |
+| Convention Packs | 9       | default, go, typescript, content (each with tool-owned and user-owned variants) + severity                   |
+| OpenSpec         | ~5      | config, schema, templates (design, proposal, spec, tasks)                                                    |
+| Skills           | 1       | speckit-workflow                                                                                             |
+| `.gitignore`     | Managed | UF runtime and legacy tool ignore patterns                                                                   |
 
 `uf init` also manages `.gitignore` entries. It appends a standard Unbound Force ignore block (marked with `# Unbound Force — managed by uf init`) that covers `.uf/` runtime data (databases, caches, locks, logs) and legacy tool directories (`.dewey/`, `.hive/`, `.unbound-force/`, `.muti-mind/`, `.mx-f/`). The behavior is append-only — existing `.gitignore` content is never modified or removed. If `.gitignore` does not exist, it is created. The operation is idempotent: running `uf init` multiple times does not duplicate the ignore block.
 
@@ -332,13 +331,13 @@ After completion, `uf init` shows a summary with file dispositions (`+` created,
 
 ## Session Ritual
 
-The most important habit: **always end your session properly**. The daily workflow follows a specify → unleash → finale loop. When you are done working, run `/finale` to commit, push, create a PR, and merge:
+The most important habit: **always end your session properly**. The daily workflow follows a specify → unleash → finale loop. When you are done working, run `/finale` to commit, push, and create a PR for review:
 
 ```text
-/finale        # commit → push → PR → merge → main
+/finale        # commit → push → PR → main
 ```
 
-`/finale` handles the full end-of-branch workflow: staging changes, generating a conventional commit message, pushing to remote, creating a PR, watching CI checks, rebase-merging, and returning to `main`. The session is not complete until `git push` succeeds — this ensures your work items, semantic memory learnings, and file reservation state are available for your next session and for other team members who may pick up where you left off.
+`/finale` handles the full end-of-branch workflow: staging changes, generating a conventional commit message, pushing to remote, creating a PR, watching CI checks, and returning to `main`. The PR stays open for human review — `/finale` never merges. The session is not complete until `git push` succeeds — this ensures your work items, semantic memory learnings, and file reservation state are available for your next session and for other team members who may pick up where you left off.
 
 ## Next Steps
 

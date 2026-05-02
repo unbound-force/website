@@ -132,11 +132,11 @@ Every exit message tells you what happened, what to do next, and how to resume. 
 
 `/unleash` builds. [`/finale`](/docs/getting-started/common-workflows/#end-of-branch-workflow-finale) ships.
 
-After `/unleash` presents demo instructions, run `/finale` to automate the end-of-branch workflow: stage all changes, generate a conventional commit message, push, create a PR, watch CI checks, rebase-merge, and return to `main`. The full developer loop is two commands:
+After `/unleash` presents demo instructions, run `/finale` to automate the end-of-branch workflow: stage all changes, generate a conventional commit message, push, create a PR, watch CI checks, and return to `main`. The PR stays open for human review. The full developer loop is two commands:
 
 ```text
 /unleash       # spec → demo-ready code
-/finale        # commit → push → PR → merge → main
+/finale        # commit → push → PR → main
 ```
 
 ## Every Tool Is Optional

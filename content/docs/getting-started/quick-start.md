@@ -48,7 +48,7 @@ Start in plan mode to explore your idea, then switch to build mode:
 ```text
 /speckit.specify    # describe what you want to build
 /unleash            # the swarm takes it from here
-/finale             # ship it
+/finale             # commit, push, create PR
 ```
 
 `/unleash` runs the entire pipeline autonomously: clarify, plan, implement, test, and review. It pauses when it needs you and resumes where it left off. See the [blog post](/blog/unleash-in-practice/) for a walkthrough.
@@ -60,7 +60,7 @@ For bug fixes and tactical changes:
 ```text
 /opsx-propose fix-the-bug    # create proposal + design + tasks
 /cobalt-crush                # implement with convention pack adherence
-/finale                      # ship it
+/finale                      # commit, push, create PR
 ```
 
 ## The Stack
