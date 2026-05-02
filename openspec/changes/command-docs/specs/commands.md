@@ -8,8 +8,8 @@ The website MUST document the `/review-pr` command in the Code Review section of
 
 - **GIVEN** a user visits the Common Workflows page
 - **WHEN** they read the Code Review section
-- **THEN** `/review-pr` MUST be documented with: purpose, usage syntax (`/review-pr [N]`), auto-detection from current branch, CI causality analysis, fix branch offering
-- **AND** a comparison table with `/review-council` MUST be present showing: when to use, scope, agent model
+- **THEN** `/review-pr` MUST be documented with: purpose, usage syntax (`/review-pr [N]`), auto-detection from current branch, `gh` CLI requirement, CI causality analysis, fix branch offering
+- **AND** a comparison table with `/review-council` MUST be present (see requirement `review-pr-comparison-table` for table details)
 
 ### Requirement: review-pr-causality-docs
 
@@ -41,21 +41,24 @@ The website MUST document the `/agent-brief` command.
 
 - **GIVEN** a user visits the relevant documentation page
 - **WHEN** they read the `/agent-brief` section
-- **THEN** both modes MUST be documented: create (generates AGENTS.md) and audit (scores existing AGENTS.md)
-- **AND** the 5-tier scoring rubric (Excellent/Strong/Adequate/Weak/Missing) MUST be described
-- **AND** context-sensitive section detection (constitution, spec framework) MUST be mentioned
-- **AND** bridge file management (CLAUDE.md, .cursorrules) MUST be mentioned
+- **THEN** both modes MUST be documented: create (generates AGENTS.md from project signals including go.mod, package.json, Makefile, CI config, README) and audit (scores existing AGENTS.md with deterministic structural checks)
+- **AND** the 5-tier scoring rubric (Excellent/Strong/Adequate/Weak/Missing) MUST be described with tier names
+- **AND** context-sensitive section detection (constitution, spec framework) MUST be explained
+- **AND** bridge file management MUST document which files are created (CLAUDE.md, .cursorrules), when they are created vs validated, and their purpose
+- **AND** doctor integration (`uf doctor` structural checks) MUST be documented
 
-### Requirement: quick-reference-table-update
+### Requirement: quick-reference-table
 
-The quick reference table in `common-workflows.md` MUST include entries for `/review-pr` and `/agent-brief`.
+A quick reference table MUST be created in `common-workflows.md` listing all documented slash commands with brief descriptions.
 
 #### Scenario: user scans quick reference
 
-- **GIVEN** a user scans the quick reference table
-- **WHEN** they look for available commands
-- **THEN** `/review-pr [N]` MUST be listed with brief description
-- **AND** `/agent-brief` MUST be listed with brief description
+- **GIVEN** a user reads `common-workflows.md`
+- **WHEN** they look for a summary of available commands
+- **THEN** a quick reference table MUST be present listing all documented commands
+- **AND** `/review-pr [N]` MUST be included with brief description
+- **AND** `/agent-brief` MUST be included with brief description
+- **AND** existing documented commands (`/unleash`, `/finale`, `/review-council`, `/speckit.specify`, `/opsx-propose`, `/cobalt-crush`) MUST also be included
 
 ## MODIFIED Requirements
 

@@ -8,7 +8,7 @@ This change addresses GitHub issues #59 (`/review-pr`) and #60 (`/agent-brief`).
 
 1. **`/review-pr` documentation**: Add to the Code Review section of `common-workflows.md` — command description, comparison table with `/review-council`, CI causality analysis explanation, fix branch offering.
 
-2. **`/agent-brief` documentation**: Add to the developer guide or common workflows — command description, create vs audit modes, 5-tier scoring rubric, context-sensitive section detection, bridge file management.
+2. **`/agent-brief` documentation**: Add to `common-workflows.md` as a "Project Context Management" section — command description, create vs audit modes, 5-tier scoring rubric, context-sensitive section detection, bridge file management.
 
 3. **Quick reference table updates**: Add both commands to the quick reference table in `common-workflows.md`.
 
@@ -27,34 +27,27 @@ This change addresses GitHub issues #59 (`/review-pr`) and #60 (`/agent-brief`).
 
 ## Impact
 
-- 1 existing page modified (common-workflows.md) — significant additions to Code Review section
-- Possibly 1 new page if `/agent-brief` content is large enough to warrant its own page
-- Quick reference table updated with 2 new entries
+- 1 existing page modified (`common-workflows.md`) — Code Review section expanded, Project Context Management section added, quick reference table created
+- GitHub issues: [#59](https://github.com/unbound-force/website/issues/59), [#60](https://github.com/unbound-force/website/issues/60)
 
 ## Constitution Alignment
 
-Assessed against the Unbound Force org constitution.
+Assessed against the Unbound Force website project constitution (`.specify/memory/constitution.md`).
 
-### I. Autonomous Collaboration
-
-**Assessment**: N/A
-
-Documentation changes — no effect on hero communication.
-
-### II. Composability First
+### I. Content Accuracy
 
 **Assessment**: PASS
 
-Both commands are documented as independently invocable. `/review-pr` works standalone (doesn't require `/review-council` first). `/agent-brief` works in any project (doesn't require Unbound Force).
+Both commands are already shipped and documented in `.opencode/command/*.md` in the `unbound-force/unbound-force` repo. Content will be sourced from the upstream command files (`review-pr.md` and `agent-brief.md`) and cross-referenced with Dewey. Factual claims (5-tier scoring rubric, CI causality analysis, etc.) must be verified against the current shipped state before writing.
 
-### III. Observable Quality
+### II. Minimal Footprint
 
 **Assessment**: PASS
 
-Documents commands that produce observable, structured output — `/review-pr` produces review findings with severity classifications, `/agent-brief` produces quality scores with a 5-tier rubric.
+Adds Markdown content to an existing page (`common-workflows.md`). No custom HTML, CSS, JavaScript, or new dependencies. A quick reference table will be created to improve discoverability — this is standard Markdown with no custom layout.
 
-### IV. Testability
+### III. Visitor Clarity
 
-**Assessment**: N/A
+**Assessment**: PASS
 
-No code changes. Validation is `npm run build` + visual review.
+Makes two undocumented commands discoverable. The comparison table (`/review-council` vs `/review-pr`) helps visitors choose the right review command for their situation. The quick reference table provides at-a-glance command discovery. Placement in `common-workflows.md` keeps all workflow commands in one location.
