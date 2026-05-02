@@ -372,6 +372,8 @@ The council discovers available Divisor persona agents in `.opencode/agents/divi
 | **SRE**       | Release pipeline, dependency health, configuration, runtime observability                |
 | **Curator**   | Documentation gaps, blog/tutorial opportunities, website issue filing                    |
 
+> **Note**: The table above lists the 6 review personas that participate in code review. Three additional content personas — Scribe (technical documentation), Herald (blog/announcements), and Envoy (public communications) — are invoked separately for content creation tasks and do not participate in the code review council.
+
 ### CI Gate (Phase 1a and 1b)
 
 Before delegating to Divisor agents, the review council runs a two-phase CI gate:

@@ -14,17 +14,18 @@ Unbound Force is a set of purpose-built agent personas designed to work as a coo
 
 But these are not just instruction files. Each hero can include LSP servers, MCP servers, tooling, tasks, commands, plugins, and other technologies that enable them to do their job. They are designed to be the pinnacle archetype of their role.
 
-## Three Tools, One Workflow
+## The Stack
 
-Unbound Force is built on three complementary tools that form a layered stack:
+Unbound Force is built on four complementary tools that form a layered stack:
 
 | Layer            | Tool                                                      | What It Does                                                                                                               |
 | ---------------- | --------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| **CLI**          | [`uf`](/docs/reference/cli/)                               | Project scaffolding, environment setup, health checks, configuration, sandboxed execution, LLM gateway.                   |
 | **Agent**        | [OpenCode](https://opencode.ai)                           | The AI coding environment where you interact, write code, and run commands. The personas run inside OpenCode.              |
 | **Planning**     | [Speckit](https://github.com/github/spec-kit) (spec-kit)  | A specification pipeline that turns ideas into structured specs, plans, and tasks before implementation begins.            |
 | **Coordination** | [Replicator](https://github.com/unbound-force/replicator) | Multi-agent coordination: parallel workers, git-backed tracking, file reservations, and semantic memory. Single Go binary. |
 
-Each tool is independently useful, but they compose into the full Unbound Force workflow: plan with Speckit, execute with OpenCode, coordinate with Replicator.
+Each tool is independently useful, but they compose into the full Unbound Force workflow: scaffold with `uf`, plan with Speckit, execute with OpenCode, coordinate with Replicator.
 
 ## The Heroes
 
