@@ -11,3 +11,7 @@ toc: true
 ## CLI Reference
 
 - **[uf CLI Reference](/docs/reference/cli/)** -- Complete command reference for the `uf` CLI, including all command groups, subcommands, and flags.
+
+## Gateway
+
+- **[Gateway](/docs/reference/gateway/)** -- LLM reverse proxy for credential isolation: Vertex AI, Bedrock, and Anthropic provider support.

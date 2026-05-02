@@ -33,7 +33,7 @@ The gateway page MUST document Vertex AI-specific translation behavior.
 - **GIVEN** a Vertex AI user reads the Vertex-specific section
 - **WHEN** they review the translation behavior
 - **THEN** the following MUST be documented: model field removal, `anthropic_version` injection, `streamRawPredict` vs `rawPredict` selection, SSE event filtering (drops `vertex_event`/`ping`), header stripping (`anthropic-beta`/`anthropic-version`)
-- **AND** the synthetic model catalog (9 models with capabilities) SHOULD be mentioned
+- **AND** the synthetic model catalog (Vertex-available Claude models with capabilities) MUST be documented
 
 ### Requirement: gateway-token-refresh-docs
 

@@ -30,3 +30,13 @@ The `uf gateway` command implements an LLM reverse proxy with 3 subcommands and 
 
 - **Risk**: Gateway provider support may expand (e.g., OpenAI, Azure). Page structure should accommodate new providers without restructuring.
 - **Trade-off**: Vertex AI detail may overwhelm users who just need Anthropic direct. Mitigated by placing Vertex-specific details in a subsection users can skip.
+
+## Content Sources
+
+Authoritative upstream source files:
+- Gateway command: `unbound-force/unbound-force/internal/gateway/` (server, proxy, providers, token refresh)
+- CLI help: `uf gateway --help`, `uf gateway start --help`
+- Sandbox integration: `unbound-force/unbound-force/internal/sandbox/` (autoStartGateway)
+- Specs: `unbound-force/unbound-force/specs/033-gateway-command/`, `unbound-force/unbound-force/specs/034-gateway-vertex-translation/`
+
+All documented features must be verified against these upstream files at implementation time.

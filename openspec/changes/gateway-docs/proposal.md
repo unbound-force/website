@@ -2,7 +2,7 @@
 
 `uf gateway` is a local LLM reverse proxy that isolates cloud credentials from AI agent containers. It accepts standard Anthropic API requests and translates + authenticates upstream to Vertex AI, Bedrock, or Anthropic. This is a security-critical feature — containers see `localhost:8080` and a dummy token instead of real cloud credentials. None of this is documented on the website.
 
-This change addresses GitHub issue #57.
+This change addresses [GitHub issue #57](https://github.com/unbound-force/website/issues/57).
 
 ## What Changes
 
@@ -33,28 +33,22 @@ A new documentation page for the `uf gateway` command covering:
 
 ## Constitution Alignment
 
-Assessed against the Unbound Force org constitution.
+Assessed against the Unbound Force website project constitution (`.specify/memory/constitution.md`).
 
-### I. Autonomous Collaboration
-
-**Assessment**: N/A
-
-Documentation page — no effect on hero communication.
-
-### II. Composability First
+### I. Content Accuracy
 
 **Assessment**: PASS
 
-Documents `uf gateway` as a standalone capability that works independently of the sandbox (though they integrate when both are used).
+Documents `uf gateway` commands sourced from the upstream implementation at `unbound-force/unbound-force/internal/gateway/`. Provider auto-detection, Vertex AI translation behavior, token refresh, and sandbox integration are all verified against the shipped code. Content must be cross-referenced with `uf gateway --help` output at implementation time.
 
-### III. Observable Quality
+### II. Minimal Footprint
 
 **Assessment**: PASS
 
-Documents `uf gateway status` which provides observable state, and the synthetic model catalog which is machine-parseable output.
+Single Markdown page under the existing Reference section. No custom layouts, CSS, or JavaScript. The Reference section was established by the `cli-reference-and-positioning` change (PR #73) — this adds a page to it.
 
-### IV. Testability
+### III. Visitor Clarity
 
-**Assessment**: N/A
+**Assessment**: PASS
 
-No code changes. Validation is `npm run build` + visual review.
+Leads with the "why" (credential isolation — a security concern visitors care about) before technical details. Provider sections are structured so users can skip to their provider. Cross-references to sandbox docs prevent duplication.
