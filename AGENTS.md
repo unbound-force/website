@@ -451,3 +451,17 @@ Use direct file operations instead of Dewey when:
 ## Recent Changes
 
 - 001-site-scaffold: Added Hugo (via npm/thulite) + Go 1.23 (module resolution) + Node.js >= 20.11.0 + `thulite ^2.6.3`, `@thulite/doks-core ^1.8.3`, `@thulite/images ^3.3.1`, `@thulite/inline-svg ^1.2.0`, `@thulite/seo ^2.4.1`, `@tabler/icons ^3.34.1`
+
+## Convention Packs
+
+This repository uses convention packs scaffolded by
+unbound-force. Agents MUST read the applicable pack(s)
+before writing or reviewing code.
+
+- `.opencode/uf/packs/default.md`
+- `.opencode/uf/packs/default-custom.md`
+- `.opencode/uf/packs/severity.md`
+- `.opencode/uf/packs/content.md`
+- `.opencode/uf/packs/content-custom.md`
+- `.opencode/uf/packs/go.md`
+- `.opencode/uf/packs/go-custom.md`
