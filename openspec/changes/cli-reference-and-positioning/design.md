@@ -13,7 +13,7 @@ The `uf` CLI is the primary user interface for Unbound Force — it installs, co
 ### Non-Goals
 - Detailed tutorials for each command (covered by separate tutorial specs)
 - Exhaustive flag documentation for `sandbox` and `gateway` (covered by their own doc specs)
-- Backfilling changelog entries for all historical releases (start from the current release)
+- Backfilling changelog entries for historical releases (include the current release only)
 
 ## Decisions
 
@@ -25,10 +25,10 @@ The `uf` CLI is the primary user interface for Unbound Force — it installs, co
 
 4. **Reference section in navigation**: Create a new "Reference" section in the docs sidebar to house the CLI reference and future reference pages (e.g., configuration reference).
 
-5. **Source command data from upstream**: Pull command details from `cmd/unbound-force/*.go` files and `--help` output in the `unbound-force` repo. Cross-reference with Dewey for any curated content.
+5. **Source command data from upstream**: Pull command details from `uf --help` and `uf <command> --help` output, cross-referencing with the `unbound-force/unbound-force` repo's CLI source code. `--help` output is the authoritative source. Cross-reference with Dewey for any curated content. Include a version marker (e.g., "This page reflects `uf` vX.Y.Z") so staleness is detectable.
 
 ## Risks / Trade-offs
 
 - **Risk**: CLI surface may change between spec creation and implementation. Mitigated by sourcing from the shipped binary at implementation time.
-- **Risk**: Changelog page requires ongoing maintenance with each release. Accepted — this is the nature of changelogs. Keep entries concise.
+- **Risk**: Changelog page requires ongoing maintenance with each release. Mitigated: changelog updates are part of the release process; the Website Documentation Gate in AGENTS.md already requires issues for user-facing changes. If the changelog falls more than 2 releases behind, remove it rather than show stale content (per Constitution I: Content Accuracy).
 - **Trade-off**: Brief descriptions in the CLI reference vs. detailed docs. Chose brief — the reference links to detailed pages where they exist.
