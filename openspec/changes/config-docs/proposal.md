@@ -4,14 +4,14 @@ The `uf config` command group provides unified configuration management with 3 s
 
 The `common-workflows.md` page already mentions `.uf/config.yaml` but doesn't document the `uf config` commands that manage it.
 
-This change addresses GitHub issue #58.
+This change addresses [GitHub issue #58](https://github.com/unbound-force/website/issues/58).
 
 ## What Changes
 
 A new documentation page for the `uf config` command covering:
 
 1. **Command surface**: `init`, `show`, `validate` — with descriptions and usage examples
-2. **Layered loading**: User config (`~/.config/uf/config.yaml`) > repo config (`.uf/config.yaml`) > env vars, with precedence examples
+2. **Layered loading**: CLI flags > env vars > repo config (`.uf/config.yaml`) > user config (`~/.config/uf/config.yaml`) > compiled defaults, with precedence examples
 3. **Configuration sections**: The 7 sections with key settings and defaults
 4. **Common customizations**: Platform-specific package manager, embedding model, gateway port, skip list
 
@@ -33,28 +33,22 @@ A new documentation page for the `uf config` command covering:
 
 ## Constitution Alignment
 
-Assessed against the Unbound Force org constitution.
+Assessed against the Unbound Force website project constitution (`.specify/memory/constitution.md`).
 
-### I. Autonomous Collaboration
-
-**Assessment**: N/A
-
-Documentation page — no effect on hero communication.
-
-### II. Composability First
+### I. Content Accuracy
 
 **Assessment**: PASS
 
-Documents `uf config` as a standalone capability. The configuration system works independently — users can use `uf` without ever running `uf config` (defaults apply).
+Documents `uf config` commands sourced from the actual upstream implementation at `unbound-force/unbound-force/internal/config/`. The layered loading order (CLI flags > env vars > repo config > user config > compiled defaults) is verified against the source code comment in `config.go`. The 7 configuration sections are verified against the `Config` struct fields. All content must be cross-referenced with `uf config --help` and `uf config show` output at implementation time.
 
-### III. Observable Quality
+### II. Minimal Footprint
 
 **Assessment**: PASS
 
-Documents `uf config show` and `uf config validate` which provide observable, machine-parseable output of the effective configuration and validation results.
+Single Markdown page under the Reference section using Doks built-in sidebar navigation. No custom layouts, CSS, or JavaScript. The Reference section is being established by the `cli-reference-and-positioning` change (PR #73) — this change adds a second page to that section, justifying its existence.
 
-### IV. Testability
+### III. Visitor Clarity
 
-**Assessment**: N/A
+**Assessment**: PASS
 
-No code changes. Validation is `npm run build` + visual review.
+Configuration is a reference topic — placing it alongside the CLI reference in the Reference section is intuitive. Cross-references from `common-workflows.md` (which already mentions `.uf/config.yaml`) ensure discoverability. The page ends with cross-links to related content.

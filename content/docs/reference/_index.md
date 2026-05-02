@@ -15,3 +15,7 @@ toc: true
 ## Gateway
 
 - **[Gateway](/docs/reference/gateway/)** -- LLM reverse proxy for credential isolation: Vertex AI, Bedrock, and Anthropic provider support.
+
+## Configuration
+
+- **[Configuration](/docs/reference/config/)** -- Unified configuration system: layered loading, config sections, and common customizations.

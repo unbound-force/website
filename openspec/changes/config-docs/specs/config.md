@@ -19,8 +19,9 @@ The configuration page MUST explain the layered loading system with precedence r
 
 - **GIVEN** a user reads the layered loading section
 - **WHEN** they review the precedence rules
-- **THEN** the 3 layers MUST be listed: user config (`~/.config/uf/config.yaml`), repo config (`.uf/config.yaml`), environment variables
-- **AND** the precedence order MUST be clearly stated (user > repo > env)
+- **THEN** the 5 layers MUST be listed: CLI flags, environment variables, repo config (`.uf/config.yaml`), user config (`~/.config/uf/config.yaml`), compiled defaults
+- **AND** the precedence order MUST be clearly stated (CLI flags > env vars > repo config > user config > compiled defaults)
+- **AND** the page MUST note that missing config files produce compiled defaults with no error
 
 ### Requirement: config-sections-docs
 
@@ -35,7 +36,7 @@ The configuration page MUST document the 7 configuration sections.
 
 ### Requirement: config-common-customizations
 
-The configuration page SHOULD include common customization examples.
+The configuration page MUST include common customization examples.
 
 #### Scenario: Fedora user sets package manager
 
