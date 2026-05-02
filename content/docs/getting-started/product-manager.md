@@ -28,11 +28,13 @@ The `mxf` command-line tool provides 7 subcommands for sprint management:
 | `mxf standup`    | Facilitate daily standups            |
 | `mxf retro`      | Facilitate retrospectives            |
 
-Install via Homebrew (included with the `unbound-force` package, the `uf` CLI):
+Install via Homebrew (separate formula from the `uf` CLI):
 
 ```bash
-brew install unbound-force/tap/unbound-force
+brew install unbound-force/tap/mxf
 ```
+
+Alternatively, `uf setup` installs the full toolchain including `mxf`.
 
 ## Reading the Dashboard
 

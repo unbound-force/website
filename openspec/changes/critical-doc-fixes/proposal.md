@@ -8,7 +8,7 @@ These corrections address GitHub issues #53, #54, #55, and #56 — all tagged `r
 
 Four surgical text corrections across four documentation pages:
 
-1. **`/finale` merge behavior** (#53): Three pages describe `/finale` as merging PRs. The shipped command explicitly states "NEVER merge the PR" — it creates PRs for review only. Fix across `common-workflows.md`, `quick-start.md`, and `developer.md`.
+1. **`/finale` merge behavior** (#53): Four pages describe `/finale` as merging PRs. The shipped command explicitly states "NEVER merge the PR" — it creates PRs for review only. Fix across `common-workflows.md`, `quick-start.md`, `developer.md`, and `blog/unleash-in-practice.md`.
 
 2. **`/unleash` branch support** (#54): `common-workflows.md` states `/unleash` rejects `opsx/*` branches. Since Spec 031, `/unleash` supports both `NNN-*` and `opsx/*` branches. Fix in `common-workflows.md`.
 
@@ -23,44 +23,39 @@ Four surgical text corrections across four documentation pages:
 
 ### Modified Capabilities
 - `docs/getting-started/common-workflows`: Corrected `/finale` and `/unleash` descriptions
-- `docs/getting-started/quick-start`: Corrected `/finale` description
-- `docs/getting-started/developer`: Corrected `/finale` description, file count, and command breakdown
+- `docs/getting-started/quick-start`: Corrected `/finale` description (both code blocks)
+- `docs/getting-started/developer`: Corrected `/finale` description (4 locations), file count, and command breakdown
 - `docs/getting-started/product-manager`: Corrected `mxf` install instruction
+- `blog/unleash-in-practice`: Corrected `/finale` description in "The Complete Loop" section
 
 ### Removed Capabilities
 - None
 
 ## Impact
 
-- 4 Markdown content pages modified
+- 5 Markdown content pages modified (4 docs + 1 blog)
 - No layout, style, or configuration changes
 - No new pages created
 - All changes are text corrections within existing content
 
 ## Constitution Alignment
 
-Assessed against the Unbound Force org constitution.
+Assessed against the Unbound Force website project constitution (`.specify/memory/constitution.md`).
 
-### I. Autonomous Collaboration
-
-**Assessment**: N/A
-
-Documentation text corrections do not affect artifact-based communication between heroes.
-
-### II. Composability First
-
-**Assessment**: N/A
-
-No tool behavior or dependency changes — text-only corrections.
-
-### III. Observable Quality
+### I. Content Accuracy
 
 **Assessment**: PASS
 
-Corrections improve the accuracy of published documentation, which is a form of observable output quality. Users reading the docs will get correct information about command behavior.
+This change exists specifically to fix Content Accuracy violations. All four corrections align documentation with the shipped command behavior (source of truth: `.opencode/command/*.md` in the `unbound-force/unbound-force` repo). The `uf init` file count (~35 files) and breakdown were verified against the current scaffold assets.
 
-### IV. Testability
+### II. Minimal Footprint
 
-**Assessment**: N/A
+**Assessment**: PASS
 
-No code changes. Validation is manual: `npm run build` succeeds and corrected text renders properly.
+Text-only corrections within existing Markdown content. No new pages, layouts, CSS, JavaScript, or dependencies.
+
+### III. Visitor Clarity
+
+**Assessment**: PASS
+
+Correcting factual errors directly improves visitor clarity. Users reading corrected docs will get accurate expectations about `/finale` (creates PRs, does not merge), `/unleash` (supports both branch types), `uf init` (correct file count), and `mxf` (separate install).

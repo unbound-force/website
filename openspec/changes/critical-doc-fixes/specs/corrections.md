@@ -21,15 +21,22 @@ Previously: `/finale` was described as merging PRs with rebase strategy, includi
 #### Scenario: user reads finale in quick-start
 
 - **GIVEN** a user visits the Quick Start page
-- **WHEN** they read the workflow code block
-- **THEN** the `/finale` comment MUST say "commit, push, create PR" not "ship it"
+- **WHEN** they read the workflow code blocks (Large Tasks and Small Tasks)
+- **THEN** all `/finale` comments MUST say "commit, push, create PR" not "ship it"
 
 #### Scenario: user reads finale in developer guide
 
 - **GIVEN** a user visits the Developer Guide page
-- **WHEN** they read the daily workflow section
-- **THEN** the text MUST say "run `/finale` to commit, push, and create a PR"
-- **AND** MUST NOT say "and merge"
+- **WHEN** they read the daily workflow section, Session Lifecycle table, and Session Ritual section
+- **THEN** all references to `/finale` MUST say "commit, push, and create a PR"
+- **AND** MUST NOT say "and merge" or "rebase-merge"
+
+#### Scenario: user reads finale in blog post
+
+- **GIVEN** a user reads the "Unleash in Practice" blog post
+- **WHEN** they read "The Complete Loop" section
+- **THEN** the `/finale` description MUST NOT mention "rebase-merge"
+- **AND** the code block comment MUST NOT include "merge"
 
 ### Requirement: unleash-branch-support-accuracy
 

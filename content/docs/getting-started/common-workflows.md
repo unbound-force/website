@@ -35,17 +35,17 @@ toc: true
 
 ### Branch Safety
 
-`/unleash` requires a Speckit feature branch (`NNN-*`). It never runs on `main` and rejects `opsx/*` branches (use `/opsx-apply` instead). It validates that `spec.md` exists before proceeding.
+`/unleash` works with both Speckit (`NNN-*`) and OpenSpec (`opsx/*`) feature branches. It never runs on `main`. For Speckit branches, it validates that `spec.md` exists. For OpenSpec branches, it detects the change name from the branch (`opsx/<name>`) and reads tasks from `openspec/changes/<name>/tasks.md`.
 
-After `/unleash` completes, the demo step suggests running `/finale` to commit, push, create a PR, and merge.
+After `/unleash` completes, the demo step suggests running `/finale` to commit, push, and create a PR.
 
 See also: [From Spec to Demo in One Command](/blog/unleash-in-practice/) — a narrative walkthrough of the pipeline.
 
 ## End-of-Branch Workflow (`/finale`)
 
-`/finale` automates the end-of-branch workflow — one command to stage, commit, push, create a PR, watch CI, merge, and return to main.
+`/finale` automates the end-of-branch workflow — one command to stage, commit, push, create a PR, watch CI, and return to main. The PR stays open for human review.
 
-### The 9-Step Workflow
+### The 8-Step Workflow
 
 | Step | Name                        | Description                                                                         |
 | ---- | --------------------------- | ----------------------------------------------------------------------------------- |
@@ -55,20 +55,18 @@ See also: [From Spec to Demo in One Command](/blog/unleash-in-practice/) — a n
 | 4    | **Push to Remote**          | Sets upstream if needed (`git push -u origin <branch>`).                            |
 | 5    | **Create or Find PR**       | Creates PR via `gh pr create` or finds existing one.                                |
 | 6    | **Watch CI Checks**         | `gh pr checks --watch`. Stops on failure with options.                              |
-| 7    | **Merge PR**                | `gh pr merge --rebase --delete-branch`. Always uses rebase merge strategy.          |
-| 8    | **Return to Main**          | `git checkout main && git pull`.                                                    |
-| 9    | **Summary**                 | Displays completion report: branch, commit, PR, checks, status.                     |
+| 7    | **Return to Main**          | `git checkout main && git pull`.                                                    |
+| 8    | **Summary**                 | Displays completion report: branch, commit, PR, checks, status.                     |
 
 ### Guardrails
 
 - Never runs on `main`
-- Never merges with failing CI checks
+- Never merges the PR — creates PRs for review, not for immediate merge
 - Never stages secret files (`.env`, `credentials.json`, `*.key`, `*.pem`) without warning
 - Never commits without user approval of the commit message
-- Always uses rebase merge strategy (no squash or merge commits)
 - If any step fails, stops immediately with context and options
 
-`/finale` works with both Speckit (`NNN-*`) and OpenSpec (`opsx/*`) branches. It is the natural complement to `/unleash` — `/unleash` builds, `/finale` ships.
+`/finale` works with both Speckit (`NNN-*`) and OpenSpec (`opsx/*`) branches. It is the natural complement to `/unleash` — `/unleash` builds, `/finale` wraps up the branch and creates a PR for review.
 
 ## New Feature (End-to-End) {#new-feature-end-to-end}
 
