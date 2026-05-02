@@ -232,7 +232,7 @@ workflow:
 
 Config values are the base defaults; CLI flags override them. For spec review, OR logic applies -- either the config or the CLI flag being true enables it.
 
-This file is created by `uf init` with all values commented out (defaults apply). Edit it to set your team's preferred workflow behavior.
+This file is created by [`uf config init`](/docs/reference/config/#config-init) with all values commented out (defaults apply). Edit it to set your team's preferred workflow behavior. Run [`uf config validate`](/docs/reference/config/#config-validate) to check for invalid keys or type mismatches. See the [full configuration reference](/docs/reference/config/) for all 7 config sections and layered loading precedence.
 
 ### Workflow Management
 
