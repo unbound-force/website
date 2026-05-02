@@ -17,6 +17,18 @@
   url = "/docs/team/"
 
 [[docs]]
+  name = "Reference"
+  weight = 35
+  identifier = "reference"
+  url = "/docs/reference/"
+
+[[docs]]
+  name = "Changelog"
+  weight = 38
+  identifier = "changelog"
+  url = "/docs/changelog/"
+
+[[docs]]
   name = "Contributing"
   weight = 40
   identifier = "contributing"

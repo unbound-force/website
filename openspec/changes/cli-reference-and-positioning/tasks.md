@@ -1,26 +1,29 @@
 ## 1. Create Reference section and CLI reference page
 
-- [ ] 1.1 Create `content/docs/reference/_index.md` section index with frontmatter (title: "Reference", weight appropriate for sidebar placement)
-- [ ] 1.2 Create `content/docs/reference/cli.md` with full CLI reference: all 6 command groups (`init`, `setup`, `doctor`, `config`, `sandbox`, `gateway`), subcommands, primary flags, and brief descriptions — sourced from upstream `unbound-force` repo
-- [ ] 1.3 Update `config/_default/menus/menus.en.toml` to add Reference section to top-level navigation if needed
+- [x] 1.1 Create `content/docs/reference/_index.md` section index with frontmatter (title: "Reference", weight appropriate for sidebar placement)
+- [x] 1.2 Create `content/docs/reference/cli.md` with full CLI reference: all current command groups, subcommands, primary flags, and brief descriptions — sourced from `uf --help` and `uf <command> --help` output. Include a version marker indicating which `uf` version the reference was generated from.
+- [x] 1.3 Update `config/_default/menus/menus.en.toml` to add Reference section to top-level navigation
 
 ## 2. Create Changelog page
 
-- [ ] 2.1 Create `content/docs/changelog/_index.md` with frontmatter and initial release entries (current release + key milestones)
-- [ ] 2.2 Add changelog to navigation menu if not auto-discovered by Hugo
+- [x] 2.1 Create `content/docs/changelog/_index.md` with frontmatter and the current release entry only — sourced from actual release artifacts (git tags, release notes, merged PRs)
+- [x] 2.2 Add a `[[docs]]` entry for Changelog in `config/_default/menus/menus.en.toml` with appropriate weight
 
 ## 3. Update stack positioning table
 
-- [ ] 3.1 Update `content/_index.md` stack table to add `uf` CLI as the first/top layer (4 layers total)
-- [ ] 3.2 Update `content/docs/getting-started/quick-start.md` stack table to add `uf` CLI layer
-- [ ] 3.3 Update `layouts/home.html` if the homepage template renders the stack table from HTML rather than Markdown
+- [x] 3.1 Update `content/docs/getting-started/_index.md` stack table and "Three Tools, One Workflow" heading/prose to reflect the 4-layer model with `uf` CLI as the first/top layer
+- [x] 3.2 Update `content/docs/getting-started/quick-start.md` stack table and surrounding prose to add `uf` CLI layer (4 layers total)
 
 ## 4. Update code review persona table scope
 
-- [ ] 4.1 Add clarifying note to the Code Review persona table in `content/docs/getting-started/common-workflows.md` stating that the 3 content personas (Scribe, Herald, Envoy) are invoked separately and do not participate in code review
+- [x] 4.1 Add clarifying note to the Code Review persona table in `content/docs/getting-started/common-workflows.md` stating that the 3 content personas (Scribe, Herald, Envoy) are invoked separately and do not participate in code review
 
 ## 5. Verification
 
-- [ ] 5.1 Run `npm run build` and confirm no build errors
-- [ ] 5.2 Run `npm run dev` and verify: CLI reference page renders with all command groups, changelog page renders, stack table shows 4 layers on homepage and quick-start, Reference section appears in navigation
-- [ ] 5.3 Verify both light and dark mode rendering for new pages
+- [x] 5.1 Run `npm run build` and confirm no build errors
+- [x] 5.2 Run `uf --help` and `uf <command> --help` for all command groups; verify the CLI reference page matches the actual command names, subcommands, and primary flags
+- [ ] 5.3 Run `npm run dev` and verify: CLI reference page renders with all command groups and version marker, changelog page renders with current release, stack table shows 4 layers on getting-started index and quick-start, Reference and Changelog sections appear in navigation
+- [x] 5.4 Verify all internal links in new pages resolve to existing pages (no dead links)
+- [ ] 5.5 Verify both light and dark mode rendering for new pages
+<!-- spec-review: passed -->
+<!-- code-review: passed -->
