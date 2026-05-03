@@ -2,7 +2,7 @@
 
 The `uf sandbox` command is one of the most significant features in the Unbound Force CLI — providing containerized, isolated AI agent sessions via Podman. It has 7 subcommands (`start`, `stop`, `attach`, `extract`, `status`, `create`, `destroy`), two mount modes, UID mapping, persistent workspaces, and a CDE backend. None of this is documented on the website.
 
-This change addresses GitHub issues #39 (basic sandbox docs), #47 (UID mapping requirements), and #61 (persistent workspaces and CDE backend).
+This change addresses GitHub issues [#39](https://github.com/unbound-force/website/issues/39) (basic sandbox docs), [#47](https://github.com/unbound-force/website/issues/47) (UID mapping requirements), and [#61](https://github.com/unbound-force/website/issues/61) (persistent workspaces and CDE backend).
 
 ## What Changes
 
@@ -36,28 +36,22 @@ This change addresses GitHub issues #39 (basic sandbox docs), #47 (UID mapping r
 
 ## Constitution Alignment
 
-Assessed against the Unbound Force org constitution.
+Assessed against the Unbound Force website project constitution (`.specify/memory/constitution.md`).
 
-### I. Autonomous Collaboration
-
-**Assessment**: N/A
-
-Documentation page — no effect on hero communication.
-
-### II. Composability First
+### I. Content Accuracy
 
 **Assessment**: PASS
 
-Documents `uf sandbox` as a standalone capability. The sandbox works independently of other tools (OpenCode runs inside, but sandbox management is self-contained).
+Documents `uf sandbox` commands sourced from the upstream implementation at `unbound-force/unbound-force/internal/sandbox/`. All 7 subcommands, mount modes, UID mapping, persistent workspaces, and CDE backend are verified against the shipped code and `uf sandbox --help` output at implementation time. The CDE backend section is explicitly labeled experimental with caveats about validation status.
 
-### III. Observable Quality
+### II. Minimal Footprint
 
 **Assessment**: PASS
 
-Documents the `uf sandbox status` command which provides observable state, and the security model which documents the isolation guarantees.
+Single Markdown page under the existing Reference section. No custom layouts, CSS, or JavaScript. The page may be long (~400-500 lines) but the interconnected nature of sandbox features benefits from co-location per the design decision.
 
-### IV. Testability
+### III. Visitor Clarity
 
-**Assessment**: N/A
+**Assessment**: PASS
 
-No code changes. Validation is `npm run build` + visual review.
+Three-tier structure (basic sessions, persistent workspaces, CDE) lets users stop reading when they reach their capability tier. Platform-specific setup is grouped by OS. Security model as a scannable table. Cross-references to gateway docs prevent duplication.

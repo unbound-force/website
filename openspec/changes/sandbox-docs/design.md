@@ -32,3 +32,13 @@ The `uf sandbox` command surface spans 7 subcommands across three capability tie
 
 - **Risk**: Sandbox subcommands may evolve before this page ships. Mitigated by sourcing from the shipped binary at implementation time.
 - **Trade-off**: Single page may become long. Accepted for now — the interconnected nature of sandbox features benefits from co-location. Can be split later if it exceeds ~500 lines.
+
+## Content Sources
+
+Authoritative upstream source files:
+- Sandbox core: `unbound-force/unbound-force/internal/sandbox/` (sandbox.go, backend.go, podman.go, workspace.go, git_sync.go)
+- CLI commands: `unbound-force/unbound-force/cmd/unbound-force/sandbox.go` and subcommand files
+- CLI help: `uf sandbox --help`, `uf sandbox <subcommand> --help`
+- Specs: `unbound-force/unbound-force/specs/032-sandbox-command/`, `unbound-force/unbound-force/specs/036-persistent-workspaces/`
+
+All documented features must be verified against these upstream files at implementation time.
