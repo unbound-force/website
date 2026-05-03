@@ -19,3 +19,7 @@ toc: true
 ## Configuration
 
 - **[Configuration](/docs/reference/config/)** -- Unified configuration system: layered loading, config sections, and common customizations.
+
+## Sandbox
+
+- **[Sandbox](/docs/reference/sandbox/)** -- Containerized AI agent sessions: Podman backends, mount modes, UID mapping, persistent workspaces, and security model.
