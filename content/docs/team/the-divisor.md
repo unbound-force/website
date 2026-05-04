@@ -175,7 +175,7 @@ This structure ensures that only code which passes all nine lenses — intent, a
 
 **For Developers (Cobalt-Crush):** Cobalt-Crush relies on The Divisor for the final technical sign-off. The multi-faceted feedback from the nine personas provides a holistic critique covering intent, structure, security, operational readiness, test quality, documentation governance, and content accuracy. Clear architectural standards minimize uncertainty, allowing Cobalt-Crush to code with confidence.
 
-**For the Tester (Gaze):** Gaze relies on The Divisor to establish the architectural and non-functional requirements against which testability must be measured. Gaze's green light on functional tests is the entry criterion for The Divisor's review, ensuring review time is spent on high-level risk and structure rather than defect finding.
+**For the Tester ([Gaze](/docs/team/gaze-tester/)):** Gaze relies on The Divisor to establish the architectural and non-functional requirements against which testability must be measured. Gaze's green light on functional tests is the entry criterion for The Divisor's review, ensuring review time is spent on high-level risk and structure rather than defect finding.
 
 **For the Product Owner and Manager (Muti-Mind and Mx F):** Muti-Mind and Mx F are assured that every merged feature is technically sound, secure, and scalable. The Divisor acts as the ultimate guarantor of technical quality, ensuring that the velocity gained through prioritization and execution is sustainable and does not accrue crippling technical debt.
 

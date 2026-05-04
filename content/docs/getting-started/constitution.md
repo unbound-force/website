@@ -138,4 +138,5 @@ The constitution is versioned (currently v1.1.0) and the check validates against
 
 - Read [Hero Artifacts](/docs/getting-started/artifacts/) to understand the envelope format and artifact types referenced in Principle I
 - See [Common Workflows](/docs/getting-started/common-workflows/) for how the constitution gates the specification pipeline
+- Read about [convention packs](/docs/getting-started/developer/#convention-packs/) — the constitution sets the floor; convention packs raise the bar with specific, severity-classified coding standards
 - Explore the [Team](/docs/team/) pages to see how each hero implements these principles

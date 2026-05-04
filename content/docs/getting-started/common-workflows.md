@@ -351,7 +351,7 @@ Moves the change to `openspec/changes/archive/` with a date prefix for historica
 
 ## Code Review
 
-The review council brings multiple specialized perspectives to every code review.
+The review council brings multiple specialized perspectives to every code review. Each persona has [exclusive ownership boundaries](/docs/team/the-divisor/#exclusive-ownership-boundaries) — a finding like "missing error handling" is raised by exactly one persona, not duplicated across multiple reviewers.
 
 ### Invoking the Council
 
