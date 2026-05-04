@@ -16,6 +16,14 @@ The Divisor is the PR Reviewer of the Unbound Force swarm — the architectural 
 
 The Divisor acts as the final technical gate before integration, translating high-level architectural standards into actionable review criteria. What makes The Divisor unique is its structure: it operates as a **council of nine dynamically discovered personas** -- nine canonical roles ship by default (six review, three content creation), with users able to add or remove personas freely. Each provides a different lens on every code submission.
 
+## Why a Council?
+
+A single AI agent reviewing its own code — or even a single separate agent reviewing another's code — misses issues that only become visible from a different perspective. Security experts catch vulnerabilities that architects overlook. Test quality specialists identify coverage gaps that SREs miss. The council model exists because no single evaluative lens is sufficient for production-quality code.
+
+The Divisor's architecture reflects two design principles. First, **doer/judge separation**: the Guard agent operates at temperature 0.1 with tool access restrictions (`write: false`, `edit: false`, `bash: false`), making it structurally unable to modify code. This is not a behavioral instruction — it is an architectural constraint. The judge physically cannot fix what it finds, forcing all findings through the normal implementation pipeline with full visibility.
+
+Second, **layered feedback ordering**: computational checks (CI pipeline, [Gaze](/docs/team/gaze-tester/) static analysis) run before the Divisor Council reviews. Fast, deterministic, cheap checks filter out obvious issues before slower, more expensive semantic review begins. The council's time is spent on judgment calls, not compilation errors.
+
 ## The Council
 
 ### The Guard — Intent and Cohesion

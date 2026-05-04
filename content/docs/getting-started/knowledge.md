@@ -8,6 +8,10 @@ weight: 80
 toc: true
 ---
 
+## Why Semantic Memory?
+
+AI agents perform best when given concrete context — real file paths, real decisions, real patterns from prior work. Unbound Force delivers context through three tiers: static documentation (AGENTS.md), versioned rules ([convention packs](/docs/getting-started/developer/#convention-packs)), and dynamic semantic memory. Dewey is the third tier — a searchable knowledge layer that provides agents with cross-repo context, prior learnings, and architectural decisions before they start work. In harness engineering terms, Dewey is a feedforward control: it shapes agent behavior by providing context before action, rather than correcting output after.
+
 ## What Dewey Does
 
 Dewey is a semantic knowledge layer that gives AI agents rich, cross-repository context. It combines a structured knowledge graph (page traversal, tag queries, wikilink navigation) with vector-based semantic search — so agents can find conceptually related content even when different terminology is used. A search for "authentication timeout" finds an issue titled "login session expiry" because Dewey understands meaning, not just keywords.

@@ -134,6 +134,18 @@ The `/constitution-check` command automates this assessment. OpenSpec proposals 
 
 The constitution is versioned (currently v1.1.0) and the check validates against the version referenced in the project's `parent_constitution` field. See the [contributing guide](/docs/contributing/) for how this fits into the specification pipeline.
 
+## Governance Hierarchy
+
+The constitution sits at the top of a layered governance model. Each layer constrains the layers below it:
+
+1. **Constitution** — core principles (this document)
+2. **Convention packs** — portable coding standards (MUST/SHOULD/MAY rules)
+3. **Agent personas** — individual hero configurations and behavioral constraints
+4. **Commands** — workflow orchestration (`/unleash`, `/review-council`, `/speckit.*`)
+5. **CI pipelines** — automated deterministic checks
+
+A convention pack cannot override a constitutional principle. A command cannot bypass a convention pack rule. This layered model ensures that organizational intent flows consistently from principles to implementation. The constitution and governance model are decay-resistant — they encode organizational values and process rules that persist regardless of how AI model capabilities evolve.
+
 ## Next Steps
 
 - Read [Hero Artifacts](/docs/getting-started/artifacts/) to understand the envelope format and artifact types referenced in Principle I
