@@ -194,7 +194,7 @@ Every session follows this ritual:
 
 ### Convention Packs
 
-Convention packs are shared coding standards files stored in `.opencode/uf/packs/`. Cobalt-Crush follows these conventions during implementation, and The Divisor enforces them during review. Every rule in a pack has a severity tag that determines how violations are handled.
+Convention packs are shared coding standards files stored in `.opencode/uf/packs/`. They function as feedforward controls — portable harness templates that guide agents before they write code, rather than correcting output after. Cobalt-Crush follows these conventions during implementation, and The Divisor enforces them during review. Every rule in a pack has a severity tag that determines how violations are handled.
 
 #### Pack Files
 
