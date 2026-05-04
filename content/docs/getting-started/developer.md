@@ -269,7 +269,7 @@ The eight categories of protected values are:
 7. Review iteration limits and worker concurrency caps
 8. Workflow gate markers (e.g., `<!-- spec-review: passed -->`)
 
-The Guard checks for "Gatekeeping Integrity" during code review and the Adversary checks for "Gate Tampering" — both will flag unauthorized modifications to these values.
+The [Guard](/docs/team/the-divisor/#the-guard--intent-and-cohesion) checks for "Gatekeeping Integrity" during code review and the [Adversary](/docs/team/the-divisor/#the-adversary--resilience-and-security) checks for "Gate Tampering" — both will flag unauthorized modifications to these values.
 
 ## Project Scaffolding with `uf init`
 

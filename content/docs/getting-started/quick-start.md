@@ -78,6 +78,7 @@ Each tool is independently useful, but they compose into the full Unbound Force 
 
 ## Next Steps
 
+- **[Constitution](/docs/getting-started/constitution/)** -- The core principles that govern all heroes. The constitution must exist before running `/speckit.specify`
 - **[Developer Guide](/docs/getting-started/developer/)** -- Daily workflow, Speckit pipeline, Replicator coordination, convention packs
 - **[Tester Guide](/docs/getting-started/tester/)** -- Gaze quality analysis, CRAP scores, coverage ratchets, CI integration
 - **[Product Owner Guide](/docs/getting-started/product-owner/)** -- Muti-Mind backlog management, priority scoring, acceptance decisions

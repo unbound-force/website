@@ -37,7 +37,7 @@ The swarm defines 7 artifact types. Each has a designated producer hero and one 
 | Type                  | Producer            | Consumers                     | Description                                                                                      |
 | --------------------- | ------------------- | ----------------------------- | ------------------------------------------------------------------------------------------------ |
 | `quality-report`      | Gaze                | Mx F, Muti-Mind, Cobalt-Crush | Test results, contract coverage data, CRAP scores, and risk analysis from quality validation     |
-| `review-verdict`      | The Divisor         | Mx F, Cobalt-Crush, Muti-Mind | APPROVE or REQUEST CHANGES verdict with per-persona findings from the review council             |
+| `review-verdict`      | [The Divisor](/docs/team/the-divisor/) | Mx F, Cobalt-Crush, Muti-Mind | APPROVE or REQUEST CHANGES verdict with per-persona findings from the review council             |
 | `backlog-item`        | Muti-Mind           | Mx F, Cobalt-Crush            | Feature or bug descriptions with priority scores (5-dimension composite) and acceptance criteria |
 | `acceptance-decision` | Muti-Mind           | Mx F, Cobalt-Crush            | ACCEPT, REJECT, or CONDITIONAL decision with rationale after reviewing the completed increment   |
 | `metrics-snapshot`    | Mx F                | Muti-Mind                     | Velocity, quality trends, review efficiency, and CI health metrics for the current period        |
