@@ -50,3 +50,11 @@ Ready to dive in? Start with the [Quick Start](/docs/getting-started/quick-start
 - **[Hero Artifacts](/docs/getting-started/artifacts/)** -- Inter-hero communication: envelope format, artifact types, and lifecycle data flow
 - **[Knowledge Retrieval with Dewey](/docs/getting-started/knowledge/)** -- Install and configure Dewey for semantic search across your repositories
 - **[Constitution](/docs/getting-started/constitution/)** -- The 4 core principles that govern all heroes and the governance model
+
+## Design Philosophy
+
+An AI agent is a model plus a harness — the surrounding system of context, controls, and feedback loops that shapes what the model produces. The model provides capability; the harness provides direction. Unbound Force invests heavily in the harness because the same model with a better harness consistently outperforms a better model with a weaker harness.
+
+The system delivers context to agents through three tiers. Static documentation (AGENTS.md) provides project structure and conventions at session start. Versioned rules ([convention packs](/docs/getting-started/developer/#convention-packs)) encode coding standards as numbered, severity-classified rules that are portable across projects. Dynamic semantic memory ([Dewey](/docs/getting-started/knowledge/)) provides searchable context from prior sessions, GitHub issues, and web documentation — adapting over time as the knowledge base grows.
+
+Quality is enforced through layered feedback: computational checks first (tests, linters, [Gaze](/docs/team/gaze-tester/) static analysis), then inferential review ([the Divisor Council](/docs/team/the-divisor/) — multiple specialized agents evaluating from distinct quality dimensions). The doer and the judge are structurally separated — review agents cannot modify files, so findings must go through the implementation path with full visibility. This layered approach means fast, cheap, deterministic checks catch the obvious issues before slower, semantic review agents spend cycles on deeper analysis.
