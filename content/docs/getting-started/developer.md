@@ -1,5 +1,6 @@
 ---
 title: "Getting Started: Developer"
+slug: "developer"
 description: "Set up your environment, learn the daily workflow, and start building with the Unbound Force AI agent swarm as a developer."
 lead: "Install the tools, learn the workflows, and start shipping code with Cobalt-Crush, Speckit, and Replicator."
 date: 2026-03-22T00:00:00+00:00

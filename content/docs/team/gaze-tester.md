@@ -1,5 +1,6 @@
 ---
 title: "Gaze"
+slug: "gaze-tester"
 description: "Gaze is the Tester of the Unbound Force swarm — a quality analysis tool for Go that measures test quality through side effect detection and contract coverage."
 lead: "The Quality Sentinel — Test Quality Analysis for Go"
 date: 2026-02-23T00:00:00+00:00
