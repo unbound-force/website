@@ -1,5 +1,6 @@
 ---
 title: "Getting Started: Tester"
+slug: "tester"
 description: "Use Gaze for quality analysis, understand contract coverage and CRAP scores, and integrate quality checks into your CI pipeline."
 lead: "Analyze code quality with Gaze, run the review council, and enforce coverage ratchets in CI."
 date: 2026-03-22T00:00:00+00:00
