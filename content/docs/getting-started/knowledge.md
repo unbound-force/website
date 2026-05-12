@@ -1,5 +1,6 @@
 ---
 title: "Knowledge Retrieval with Dewey"
+slug: "knowledge"
 description: "Set up Dewey for semantic knowledge retrieval — install, configure content sources, and give your AI agents cross-repo context."
 lead: "Give your AI agents the context they need. Install Dewey, configure your knowledge sources, and enable semantic search across your entire organization."
 date: 2026-03-25T00:00:00+00:00

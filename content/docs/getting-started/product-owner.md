@@ -1,5 +1,6 @@
 ---
 title: "Getting Started: Product Owner"
+slug: "product-owner"
 description: "Use Muti-Mind for backlog management, priority scoring, and acceptance decisions in the Unbound Force hero workflow."
 lead: "Manage the product backlog, score priorities, sync with GitHub Issues, and make acceptance decisions."
 date: 2026-03-22T00:00:00+00:00

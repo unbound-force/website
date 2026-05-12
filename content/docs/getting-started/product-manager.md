@@ -1,5 +1,6 @@
 ---
 title: "Getting Started: Product Manager"
+slug: "product-manager"
 description: "Use Mx F for sprint management, metrics dashboards, impediment tracking, coaching, and retrospectives in the Unbound Force workflow."
 lead: "Monitor team health, facilitate retrospectives, and drive continuous improvement with Mx F."
 date: 2026-03-22T00:00:00+00:00

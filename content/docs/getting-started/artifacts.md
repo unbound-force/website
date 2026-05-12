@@ -1,5 +1,6 @@
 ---
 title: "Hero Artifacts"
+slug: "artifacts"
 description: "The 7 inter-hero artifact types, the standard envelope format, and how artifacts flow through the hero lifecycle."
 lead: "How heroes communicate — structured artifacts with a standard envelope format that enables autonomous, auditable collaboration."
 date: 2026-03-29T00:00:00+00:00
