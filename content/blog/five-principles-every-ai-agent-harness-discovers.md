@@ -16,7 +16,7 @@ contributors: ["Unbound Force"]
 
 Three independent teams — OpenAI, Anthropic, and ThoughtWorks — each spent months building AI agent harnesses. They started from different assumptions, used different architectures, and optimized for different goals. They arrived at the same five conclusions.
 
-Yanli Liu documented this convergence in "Harness Engineering: What Every AI Engineer Needs to Know in 2026" (*AI Advances*, Apr 2026), cataloging the principles that every team discovers when they move from toy demos to production-grade agent systems. The article has 1.7K claps for a reason: if you have built an agent harness, you recognize every finding immediately.
+Yanli Liu documented this convergence in ["Harness Engineering: What Every AI Engineer Needs to Know in 2026" (*AI Advances*, Apr 2026)](https://ai.gopubby.com/harness-engineering-what-every-ai-engineer-needs-to-know-in-2026-0ab649e5686a), cataloging the principles that every team discovers when they move from toy demos to production-grade agent systems. The article has 1.7K claps for a reason: if you have built an agent harness, you recognize every finding immediately.
 
 Unbound Force implements all five principles. In several cases, it goes further than any of the three teams Liu describes. This post walks through each principle with concrete evidence from the codebase.
 
