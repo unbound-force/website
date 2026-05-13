@@ -29,7 +29,7 @@
 - [x] 5.2 Run `npm run build` and confirm no build errors
 - [x] 5.3 Verify the blog post appears in the blog listing page
 - [x] 5.4 Verify all internal links resolve (no dead links)
-- [ ] 5.5 Run `npm run dev` and verify the post renders correctly
-- [ ] 5.6 Verify both light and dark mode rendering
+- [x] 5.5 Run `npm run dev` and verify the post renders correctly
+- [x] 5.6 Verify both light and dark mode rendering
 <!-- spec-review: passed -->
 <!-- code-review: passed -->
