@@ -147,16 +147,29 @@ If you use Vertex AI for your LLM provider, the sandbox automatically starts the
 - **Podman required**: The sandbox uses Podman, not Docker. On macOS, a Podman machine must be running (`podman machine start`).
 - **Fixed health check timeout**: The OpenCode server health check waits up to 60 seconds — there is no `--timeout` flag to adjust this.
 
-## What's Next
+## Persistent Workspaces with DevPod
 
-Eclipse Che / Dev Spaces integration is in development as an alternative backend for cloud-hosted sandboxes. The `--backend che` flag exists but has not been validated end-to-end with a production Che instance — it is labeled experimental. For custom container images, the [opencode-dev containerfile](https://github.com/unbound-force/opencode-dev) repository provides the base image used by the sandbox.
+Ephemeral containers are the default, but for long-running sessions you can create persistent workspaces backed by DevPod:
+
+```bash
+uf sandbox create                        # persistent workspace
+uf sandbox create --ide vscode           # open VS Code after creation
+uf sandbox start --ide cursor            # resume and open Cursor
+```
+
+Persistent workspaces survive stop/start cycles — the container's filesystem state is retained across restarts. DevPod handles workspace provisioning and IDE integration. The `--ide` flag supports `vscode`, `openvscode`, `fleet`, `jupyternotebook`, and `cursor`.
+
+The workspace uses a `.devcontainer/devcontainer.json` configuration generated per-developer by `uf sandbox init`. This file is gitignored because the configuration is OS-specific: macOS and Linux require different Podman user namespace flags for correct UID mapping inside the container. Each developer generates their own rather than committing a shared config that works on only one platform.
+
+Eclipse Che / Dev Spaces support exists as an experimental alternative backend (`--backend che`) but has not been validated end-to-end with a production Che instance. For custom container images, the [opencode-dev containerfile](https://github.com/unbound-force/opencode-dev) repository provides the base image used by the sandbox.
 
 ## Get Started
 
 Install or upgrade the Unbound Force CLI and start your first sandbox session:
 
 ```bash
-brew install unbound-force/tap/unbound-force
+brew install unbound-force/tap/unbound-force   # new install
+brew upgrade unbound-force                      # existing users
 uf sandbox start
 ```
 
@@ -164,6 +177,7 @@ Your repo stays untouchable. The agent works in a container. Changes come out on
 
 ## See Also
 
+- [Sandbox Reference](/docs/reference/sandbox/) -- Command reference for all `uf sandbox` subcommands, flags, and configuration
 - [Quick Start](/docs/getting-started/quick-start/) -- Install and verify the toolchain
 - [Developer Guide](/docs/getting-started/developer/) -- Daily workflow with the `uf` CLI
 - [Common Workflows](/docs/getting-started/common-workflows/) -- End-to-end feature and review flows
