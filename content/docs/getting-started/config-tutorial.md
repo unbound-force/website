@@ -43,6 +43,7 @@ Open the file to see the available sections:
 # sandbox:
 #   runtime: auto            # auto, podman, docker
 #   image: ""                # default: quay.io/unbound-force/opencode-dev:latest
+#   ide: none                # none, vscode, openvscode, fleet, jupyternotebook, cursor
 
 # gateway:
 #   port: 53147
@@ -116,6 +117,28 @@ setup:
 ```
 
 After setting this, `uf setup` will install OpenCode, Speckit, Replicator, and Dewey but skip Gaze and Mx F.
+
+### Scenario: Default IDE for Sandbox Workspaces
+
+When using DevPod persistent workspaces, set a default IDE so it opens automatically after workspace creation:
+
+```yaml
+sandbox:
+  ide: vscode
+```
+
+Verify with `uf config show`:
+
+```bash
+uf config show
+```
+
+```text
+sandbox:
+  ide: vscode    ← your override (default: none)
+```
+
+Now `uf sandbox create` will open VS Code after the workspace is ready. Valid values: `none`, `vscode`, `openvscode`, `fleet`, `jupyternotebook`, `cursor`. You can override per-command with `uf sandbox create --ide cursor`.
 
 ## Step 3: Understand Config Precedence
 
@@ -207,6 +230,7 @@ uf config show --format json
 
 ## See Also
 
+- [Configuration Reference](/docs/reference/config/) -- All config sections, fields, and environment variable overrides
 - [Common Workflows](/docs/getting-started/common-workflows/) -- Workflow configuration with `.uf/config.yaml`
 - [Quick Start](/docs/getting-started/quick-start/) -- Install and verify the toolchain
 - [Developer Guide](/docs/getting-started/developer/) -- Daily workflow with the `uf` CLI
