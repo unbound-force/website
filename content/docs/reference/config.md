@@ -71,6 +71,22 @@ Compiled defaults   ← lowest priority (built into the binary)
 
 Missing config files are not an error. If neither file exists, compiled defaults apply for all settings.
 
+### Environment Variable Overrides
+
+Every config field can be overridden with an environment variable. The naming convention is `UF_` + section + `_` + field in uppercase:
+
+| Environment Variable | Config Field |
+|---------------------|--------------|
+| `UF_SETUP_PACKAGE_MANAGER` | `setup.package_manager` |
+| `UF_SCAFFOLD_LANGUAGE` | `scaffold.language` |
+| `UF_EMBEDDING_MODEL` | `embedding.model` |
+| `UF_EMBEDDING_DIMENSIONS` | `embedding.dimensions` |
+| `UF_SANDBOX_RUNTIME` | `sandbox.runtime` |
+| `UF_SANDBOX_IMAGE` | `sandbox.image` |
+| `UF_SANDBOX_IDE` | `sandbox.ide` |
+| `UF_GATEWAY_PORT` | `gateway.port` |
+| `UF_GATEWAY_PROVIDER` | `gateway.provider` |
+
 ### Precedence Example
 
 If your user config sets `gateway.port: 8080` and your repo config sets `gateway.port: 9090`, the repo config wins (it's higher priority). If you then run `uf gateway --port 3000`, the CLI flag wins over both.
@@ -84,7 +100,7 @@ The config file has 7 sections. Each controls a specific part of the `uf` toolch
 | **setup** | Controls how `uf setup` installs tools | `package_manager` (auto, brew, dnf, apt), `skip` (tools to skip) |
 | **scaffold** | Controls what `uf init` deploys | `language` (auto-detected from go.mod, package.json, etc.) |
 | **embedding** | Embedding model for Dewey semantic search | `model` (default: granite-embedding:30m), `dimensions` (default: 256) |
-| **sandbox** | Controls `uf sandbox` containerized sessions | `runtime` (auto, podman, docker), `image`, `resources.memory` |
+| **sandbox** | Controls `uf sandbox` containerized sessions | `runtime` (auto, podman, docker), `image`, `ide` (none, vscode, cursor, etc.), `resources.memory` |
 | **gateway** | Controls `uf gateway` LLM reverse proxy | `port` (default: 53147), `provider` (auto, anthropic, vertex, bedrock) |
 | **doctor** | Controls `uf doctor` health checks | `skip` (checks to skip), `tools` (custom tool paths) |
 | **workflow** | Controls hero lifecycle execution modes | `execution_modes.define` (human/swarm), `spec_review` (true/false) |
@@ -118,6 +134,15 @@ gateway:
 ```
 
 The default port (53147) avoids conflicts with common services. Change it if you have a port conflict or prefer a standard port.
+
+### Open an IDE with sandbox sessions
+
+```yaml
+sandbox:
+  ide: vscode
+```
+
+By default, `uf sandbox start` creates the workspace without opening an IDE (`none`). Set `ide` to have DevPod automatically open your preferred editor after workspace creation. Valid values: `none`, `vscode`, `openvscode`, `fleet`, `jupyternotebook`, `cursor`.
 
 ### Skip tools during setup
 
