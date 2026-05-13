@@ -12,7 +12,7 @@ toc: true
 
 `uf sandbox` provides containerized development sessions for AI agents. Instead of running OpenCode directly on your host, the sandbox creates a Podman container with your project mounted, OpenCode installed, and API keys forwarded. The agent works inside the container where file changes are isolated (or directly applied, depending on mount mode).
 
-**Prerequisites**: Podman must be installed. On macOS, a Podman machine must be running (`podman machine start`).
+**Prerequisites**: Podman and DevPod must be installed. Run `uf setup` to install both automatically (Podman at step 14, DevPod at step 15, plus DevPod Podman provider configuration at step 16). On macOS, a Podman machine must be running (`podman machine start`). Run `uf doctor` to verify Podman runtime health, Docker-to-Podman shim, DevPod version (>= 0.5.0), and DevPod provider configuration.
 
 ## Session Management
 
@@ -35,6 +35,7 @@ uf sandbox start --image my-image   # custom container image
 | `--memory <string>` | Container memory limit (default `8g`) |
 | `--cpus <string>` | Container CPU limit (default `4`) |
 | `--backend <string>` | Backend: `auto`, `podman`, or `che` (default `auto`) |
+| `--ide <string>` | IDE for DevPod to open after start: `none` (default), `vscode`, `openvscode`, `fleet`, `jupyternotebook`, `cursor` |
 | `--uidmap` | Use explicit UID/GID mapping (macOS escape hatch) |
 | `--no-parent` | Mount only the project directory (disable parent directory mount) |
 
@@ -48,7 +49,7 @@ uf sandbox stop
 
 ### sandbox attach
 
-Connect to a running sandbox's OpenCode TUI. Requires the sandbox to be running.
+Connect to a running sandbox's OpenCode TUI. Detects persistent workspaces first, then falls back to ephemeral containers. Requires the sandbox to be running.
 
 ```bash
 uf sandbox attach
@@ -125,6 +126,21 @@ If files inside the sandbox appear owned by `root:nobody`, the UID mapping is no
 2. **macOS Podman machine**: Restart the machine or use `--uidmap`
 3. **Linux**: Check that `/etc/subuid` and `/etc/subgid` have entries for your user
 
+## Devcontainer Configuration
+
+The sandbox uses a `.devcontainer/devcontainer.json` file to configure the development container. This file is **gitignored** — each developer generates their own via `uf sandbox init`, because the configuration is OS-specific.
+
+### OS-Specific UID Mapping
+
+The generated devcontainer config differs by platform:
+
+- **macOS**: Uses `--userns=keep-id:uid=1000,gid=1000` — the Podman VM requires explicit UID/GID values to map through the virtiofs layer
+- **Linux**: Uses `--userns=keep-id` (without explicit UID/GID) — avoids subuid range conflicts that can occur on container restart when explicit mappings are used
+
+This is why the devcontainer is generated per-developer rather than committed to the repo: macOS and Linux developers need different `runArgs` to get correct file ownership inside the container.
+
+> **Note**: `uf init` does not deploy a devcontainer template. Run `uf sandbox init` to generate the platform-appropriate configuration.
+
 ## Persistent Workspaces
 
 By default, `uf sandbox start` creates ephemeral containers that are removed on `stop`. For long-running development sessions, create a persistent workspace that survives stop/start cycles.
@@ -148,11 +164,12 @@ uf sandbox create --demo-ports 3000,8080       # expose demo ports
 | `--memory <string>` | Memory limit (default `8g`) |
 | `--cpus <string>` | CPU limit (default `4`) |
 | `--detach` | Start without attaching the TUI |
+| `--ide <string>` | IDE for DevPod to open after creation: `none` (default), `vscode`, `openvscode`, `fleet`, `jupyternotebook`, `cursor` |
 | `--uidmap` | Use explicit UID/GID mapping |
 
 ### sandbox destroy
 
-Permanently delete a persistent workspace and all associated state (named volumes, CDE workspace).
+Permanently delete a persistent workspace and all associated state (named volumes, CDE workspace). Ephemeral containers are cleaned up directly without requiring workspace resolution.
 
 ```bash
 uf sandbox destroy          # interactive confirmation
@@ -168,6 +185,12 @@ uf sandbox destroy --force  # destroy even if running
 ### Workspace Detection
 
 Once a persistent workspace exists, `start`, `stop`, and `extract` automatically detect and use it. You don't need to pass any extra flags — the commands recognize that a workspace exists for the current project and operate on it.
+
+### Server Auto-Start
+
+DevPod workspaces auto-start the OpenCode server via a `postStartCommand` in the devcontainer configuration. After both `create` and `start`, the sandbox runs a health check with exponential backoff (500ms to 5s intervals, 60s timeout) to confirm the server is ready before attaching.
+
+If the `postStartCommand` did not run (e.g., the devcontainer was created outside the normal flow), the SSH fallback starts the server manually when attaching.
 
 ### Bidirectional Git Sync
 
@@ -198,6 +221,21 @@ Backend resolution follows a priority chain:
 | 2 | Environment variable | `UF_SANDBOX_BACKEND=che` |
 | 3 | Config file | `sandbox.backend: che` in `.uf/config.yaml` |
 | 4 | Auto-detect | Podman (default) |
+
+## IDE Integration
+
+The `--ide` flag controls which IDE DevPod opens after workspace creation or start. The value is resolved through a priority chain:
+
+| Priority | Source | Example |
+|----------|--------|---------|
+| 1 | CLI flag | `--ide vscode` |
+| 2 | Environment variable | `UF_SANDBOX_IDE=cursor` |
+| 3 | Config file | `sandbox.ide: vscode` in `.uf/config.yaml` |
+| 4 | Default | `none` (no IDE opened) |
+
+Valid values: `none`, `vscode`, `openvscode`, `fleet`, `jupyternotebook`, `cursor`.
+
+When set to a value other than `none`, DevPod opens the specified IDE and connects it to the workspace after the container is ready and the health check passes.
 
 ## Security Model
 
@@ -232,6 +270,8 @@ When a cloud provider is detected, the sandbox auto-starts the LLM gateway (`uf 
 
 ## See Also
 
+- [Gateway](/docs/reference/gateway/) -- LLM reverse proxy auto-started by the sandbox for cloud provider credential isolation
+- [Configuration](/docs/reference/config/) -- `sandbox.ide`, `sandbox.runtime`, and other sandbox config fields
 - [Quick Start](/docs/getting-started/quick-start/) -- Install and verify the toolchain
 - [Developer Guide](/docs/getting-started/developer/) -- Daily workflow with the `uf` CLI
 - [Common Workflows](/docs/getting-started/common-workflows/) -- End-to-end feature and review flows
