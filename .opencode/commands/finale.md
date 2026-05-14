@@ -139,22 +139,57 @@ gh pr view --json number,url 2>/dev/null
   creation.
 - **If no PR**: create one:
 
-  a. Generate PR title from commit history:
+  a. **Fork detection**: Check if this repo is a fork:
+  ```bash
+  gh repo view --json isFork,parent
+  ```
+  If `isFork` is `true`, ask the user:
+
+  > "This repo is a fork of `<parent.owner>/<parent.name>`.
+  > Where should the PR target?
+  >
+  > 1. Upstream (`<parent.owner>/<parent.name>` main)
+  > 2. Fork (`<origin.owner>/<origin.name>` main)"
+
+  Use the answer to set `--repo` on `gh pr create`.
+  If not a fork, proceed without asking.
+
+  b. Generate PR title from commit history:
   ```bash
   git log main..HEAD --oneline
   ```
   Use the most descriptive commit message as the title,
   or synthesize from multiple commits.
 
-  b. Generate PR body: summarize all commits on the
+  c. Generate PR body: summarize all commits on the
   branch with a `## Summary` section and bullet points.
 
-  c. Create:
+  d. Show the proposed PR content to the user:
+
+  > **Proposed PR:**
+  >
+  > **Title:** `<title>`
+  >
+  > **Body:**
+  > ```
+  > <body>
+  > ```
+  >
+  > Approve, edit, or provide your own?
+
+  Use the approved (or edited/replaced) title and body
+  for creation.
+
+  e. Create:
   ```bash
+  # If targeting upstream fork parent:
+  gh pr create --repo <parent> --title "<title>" \
+    --body "<body>"
+  # Otherwise (not a fork, or user chose fork target):
   gh pr create --title "<title>" --body "<body>"
   ```
 
-  d. Report the PR URL.
+  f. Report the PR URL.
 
 ### 6. Watch CI Checks
 
@@ -221,6 +256,8 @@ approval with: gh pr merge --rebase --delete-branch
 - **NEVER stage secret files without warning** — always
   prompt
 - **NEVER commit without user approval** of the message
+- **NEVER create a PR without user approval** of the
+  title and body
 - **ALWAYS report the PR URL** so the user can review it
 - **If any step fails**, stop immediately with context
   and options — do not attempt to continue or recover
