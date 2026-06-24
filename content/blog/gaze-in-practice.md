@@ -100,6 +100,8 @@ This warning means the module-level quality scan did not find test files at the 
 
 The fix is straightforward: run `/gaze quality ./internal/store` or `/gaze quality ./internal/organizer` to get per-package contract coverage breakdowns. This is not a bug — it is the tool telling you to scope your query more narrowly for detailed results.
 
+> **Update** ([gaze#159](https://github.com/unbound-force/gaze/pull/159)): `gaze quality` accepts multiple package patterns including `./...` wildcards. Running `gaze quality ./...` processes all packages in the module, skipping packages without tests (with a warning). The per-package scoping shown above is still useful for targeted analysis but is no longer required.
+
 ## 🏷️ Classification Summary
 
 The classification analysis identifies the side effects of each function and classifies them as contractual, incidental, or ambiguous.

@@ -18,11 +18,14 @@ Gaze detects every observable side effect a function produces, classifies each a
 ### Core Commands
 
 ```bash
-# Detect all observable side effects in a package
-gaze analyze --classify ./pkg
+# Detect all observable side effects across the module
+gaze analyze --classify ./...
+
+# Analyze specific packages
+gaze analyze --classify ./internal/loader ./internal/crap
 
 # Assess test quality (contract coverage, over-specification)
-gaze quality ./pkg
+gaze quality ./...
 
 # Compute CRAP and GazeCRAP risk scores
 gaze crap ./...
