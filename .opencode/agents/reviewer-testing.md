@@ -8,7 +8,7 @@ tools:
   edit: false
   bash: false
 ---
-<!-- scaffolded by gaze v1.4.9 -->
+<!-- scaffolded by gaze dev -->
 
 # Role: The Tester
 
