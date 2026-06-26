@@ -1,12 +1,25 @@
 ---
 title: "Common Workflows"
-description: "The /unleash autonomous pipeline, /finale shipping workflow, manual feature flows, bug fixes, code reviews, and environment setup."
+description: "Slash command reference and end-to-end workflows — /unleash, /finale, /review-council, /review-pr, /agent-brief, and more."
 lead: "End-to-end workflows that show how all five heroes collaborate across the development lifecycle."
 date: 2026-03-22T00:00:00+00:00
 draft: false
 weight: 70
 toc: true
 ---
+
+## Quick Reference
+
+| Command | Purpose |
+|---------|---------|
+| `/speckit.specify` | Create a new feature specification (Speckit) |
+| `/opsx-propose <name>` | Create a tactical change with proposal, design, and tasks (OpenSpec) |
+| `/unleash` | Run the full autonomous pipeline: clarify → plan → implement → review → demo |
+| `/cobalt-crush` | Implement an OpenSpec change with convention pack adherence |
+| `/review-council` | Pre-PR review with 5+ Divisor personas in parallel |
+| `/review-pr [N]` | Post-PR review with CI causality analysis and fix branch offering |
+| `/agent-brief` | Create or audit AGENTS.md — the project briefing for AI agents |
+| `/finale` | Stage, commit, push, create PR, watch CI, and return to main |
 
 ## Autonomous Pipeline (`/unleash`)
 
@@ -392,6 +405,119 @@ Before delegating to Divisor agents, the review council runs a two-phase CI gate
 ### Verdict
 
 The council returns **APPROVE** only when all active personas approve. A single REQUEST CHANGES means the council verdict is REQUEST CHANGES. Missing personas (agent files not found) don't block the verdict but are noted in the report.
+
+### Post-PR Review (`/review-pr`)
+
+`/review-pr` is the post-PR counterpart to `/review-council`. Where `/review-council` reviews code locally before a PR exists, `/review-pr` reviews a pull request after it has been created — using CI results, PR metadata, and the full diff.
+
+```text
+/review-pr        # auto-detect PR from current branch
+/review-pr 42     # review a specific PR by number
+```
+
+**Requires**: The `gh` CLI must be installed and authenticated (`gh auth login`).
+
+#### How It Works
+
+1. **Resolve PR** — auto-detects the open PR for the current branch, or accepts a PR number as argument
+2. **Fetch metadata** — retrieves PR title, description, changed files, and branch info via `gh`
+3. **CI check results** — fetches CI/CD check status and classifies any failures
+4. **Local tool pre-flight** — runs project-specific tools (linters, tests) only for checks not already covered by CI
+5. **Scoped diff** — fetches the PR diff, skipping lock files, auto-generated code, and binary files
+6. **Locate spec** — finds the associated specification (Speckit or OpenSpec) for intent alignment
+7. **AI review** — applies judgment to what deterministic tools cannot check: alignment, security, and constitution compliance
+8. **Report** — structured output with severity-classified findings
+
+#### CI Causality Analysis
+
+When CI checks fail, `/review-pr` determines whether each failure was caused by the PR or is a pre-existing issue on the base branch:
+
+| Base Branch | PR Check | Classification |
+|-------------|----------|----------------|
+| Pass | Fail | **PR-caused** — the PR introduced the failure |
+| Fail | Fail | **Pre-existing** — failure exists independently of the PR |
+| No data | Fail | **Unknown** — treated as PR-caused (conservative) |
+
+**PR-caused failures** are reported as HIGH or CRITICAL findings with the specific change that likely caused the failure.
+
+**Pre-existing failures** are reported separately and do not block the PR verdict. After the review, `/review-pr` offers to create a fix branch (`fix/pr-<N>-<check-name>`) with a proposed resolution for each pre-existing failure. This fix branch is created locally — you review it and push when ready. The fix branch offer includes a dirty-tree guard (won't create if uncommitted changes exist) and a collision check (won't overwrite an existing branch).
+
+#### In-line PR Comments
+
+If HIGH or CRITICAL findings are found, `/review-pr` offers to post them as in-line comments on the PR so the author sees them in context. Comments are always shown for your approval before posting. A cap of 15 in-line comments prevents noisy reviews — findings beyond the cap are consolidated into a summary comment.
+
+#### `/review-council` vs `/review-pr`
+
+| Aspect | `/review-council` | `/review-pr` |
+|--------|-------------------|-------------|
+| **When** | Before the PR — during implementation | After the PR — during review |
+| **Scope** | Full codebase review against AGENTS.md | Single PR review against spec and PR intent |
+| **Agent model** | 5+ Divisor personas in parallel | Single agent with structured phases |
+| **CI integration** | Runs CI commands locally (Phase 1a) | Reads CI results from the PR, runs local tools only for gaps |
+| **Output** | APPROVE / REQUEST CHANGES verdict | Structured report with severity-classified findings |
+| **Fix offering** | Iterates fixes in-session (up to 3 rounds) | Offers fix branches for pre-existing CI failures |
+| **Gaze integration** | Phase 1b quality analysis (if available) | Not included — uses CI results instead |
+
+**Decision guide**: Use `/review-council` while developing (before pushing), use `/review-pr` after the PR is open. They complement each other — `/review-council` catches issues early, `/review-pr` validates the PR in context with CI data.
+
+## Project Context Management (`/agent-brief`)
+
+`/agent-brief` manages the AGENTS.md lifecycle — the project briefing that AI coding agents read at the start of every session. AGENTS.md is the API contract between humans and AI agents: it tells agents how to build, test, and lint the project, what conventions to follow, and what constraints to respect.
+
+```text
+/agent-brief           # auto-detect: create if missing, audit if exists
+/agent-brief create    # force create mode (overwrite existing)
+/agent-brief audit     # force audit mode (read-only evaluation)
+```
+
+### Create Mode
+
+When no AGENTS.md exists (or forced with `create`), `/agent-brief` analyzes the project and generates a complete AGENTS.md from actual project signals:
+
+**Project signals analyzed**:
+- `go.mod`, `package.json`, `Cargo.toml`, `pyproject.toml` — language and dependencies
+- `Makefile`, `.github/workflows/` — build, test, lint commands (CI files are the source of truth)
+- `.golangci.yml`, `ruff.toml`, `.eslintrc*` — linter configuration
+- `README.md`, `LICENSE`, `.git/config` — project description and context
+- `.specify/memory/constitution.md`, `specs/`, `openspec/` — governance and spec framework
+
+The generated file has two tiers:
+- **Tier 1 sections** (filled from project data): Project Overview, Build & Test Commands, Project Structure, Code Conventions, Technology Stack
+- **Tier 1C sections** (context-sensitive, only generated when triggers are detected): Constitution/Governance, Specification Framework
+- **Tier 2 sections** (stubs with TODO guidance): Architecture, Testing Conventions, Git & Workflow, Behavioral Constraints
+
+The generated content is always shown for review before writing. Tier 2 stubs include detailed comments explaining what to fill and why it matters.
+
+### Audit Mode
+
+When AGENTS.md already exists, `/agent-brief` evaluates it against a section taxonomy and produces a quality score.
+
+**5-tier scoring rubric**:
+
+| Score | Criteria |
+|-------|----------|
+| **Excellent** | 5/5 Tier 1 + 4/4 Tier 2 + all applicable Tier 1C |
+| **Strong** | 5/5 Tier 1 + 2-3/4 Tier 2 |
+| **Adequate** | 4-5/5 Tier 1 |
+| **Weak** | 2-3/5 Tier 1 |
+| **Missing** | 0-1/5 Tier 1 |
+
+If Tier 1C sections are applicable (triggers detected) but missing, the score is downgraded by one level.
+
+The audit report includes section coverage, quality metrics (line count, build code blocks, staleness checks), and specific improvement suggestions with generated content for missing sections. You can apply suggestions interactively.
+
+### Bridge File Management
+
+After creating or auditing AGENTS.md, `/agent-brief` verifies cross-tool bridge files:
+
+- **CLAUDE.md** — should contain `@AGENTS.md` to import the project context into Claude Code sessions
+- **.cursorrules** — should reference AGENTS.md for Cursor IDE integration
+
+Bridge file creation is owned by `uf init`. If bridge files are missing or misconfigured, `/agent-brief` reports the status and suggests running `uf init` to create them.
+
+### Doctor Integration
+
+`uf doctor` includes deterministic structural checks for AGENTS.md quality as part of its 7-area health check. These checks verify section presence, build code blocks, directory tree accuracy, constitution references, and spec framework documentation — the same checks that `/agent-brief audit` runs, available as a quick pass/warn/fail diagnostic.
 
 ## Environment Setup
 
