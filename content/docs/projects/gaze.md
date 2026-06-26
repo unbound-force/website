@@ -136,10 +136,12 @@ Both `--ai=opencode` and `--ai=claude` are fully supported AI backends for `gaze
 
 | Flag                   | Commands             | Description                                                                                                                                                    |
 | ---------------------- | -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `--include-unexported` | `analyze`, `quality` | Include unexported functions in the analysis. Auto-detected for `package main` — CLI tools and entry points are analyzed by default without needing this flag. |
-| `--ai-mapper`          | `quality`, `crap`    | Enable AI-assisted assertion mapping as a 5th pass (confidence 50). Uses the configured AI adapter to evaluate structurally disconnected assertions.           |
-| `--max-gaze-crapload`  | `report`             | Fail if more than N functions exceed the GazeCRAP threshold. Similar to `--max-crapload` but uses contract coverage instead of line coverage.                  |
-| `--coverprofile`       | `report`             | Pass a pre-generated `go test -coverprofile` to skip Gaze's internal test run. See the [Tester guide](/docs/getting-started/tester/) for the CI pattern.       |
+| `--include-unexported` | `analyze`, `quality` | Include unexported functions in the analysis. Auto-detected per-package for `package main` (see note below). |
+| `--ai-mapper`          | `quality`, `crap`    | Enable AI-assisted assertion mapping as a 5th pass (confidence 50). Uses the configured AI adapter to evaluate structurally disconnected assertions. |
+| `--max-gaze-crapload`  | `report`             | Fail if more than N functions exceed the GazeCRAP threshold. Similar to `--max-crapload` but uses contract coverage instead of line coverage. |
+| `--coverprofile`       | `report`             | Pass a pre-generated `go test -coverprofile` to skip Gaze's internal test run. See the [Tester guide](/docs/getting-started/tester/) for the CI pattern. |
+
+**`--include-unexported` auto-detection**: When analyzing multiple packages, each package is checked individually for `package main`. CLI entry points are included automatically without needing this flag.
 
 ### The `/gaze fix` Command
 
@@ -229,7 +231,7 @@ Gaze is actively developed. The current scope has known boundaries:
 - **P3-P4 side effects not yet detected.** P0 through P2 are fully implemented — covering return values, error returns, mutations, I/O, channel operations, file system operations, database writes, goroutine spawns, panics, and context cancellation. P3-P4 side effects (stdout/stderr, environment mutations, mutex operations, reflection, unsafe) are not yet detected.
 - **Assertion mapping accuracy is ~84.7%** (83/98 mapped assertions, ratchet floor 84.0%). The target is 90%. Accuracy is primarily limited by helper function assertions and testify field-access patterns (tracked as [GitHub Issue #6](https://github.com/unbound-force/gaze/issues/6)).
 - **No CGo or unsafe analysis.** Functions using `cgo` or `unsafe.Pointer` are not analyzed for their specific side effects.
-- **Single package loading.** The `analyze` and `quality` commands process one package at a time. The `crap` and `report` commands process the entire module (`./...`).
+- **No transitive multi-module analysis.** All four commands (`analyze`, `quality`, `crap`, `report`) accept multiple package patterns including `./...` wildcards, but analysis is scoped to the current module. Cross-module dependency analysis is out of scope for v1.
 
 ## Learn More
 
