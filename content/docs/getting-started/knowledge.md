@@ -43,9 +43,16 @@ The Unbound Force swarm and Dewey are aligned on the same embedding model (IBM G
 ```bash
 export OLLAMA_MODEL=granite-embedding:30m
 export OLLAMA_EMBED_DIM=256
+export DEWEY_CHUNK_MAX_CHARS=12288
 ```
 
-`uf setup` sets these automatically during installation. The shell profile entries ensure they persist across terminal sessions. Without them, child processes may use different embedding models, causing inconsistent search results between the swarm and Dewey.
+| Variable | Default | Description |
+| -------- | ------- | ----------- |
+| `OLLAMA_MODEL` | `granite-embedding:30m` | Embedding model name passed to Ollama |
+| `OLLAMA_EMBED_DIM` | `256` | Embedding vector dimension |
+| `DEWEY_CHUNK_MAX_CHARS` | `12288` | Maximum chunk size (in characters) for embedding. Overrides the `embedding.max_chunk_chars` config value when set. |
+
+`uf setup` sets `OLLAMA_MODEL` and `OLLAMA_EMBED_DIM` automatically during installation. The shell profile entries ensure they persist across terminal sessions. Without them, child processes may use different embedding models, causing inconsistent search results between the swarm and Dewey.
 
 If the Homebrew formula is not yet available, install from source:
 
@@ -383,13 +390,15 @@ Run `dewey doctor` to check the health of your Dewey installation. It reports on
 | **Workspace**           | `.uf/dewey/` directory, config files, `sources.yaml`       |
 | **Database**            | `graph.db` health, page/block/embedding counts             |
 | **Sources in Database** | Per-source page counts                                     |
-| **Embedding Layer**     | Ollama availability, model status                          |
+| **Embedding Layer**     | Ollama availability, model status, legacy model advisory   |
 | **MCP Server**          | Lock file, `opencode.json` configuration                   |
 | **Summary**             | Overall health with emoji markers (✓ pass, ⚠ warn, ✗ fail) |
 
 ```bash
 dewey doctor
 ```
+
+When `granite-embedding:30m` is configured, `dewey doctor` displays an informational advisory suggesting an upgrade to the Granite Embedding R2 model. This is not a warning or error — Dewey functions normally with the current model. A future Dewey release will update the default embedding model to Granite Embedding R2 once it is available on Ollama.
 
 ### `dewey reindex`
 
