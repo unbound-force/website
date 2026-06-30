@@ -41,7 +41,7 @@ Dewey exposes 48 MCP tools for navigate, search, analyze, write, decision, journ
 
 ### Semantic Search
 
-Vector-based similarity search using IBM Granite embeddings (30M parameters, 63 MB, Apache 2.0). Finds conceptually related content even when different terminology is used. Runs locally via Ollama — no data leaves your machine.
+Vector-based similarity search using IBM Granite embeddings (30M parameters, 63 MB, Apache 2.0). Finds conceptually related content even when different terminology is used. Runs locally via Ollama — no data leaves your machine. The maximum chunk size for embedding is configurable via the `DEWEY_CHUNK_MAX_CHARS` environment variable or the `embedding.max_chunk_chars` config field (default: 12288 characters). A future Dewey release will update the default embedding model to Granite Embedding R2 for improved retrieval accuracy.
 
 ### Four Content Source Types
 

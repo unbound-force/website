@@ -129,8 +129,13 @@ The embedding model is configurable. While Granite is the recommended default, t
 embedding:
   provider: ollama
   model: granite-embedding:30m
+  max_chunk_chars: 12288  # Maximum chunk size for embedding (default: 12288)
   # Alternative: granite-embedding:278m for multilingual content
 ```
+
+The `max_chunk_chars` field controls the maximum number of characters per chunk when generating embeddings. The default value of 12288 is suitable for most use cases. This value can also be overridden via the `DEWEY_CHUNK_MAX_CHARS` environment variable.
+
+A future Dewey release will update the default embedding model to IBM Granite Embedding R2, which offers improved retrieval accuracy. The current `granite-embedding:30m` model remains fully supported and functional. When R2 becomes available on Ollama, `dewey doctor` will display an informational advisory suggesting the upgrade.
 
 ## How Heroes Use Dewey
 
