@@ -36,6 +36,8 @@ ollama pull granite-embedding:30m
 
 The `granite-embedding:30m` model is IBM's Granite Embedding — a 63 MB model licensed under Apache 2.0 with full training data transparency. It runs locally via Ollama; no data leaves your machine.
 
+Pulling the embedding model is recommended but not strictly required to start using Dewey. If the model is not available, Dewey continues in keyword-only mode — structured graph queries, tag lookups, and keyword search all work. Semantic search becomes available once the model is pulled. See [Graceful Degradation](#graceful-degradation) for details.
+
 ### Embedding Model Alignment
 
 The Unbound Force swarm and Dewey are aligned on the same embedding model (IBM Granite `granite-embedding:30m`). To ensure consistency for processes spawned outside of `uf setup` (e.g., `dewey serve`, manual `replicator init`), add these environment variables to your shell profile (`~/.zshrc` or `~/.bashrc`):
@@ -51,8 +53,23 @@ export DEWEY_CHUNK_MAX_CHARS=12288
 | `OLLAMA_MODEL` | `granite-embedding:30m` | Embedding model name passed to Ollama |
 | `OLLAMA_EMBED_DIM` | `256` | Embedding vector dimension |
 | `DEWEY_CHUNK_MAX_CHARS` | `12288` | Maximum chunk size (in characters) for embedding. Overrides the `embedding.max_chunk_chars` config value when set. |
+| `DEWEY_EMBEDDING_ENDPOINT` | — | Overrides the Ollama endpoint for embedding requests. Takes highest precedence (see [Endpoint Resolution](#endpoint-resolution) below). |
+| `OLLAMA_HOST` | — | Standard Ollama environment variable. Dewey reads this as a fallback when `DEWEY_EMBEDDING_ENDPOINT` is not set and no `embedding.endpoint` is configured in `config.yaml`. |
 
 `uf setup` sets `OLLAMA_MODEL` and `OLLAMA_EMBED_DIM` automatically during installation. The shell profile entries ensure they persist across terminal sessions. Without them, child processes may use different embedding models, causing inconsistent search results between the swarm and Dewey.
+
+### Endpoint Resolution
+
+Dewey resolves the Ollama endpoint using a 4-tier precedence chain. The first value found wins:
+
+1. **`DEWEY_EMBEDDING_ENDPOINT`** environment variable — highest precedence, intended for CI or custom deployment overrides
+2. **`embedding.endpoint`** in `config.yaml` — per-vault configuration, then global configuration
+3. **`OLLAMA_HOST`** environment variable — standard Ollama variable, shared with other tools in the Ollama ecosystem
+4. **`http://localhost:11434`** — default fallback when nothing else is configured
+
+Values without a scheme (e.g., `192.168.1.50:11434`) are automatically normalized with `http://`.
+
+Most users do not need to set any of these — Dewey connects to `localhost:11434` by default, which is where Ollama listens. Set `OLLAMA_HOST` if you run Ollama on a remote machine or non-standard port, and `DEWEY_EMBEDDING_ENDPOINT` only if Dewey needs a different endpoint than other Ollama clients.
 
 If the Homebrew formula is not yet available, install from source:
 
@@ -433,6 +450,12 @@ Dewey is an enhancement, not a requirement. Per the Unbound Force constitution's
 
 All heroes check for Dewey's availability at runtime. If Dewey is not configured or not running, they fall back gracefully — reduced context quality, but fully functional. You can adopt Dewey incrementally: start with local disk indexing, add GitHub sources when you want cross-repo context, add web crawl when you want toolstack docs.
 
+### Embedding Model Not Pulled
+
+If Ollama is running but the configured embedding model has not been pulled, Dewey does not exit with a fatal error. Instead, it logs a warning and continues in **keyword-only mode** — structured graph queries, tag lookups, wikilink traversal, and keyword search all work normally. Only semantic (vector-based) search is unavailable until the model is pulled.
+
+This means you can run `dewey serve` or `dewey index` immediately after installing Dewey, even before pulling the embedding model. Dewey is fully functional for structured queries; semantic search becomes available once you run `ollama pull granite-embedding:30m`.
+
 ## Knowledge Lifecycle
 
 Dewey provides three commands that manage the quality and evolution of stored knowledge over time.
@@ -518,6 +541,7 @@ Common issues and how to resolve them:
 | ---------------------- | -------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
 | MCP server timeout     | OpenCode shows connection timeout      | Check `.gitignore` for large directories being indexed; run `dewey reindex`                                                                 |
 | Ollama not running     | `dewey doctor` shows embedding layer ✗ | Run `ollama serve` or install Ollama (`brew install --cask ollama`)                                                                         |
+| Model not pulled       | Semantic search returns no results; log shows "embedding model not available" | Run `ollama pull granite-embedding:30m`. Dewey continues in keyword-only mode until the model is available.                                 |
 | Lock file conflicts    | "Another dewey instance is running"    | Only one `dewey serve` per vault; check for stale `.uf/dewey/.dewey.lock`                                                                   |
 | Low embedding coverage | Semantic search returns few results    | Run `dewey index` to generate embeddings for new content                                                                                    |
 | Slow startup           | First `dewey serve` takes minutes      | Normal for large repos on first index; subsequent startups are near-instant. Check `.gitignore` to exclude `node_modules/`, `vendor/`, etc. |
