@@ -82,7 +82,7 @@ Dewey runs as an MCP server alongside your AI coding environment. It combines:
 
 - **Knowledge graph** — in-memory graph built from Markdown files with wikilink, tag, and property relationships
 - **SQLite persistence** — pages, blocks, links, and embeddings stored in `.uf/dewey/graph.db`
-- **Ollama embeddings** — IBM Granite model generates vector embeddings for semantic similarity search
+- **Ollama embeddings** — IBM Granite model generates vector embeddings for semantic similarity search. Dewey reads the standard `OLLAMA_HOST` environment variable, so it automatically connects to the same Ollama instance as other tools in your workflow
 - **Pluggable sources** — content source interface supports disk, GitHub, web crawl, and code with configurable refresh intervals
 
 ## Learn More
