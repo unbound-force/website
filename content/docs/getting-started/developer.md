@@ -311,7 +311,7 @@ uf init [--divisor] [--lang go|python|typescript] [--force]
 | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `--divisor` | Deploy only PR review agents (Divisor personas) and convention packs. For projects that only want code review, not the full swarm workflow.                                          |
 | `--lang`    | Override language auto-detection for convention pack selection. Auto-detects from `go.mod`, `pyproject.toml`, `setup.py`, `setup.cfg`, `requirements.txt`, `tox.ini`, `Pipfile`, `tsconfig.json`, `package.json`, `Cargo.toml`. |
-| `--force`   | Overwrite user-owned files that would normally be skipped, re-index Dewey workspace, and refresh `opencode.json` entries. Use with caution -- this will replace your customizations. |
+| `--force`   | Overwrite user-owned files that would normally be skipped, re-index Dewey workspace (with `--no-embeddings` — embedding generation is deferred), and refresh `opencode.json` entries. Use with caution -- this will replace your customizations. |
 
 ### What Gets Deployed
 
@@ -342,7 +342,7 @@ Files deployed by `uf init` fall into two ownership categories:
 After deploying files, `uf init` performs sub-tool initialization:
 
 - Creates `.uf/config.yaml` for [workflow configuration](/docs/getting-started/common-workflows/#workflow-configuration) (skipped if it already exists)
-- If [Dewey](/docs/getting-started/knowledge/) is available: creates the `.uf/dewey/` workspace, auto-detects sibling repos and your GitHub org to generate a [multi-repo source config](/docs/getting-started/knowledge/#what-uf-init-creates), and builds the initial index. After setup, you can [extend sources with web crawls](/docs/getting-started/knowledge/#extending-your-sources) for your project's toolstack documentation. With `--force`, re-indexes an existing Dewey workspace.
+- If [Dewey](/docs/getting-started/knowledge/) is available: creates the `.uf/dewey/` workspace, auto-detects sibling repos and your GitHub org to generate a [multi-repo source config](/docs/getting-started/knowledge/#what-uf-init-creates), and builds the initial index (using `--no-embeddings` for faster initialization — embedding generation is deferred). After setup, you can [extend sources with web crawls](/docs/getting-started/knowledge/#extending-your-sources) for your project's toolstack documentation, and run `dewey index` separately to generate embeddings for semantic search. With `--force`, re-indexes an existing Dewey workspace (also with `--no-embeddings`).
 - If `specify` is available: creates the `.specify/` directory with Speckit configuration targeting the OpenCode integration. Operates offline without network calls and is scoped to the current directory. Skipped if `.specify/` already exists.
 - Configures `opencode.json` with MCP and plugin entries:
   - **Dewey MCP entry**: When `dewey` is in PATH, adds the `mcp.dewey` entry for the Dewey MCP server

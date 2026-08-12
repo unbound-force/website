@@ -436,7 +436,7 @@ export OLLAMA_EMBED_DIM=256
 
 Dewey is optional -- all heroes function without it. See the [knowledge retrieval guide](/docs/getting-started/knowledge/) for source configuration and OpenCode integration.
 
-As the final step of setup, `uf init` scaffolds your project files and performs sub-tool initialization: it creates `.uf/config.yaml` for [workflow configuration](#workflow-configuration), runs `dewey init` + `dewey index` when Dewey is available, initializes `.specify/` with Speckit configuration when `specify` is available, and configures `opencode.json` with Dewey MCP server and Replicator MCP server entries when those tools are detected.
+As the final step of setup, `uf init` scaffolds your project files and performs sub-tool initialization: it creates `.uf/config.yaml` for [workflow configuration](#workflow-configuration), runs `dewey init` + `dewey index --no-embeddings` when Dewey is available (embedding generation is deferred for faster initialization — run `dewey index` separately afterward to generate embeddings for semantic search), initializes `.specify/` with Speckit configuration when `specify` is available, and configures `opencode.json` with Dewey MCP server and Replicator MCP server entries when those tools are detected.
 
 ### 3. Verify
 
