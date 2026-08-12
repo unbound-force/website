@@ -1,5 +1,4 @@
 ---
-name: system-design
 description: System design principles for clean architecture
 tags: [design, architecture, principles]
 ---

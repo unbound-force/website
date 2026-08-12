@@ -1,5 +1,4 @@
 ---
-name: learning-systems
 description: How the forge learns from outcomes
 tags: [learning, forge, insights]
 ---
