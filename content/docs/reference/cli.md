@@ -38,7 +38,7 @@ uf init [flags]
 | Flag | Description |
 |------|-------------|
 | `--divisor` | Deploy only Divisor review agents and convention packs |
-| `--force` | Overwrite all existing files |
+| `--force` | Overwrite all existing files and re-index Dewey workspace (with `--no-embeddings` — embedding generation is deferred) |
 | `--lang <string>` | Project language for convention pack selection: `go`, `python`, or `typescript` (auto-detected from `go.mod`, `pyproject.toml`, `setup.py`, `package.json`, etc. if omitted) |
 
 If any sub-tool fails during initialization, `uf init` displays the actual error output from the failing command so you can diagnose the issue directly.
