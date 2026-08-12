@@ -1,5 +1,4 @@
 ---
-name: forge-coordination
 description: Multi-agent coordination patterns for forge sessions
 tags: [forge, coordination, multi-agent]
 ---

@@ -1,5 +1,4 @@
 ---
-name: always-on-guidance
 description: Global coding rules and tool usage discipline
 tags: [always-on, coding, quality]
 ---

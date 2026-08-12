@@ -1,5 +1,4 @@
 ---
-name: testing-patterns
 description: Go testing patterns for the replicator project
 tags: [testing, go, patterns]
 ---
