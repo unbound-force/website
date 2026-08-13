@@ -8,7 +8,7 @@ weight: 10
 toc: true
 ---
 
-> This page reflects `uf` v0.12.0. Run `uf --help` for the latest.
+> This page reflects `uf` v0.15.0. Run `uf --help` for the latest.
 
 ## Overview
 
@@ -41,6 +41,8 @@ uf init [flags]
 | `--force` | Overwrite all existing files |
 | `--lang <string>` | Project language for convention pack selection (auto-detected from `go.mod`, `package.json`, etc. if omitted) |
 
+If any sub-tool fails during initialization, `uf init` displays the actual error output from the failing command so you can diagnose the issue directly.
+
 ## setup
 
 Install and configure the Unbound Force development toolchain. Detects existing version and package managers, installs missing tools through the appropriate manager, configures the Swarm plugin in `opencode.json`, and scaffolds project files. Idempotent — safe to run multiple times.
@@ -54,6 +56,8 @@ uf setup [flags]
 | `--dir <string>` | Target directory for setup (default `.`) |
 | `--dry-run` | Print actions without executing |
 | `--yes` | Skip confirmation prompts for curl\|bash installs |
+
+If a tool installation or configuration step fails, `uf setup` displays the actual error output from the failing command so you can diagnose the issue directly.
 
 See the [Quick Start](/docs/getting-started/quick-start/) for a walkthrough of `uf setup`.
 

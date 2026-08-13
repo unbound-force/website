@@ -326,6 +326,8 @@ After deploying files, `uf init` performs sub-tool initialization:
   - Idempotent — checks for existing entries before adding. Use `--force` to overwrite stale entries.
   - Preserves user-added keys (custom MCP servers, custom config) — only manages the entries it owns
 
+If any initialization step fails, the actual error output from the failing tool is displayed so you can diagnose the issue directly.
+
 ### Summary Output
 
 After completion, `uf init` shows a summary with file dispositions (`+` created, `~` updated, `!` overwritten, `-` skipped) and context-aware next-step guidance based on what tools are available in your environment.
