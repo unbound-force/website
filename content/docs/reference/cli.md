@@ -8,7 +8,7 @@ weight: 10
 toc: true
 ---
 
-> This page reflects `uf` v0.15.0. Run `uf --help` for the latest.
+> This page reflects `uf` v0.12.0. Run `uf --help` for the latest.
 
 ## Overview
 

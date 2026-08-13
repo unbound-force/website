@@ -10,6 +10,6 @@
 ## 3. Verification
 
 - [x] 3.1 Run `npm run build` and confirm no build errors
-- [x] 3.2 Update the CLI reference version note from `v0.12.0` to reflect the version that includes this change (verify against upstream release; if the release version is not yet known, leave `v0.12.0` and note the pending update in the PR description)
+- [x] 3.2 Update the CLI reference version note from `v0.12.0` to reflect the version that includes this change (verify against upstream release; if the release version is not yet known, leave `v0.12.0` and note the pending update in the PR description) — **Result**: upstream release version could not be verified via Dewey or changelog; left at `v0.12.0` per fallback instruction. Version bump deferred to a future changelog backfill.
 
 <!-- spec-review: passed -->
