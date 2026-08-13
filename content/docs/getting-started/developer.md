@@ -320,6 +320,7 @@ After deploying files, `uf init` performs sub-tool initialization:
 
 - Creates `.uf/config.yaml` for [workflow configuration](/docs/getting-started/common-workflows/#workflow-configuration) (skipped if it already exists)
 - If [Dewey](/docs/getting-started/knowledge/) is available: creates the `.uf/dewey/` workspace, auto-detects sibling repos and your GitHub org to generate a [multi-repo source config](/docs/getting-started/knowledge/#what-uf-init-creates), and builds the initial index. After setup, you can [extend sources with web crawls](/docs/getting-started/knowledge/#extending-your-sources) for your project's toolstack documentation. With `--force`, re-indexes an existing Dewey workspace.
+- If `specify` is available: creates the `.specify/` directory with Speckit configuration targeting the OpenCode integration. Operates offline without network calls and is scoped to the current directory. Skipped if `.specify/` already exists.
 - Configures `opencode.json` with MCP and plugin entries:
   - **Dewey MCP entry**: When `dewey` is in PATH, adds the `mcp.dewey` entry for the Dewey MCP server
   - **Replicator MCP entry**: When `replicator` is in PATH, adds `mcp.replicator` entry for the Replicator MCP server
