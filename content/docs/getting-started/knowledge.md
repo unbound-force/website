@@ -74,7 +74,7 @@ Most users do not need to set any of these — Dewey connects to `localhost:1143
 If the Homebrew formula is not yet available, install from source:
 
 ```bash
-go install github.com/unbound-force/dewey@latest
+go install github.com/unbound-force/dewey/v3@latest
 ```
 
 ## Initialize Your Repository
