@@ -57,7 +57,7 @@ export DEWEY_CHUNK_MAX_CHARS=12288
 If the Homebrew formula is not yet available, install from source:
 
 ```bash
-go install github.com/unbound-force/dewey@latest
+go install github.com/unbound-force/dewey/v3@latest
 ```
 
 ## Initialize Your Repository

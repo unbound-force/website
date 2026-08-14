@@ -30,7 +30,7 @@ ollama pull granite-embedding:30m
 On Linux, install from source:
 
 ```bash
-go install github.com/unbound-force/dewey@latest
+go install github.com/unbound-force/dewey/v3@latest
 ```
 
 ## Key Features
