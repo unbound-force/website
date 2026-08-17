@@ -45,7 +45,7 @@ If any sub-tool fails during initialization, `uf init` displays the actual error
 
 ## setup
 
-Install and configure the Unbound Force development toolchain. Detects existing version and package managers, installs missing tools through the appropriate manager, configures the Swarm plugin in `opencode.json`, and scaffolds project files. Idempotent — safe to run multiple times.
+Install and configure the Unbound Force development toolchain. Detects existing versions, package managers, and platform capabilities, then installs missing tools through the appropriate method. Configures the Swarm plugin in `opencode.json` and scaffolds project files. Idempotent — safe to run multiple times.
 
 ```bash
 uf setup [flags]
@@ -55,7 +55,33 @@ uf setup [flags]
 |------|-------------|
 | `--dir <string>` | Target directory for setup (default `.`) |
 | `--dry-run` | Print actions without executing |
-| `--yes` | Skip confirmation prompts for curl\|bash installs |
+| `--yes` | Skip confirmation prompts (does **not** auto-confirm third-party curl installers — see below) |
+
+### Install cascade
+
+For each tool, `uf setup` tries install methods in order until one succeeds:
+
+1. **Homebrew** — used when `brew` is available (macOS, or Linux with Linuxbrew)
+2. **System package manager** — `dnf` on Fedora/RHEL, `apt` on Debian/Ubuntu (used when Homebrew is absent and the tool has a native package)
+3. **Curl installer** — official install scripts from the tool's vendor (Ollama, DevPod). Requires interactive confirmation (see below)
+4. **Skip** — prints a download link and continues to the next tool
+
+The cascade is automatic. On macOS with Homebrew, all tools install via `brew`. On Fedora without Homebrew, Podman installs via `dnf`, while Ollama and DevPod use their official curl installers.
+
+### Interactive prompts for third-party installers
+
+When `uf setup` falls back to a curl installer (e.g., `curl -fsSL https://ollama.com/install.sh | sh`), it asks for explicit **y/n confirmation** before running the script. This is a security gate — these scripts execute third-party code that may request elevated privileges.
+
+- **Interactive terminal**: You see a prompt like `Install Ollama via curl installer? [y/N]`
+- **Non-interactive mode** (CI pipelines, `--yes` flag): Curl installers are **skipped**, not auto-confirmed. The `--yes` flag confirms package manager installs but deliberately does not confirm third-party script execution. The tool is skipped with a download link instead.
+
+If you want to audit an install script before running it, download and inspect it first:
+
+```bash
+curl -fsSL https://ollama.com/install.sh -o install-ollama.sh
+less install-ollama.sh
+sh install-ollama.sh
+```
 
 If a tool installation or configuration step fails, `uf setup` displays the actual error output from the failing command so you can diagnose the issue directly.
 
@@ -75,6 +101,16 @@ uf doctor [flags]
 |------|-------------|
 | `--dir <string>` | Target directory to check (default `.`) |
 | `--format <string>` | Output format: `text` or `json` (default `text`) |
+
+### Platform-aware install hints
+
+When doctor detects a missing tool, the suggested install command matches your platform and configured package manager:
+
+- **macOS / Homebrew**: `brew install <formula>`
+- **Fedora / RHEL (dnf)**: `dnf install <package>` for tools available in Fedora repos (e.g., Podman)
+- **No package manager**: a download URL for manual installation
+
+This means a Fedora user running `uf doctor` sees `dnf install podman` rather than `brew install podman`. The hints reflect what will actually work on your system.
 
 ## config
 
