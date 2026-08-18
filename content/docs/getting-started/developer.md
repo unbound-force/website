@@ -180,7 +180,7 @@ Every session follows this ritual:
 | --------- | ------------------------------------- | --------------------------------------- |
 | **Start** | `/speckit.specify` or `/opsx-propose` | Define the work                         |
 | **Work**  | `/unleash` or `/cobalt-crush`         | Execute the work                        |
-| **End**   | `/finale`                             | Commit, push, create PR for review      |
+| **End**   | `/finale`                             | Commit, push, create PR with structured description |
 
 ## Cobalt-Crush Persona
 
@@ -341,7 +341,7 @@ The most important habit: **always end your session properly**. The daily workfl
 /finale        # commit → push → PR → main
 ```
 
-`/finale` handles the full end-of-branch workflow: staging changes, generating a conventional commit message, pushing to remote, creating a PR, watching CI checks, and returning to `main`. The PR stays open for human review — `/finale` never merges. The session is not complete until `git push` succeeds — this ensures your work items, semantic memory learnings, and file reservation state are available for your next session and for other team members who may pick up where you left off.
+`/finale` handles the full end-of-branch workflow: staging changes, generating a conventional commit message with AI attribution, pushing to remote, creating a PR with a [structured description](/docs/getting-started/common-workflows/#structured-pr-descriptions), watching CI checks, and returning to `main`. The PR stays open for human review — `/finale` never merges. The session is not complete until `git push` succeeds — this ensures your work items, semantic memory learnings, and file reservation state are available for your next session and for other team members who may pick up where you left off.
 
 ## Next Steps
 
