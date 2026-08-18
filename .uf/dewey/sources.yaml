@@ -10,6 +10,18 @@ sources:
     config:
       path: "."
 
+  - id: disk-.github
+    type: disk
+    name: .github
+    config:
+      path: "../.github"
+
+  - id: disk-containerfile
+    type: disk
+    name: containerfile
+    config:
+      path: "../containerfile"
+
   - id: disk-dewey
     type: disk
     name: dewey
@@ -22,11 +34,23 @@ sources:
     config:
       path: "../gaze"
 
+  - id: disk-gaze-py
+    type: disk
+    name: gaze-py
+    config:
+      path: "../gaze-py"
+
   - id: disk-homebrew-tap
     type: disk
     name: homebrew-tap
     config:
       path: "../homebrew-tap"
+
+  - id: disk-replicator
+    type: disk
+    name: replicator
+    config:
+      path: "../replicator"
 
   - id: disk-unbound-force
     type: disk
@@ -50,55 +74,12 @@ sources:
       org: unbound-force
       repos:
         - website
+        - .github
+        - containerfile
         - dewey
         - gaze
+        - gaze-py
         - homebrew-tap
+        - replicator
         - unbound-force
     refresh_interval: daily
-
-  # Web sources (toolstack documentation)
-  - id: web-hugo
-    type: web
-    name: hugo-docs
-    config:
-      urls:
-        - https://gohugo.io/documentation/
-      depth: 2
-    refresh_interval: weekly
-
-  - id: web-doks
-    type: web
-    name: doks-theme
-    config:
-      urls:
-        - https://getdoks.org/docs/
-      depth: 2
-    refresh_interval: weekly
-
-  - id: web-bootstrap
-    type: web
-    name: bootstrap-css
-    config:
-      urls:
-        - https://getbootstrap.com/docs/5.3/
-      depth: 1
-    refresh_interval: weekly
-
-  # Core platform documentation (Unbound Force ecosystem)
-  - id: web-opencode
-    type: web
-    name: opencode-docs
-    config:
-      urls:
-        - https://opencode.ai/docs
-      depth: 2
-    refresh_interval: weekly
-
-  - id: web-mcp-spec
-    type: web
-    name: mcp-specification
-    config:
-      urls:
-        - https://modelcontextprotocol.io/docs/
-      depth: 2
-    refresh_interval: weekly
