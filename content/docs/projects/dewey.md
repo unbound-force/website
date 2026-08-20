@@ -27,7 +27,15 @@ brew install --cask ollama
 ollama pull granite-embedding:30m
 ```
 
-On Linux, install from source:
+On Linux (Fedora, RHEL, CentOS), download the `.rpm` package from the [Releases page](https://github.com/unbound-force/dewey/releases) and install with `dnf`:
+
+```bash
+sudo dnf install ./dewey_<version>_linux_amd64.rpm
+```
+
+RPM packages are available for both `amd64` and `arm64` architectures. The binary installs to `/usr/bin/dewey`.
+
+Or install from source:
 
 ```bash
 go install github.com/unbound-force/dewey/v3@latest
