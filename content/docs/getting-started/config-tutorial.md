@@ -34,7 +34,7 @@ Open the file to see the available sections:
 #   skip: []                 # tools to skip during setup
 
 # scaffold:
-#   language: ""             # auto-detected from go.mod, package.json, etc.
+#   language: ""             # auto-detected from go.mod, pyproject.toml, package.json, etc.
 
 # embedding:
 #   model: granite-embedding:30m
