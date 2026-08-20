@@ -355,9 +355,10 @@ The review council brings multiple specialized perspectives to every code review
 
 ```text
 /review-council
+/review-council 42    # optionally specify a PR number
 ```
 
-The council discovers available Divisor persona agents in `.opencode/agents/divisor-*.md` and launches all of them in parallel.
+The council discovers available Divisor persona agents in `.opencode/agents/divisor-*.md` and launches all of them in parallel. When a PR number is provided, the council posts its consolidated findings as a GitHub PR review after the local review completes. Without a PR number, the review runs locally only. See the [Code Review Tutorial](/docs/getting-started/code-review-tutorial/#optional-post-to-github) for the full GitHub posting workflow.
 
 ### What Each Persona Evaluates
 
@@ -391,7 +392,9 @@ Before delegating to Divisor agents, the review council runs a two-phase CI gate
 
 ### Verdict
 
-The council returns **APPROVE** only when all active personas approve. A single REQUEST CHANGES means the council verdict is REQUEST CHANGES. Missing personas (agent files not found) don't block the verdict but are noted in the report.
+The council returns **APPROVE** only when all active personas approve. A single REQUEST CHANGES means the council verdict is REQUEST CHANGES. When all personas approve but one or more include advisory findings (LOW-severity observations), the verdict is **APPROVE WITH ADVISORIES**. Missing personas (agent files not found) don't block the verdict but are noted in the report.
+
+When posting to GitHub via `/review-council N`, the council verdict maps to a GitHub review event: APPROVE maps to `APPROVE`, REQUEST CHANGES maps to `REQUEST_CHANGES`, and APPROVE WITH ADVISORIES maps to `COMMENT` (ensuring advisory findings are visible on the PR without blocking merge).
 
 ## Environment Setup
 

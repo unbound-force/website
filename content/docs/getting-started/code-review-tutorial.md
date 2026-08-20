@@ -27,7 +27,11 @@ Before you push your changes and create a PR, run `/review-council` to catch iss
 
 ```text
 /review-council
+/review-council [N]        # optionally specify a PR number
+/review-council code [N]   # explicitly select code review mode
 ```
+
+When a PR number is provided, the council posts its consolidated findings as a GitHub PR review after completing the local review. Without a PR number, the review runs locally only.
 
 ### What Happens
 
@@ -66,6 +70,28 @@ Council Verdict: APPROVE
 If any persona returns **REQUEST CHANGES**, the council verdict is REQUEST CHANGES. Fix the findings and re-run. The review council iterates up to 3 times, auto-fixing LOW and MEDIUM findings where possible.
 
 **Gaze integration** (optional): If [Gaze](/docs/projects/gaze/) is installed, the review council runs quality analysis (CRAP scores, test coverage) as Phase 1b. This is informational — it does not block the verdict.
+
+### Optional: Post to GitHub
+
+When a PR exists for your branch, `/review-council` can post its consolidated findings as a GitHub PR review. The council detects an open PR automatically via `gh pr view`, or you can specify a PR number explicitly with `/review-council N`.
+
+**How it works**: After all personas complete their local review, the council aggregates their findings into a single GitHub review with per-persona sections. The council verdict maps to a GitHub review event:
+
+| Council Verdict | GitHub Review Event | When It Occurs |
+|-----------------|---------------------|----------------|
+| APPROVE | `APPROVE` | All personas approve with no findings |
+| APPROVE WITH ADVISORIES | `COMMENT` | All personas approve but one or more include advisory findings (LOW-severity observations or informational notes) |
+| REQUEST CHANGES | `REQUEST_CHANGES` | Any persona returns REQUEST CHANGES |
+
+**Pre-posting safety checks**:
+
+- **Duplicate detection** — skips posting if the council has already posted an identical review on the same commit
+- **Stale review dismissal** — warns if previous council reviews on older commits should be dismissed
+- **CODEOWNER warnings** — alerts if the PR modifies files owned by teams not represented in the review
+
+Before posting, the council asks for **human confirmation**. No review is posted without your explicit approval.
+
+**Graceful degradation**: If `gh` is not installed, not authenticated, or no PR exists for the current branch, `/review-council` runs the full local review without errors. GitHub posting is strictly optional — the local review workflow is unchanged.
 
 ## Step 2: Push and Create a PR
 
@@ -188,17 +214,20 @@ The two review commands fit into the standard development workflow:
 Merge                     # after reviewer approval
 ```
 
-You can use either command independently — they do not depend on each other. But together they catch issues at two different points: before the code leaves your machine and after it runs through CI.
+You can use either command independently — they do not depend on each other. But together they catch issues at two different points: before the code leaves your machine and after it runs through CI. Additionally, `/review-council N` can optionally post its findings to an existing PR, bridging the pre-PR and post-PR stages when you want multi-persona review results visible on the PR itself.
 
 ## Decision Table
 
 | Situation | Command | Why |
 |-----------|---------|-----|
 | Before pushing | `/review-council` | Catch issues locally with 5+ parallel reviewers |
+| Post council findings to a PR | `/review-council N` | Multi-persona local review with findings posted as a GitHub PR review |
 | After creating a PR | `/review-pr` | Review with CI results and causality analysis |
 | Reviewing someone else's PR | `/review-pr 42` | Works on any PR by number |
 | CI failed, unsure if my fault | `/review-pr` | Causality classification separates your regressions from noise |
 | Want maximum coverage | Both in sequence | `/review-council` pre-push, `/review-pr` post-PR |
+
+> **`/review-council N` vs `/review-pr N`**: Both target a specific PR, but they serve different purposes. `/review-council N` runs the full multi-persona local review and posts the aggregated findings to the PR. `/review-pr N` fetches CI results, performs causality analysis (PR-caused vs pre-existing failures), and reviews the PR diff with that context. Use `/review-council N` when you want the council's multi-persona review visible on the PR; use `/review-pr N` when you need CI-aware review with causality classification.
 
 ## See Also
 
