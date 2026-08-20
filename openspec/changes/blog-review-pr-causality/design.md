@@ -35,7 +35,7 @@ The website documents `/review-pr` in `common-workflows.md` (PR #74) with comman
 ## Content Sources
 
 Authoritative upstream source:
-- `/review-pr` command: `unbound-force/unbound-force/.opencode/command/review-pr.md`
+- `/uf.review-pr` command: `unbound-force/unbound-force/.opencode/commands/uf.review-pr.md`
 - Comparison table: `content/docs/getting-started/common-workflows.md` (if PR #74 merged)
 
 All technical claims must be verified against the upstream command file at implementation time.
