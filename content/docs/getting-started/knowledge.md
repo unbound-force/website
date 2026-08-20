@@ -34,6 +34,14 @@ brew install --cask ollama
 ollama pull granite-embedding:30m
 ```
 
+On Linux (Fedora, RHEL, CentOS), download the `.rpm` package from the [Releases page](https://github.com/unbound-force/dewey/releases) and install with `dnf`:
+
+```bash
+sudo dnf install ./dewey_<version>_linux_amd64.rpm
+```
+
+RPM packages are available for both `amd64` and `arm64` architectures. The binary installs to `/usr/bin/dewey`.
+
 The `granite-embedding:30m` model is IBM's Granite Embedding — a 63 MB model licensed under Apache 2.0 with full training data transparency. It runs locally via Ollama; no data leaves your machine.
 
 Pulling the embedding model is recommended but not strictly required to start using Dewey. If the model is not available, Dewey continues in keyword-only mode — structured graph queries, tag lookups, and keyword search all work. Semantic search becomes available once the model is pulled. See [Graceful Degradation](#graceful-degradation) for details.
