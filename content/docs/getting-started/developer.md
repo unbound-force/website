@@ -31,7 +31,27 @@ After setup, verify everything is working:
 uf doctor
 ```
 
-Doctor checks 7 areas: your detected environment (version managers), core tools, Replicator health, scaffolded files, hero availability, MCP server config, and agent/skill integrity. Every failed check includes a copy-pasteable install command to fix it.
+Doctor checks 7 areas: your detected environment (version managers), core tools, Replicator health, scaffolded files, hero availability, MCP server config, and agent/skill integrity. When a Python project is detected, doctor additionally checks Python-specific tooling (see [Python Doctor Checks](#python-doctor-checks) below). Every failed check includes a copy-pasteable install command to fix it.
+
+### Python Doctor Checks
+
+When `uf doctor` detects a Python project (via any of the [marker files](#language-auto-detection) listed below), it runs a "Python Tools" check group with 9 categories:
+
+| Check              | Status      | Notes                                                    |
+| ------------------ | ----------- | -------------------------------------------------------- |
+| `python3`          | Required    | Python 3 interpreter must be available                   |
+| `pip` or `uv`      | Recommended | Package installer -- either satisfies the check          |
+| `pytest`           | Required    | Test runner                                              |
+| Code formatter     | Recommended | Checks for `black`, `ruff format`, or alternatives       |
+| Linter             | Recommended | Checks for `ruff`, `flake8`, or alternatives             |
+| Import sorter      | Recommended | Checks for `isort`, `ruff check --select I`, or alternatives |
+| Security scanner   | Recommended | Checks for `bandit`, `ruff`, or alternatives             |
+| `mypy`             | Optional    | Static type checker                                      |
+| `tox`              | Optional    | Test automation across environments                      |
+
+Required checks cause `uf doctor` to exit with code 1 if missing. Recommended checks produce warnings. Optional checks are informational only.
+
+Tool checks are outcome-focused, not tool-specific -- any tool that fulfills the purpose satisfies the check (e.g., `ruff` can satisfy the formatter, linter, and import sorter checks simultaneously).
 
 ## OpenCode Modes
 
@@ -210,12 +230,14 @@ Packs are organized by language, with each language having a tool-owned canonica
 | `typescript.md`        | Tool-owned | TypeScript-specific rules: ESLint, Prettier, strict typing, architectural patterns                                |
 | `typescript-custom.md` | User-owned | Project-specific TypeScript conventions                                                                           |
 | `severity.md`          | Tool-owned | Shared severity definitions for all Divisor personas (calibration standard for CRITICAL/HIGH/MEDIUM/LOW findings) |
+| `python.md`            | Tool-owned | Python-specific rules: coding style, architectural patterns, security checks, testing, type annotations, documentation |
+| `python-custom.md`     | User-owned | Project-specific Python conventions                                                                               |
 | `content.md`           | Tool-owned | Language-agnostic writing standards for documentation, blog posts, and website content                            |
 | `content-custom.md`    | User-owned | Project-specific writing conventions                                                                              |
 
 #### Ownership Model
 
-- **Tool-owned** files (`default.md`, `go.md`, `typescript.md`) are automatically updated by `uf init` when the embedded version changes. You should not edit these directly -- your changes will be overwritten on the next `uf init` run.
+- **Tool-owned** files (`default.md`, `go.md`, `python.md`, `typescript.md`) are automatically updated by `uf init` when the embedded version changes. You should not edit these directly -- your changes will be overwritten on the next `uf init` run.
 - **User-owned** files (`*-custom.md`) are never overwritten by `uf init`. Your customizations are preserved across updates. These are the files you edit to add project-specific conventions.
 
 #### Rule Severity Tags
@@ -233,6 +255,7 @@ These tags map directly to review finding severity -- a `[MUST]` violation produ
 When you run `uf init`, it detects your project's language from marker files and deploys only the matching language pack (plus the default pack):
 
 - `go.mod` detected: deploys `go.md` + `go-custom.md`
+- `pyproject.toml`, `setup.py`, `setup.cfg`, `requirements.txt`, `tox.ini`, or `Pipfile` detected: deploys `python.md` + `python-custom.md`
 - `tsconfig.json` or `package.json` detected: deploys `typescript.md` + `typescript-custom.md`
 - No language detected: deploys only the default pack
 
@@ -279,7 +302,7 @@ The [Guard](/docs/team/the-divisor/#the-guard--intent-and-cohesion) checks for "
 ### Usage
 
 ```bash
-uf init [--divisor] [--lang go|typescript] [--force]
+uf init [--divisor] [--lang go|python|typescript] [--force]
 ```
 
 ### Flags
@@ -287,7 +310,7 @@ uf init [--divisor] [--lang go|typescript] [--force]
 | Flag        | Description                                                                                                                                                                          |
 | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `--divisor` | Deploy only PR review agents (Divisor personas) and convention packs. For projects that only want code review, not the full swarm workflow.                                          |
-| `--lang`    | Override language auto-detection for convention pack selection. Auto-detects from `go.mod`, `tsconfig.json`, `package.json`, `pyproject.toml`, `Cargo.toml`.                         |
+| `--lang`    | Override language auto-detection for convention pack selection. Auto-detects from `go.mod`, `pyproject.toml`, `setup.py`, `setup.cfg`, `requirements.txt`, `tox.ini`, `Pipfile`, `tsconfig.json`, `package.json`, `Cargo.toml`. |
 | `--force`   | Overwrite user-owned files that would normally be skipped, re-index Dewey workspace, and refresh `opencode.json` entries. Use with caution -- this will replace your customizations. |
 
 ### What Gets Deployed
@@ -298,7 +321,7 @@ uf init [--divisor] [--lang go|typescript] [--force]
 | ---------------- | ------- | ------------------------------------------------------------------------------------------------------------ |
 | Agents           | ~12     | 9 Divisor personas (6 review + 3 content), Cobalt-Crush, Constitution Check, Mx F Coach                     |
 | Commands         | ~8      | review-council, review-pr, constitution-check, cobalt-crush, unleash, uf-init, agent-brief, finale           |
-| Convention Packs | 9       | default, go, typescript, content (each with tool-owned and user-owned variants) + severity                   |
+| Convention Packs | 11      | default, go, python, typescript, content (each with tool-owned and user-owned variants) + severity           |
 | OpenSpec         | ~5      | config, schema, templates (design, proposal, spec, tasks)                                                    |
 | Skills           | 1       | speckit-workflow                                                                                             |
 | `.gitignore`     | Managed | UF runtime and legacy tool ignore patterns                                                                   |

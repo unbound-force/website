@@ -98,7 +98,7 @@ The config file has 7 sections. Each controls a specific part of the `uf` toolch
 | Section | Purpose | Key Settings |
 |---------|---------|-------------|
 | **setup** | Controls how `uf setup` installs tools | `package_manager` (auto, brew, dnf, apt), `skip` (tools to skip) |
-| **scaffold** | Controls what `uf init` deploys | `language` (auto-detected from go.mod, package.json, etc.) |
+| **scaffold** | Controls what `uf init` deploys | `language` (auto-detected from go.mod, pyproject.toml, package.json, etc.) |
 | **embedding** | Embedding model for Dewey semantic search | `model` (default: granite-embedding:30m), `dimensions` (default: 256) |
 | **sandbox** | Controls `uf sandbox` containerized sessions | `runtime` (auto, podman, docker), `image`, `ide` (none, vscode, cursor, etc.), `resources.memory` |
 | **gateway** | Controls `uf gateway` LLM reverse proxy | `port` (default: 53147), `provider` (auto, anthropic, vertex, bedrock) |

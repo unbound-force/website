@@ -8,7 +8,7 @@ weight: 10
 toc: true
 ---
 
-> This page reflects `uf` v0.12.0. Run `uf --help` for the latest.
+> This page reflects `uf` v0.16.0. Run `uf --help` for the latest.
 
 ## Overview
 
@@ -39,7 +39,7 @@ uf init [flags]
 |------|-------------|
 | `--divisor` | Deploy only Divisor review agents and convention packs |
 | `--force` | Overwrite all existing files |
-| `--lang <string>` | Project language for convention pack selection (auto-detected from `go.mod`, `package.json`, etc. if omitted) |
+| `--lang <string>` | Project language for convention pack selection: `go`, `python`, or `typescript` (auto-detected from `go.mod`, `pyproject.toml`, `setup.py`, `package.json`, etc. if omitted) |
 
 If any sub-tool fails during initialization, `uf init` displays the actual error output from the failing command so you can diagnose the issue directly.
 
@@ -89,7 +89,7 @@ See the [Quick Start](/docs/getting-started/quick-start/) for a walkthrough of `
 
 ## doctor
 
-Check for required tools, version managers, scaffolded files, hero availability, Swarm plugin status, MCP server configuration, and agent/skill integrity. Produces a colored terminal report by default, or structured JSON for CI pipelines.
+Check for required tools, version managers, scaffolded files, hero availability, Swarm plugin status, MCP server configuration, and agent/skill integrity. When a Python project is detected, additionally checks Python-specific tooling (python3, pytest, formatters, linters, type checkers). Produces a colored terminal report by default, or structured JSON for CI pipelines.
 
 Exit code 0 when all checks pass or only warnings exist. Exit code 1 when any check fails.
 
