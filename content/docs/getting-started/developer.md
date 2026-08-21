@@ -18,7 +18,7 @@ brew install unbound-force/tap/unbound-force
 uf setup
 ```
 
-`uf setup` detects your existing version managers (goenv, nvm, fnm, Homebrew) and installs through them:
+`uf setup` detects your existing version managers (goenv, nvm, fnm, Homebrew) and installs through them. For a detailed breakdown of what setup and init do under the hood, see [uf setup / uf init Lifecycle](/docs/getting-started/common-workflows/#uf-setup-uf-init-lifecycle).
 
 - **Core tools** -- OpenCode (AI coding environment), Gaze (quality analysis), Mx F (manager hero), GitHub CLI
 - **Development tools** -- Node.js, OpenSpec CLI, Replicator (multi-agent coordination)

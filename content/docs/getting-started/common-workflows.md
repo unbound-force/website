@@ -1,6 +1,6 @@
 ---
 title: "Common Workflows"
-description: "The /uf.unleash autonomous pipeline, /uf.finale shipping workflow, manual feature flows, bug fixes, code reviews, and environment setup."
+description: "The /uf.unleash autonomous pipeline, /uf.finale shipping workflow, manual feature flows, bug fixes, code reviews, environment setup, and uf setup / uf init lifecycle."
 lead: "End-to-end workflows that show how all five heroes collaborate across the development lifecycle."
 date: 2026-03-22T00:00:00+00:00
 draft: false
@@ -629,6 +629,90 @@ Then run the full autonomous pipeline:
 ```text
 /uf.unleash
 ```
+
+## `uf setup` / `uf init` Lifecycle {#uf-setup-uf-init-lifecycle}
+
+The [Environment Setup](#environment-setup) section above covers the quick path: install, setup, verify, start. This section explains what `uf setup` and `uf init` actually do under the hood -- useful when troubleshooting, re-initializing an existing project, or understanding how the toolchain is assembled.
+
+### `uf setup`: Install Cascade
+
+`uf setup` installs the [four tool categories](#2-run-setup) listed in the Environment Setup section above, in order. As a final step, `uf init` runs automatically to scaffold the project.
+
+Setup detects your platform and adjusts the installation method accordingly:
+
+- **macOS with Homebrew**: installs via `brew install` where packages are available
+- **Fedora/RHEL with dnf**: installs via `dnf` for tools available in Fedora repos (e.g., Podman). Tools without native packages (Ollama, DevPod) fall back to their official curl installers with an interactive confirmation prompt
+- **Other platforms**: falls back to curl-based installers or version manager installs (goenv, nvm, fnm)
+
+Existing installations are detected and skipped. Use `--dry-run` to preview what would be installed without making changes.
+
+#### RPM Version Resolution (Fedora/RHEL)
+
+On dnf-based systems, `uf setup` resolves companion tool versions (Gaze, Replicator) independently. Rather than using the `uf` binary's own build-time version for all companion RPM URLs -- which could cause 404 errors when tool versions diverge -- each companion tool's latest release is resolved independently via `gh release view`. The resolved tag is validated for repository format, semver format, and length bounds.
+
+This means `gh` CLI must be installed before Gaze and Replicator on dnf-based systems. `uf setup` handles this ordering automatically, but if you see RPM 404 errors during manual installation, verify that `gh` is installed and has network access.
+
+### `uf init`: Project Scaffolding
+
+`uf init` is the final step of `uf setup`. It can also be run independently to initialize or re-initialize a project. The init process performs a 12-step scaffolding sequence:
+
+- Creates `.uf/config.yaml` for [workflow configuration](/docs/getting-started/common-workflows/#workflow-configuration)
+- Deploys agents, commands, convention packs, and templates into the project
+- Injects command-specific guardrails for Speckit and execution commands (4 variants: `speckit.implement`, `speckit.constitution`, `speckit.taskstoissues`, and general execution/utility)
+- Injects STOP HERE blocks for 6 spec-phase Speckit commands to enforce phase boundaries
+- Manages scaffold comment deduplication on re-runs to prevent duplicate injections
+- Cleans up legacy `unbound/packs/` directories from older versions
+- Performs sub-tool initialization (see below)
+
+Init is idempotent -- running it multiple times on the same project is safe. Branch enforcement and guardrail injection are split into independent checks, so partial re-runs complete correctly.
+
+### Sub-tool Initialization
+
+After scaffolding, `uf init` initializes companion tools concurrently. Five sub-tools -- Dewey, Gaze, Replicator, Specify, and OpenSpec -- are initialized in parallel via independent goroutines, reducing wall-clock time from ~90-120 seconds (sequential) to ~30-60 seconds.
+
+Sub-tools are divided into two groups:
+
+| Group | Tools | Notes |
+| ----- | ----- | ----- |
+| **Group A** | Dewey | Handles indexing and embedding generation. Receives `--no-embeddings` during init to avoid blocking. |
+| **Group B** | Specify, Replicator, OpenSpec, Gaze | Standard initialization with no special flags. |
+
+Dewey indexing no longer blocks other tool initialization. When Dewey is available, `uf init` runs `dewey init` + `dewey index --no-embeddings`. For full embedding generation, run `dewey index` separately after init completes.
+
+### Re-initialization (`--force`)
+
+`uf init --force` re-initializes all sub-tools across both Group A and Group B. This is useful when a tool's configuration has become corrupted, or after upgrading `uf` to pick up new init steps.
+
+Without `--force`, init only initializes tools that have not been initialized before. With `--force`:
+
+- All sub-tools are re-initialized regardless of current state
+- Tools that support `--force` receive the flag via their CLI
+- The init summary shows "re-initialized" vs. "initialized" for each tool to distinguish fresh vs. forced initialization
+
+Prior to v0.16.0, `--force` only re-initialized Group A (Dewey), silently skipping Group B tools. This was fixed so that `--force` now covers all sub-tools.
+
+### Guardrail Injection
+
+`uf init` injects command-specific guardrails into your project's agent configuration. There are four guardrail variants, each tailored to a different command category:
+
+- **`speckit.implement`** -- guardrails for the implementation phase
+- **`speckit.constitution`** -- guardrails for constitution management
+- **`speckit.taskstoissues`** -- guardrails for task-to-issue conversion
+- **Execution/utility** -- guardrails for general execution commands
+
+On re-runs, `uf init` self-corrects: correctness markers in the injected content allow init to detect outdated guardrails and replace them with the current version. This means upgrading `uf` and running `uf init` automatically updates your project's guardrails without manual intervention.
+
+### Stale Command Warnings
+
+After the `uf.*` namespace migration, running `uf init` on an existing project scans agent markdown files for references to old-name commands (the pre-`uf.*` namespace). If stale references are found, init emits warnings with actionable output identifying which files contain outdated command names. Update the flagged files to use the current `uf.*` namespace.
+
+### Troubleshooting
+
+**Dewey indexing hangs on `uf init --force`**: The `--force` flag passes `--no-embeddings` to Dewey's index command, so Dewey should not trigger full embedding generation during init. If Dewey appears to hang, it may be performing the initial workspace indexing on a large repository (~2300+ pages). Wait for it to complete, or cancel and run `dewey index` separately with `--no-embeddings` to skip the embedding generation pass. For full embedding generation (required for semantic search), run `dewey index` independently after init completes -- this runs Ollama with the Granite embedding model and can take several minutes depending on workspace size.
+
+**Stale command references after upgrade**: After upgrading `uf`, run `uf init` to trigger the stale command reference scan. If warnings appear, update the referenced files to use the `uf.*` namespace. The warning output identifies exact file paths and the old command names found.
+
+**RPM 404 errors on Fedora/RHEL**: If `uf setup` fails to download companion tool RPMs, verify that `gh` CLI is installed and has network access. Each companion tool's version is resolved independently via `gh release view`, so a missing or unauthenticated `gh` CLI will cause resolution failures. Run `gh auth status` to check authentication, and `gh release view --repo unbound-force/<tool>` to test version resolution manually.
 
 ## Next Steps
 
