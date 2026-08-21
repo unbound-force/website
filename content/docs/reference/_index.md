@@ -1,6 +1,6 @@
 ---
 title: "Reference"
-description: "Command reference and configuration documentation for the Unbound Force toolchain — CLI commands, flags, and subcommands."
+description: "Reference documentation for the Unbound Force toolchain — CLI commands, convention packs, council review action, and configuration."
 lead: "Detailed reference documentation for the uf CLI and related tools."
 date: 2026-05-02T00:00:00+00:00
 draft: false
@@ -19,6 +19,14 @@ toc: true
 ## Configuration
 
 - **[Configuration](/docs/reference/config/)** -- Unified configuration system: layered loading, config sections, and common customizations.
+
+## Convention Packs
+
+- **[Convention Packs](/docs/reference/convention-packs/)** -- Portable, severity-classified coding standards: pack types, severity levels (MUST/SHOULD/MAY), loading mechanism, and the CI convention pack.
+
+## Council Review Action
+
+- **[Council Review Action](/docs/reference/council-review-action/)** -- AI-powered multi-perspective code review as a GitHub Action: three-workflow chain architecture, persona discovery, and configuration.
 
 ## Sandbox
 
