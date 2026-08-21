@@ -23,8 +23,8 @@
 
 - [x] 4.1 Run `npm run build` and confirm no build errors
 - [x] 4.2 Update `common-workflows.md` frontmatter `description` to reflect the expanded scope
-- [ ] 4.3 Run `npm run dev` and verify all new sections render correctly
+- [x] 4.3 Run `npm run dev` and verify all new sections render correctly
 - [x] 4.4 Verify comparison table and quick reference table render correctly (no broken markdown table formatting)
-- [ ] 4.5 Verify both light and dark mode rendering
+- [x] 4.5 Verify both light and dark mode rendering
 <!-- spec-review: passed -->
 <!-- code-review: passed -->

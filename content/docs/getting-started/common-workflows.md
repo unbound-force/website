@@ -598,7 +598,7 @@ When CI checks fail, `/uf.review-pr` determines whether each failure was caused 
 
 **PR-caused failures** are reported as HIGH or CRITICAL findings with the specific change that likely caused the failure.
 
-**Pre-existing failures** are reported separately and do not block the PR verdict. After the review, `/uf.review-pr` offers to create a fix branch (`fix/pr-<N>-<check-name>`) with a proposed resolution for each pre-existing failure. This fix branch is created locally — you review it and push when ready. The fix branch offer includes a dirty-tree guard (won't create if uncommitted changes exist) and a collision check (won't overwrite an existing branch).
+**Pre-existing failures** are reported separately and do not block the PR verdict. After the review, `/uf.review-pr` offers to create a fix branch (`fix/pr-<N>-<check-name>`) with a proposed resolution for each pre-existing failure. This fix branch is created locally with user confirmation — you must approve the branch creation before it proceeds, then review and push when ready. The fix branch offer includes a dirty-tree guard (won't create if uncommitted changes exist) and a collision check (won't overwrite an existing branch).
 
 See the [Code Review Tutorial](/docs/getting-started/code-review-tutorial/#step-3-post-pr-review-with-review-pr) for a full walkthrough with example output.
 
@@ -666,18 +666,9 @@ If Tier 1C sections are applicable (triggers detected) but missing, the score is
 
 The audit report includes section coverage, quality metrics (line count, build code blocks, staleness checks), and specific improvement suggestions with generated content for missing sections. You can apply suggestions interactively.
 
-### Bridge File Management
-
-After creating or auditing AGENTS.md, `/agent-brief` verifies cross-tool bridge files:
-
-- **CLAUDE.md** — should contain `@AGENTS.md` to import the project context into Claude Code sessions
-- **.cursorrules** — should reference AGENTS.md for Cursor IDE integration
-
-Bridge file creation is owned by `uf init`. If bridge files are missing or misconfigured, `/agent-brief` reports the status and suggests running `uf init` to create them.
-
 ### Doctor Integration
 
-`uf doctor` includes deterministic structural checks for AGENTS.md quality as part of its 7-area health check. These checks verify section presence, build code blocks, directory tree accuracy, constitution references, and spec framework documentation — the same checks that `/agent-brief audit` runs, available as a quick pass/warn/fail diagnostic.
+`uf doctor` includes 11 deterministic structural checks for AGENTS.md quality as part of its 7-area health check. These checks verify section presence, build code blocks, directory tree accuracy, constitution references, and spec framework documentation — the same checks that `/agent-brief audit` runs, available as a quick pass/warn/fail diagnostic.
 
 ## Environment Setup
 
