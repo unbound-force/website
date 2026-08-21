@@ -63,12 +63,14 @@ Each key shows its default. Uncomment and change only what you need.
 
 ### Scenario: Fedora/RHEL Package Manager
 
-By default, `uf setup` auto-detects your package manager (Homebrew on macOS, apt on Debian/Ubuntu). On Fedora or RHEL, set it explicitly:
+By default, `uf setup` auto-detects your package manager (Homebrew on macOS, apt on Debian/Ubuntu, dnf on Fedora/RHEL). On Fedora or RHEL, you can set it explicitly to ensure dnf is always used:
 
 ```yaml
 setup:
   package_manager: dnf
 ```
+
+With `dnf` set, `uf setup` installs tools like Podman via `dnf install` instead of Homebrew. Tools without dnf packages (Ollama, DevPod) fall back to their official curl installers with an interactive confirmation prompt. See the [CLI reference](/docs/reference/cli/#install-cascade) for the full install cascade.
 
 Verify the setting took effect:
 

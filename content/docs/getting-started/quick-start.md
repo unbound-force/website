@@ -17,6 +17,8 @@ brew install unbound-force/tap/unbound-force
 uf setup
 ```
 
+On **Fedora/RHEL** without Homebrew, install `uf` from the RPM package, then run `uf setup`. Setup automatically detects `dnf` and uses it for tools available in Fedora repos (e.g., Podman). Tools without native packages (Ollama, DevPod) fall back to their official curl installers with an interactive confirmation prompt. See the [CLI reference](/docs/reference/cli/#install-cascade) for the full install cascade.
+
 `uf setup` installs everything in one command:
 
 - **Core tools** -- OpenCode (AI coding environment), Gaze (quality analysis), Mx F (manager hero), GitHub CLI
@@ -24,7 +26,7 @@ uf setup
 - **Knowledge layer** -- Ollama (local model runtime), Dewey (semantic search), IBM Granite embedding model
 - **Project scaffolding** -- agents, commands, convention packs, templates, workflow configuration, and `.gitignore` management via `uf init`
 
-Setup detects your version managers (goenv, nvm, fnm, Homebrew) and installs through them. Use `--dry-run` to preview what would be installed without making changes.
+Setup detects your platform and version managers (goenv, nvm, fnm, Homebrew, dnf) and installs through them. Use `--dry-run` to preview what would be installed without making changes.
 
 ## Verify
 
@@ -32,7 +34,7 @@ Setup detects your version managers (goenv, nvm, fnm, Homebrew) and installs thr
 uf doctor
 ```
 
-Doctor checks 7 areas and shows pass/warn/fail for each with install hints. Fix any failures by copying the suggested command from the output.
+Doctor checks 7 areas and shows pass/warn/fail for each with platform-appropriate install hints. On Fedora/RHEL, hints show `dnf install` commands for tools available in Fedora repos. Fix any failures by copying the suggested command from the output.
 
 ## Start Working
 
