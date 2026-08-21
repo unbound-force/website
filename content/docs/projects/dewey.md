@@ -14,7 +14,7 @@ AI agents make better decisions when they have better context. Dewey is an MCP s
 
 A search for "authentication timeout" finds an issue titled "login session expiry" because Dewey understands meaning, not just keywords. Agents start with a vague concept and refine their understanding through structured navigation, discovering related specifications, past decisions, and connected documentation they did not know to ask for.
 
-Dewey is a hard fork of [graphthulhu](https://github.com/skridlevsky/graphthulhu), building on its knowledge graph foundation and adding persistent storage, semantic search, and pluggable content sources. Dewey now provides 48 MCP tools across 12 categories.
+Dewey is a hard fork of [graphthulhu](https://github.com/skridlevsky/graphthulhu), building on its knowledge graph foundation and adding persistent storage, semantic search, and pluggable content sources. Dewey now provides 50 MCP tools across 12 categories.
 
 ## Installation
 
@@ -34,7 +34,6 @@ sudo dnf install ./dewey_<version>_linux_amd64.rpm
 ```
 
 RPM packages are available for both `amd64` and `arm64` architectures. The binary installs to `/usr/bin/dewey`.
-
 Or install from source:
 
 ```bash
@@ -43,9 +42,9 @@ go install github.com/unbound-force/dewey/v3@latest
 
 ## Key Features
 
-### 48 MCP Tools Across 12 Categories
+### 50 MCP Tools Across 12 Categories
 
-Dewey exposes 48 MCP tools for navigate, search, analyze, write, decision, journal, flashcard, whiteboard, semantic search, health, knowledge management, and learning. Agents use these tools through the standard MCP protocol — no custom integrations required.
+Dewey exposes 50 MCP tools for navigate, search, analyze, write, decision, journal, flashcard, whiteboard, semantic search, health, knowledge management, and learning. Agents use these tools through the standard MCP protocol — no custom integrations required.
 
 ### Semantic Search
 
@@ -58,13 +57,25 @@ Vector-based similarity search using IBM Granite embeddings (30M parameters, 63 
 - **Web crawl** — indexes documentation from toolstack websites with robots.txt compliance and local caching
 - **Code** — Go AST parsing to extract function signatures, CLI commands, MCP tool registrations, and package documentation from Go source files
 
+### Pluggable Embedding and Synthesis Providers
+
+Dewey supports multiple AI providers for both embedding and synthesis operations. Choose between Ollama (local, privacy-preserving) and Vertex AI (cloud, Google Cloud Platform) depending on your requirements. Provider configuration is per-vault in `config.yaml`, with a global configuration fallback at `~/.config/dewey/config.yaml`. See the [getting-started guide](/docs/getting-started/knowledge/) for setup instructions.
+
 ### Persistent SQLite Index
 
 Indexes persist to `.uf/dewey/graph.db` across sessions. Subsequent startups load from the persistent index and only re-process changed files — startup is near-instant after the first index.
 
+### Content Sanitization
+
+When indexing content from untrusted sources, Dewey applies a 4-layer sanitization pipeline: injection pattern scanning, content hash drift detection, Markdown structure validation, and size anomaly detection. Each content source can be configured with a `sanitize_mode` (warn, strict, or off) and `trust_tier` in `sources.yaml`. Findings are surfaced by `dewey doctor` and `dewey lint`.
+
 ### Graceful Degradation
 
 Dewey is an enhancement, not a requirement. Every hero in the swarm functions without Dewey, falling back to direct file reads. Semantic search requires Ollama; structured graph queries work without it.
+
+### Curated Knowledge Stores
+
+The `dewey curate` command synthesizes indexed content into structured knowledge articles. Configure knowledge stores in `knowledge-stores.yaml` to define which topics to curate, and Dewey produces focused articles ranked at the `curated` trust tier — higher than raw indexed content but below human-validated knowledge. Background curation runs automatically during `dewey serve`, keeping curated articles current as new content arrives.
 
 ### Knowledge Lifecycle
 
@@ -90,7 +101,7 @@ Dewey runs as an MCP server alongside your AI coding environment. It combines:
 
 - **Knowledge graph** — in-memory graph built from Markdown files with wikilink, tag, and property relationships
 - **SQLite persistence** — pages, blocks, links, and embeddings stored in `.uf/dewey/graph.db`
-- **Ollama embeddings** — IBM Granite model generates vector embeddings for semantic similarity search. Dewey reads the standard `OLLAMA_HOST` environment variable, so it automatically connects to the same Ollama instance as other tools in your workflow
+- **Pluggable embedding providers** — IBM Granite model generates vector embeddings for semantic similarity search. Dewey supports both Ollama (local, privacy-preserving) and Vertex AI (cloud) as embedding and synthesis providers
 - **Pluggable sources** — content source interface supports disk, GitHub, web crawl, and code with configurable refresh intervals
 
 ## Learn More
