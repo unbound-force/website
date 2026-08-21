@@ -180,6 +180,7 @@ The [Developer (Cobalt-Crush)](/docs/getting-started/developer/) creates the tec
   - **Adversary**: Security, resilience, error handling
   - **Testing**: Test architecture, coverage strategy, assertion depth
   - **SRE**: Release pipeline, dependency health, observability
+  - **Curator**: Documentation gaps, blog/tutorial opportunities, website issue filing
 
 If the council returns REQUEST CHANGES, the developer addresses findings and re-submits (up to 3 iterations before escalation to human review).
 
@@ -416,7 +417,7 @@ This creates `openspec/changes/fix-auth-timeout/` with:
 - `design.md` -- Technical approach
 - `tasks.md` -- Implementation steps
 
-This creates an `opsx/fix-auth-timeout` branch and checks it out automatically. The `opsx/` prefix distinguishes OpenSpec branches from Speckit branches (`NNN-<short-name>`) in `git branch` output.
+This creates an `opsx/fix-auth-timeout` branch and checks it out automatically. The `opsx/` prefix distinguishes OpenSpec branches from Speckit branches (`speckit/NNN-<short-name>`) in `git branch` output.
 
 ### 2. Implement
 
@@ -472,7 +473,7 @@ The council discovers available Divisor persona agents in `.opencode/agents/divi
 | **SRE**       | Release pipeline, dependency health, configuration, runtime observability                |
 | **Curator**   | Documentation gaps, blog/tutorial opportunities, website issue filing                    |
 
-> **Note**: The table above lists the 6 review personas that participate in code review. Three additional content personas — Scribe (technical documentation), Herald (blog/announcements), and Envoy (public communications) — are invoked separately for content creation tasks and do not participate in the code review council.
+> **Note**: The table above lists the 6 review personas with dedicated code review focus areas. Three additional content personas — Scribe (technical documentation), Herald (blog/announcements), and Envoy (public communications) — are also discovered and invoked by the review council, where they evaluate documentation quality, content opportunities, and communication clarity. Their code-level findings are deferred to the review personas above.
 
 ### CI Gate (Phase 1a and 1b)
 

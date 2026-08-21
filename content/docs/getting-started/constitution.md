@@ -1,6 +1,6 @@
 ---
 title: "Constitution"
-description: "The 4 core principles that govern all Unbound Force heroes — Autonomous Collaboration, Composability First, Observable Quality, and Testability."
+description: "The 5 principles governing all Unbound Force heroes — Autonomous Collaboration, Composability, Observable Quality, Testability, Security by Default."
 lead: "The foundational principles that govern every hero in the Unbound Force swarm."
 date: 2026-03-29T00:00:00+00:00
 draft: false
@@ -10,7 +10,7 @@ toc: true
 
 ## What the Constitution Is
 
-The Unbound Force constitution is the highest-authority document in the organization. It defines four core principles that every hero must follow and every hero constitution must align with. All development practices, pull request reviews, specification pipelines, and quality gates operate within the boundaries set by these principles.
+The Unbound Force constitution is the highest-authority document in the organization. It defines five core principles that every hero must follow and every hero constitution must align with. All development practices, pull request reviews, specification pipelines, and quality gates operate within the boundaries set by these principles.
 
 The constitution exists because an AI agent swarm that generates code rapidly needs structural constraints to prevent collapse. Without shared principles, heroes would make incompatible assumptions about communication, quality, and testability. The constitution makes those assumptions explicit, enforceable, and versioned.
 
@@ -82,6 +82,19 @@ Every component built within the Unbound Force ecosystem MUST be testable in iso
 
 **Rationale**: AI agents generate code rapidly. If that code is not structurally testable, the resulting system will quickly collapse under its own unverified complexity. The Testability principle ensures that velocity never comes at the cost of verifiability.
 
+## Principle V: Security by Default
+
+Every component built within the Unbound Force ecosystem MUST treat security as a structural property, not a review-time afterthought. Supply chain integrity, input validation, and least privilege MUST be enforced by design.
+
+### MUST Rules
+
+- Dependencies MUST be verified by content hash (SHA256 or equivalent) when downloaded outside a package manager's built-in verification. CI pipelines MUST pin actions and reusable workflows by commit SHA, not mutable tags.
+- All external inputs (user input, API payloads, file contents, environment variables used as data) MUST be validated and sanitized before reaching any security-sensitive operation.
+- Components MUST operate with the minimum permissions necessary. Secrets MUST be scoped to the narrowest context needed. File permissions MUST default to restrictive values (0o644 for files, 0o755 for executables and directories).
+- Before adding an external dependency, the adopter MUST justify that the project's existing toolchain cannot cover the same use case. Every dependency is attack surface; the default answer is "do not add."
+
+**Rationale**: AI agents make adding dependencies and generating code trivially fast. Without structural security guardrails, the attack surface of the system grows with each generation cycle.
+
 ## Hero Constitution Alignment
 
 Each hero repository maintains its own constitution that extends the organizational constitution:
@@ -109,7 +122,7 @@ The constitution follows semantic versioning:
 | Change Type                                                   | Version Bump | Example                               |
 | ------------------------------------------------------------- | ------------ | ------------------------------------- |
 | Principle removal or incompatible redefinition of a MUST rule | MAJOR        | Removing Testability principle        |
-| New principle added or materially expanded guidance           | MINOR        | Adding Testability (v1.0.0 -> v1.1.0) |
+| New principle added or materially expanded guidance           | MINOR        | Adding Security by Default            |
 | Clarifications, wording, or non-semantic refinements          | PATCH        | Rewording a rationale paragraph       |
 
 ### Compliance Review
@@ -132,7 +145,7 @@ Violations are CRITICAL severity and non-negotiable -- they must be resolved bef
 
 The `/uf.constitution-check` command automates this assessment. OpenSpec proposals also include a Constitution Alignment section where each principle is evaluated against the proposed change.
 
-The constitution is versioned (currently v1.1.0) and the check validates against the version referenced in the project's `parent_constitution` field. See the [contributing guide](/docs/contributing/) for how this fits into the specification pipeline.
+The constitution is versioned (currently v1.2.0) and the check validates against the version referenced in the project's `parent_constitution` field. See the [contributing guide](/docs/contributing/) for how this fits into the specification pipeline.
 
 ## Governance Hierarchy
 
@@ -150,5 +163,5 @@ A convention pack cannot override a constitutional principle. A command cannot b
 
 - Read [Hero Artifacts](/docs/getting-started/artifacts/) to understand the envelope format and artifact types referenced in Principle I
 - See [Common Workflows](/docs/getting-started/common-workflows/) for how the constitution gates the specification pipeline
-- Read about [convention packs](/docs/getting-started/developer/#convention-packs/) — the constitution sets the floor; convention packs raise the bar with specific, severity-classified coding standards
+- Read about [convention packs](/docs/reference/convention-packs/) — the constitution sets the floor; convention packs raise the bar with specific, severity-classified coding standards
 - Explore the [Team](/docs/team/) pages to see how each hero implements these principles

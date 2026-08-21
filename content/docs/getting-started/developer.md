@@ -147,7 +147,7 @@ Each stage produces artifacts that feed the next. Specs must be committed and pu
 
 **OpenSpec** is the tactical workflow for smaller changes. It uses `/opsx-propose` to create a change with proposal, design, and tasks artifacts, then `/opsx-apply` to implement. See [Common Workflows](/docs/getting-started/common-workflows/) for the full flow.
 
-Both workflows enforce branch conventions: Speckit uses `NNN-<short-name>` branches (created by `/speckit.specify`), and OpenSpec uses `opsx/<change-name>` branches (created by `/opsx-propose`). Branch validation is a hard gate at each pipeline step.
+Both workflows enforce branch conventions: Speckit uses `speckit/NNN-<short-name>` branches (created by `/speckit.specify`), and OpenSpec uses `opsx/<change-name>` branches (created by `/opsx-propose`). Branch validation is a hard gate at each pipeline step.
 
 ## Working with Replicator
 
@@ -216,7 +216,7 @@ Every session follows this ritual:
 
 ### Convention Packs
 
-Convention packs are shared coding standards files stored in `.opencode/uf/packs/`. They function as feedforward controls — portable harness templates that guide agents before they write code, rather than correcting output after. Cobalt-Crush follows these conventions during implementation, and The Divisor enforces them during review. Every rule in a pack has a severity tag that determines how violations are handled.
+Convention packs are shared coding standards files stored in `.opencode/uf/packs/`. They function as feedforward controls — portable harness templates that guide agents before they write code, rather than correcting output after. Cobalt-Crush follows these conventions during implementation, and The Divisor enforces them during review. Every rule in a pack has a severity tag that determines how violations are handled. See the full [Convention Packs reference](/docs/reference/convention-packs/) for details on all pack types, severity levels, and the CI convention pack.
 
 #### Pack Files
 

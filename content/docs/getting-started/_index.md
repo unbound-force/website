@@ -50,7 +50,7 @@ Ready to dive in? Start with the [Quick Start](/docs/getting-started/quick-start
 - **[Common Workflows](/docs/getting-started/common-workflows/)** -- The `/uf.unleash` autonomous pipeline, `/uf.finale` shipping workflow, manual feature flows, bug fixes, and code reviews
 - **[Hero Artifacts](/docs/getting-started/artifacts/)** -- Inter-hero communication: envelope format, artifact types, and lifecycle data flow
 - **[Knowledge Retrieval with Dewey](/docs/getting-started/knowledge/)** -- Install and configure Dewey for semantic search across your repositories
-- **[Constitution](/docs/getting-started/constitution/)** -- The 4 core principles that govern all heroes and the governance model
+- **[Constitution](/docs/getting-started/constitution/)** -- The 5 core principles that govern all heroes and the governance model
 
 ## Design Philosophy
 
