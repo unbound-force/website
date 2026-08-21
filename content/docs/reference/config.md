@@ -114,7 +114,7 @@ setup:
   package_manager: dnf
 ```
 
-By default, `uf setup` auto-detects your package manager (Homebrew on macOS, apt on Debian/Ubuntu). Override this for platforms where auto-detection picks the wrong one.
+By default, `uf setup` auto-detects your package manager (Homebrew on macOS, apt on Debian/Ubuntu, dnf on Fedora/RHEL). Setting `dnf` explicitly ensures all tools install through dnf where native packages exist, with curl installer fallbacks for tools without dnf packages (Ollama, DevPod). See the [CLI reference](/docs/reference/cli/#install-cascade) for the full install cascade.
 
 ### Change the embedding model
 

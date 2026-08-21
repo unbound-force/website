@@ -418,7 +418,7 @@ This installs the full toolchain in one command:
 - **Knowledge layer** -- Ollama (local model runtime), Dewey (semantic search), IBM Granite embedding model, Dewey workspace initialization and index build
 - **Project scaffolding** -- `uf init` to deploy agents, commands, convention packs, templates, and workflow configuration
 
-Setup detects your version managers (goenv, nvm, fnm, Homebrew) and installs through them. Use `--dry-run` to preview what would be installed without making changes.
+Setup detects your platform and version managers (goenv, nvm, fnm, Homebrew, dnf) and installs through them. On Fedora/RHEL without Homebrew, tools like Podman install via `dnf` and tools without native packages (Ollama, DevPod) fall back to their official curl installers with an interactive confirmation prompt. Use `--dry-run` to preview what would be installed without making changes.
 
 If you previously ran `uf setup` before v0.5.0, re-run it to pick up the new tools (Mx F, GitHub CLI, OpenSpec CLI, Ollama, and Dewey). Existing installations are detected and skipped.
 
@@ -441,7 +441,7 @@ As the final step of setup, `uf init` scaffolds your project files and performs 
 uf doctor
 ```
 
-Doctor checks 7 areas and shows pass/warn/fail for each with install hints. Fix any failures by copying the suggested command from the output.
+Doctor checks 7 areas and shows pass/warn/fail for each with platform-appropriate install hints (e.g., `dnf install` on Fedora/RHEL, `brew install` on macOS). Fix any failures by copying the suggested command from the output.
 
 ### 4. Start Working
 
