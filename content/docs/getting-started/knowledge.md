@@ -44,7 +44,27 @@ RPM packages are available for both `amd64` and `arm64` architectures. The binar
 
 The `granite-embedding:30m` model is IBM's Granite Embedding — a 63 MB model licensed under Apache 2.0 with full training data transparency. It runs locally via Ollama; no data leaves your machine.
 
+> **Note**: macOS Homebrew cask install issues that affected v3.1.0 and v3.2.0 (SHA-256 mismatch errors) have been fixed. If you previously encountered install failures, retry with the latest version.
+
 Pulling the embedding model is recommended but not strictly required to start using Dewey. If the model is not available, Dewey continues in keyword-only mode — structured graph queries, tag lookups, and keyword search all work. Semantic search becomes available once the model is pulled. See [Graceful Degradation](#graceful-degradation) for details.
+
+### RPM (Fedora, RHEL, CentOS)
+
+RPM packages are published with every Dewey release on GitHub, available for both `amd64` and `arm64` architectures. Download the package for your platform from the [latest release](https://github.com/unbound-force/dewey/releases/latest) and install:
+
+```bash
+sudo dnf install ./dewey_<version>_linux_amd64.rpm
+```
+
+The RPM installs the `dewey` binary to `/usr/bin/dewey`.
+
+### Install from Source
+
+If pre-built packages are not available for your platform, install from source:
+
+```bash
+go install github.com/unbound-force/dewey/v3@latest
+```
 
 ### Embedding Model Alignment
 
@@ -62,7 +82,11 @@ export DEWEY_CHUNK_MAX_CHARS=12288
 | `OLLAMA_EMBED_DIM` | `256` | Embedding vector dimension |
 | `DEWEY_CHUNK_MAX_CHARS` | `12288` | Maximum chunk size (in characters) for embedding. Overrides the `embedding.max_chunk_chars` config value when set. |
 | `DEWEY_EMBEDDING_ENDPOINT` | — | Overrides the Ollama endpoint for embedding requests. Takes highest precedence (see [Endpoint Resolution](#endpoint-resolution) below). |
+| `DEWEY_SYNTHESIS_ENDPOINT` | — | Overrides the Ollama endpoint for synthesis (compilation, curation) requests. Fallback chain: `DEWEY_SYNTHESIS_ENDPOINT` → `OLLAMA_HOST` → `http://localhost:11434`. |
+| `DEWEY_AUTHOR` | — | Author tag for learning identities (e.g., `alice`). Used in CI or shared environments to attribute learnings to a specific author. |
 | `OLLAMA_HOST` | — | Standard Ollama environment variable. Dewey reads this as a fallback when `DEWEY_EMBEDDING_ENDPOINT` is not set and no `embedding.endpoint` is configured in `config.yaml`. |
+
+> **Synthesis vs. embedding precedence**: Synthesis endpoint resolution uses an inverted precedence compared to embedding. For synthesis, `config.yaml` settings take highest priority over environment variables (`config.yaml` > `DEWEY_SYNTHESIS_ENDPOINT` > `OLLAMA_HOST` > default). For embedding, environment variables take highest priority (`DEWEY_EMBEDDING_ENDPOINT` > `config.yaml` > `OLLAMA_HOST` > default). This means setting `DEWEY_SYNTHESIS_ENDPOINT` has no effect if `synthesis.endpoint` is set in `config.yaml`.
 
 `uf setup` sets `OLLAMA_MODEL` and `OLLAMA_EMBED_DIM` automatically during installation. The shell profile entries ensure they persist across terminal sessions. Without them, child processes may use different embedding models, causing inconsistent search results between the swarm and Dewey.
 
@@ -79,11 +103,47 @@ Values without a scheme (e.g., `192.168.1.50:11434`) are automatically normalize
 
 Most users do not need to set any of these — Dewey connects to `localhost:11434` by default, which is where Ollama listens. Set `OLLAMA_HOST` if you run Ollama on a remote machine or non-standard port, and `DEWEY_EMBEDDING_ENDPOINT` only if Dewey needs a different endpoint than other Ollama clients.
 
-If the Homebrew formula is not yet available, install from source:
+### Provider Configuration
 
-```bash
-go install github.com/unbound-force/dewey/v3@latest
+Dewey supports pluggable providers for both embedding and synthesis operations. Configure providers in your vault's `config.yaml` (`.uf/dewey/config.yaml`):
+
+**Ollama (default — local, privacy-preserving)**:
+
+```yaml
+embedding:
+  provider: ollama
+  model: granite-embedding:30m
+  endpoint: http://localhost:11434
+
+synthesis:
+  provider: ollama
+  model: granite3.2:2b
+  endpoint: http://localhost:11434
 ```
+
+**Vertex AI (cloud — Google Cloud Platform)**:
+
+```yaml
+embedding:
+  provider: vertex
+  project: my-gcp-project
+  region: us-east5
+  model: text-embedding-005
+
+synthesis:
+  provider: vertex
+  project: my-gcp-project
+  region: us-east5
+  model: gemini-2.0-flash
+```
+
+Vertex AI requires `gcloud` authentication. Run `gcloud auth application-default login` before using Vertex AI providers.
+
+The `region` field accepts either a specific GCP region (e.g., `us-east5`) or `global`. When set to `global`, Dewey uses the `aiplatform.googleapis.com` endpoint without a region prefix, routing requests to the nearest available region.
+
+### Global Configuration
+
+Dewey supports a global configuration file at `~/.config/dewey/config.yaml`. Per-vault configs (`.uf/dewey/config.yaml`) override global settings, allowing you to set organization-wide defaults while customizing individual projects.
 
 ## Initialize Your Repository
 
@@ -296,6 +356,8 @@ dewey index --source web-go-stdlib
 
 This separates the "fetch external content" operation (which may take seconds to minutes) from the "start serving queries" operation (which is near-instant from the persistent index).
 
+The index pipeline is optimized for large vaults: embeddings are generated in batches (batch size 32) rather than per-block, and content sources are fetched concurrently. These optimizations mean indexing time scales sub-linearly with vault size.
+
 ## Extending Your Sources
 
 `uf init` gives you disk and GitHub sources automatically, but **web sources must be added manually** because they are project-specific. This is the single most impactful customization you can make — it gives your AI agents access to current API documentation for the frameworks and libraries your project depends on.
@@ -383,6 +445,39 @@ For a TypeScript or JavaScript project:
 
 After adding web sources, run `dewey index` to fetch and index the new content. Subsequent indexes only re-fetch when the refresh interval expires.
 
+## Content Sanitization
+
+When indexing content from untrusted sources, Dewey applies a 4-layer sanitization pipeline to protect your knowledge base:
+
+| Layer | What It Checks | Severity |
+| ----- | -------------- | -------- |
+| **Injection Pattern Scanning** | 10 regex patterns detecting prompt injection, system prompt overrides, and role manipulation | Critical / High |
+| **Content Hash Drift** | Detects unexpected changes in previously indexed content | Medium |
+| **Markdown Structure Validation** | Validates Markdown structure to catch malformed or adversarial content | Medium |
+| **Size Anomaly Detection** | Flags documents that deviate by more than 3 standard deviations from the source's mean size | Medium |
+
+Configure sanitization per-source in `sources.yaml`:
+
+```yaml
+sources:
+  - id: web-external-docs
+    type: web
+    name: external-docs
+    sanitize_mode: strict   # warn | strict | off
+    trust_tier: untrusted   # authored | validated | draft | untrusted
+    config:
+      urls:
+        - https://external-docs.example.com/
+```
+
+- **`sanitize_mode: strict`** — blocks content that triggers critical or high severity patterns
+- **`sanitize_mode: warn`** — logs findings but indexes the content (default)
+- **`sanitize_mode: off`** — skips sanitization entirely
+
+> **Security warning**: Setting `sanitize_mode: off` disables all content scanning. Only use this for fully trusted sources where you control the content. Incorrect `trust_tier` assignment (e.g., marking untrusted content as `authored`) can cause unvalidated content to rank higher in search results.
+
+Sanitization findings are surfaced by `dewey doctor` and `dewey lint`, making it easy to audit your content pipeline.
+
 ## OpenCode Integration
 
 Dewey integrates with OpenCode as an MCP server. Add this to your `opencode.json`:
@@ -407,7 +502,7 @@ Once configured, all hero agents can use Dewey's MCP tools for knowledge retriev
 
 ### `dewey doctor`
 
-Run `dewey doctor` to check the health of your Dewey installation. It reports on 7 diagnostic sections:
+Run `dewey doctor` to check the health of your Dewey installation. It reports on 8 diagnostic sections:
 
 | Section                 | What It Checks                                             |
 | ----------------------- | ---------------------------------------------------------- |
@@ -416,6 +511,7 @@ Run `dewey doctor` to check the health of your Dewey installation. It reports on
 | **Database**            | `graph.db` health, page/block/embedding counts             |
 | **Sources in Database** | Per-source page counts                                     |
 | **Embedding Layer**     | Ollama availability, model status, legacy model advisory   |
+| **Synthesis Layer**     | Provider type (ollama/vertex/unconfigured), resolved endpoint, model name, connectivity status, and (for Ollama) model availability |
 | **MCP Server**          | Lock file, `opencode.json` configuration                   |
 | **Summary**             | Overall health with emoji markers (✓ pass, ⚠ warn, ✗ fail) |
 
@@ -464,6 +560,24 @@ If Ollama is running but the configured embedding model has not been pulled, Dew
 
 This means you can run `dewey serve` or `dewey index` immediately after installing Dewey, even before pulling the embedding model. Dewey is fully functional for structured queries; semantic search becomes available once you run `ollama pull granite-embedding:30m`.
 
+## Curated Knowledge Stores
+
+The `dewey curate` command synthesizes indexed content into structured knowledge articles, grouped by topic. Configure curation targets in `knowledge-stores.yaml`:
+
+```yaml
+stores:
+  - tag: authentication
+    description: "Authentication patterns and decisions"
+  - tag: deployment
+    description: "Deployment procedures and configuration"
+```
+
+Run `dewey curate` to process all configured stores, or `dewey curate --store authentication` to curate a single topic. Curated articles receive the `curated` trust tier — ranking above raw `draft` content but below `validated` and `authored` content in search results.
+
+Background curation runs automatically during `dewey serve`, keeping curated articles current as new learnings and indexed content arrive. You can also trigger curation manually or from CI pipelines.
+
+When using Vertex AI as the synthesis provider, note that curation of large vaults may take several minutes — Vertex AI supports up to 16000 max output tokens per request with a 300-second timeout for large prompt processing.
+
 ## Knowledge Lifecycle
 
 Dewey provides three commands that manage the quality and evolution of stored knowledge over time.
@@ -498,18 +612,20 @@ Moves content between trust tiers — from draft to validated, or from validated
 
 ```bash
 # Promote a draft article to validated
-dewey promote --id gotcha-003
+dewey promote --id gotcha-20260502T143022-alice
 ```
 
 ## Trust Tiers
 
-Dewey classifies all stored knowledge into three trust tiers. Tiers affect how content ranks in search results and allow agents to filter by quality level.
+Dewey classifies all stored knowledge into five trust tiers. Tiers affect how content ranks in search results and allow agents to filter by quality level.
 
-| Tier          | Meaning                             | How Content Gets This Tier                                                    |
-| ------------- | ----------------------------------- | ----------------------------------------------------------------------------- |
-| **Authored**  | Human-written content               | Content created directly by humans (specs, READMEs, design docs)              |
-| **Validated** | Machine-generated, human-reviewed   | Content generated by agents and approved by a human via `dewey promote`       |
-| **Draft**     | Machine-generated, not yet reviewed | Content stored by agents via `store_learning` or generated by `dewey compile` |
+| Tier           | Meaning                             | How Content Gets This Tier                                                    |
+| -------------- | ----------------------------------- | ----------------------------------------------------------------------------- |
+| **Authored**   | Human-written content               | Content created directly by humans (specs, READMEs, design docs)              |
+| **Curated**    | Machine-synthesized, topic-grouped  | Articles produced by `dewey curate` from configured knowledge stores          |
+| **Validated**  | Machine-generated, human-reviewed   | Content generated by agents and approved by a human via `dewey promote`       |
+| **Draft**      | Machine-generated, not yet reviewed | Content stored by agents via `store_learning` or generated by `dewey compile` |
+| **Untrusted**  | External or unverified content      | Content from sources configured with `trust_tier: untrusted` in `sources.yaml` |
 
 Higher-tier content ranks above lower-tier content in search results. The `dewey_semantic_search_filtered` tool accepts a `tier` parameter, allowing agents to restrict searches to validated or authored content when reliability matters.
 
@@ -527,7 +643,9 @@ Agents store learnings in Dewey using the `store_learning` MCP tool. Each learni
 
 ### Response
 
-The tool returns a `{tag}-{sequence}` identity string (e.g., `gotcha-003`), which uniquely identifies the stored learning for future reference.
+The tool returns a `{tag}-{YYYYMMDDTHHMMSS}-{author}` identity string (e.g., `gotcha-20260502T143022-alice`), which uniquely identifies the stored learning for future reference. The author component comes from the `DEWEY_AUTHOR` environment variable (defaults to the system username).
+
+> **Migration note**: Prior to v3.2.0, learning identities used a sequential format (`{tag}-{sequence}`, e.g., `gotcha-003`). Existing learnings in the old format are automatically re-ingested on startup — no manual migration is required. The old `tags` parameter is still accepted for backward compatibility.
 
 ### Search Result Metadata
 
@@ -537,7 +655,7 @@ When retrieving learnings via `dewey_semantic_search` or `dewey_semantic_search_
 | ------------ | -------------------------------------------------------- |
 | `created_at` | Timestamp when the learning was stored                   |
 | `category`   | The learning's classification (if provided at storage)   |
-| `tier`       | The trust tier of the content (authored/validated/draft) |
+| `tier`       | The trust tier of the content (authored/curated/validated/draft/untrusted) |
 
 Use the `tier` parameter on `dewey_semantic_search_filtered` to filter results by trust level — for example, restricting to `authored` or `validated` content when making critical decisions.
 

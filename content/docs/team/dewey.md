@@ -32,7 +32,7 @@ Existing agent configurations that use graphthulhu can migrate to Dewey by chang
 
 ## Query Capabilities
 
-Dewey exposes 48 MCP tools across 12 categories. For knowledge retrieval, agents primarily use 9 query tools across two search modes.
+Dewey exposes 50 MCP tools across 12 categories. For knowledge retrieval, agents primarily use 9 query tools across two search modes.
 
 ### Structured Queries
 
@@ -61,11 +61,13 @@ New in Dewey, these tools use vector embeddings for conceptual similarity:
 
 New in Dewey v3.0.0, these tools manage the knowledge lifecycle:
 
-| Tool      | What It Does                                                                                 |
-| --------- | -------------------------------------------------------------------------------------------- |
-| `compile` | Cluster stored learnings by topic and synthesize them into current-state articles via LLM    |
-| `lint`    | Detect quality issues: stale decisions, uncompiled learnings, embedding gaps, contradictions |
-| `promote` | Move content between trust tiers (draft to validated to authored) after human review         |
+| Tool             | What It Does                                                                                 |
+| ---------------- | -------------------------------------------------------------------------------------------- |
+| `compile`        | Cluster stored learnings by topic and synthesize them into current-state articles via LLM    |
+| `curate`         | Synthesize indexed content into compiled knowledge articles for configured knowledge stores  |
+| `lint`           | Detect quality issues: stale decisions, uncompiled learnings, embedding gaps, contradictions |
+| `promote`        | Move content between trust tiers (draft to validated to authored) after human review         |
+| `store_compiled` | Persist a compiled article synthesized by an agent, with provenance tracking and embeddings  |
 
 ### Learning
 
@@ -123,7 +125,9 @@ Dewey uses [IBM Granite Embedding](https://www.ibm.com/granite/docs/models/embed
 
 Enterprise licensing provenance matters. Granite's training data is fully disclosed and permissibly licensed — there are no questions about whether the model was trained on proprietary or restricted content. This is a deliberate choice for organizations where licensing provenance is a compliance requirement.
 
-The embedding model is configurable. While Granite is the recommended default, teams can swap to any Ollama-compatible embedding model by editing `.uf/dewey/config.yaml`:
+The embedding model is configurable. Dewey supports pluggable providers — **Ollama** for local execution and **Vertex AI** for cloud-hosted inference. While Granite via Ollama is the recommended default, teams can swap to any compatible embedding model. See the [provider configuration guide](/docs/getting-started/knowledge/#provider-configuration) for setup details.
+
+To configure the default Ollama provider, edit `.uf/dewey/config.yaml`:
 
 ```yaml
 embedding:

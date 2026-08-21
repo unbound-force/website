@@ -90,4 +90,4 @@ Dewey v3.0.0's knowledge compilation was the largest single feature in the proje
 
 We are not overclaiming the maturity of these features. Knowledge compilation is new. The resolution strategies are the first iteration. Trust tiers work, but the workflow of reviewing and promoting content is still being refined through real usage across the Unbound Force swarm. What shipped is a foundation — a sound architecture that can evolve, not a finished product.
 
-If you want to try these features, the [knowledge getting-started guide](/docs/getting-started/knowledge/) covers the CLI commands and configuration for compilation, linting, and trust tiers. The [Dewey project page](/docs/projects/dewey/) has the full feature overview, including the 48 MCP tools available across 12 categories.
+If you want to try these features, the [knowledge getting-started guide](/docs/getting-started/knowledge/) covers the CLI commands and configuration for compilation, linting, and trust tiers. The [Dewey project page](/docs/projects/dewey/) has the full feature overview, including the 50 MCP tools available across 12 categories.
