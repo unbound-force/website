@@ -26,7 +26,7 @@ On **Fedora/RHEL** without Homebrew, install `uf` from the RPM package, then run
 - **Knowledge layer** -- Ollama (local model runtime), Dewey (semantic search), IBM Granite embedding model
 - **Project scaffolding** -- agents, commands, convention packs, templates, workflow configuration, and `.gitignore` management via `uf init`
 
-Setup detects your platform and version managers (goenv, nvm, fnm, Homebrew, dnf) and installs through them. Use `--dry-run` to preview what would be installed without making changes.
+Setup detects your platform and version managers (goenv, nvm, fnm, Homebrew, dnf) and installs through them. Use `--dry-run` to preview what would be installed without making changes. For a detailed breakdown of what setup and init do under the hood, see [uf setup / uf init Lifecycle](/docs/getting-started/common-workflows/#uf-setup-uf-init-lifecycle).
 
 ## Verify
 
