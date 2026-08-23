@@ -37,6 +37,7 @@ uf sandbox start --image my-image   # custom container image
 | `--backend <string>` | Backend: `auto`, `podman`, or `che` (default `auto`) |
 | `--ide <string>` | IDE for DevPod to open after start: `none` (default), `vscode`, `openvscode`, `fleet`, `jupyternotebook`, `cursor` |
 | `--uidmap` | Use explicit UID/GID mapping (macOS escape hatch) |
+| `--provider <string>` | DevPod provider name (default `podman`). References a registered DevPod provider — does not require the binary in PATH. Registered automatically by `uf setup` |
 | `--no-parent` | Mount only the project directory (disable parent directory mount) |
 
 ### sandbox stop
@@ -165,6 +166,7 @@ uf sandbox create --demo-ports 3000,8080       # expose demo ports
 | `--cpus <string>` | CPU limit (default `4`) |
 | `--detach` | Start without attaching the TUI |
 | `--ide <string>` | IDE for DevPod to open after creation: `none` (default), `vscode`, `openvscode`, `fleet`, `jupyternotebook`, `cursor` |
+| `--provider <string>` | DevPod provider name (default `podman`). References a registered DevPod provider — does not require the binary in PATH. Registered automatically by `uf setup` |
 | `--uidmap` | Use explicit UID/GID mapping |
 
 ### sandbox destroy
@@ -192,6 +194,8 @@ DevPod workspaces auto-start the OpenCode server via a `postStartCommand` in the
 
 If the `postStartCommand` did not run (e.g., the devcontainer was created outside the normal flow), the SSH fallback starts the server manually when attaching.
 
+> **Troubleshooting**: If `devpod up` fails during workspace creation or start, run `uf doctor` to check DevPod provider configuration and Podman runtime health. If the provider is misconfigured or missing, run `uf setup` to reinstall Podman (step 14), DevPod (step 15), and the DevPod Podman provider (step 16).
+
 ### Bidirectional Git Sync
 
 Persistent workspaces maintain bidirectional git synchronization between the host and container. When the workspace starts, it syncs the host's git state into the container. When you extract changes, they flow back via `git format-patch` / `git am`.
@@ -200,27 +204,34 @@ Persistent workspaces maintain bidirectional git synchronization between the hos
 
 Ports specified with `--demo-ports` during `create` are forwarded from the container to the host. Use this for web applications or API servers that need to be accessed from outside the container. `uf sandbox status` displays the active demo endpoints.
 
-## CDE Backend (Experimental)
+## CDE Backend
 
-> **Experimental**: The Eclipse Che / Dev Spaces backend has API coverage and mocked tests, but has not been validated end-to-end with a production Eclipse Che instance. Use with caution.
-
-The sandbox supports an alternative backend for Eclipse Che / Dev Spaces cloud development environments (CDEs).
+DevPod with Podman is the primary and recommended CDE backend. The sandbox defaults to DevPod for all workspace operations.
 
 ### Backend Selection
 
 ```bash
-uf sandbox create --backend che     # force Che backend
-uf sandbox create --backend podman  # force Podman backend
+uf sandbox create --backend podman  # force Podman/DevPod backend (default)
 ```
 
 Backend resolution follows a priority chain:
 
 | Priority | Source | Example |
 |----------|--------|---------|
-| 1 | CLI flag | `--backend che` |
-| 2 | Environment variable | `UF_SANDBOX_BACKEND=che` |
-| 3 | Config file | `sandbox.backend: che` in `.uf/config.yaml` |
+| 1 | CLI flag | `--backend podman` |
+| 2 | Environment variable | `UF_SANDBOX_BACKEND=podman` |
+| 3 | Config file | `sandbox.backend: podman` in `.uf/config.yaml` |
 | 4 | Auto-detect | Podman (default) |
+
+### Eclipse Che / Dev Spaces (Legacy — Deprecated)
+
+> **Deprecated**: The Eclipse Che / Dev Spaces backend is deprecated. Using `--backend che` returns a migration error directing you to use DevPod instead. The Che backend had API coverage and mocked tests but was never validated end-to-end with a production Eclipse Che instance.
+
+```bash
+uf sandbox create --backend che     # returns migration error
+```
+
+If you encounter a migration error when using `--backend che`, switch to the default DevPod backend by removing the `--backend che` flag (or setting `--backend podman`). Run `uf setup` to install DevPod and configure the Podman provider if not already set up.
 
 ## IDE Integration
 
@@ -268,8 +279,13 @@ For Vertex AI users, the sandbox supports two credential paths:
 
 When a cloud provider is detected, the sandbox auto-starts the LLM gateway (`uf gateway`) to proxy API requests. The container receives `ANTHROPIC_BASE_URL` and `ANTHROPIC_AUTH_TOKEN` environment variables pointing to the gateway instead of direct credential mounts.
 
+### GPU-less Embedding Support
+
+For developers without a local GPU who need embedding model support (e.g., for Dewey semantic search), the `uf ollama-proxy` command starts a proxy to a remote Ollama instance via the gateway. This allows sandbox sessions to access embedding models without requiring local GPU hardware. See the [CLI Reference](/docs/reference/cli/) for `uf ollama-proxy` subcommands and configuration.
+
 ## See Also
 
+- [Development Environment Setup](/docs/getting-started/devenv-setup/) -- Step-by-step guide to setting up a DevPod sandbox
 - [Gateway](/docs/reference/gateway/) -- LLM reverse proxy auto-started by the sandbox for cloud provider credential isolation
 - [Configuration](/docs/reference/config/) -- `sandbox.ide`, `sandbox.runtime`, and other sandbox config fields
 - [Quick Start](/docs/getting-started/quick-start/) -- Install and verify the toolchain
