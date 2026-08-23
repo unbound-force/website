@@ -187,13 +187,13 @@ Before marking any implementation task complete or declaring a PR ready, agents 
 
 ### Review Council as PR Prerequisite
 
-Before submitting a pull request, agents **must** run `/review-council` and resolve all REQUEST CHANGES findings until all reviewers return APPROVE. There must be **minimal to no code changes** between the council's APPROVE verdict and the PR submission — the council reviews the final code, not a draft that changes afterward.
+Before submitting a pull request, agents **must** run `/uf.review-council` and resolve all REQUEST CHANGES findings until all reviewers return APPROVE. There must be **minimal to no code changes** between the council's APPROVE verdict and the PR submission — the council reviews the final code, not a draft that changes afterward.
 
 Workflow:
 
 1. Complete all implementation tasks
 2. Run CI checks locally (build, test, vet)
-3. Run `/review-council` — fix any findings, re-run until APPROVE
+3. Run `/uf.review-council` — fix any findings, re-run until APPROVE
 4. Commit, push, and submit PR immediately after council APPROVE
 5. Do NOT make further code changes between APPROVE and PR submission
 

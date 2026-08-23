@@ -1,6 +1,6 @@
 ---
-title: "From Spec to Demo in One Command: How /unleash Works"
-description: "Most AI coding workflows need a human pressing 'next' at every step. /unleash runs the entire pipeline — from spec to demo-ready code — autonomously."
+title: "From Spec to Demo in One Command: How /uf.unleash Works"
+description: "Most AI coding workflows need a human pressing 'next' at every step. /uf.unleash runs the entire pipeline — from spec to demo-ready code — autonomously."
 lead: "One command. Eight stages. The swarm handles clarification, planning, implementation, testing, and review autonomously."
 slug: "unleash-in-practice"
 date: 2026-03-31T00:00:00+00:00
@@ -31,25 +31,25 @@ Each step requires a human to invoke the next command, evaluate the output, and 
 
 The question is not whether each step is valuable — it is. The question is whether a human needs to be the one pressing "next" at every transition.
 
-## What /unleash Does
+## What /uf.unleash Does
 
-`/unleash` is a single command that takes a Speckit specification and runs the entire pipeline autonomously — from clarification through implementation, testing, review, and demo. It handles the transitions, evaluates the outputs, and makes the proceed/stop decisions at each stage.
+`/uf.unleash` is a single command that takes a Speckit specification and runs the entire pipeline autonomously — from clarification through implementation, testing, review, and demo. It handles the transitions, evaluates the outputs, and makes the proceed/stop decisions at each stage.
 
-When it encounters something that genuinely requires human judgment — an unanswerable question, a critical spec finding, a persistent code review issue — it exits cleanly with context about what happened and what to do next. When you re-run `/unleash`, it detects which stages are complete and resumes from where it left off.
+When it encounters something that genuinely requires human judgment — an unanswerable question, a critical spec finding, a persistent code review issue — it exits cleanly with context about what happened and what to do next. When you re-run `/uf.unleash`, it detects which stages are complete and resumes from where it left off.
 
-The result: you write a spec, run `/unleash`, and come back to demo-ready code with a summary of what was built and how to verify it.
+The result: you write a spec, run `/uf.unleash`, and come back to demo-ready code with a summary of what was built and how to verify it.
 
 ## The Pipeline
 
-`/unleash` orchestrates these stages in sequence:
+`/uf.unleash` orchestrates these stages in sequence:
 
 ### 1. Clarify
 
 The pipeline scans your spec for `[NEEDS CLARIFICATION]` markers — questions that were flagged during specification but not answered.
 
-If [Dewey](/docs/getting-started/knowledge/) (the swarm's knowledge retrieval system) is available, `/unleash` attempts to resolve each question automatically by searching across your organization's documentation, GitHub issues, and related specs. Questions that Dewey can answer are resolved silently and recorded in the spec.
+If [Dewey](/docs/getting-started/knowledge/) (the swarm's knowledge retrieval system) is available, `/uf.unleash` attempts to resolve each question automatically by searching across your organization's documentation, GitHub issues, and related specs. Questions that Dewey can answer are resolved silently and recorded in the spec.
 
-Questions that Dewey cannot answer are collected and presented to you as an exit point. You answer them in the spec and re-run `/unleash`.
+Questions that Dewey cannot answer are collected and presented to you as an exit point. You answer them in the spec and re-run `/uf.unleash`.
 
 If Dewey is not configured, all clarification questions exit for human input. The pipeline is the same — you answer more questions yourself.
 
@@ -92,7 +92,7 @@ If Replicator worktrees are not available, parallel tasks fall back to sequentia
 
 Runs the Divisor review council in code review mode. This includes:
 
-- CI hard gate (lint, vulnerability checks)
+- CI soft gate with causality analysis (lint, vulnerability checks — pre-existing failures are informational)
 - Gaze quality analysis (if installed) — contract coverage, CRAP scores
 - The Divisor review council evaluating the implementation
 
@@ -112,36 +112,36 @@ Presents structured output:
 - **How to verify** — steps from the quickstart or acceptance scenarios
 - **Key files changed** — grouped by directory
 - **Test results** — pass/fail summary
-- **Next steps** — run `/finale` to ship, or `/speckit.clarify` to iterate
+- **Next steps** — run `/uf.finale` to ship, or `/speckit.clarify` to iterate
 
 ## Where It Pauses
 
-`/unleash` is autonomous, not unattended. It exits cleanly at five specific points where human judgment is needed:
+`/uf.unleash` is autonomous, not unattended. It exits cleanly at five specific points where human judgment is needed:
 
 | Exit Point                  | Why It Pauses                                 | What You Do                                       |
 | --------------------------- | --------------------------------------------- | ------------------------------------------------- |
-| Unanswerable clarification  | Dewey could not resolve a spec question       | Answer the question in spec.md, re-run `/unleash` |
-| HIGH/CRITICAL spec findings | Review council found serious spec issues      | Run `/speckit.clarify`, re-run `/unleash`         |
-| Build/test failure          | CI commands failed after a phase              | Fix the failure, re-run `/unleash`                |
-| Merge conflict              | Parallel workers produced conflicting changes | Resolve conflicts, re-run `/unleash`              |
-| Exhausted code review       | 3 review iterations without full approval     | Fix remaining findings, re-run `/unleash`         |
+| Unanswerable clarification  | Dewey could not resolve a spec question       | Answer the question in spec.md, re-run `/uf.unleash` |
+| HIGH/CRITICAL spec findings | Review council found serious spec issues      | Run `/speckit.clarify`, re-run `/uf.unleash`         |
+| Build/test failure          | CI commands failed after a phase              | Fix the failure, re-run `/uf.unleash`                |
+| Merge conflict              | Parallel workers produced conflicting changes | Resolve conflicts, re-run `/uf.unleash`              |
+| Exhausted code review       | 3 review iterations without full approval     | Fix remaining findings, re-run `/uf.unleash`         |
 
-Every exit message tells you what happened, what to do next, and how to resume. Re-running `/unleash` after fixing the issue skips all completed stages and picks up exactly where it left off.
+Every exit message tells you what happened, what to do next, and how to resume. Re-running `/uf.unleash` after fixing the issue skips all completed stages and picks up exactly where it left off.
 
 ## The Complete Loop
 
-`/unleash` builds. [`/finale`](/docs/getting-started/common-workflows/#end-of-branch-workflow-finale) ships.
+`/uf.unleash` builds. [`/uf.finale`](/docs/getting-started/common-workflows/#end-of-branch-workflow-finale) ships.
 
-After `/unleash` presents demo instructions, run `/finale` to automate the end-of-branch workflow: stage all changes, generate a conventional commit message, push, create a PR, watch CI checks, and return to `main`. The PR stays open for human review. The full developer loop is two commands:
+After `/uf.unleash` presents demo instructions, run `/uf.finale` to automate the end-of-branch workflow: stage all changes, generate a conventional commit message, push, create a PR, watch CI checks, and return to `main`. The PR stays open for human review. The full developer loop is two commands:
 
 ```text
-/unleash       # spec → demo-ready code
-/finale        # commit → push → PR → main
+/uf.unleash    # spec → demo-ready code
+/uf.finale     # commit → push → PR → main
 ```
 
 ## Every Tool Is Optional
 
-`/unleash` is designed for graceful degradation. Every external tool it uses has a fallback:
+`/uf.unleash` is designed for graceful degradation. Every external tool it uses has a fallback:
 
 | Tool       | If Available                          | If Not Available               |
 | ---------- | ------------------------------------- | ------------------------------ |
@@ -154,7 +154,7 @@ The pipeline works with all four tools, with none of them, or with any combinati
 
 ## Where It Works Best
 
-`/unleash` works best for well-scoped features with clear specifications — the kind of work where a senior developer could describe the approach in a few sentences. Complex cross-cutting refactors, ambiguous requirements, and large-scale architectural changes still benefit from the step-by-step [Speckit commands](/docs/getting-started/developer/#working-with-speckit) where you control each transition. The exit-and-resume design means you can start with `/unleash` and drop to manual control if the pipeline pauses at a point where you want finer-grained direction.
+`/uf.unleash` works best for well-scoped features with clear specifications — the kind of work where a senior developer could describe the approach in a few sentences. Complex cross-cutting refactors, ambiguous requirements, and large-scale architectural changes still benefit from the step-by-step [Speckit commands](/docs/getting-started/developer/#working-with-speckit) where you control each transition. The exit-and-resume design means you can start with `/uf.unleash` and drop to manual control if the pipeline pauses at a point where you want finer-grained direction.
 
 ## Getting Started
 
@@ -174,7 +174,7 @@ Create a feature specification:
 Describe what you want to build. Then unleash the swarm:
 
 ```text
-/unleash
+/uf.unleash
 ```
 
 See the [Quick Start guide](/docs/getting-started/quick-start/) for detailed installation and setup instructions, or read the [Common Workflows](/docs/getting-started/common-workflows/) reference for the full pipeline documentation.

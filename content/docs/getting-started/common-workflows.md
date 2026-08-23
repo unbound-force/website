@@ -1,6 +1,6 @@
 ---
 title: "Common Workflows"
-description: "The /unleash autonomous pipeline, /finale shipping workflow, manual feature flows, bug fixes, code reviews, and environment setup."
+description: "The /uf.unleash autonomous pipeline, /uf.finale shipping workflow, manual feature flows, bug fixes, code reviews, and environment setup."
 lead: "End-to-end workflows that show how all five heroes collaborate across the development lifecycle."
 date: 2026-03-22T00:00:00+00:00
 draft: false
@@ -8,9 +8,9 @@ weight: 70
 toc: true
 ---
 
-## Autonomous Pipeline (`/unleash`)
+## Autonomous Pipeline (`/uf.unleash`) {#autonomous-pipeline-unleash}
 
-`/unleash` is the autonomous Speckit pipeline execution command. It takes a spec from draft to demo-ready code in a single command, orchestrating the full pipeline with graceful exit points and full resumability.
+`/uf.unleash` is the autonomous Speckit pipeline execution command. It takes a spec from draft to demo-ready code in a single command, orchestrating the full pipeline with graceful exit points and full resumability.
 
 ### The Pipeline
 
@@ -21,7 +21,7 @@ toc: true
 | 3    | **Tasks**         | Delegates to Cobalt-Crush to generate `tasks.md` via `/speckit.tasks`                                                                                                              |
 | 4    | **Spec Review**   | Runs the review council in Spec Review Mode. Auto-fixes LOW/MEDIUM findings. Exits on HIGH/CRITICAL.                                                                               |
 | 5    | **Implement**     | Parses `tasks.md` for phases. `[P]` parallel tasks run via Replicator worktrees (up to 4 concurrent workers). Phase checkpoints run CI commands derived from `.github/workflows/`. |
-| 6    | **Code Review**   | Runs the review council in Code Review Mode. Includes Phase 1a CI hard gate, Phase 1b Gaze quality analysis, and Divisor agent reviews. Up to 3 fix iterations.                    |
+| 6    | **Code Review**   | Runs the review council in Code Review Mode. Includes Phase 1a CI soft gate with causality analysis, Phase 1b Gaze quality analysis, and Divisor agent reviews. Up to 3 fix iterations. |
 | 7    | **Retrospective** | Analyzes the session and stores learnings in Dewey semantic memory.                                                                                                                |
 | 8    | **Demo**          | Presents structured demo instructions: what was built, how to verify, key files changed, and next steps.                                                                           |
 
@@ -35,15 +35,15 @@ toc: true
 
 ### Branch Safety
 
-`/unleash` works with both Speckit (`NNN-*`) and OpenSpec (`opsx/*`) feature branches. It never runs on `main`. For Speckit branches, it validates that `spec.md` exists. For OpenSpec branches, it detects the change name from the branch (`opsx/<name>`) and reads tasks from `openspec/changes/<name>/tasks.md`.
+`/uf.unleash` works with both Speckit (`NNN-*`) and OpenSpec (`opsx/*`) feature branches. It never runs on `main`. For Speckit branches, it validates that `spec.md` exists. For OpenSpec branches, it detects the change name from the branch (`opsx/<name>`) and reads tasks from `openspec/changes/<name>/tasks.md`.
 
-After `/unleash` completes, the demo step suggests running `/finale` to commit, push, and create a PR.
+After `/uf.unleash` completes, the demo step suggests running `/uf.finale` to commit, push, and create a PR.
 
 See also: [From Spec to Demo in One Command](/blog/unleash-in-practice/) — a narrative walkthrough of the pipeline.
 
-## End-of-Branch Workflow (`/finale`)
+## End-of-Branch Workflow (`/uf.finale`) {#end-of-branch-workflow-finale}
 
-`/finale` automates the end-of-branch workflow — one command to stage, commit, push, create a PR, watch CI, and return to main. The PR stays open for human review.
+`/uf.finale` automates the end-of-branch workflow — one command to stage, commit, push, create a PR, watch CI, and return to main. The PR stays open for human review.
 
 ### The 8-Step Workflow
 
@@ -94,11 +94,42 @@ If the repository contains a PR template (`.github/PULL_REQUEST_TEMPLATE.md`), `
 - Uses `--body-file` instead of inline `--body` to safely handle AI-generated content containing shell metacharacters
 - If any step fails, stops immediately with context and options
 
-`/finale` works with both Speckit (`NNN-*`) and OpenSpec (`opsx/*`) branches. It is the natural complement to `/unleash` — `/unleash` builds, `/finale` wraps up the branch and creates a PR for review.
+### Structured PR Descriptions
+
+When creating a PR, `/uf.finale` generates a structured body with four sections:
+
+| Section              | Content                                                                 |
+| -------------------- | ----------------------------------------------------------------------- |
+| **Summary**          | What changed and why, derived from the diff and commit messages.        |
+| **How to Test**      | Steps to verify the changes locally.                                    |
+| **How to Demo**      | Steps to demonstrate the feature to stakeholders.                       |
+| **Key Files Changed**| List of modified files grouped by purpose.                              |
+
+**PR template detection**: If the repository contains `.github/PULL_REQUEST_TEMPLATE.md`, `/uf.finale` reads the template and maps its generated content into the template's sections instead of using the default structure.
+
+**Review council integration**: If a `/uf.review-council` report exists from a prior run, known issues are included in the PR body under a **Known Issues** section.
+
+**AI attribution**: Every PR created by `/uf.finale` includes an AI attribution footer in the PR body and an `AI-assisted-by: /uf.finale` git trailer in the commit metadata.
+
+### Conflict Recovery
+
+When the push step (step 4) fails because the remote branch has diverged, `/uf.finale` enters conflict recovery mode and presents five options:
+
+| Option | Name                       | Description                                                                                      |
+| ------ | -------------------------- | ------------------------------------------------------------------------------------------------ |
+| 1      | **Retry**                  | Attempts the push again (useful if the conflict was transient).                                  |
+| 2      | **Manual Resolution**      | Prints step-by-step instructions for resolving conflicts locally with `git pull --rebase`.       |
+| 3      | **Abort**                  | Stops the workflow and returns to the shell without changes.                                     |
+| 4      | **Force Push**             | Overwrites the remote branch (`git push --force-with-lease`). Use with caution.                  |
+| 5      | **AI-Assisted Resolution** | Spawns a sub-agent to merge the target branch, identify conflicts, and resolve them with AI.     |
+
+The AI-assisted option (5) spawns a `cobalt-crush-dev` sub-agent that merges the target branch into your feature branch, analyzes the intent of both sides using the diff context, resolves conflict markers programmatically, and creates a merge commit. After resolution, the normal push flow resumes. If the sub-agent cannot resolve the conflicts, `/uf.finale` falls back to manual resolution instructions.
+
+`/uf.finale` works with both Speckit (`NNN-*`) and OpenSpec (`opsx/*`) branches. It is the natural complement to `/uf.unleash` — `/uf.unleash` builds, `/uf.finale` wraps up the branch and creates a PR for review.
 
 ## New Feature (End-to-End) {#new-feature-end-to-end}
 
-> For autonomous execution of this entire workflow in one command, use [`/unleash`](#autonomous-pipeline-unleash). The manual flow below gives you step-by-step control over each stage.
+> For autonomous execution of this entire workflow in one command, use [`/uf.unleash`](#autonomous-pipeline-unleash). The manual flow below gives you step-by-step control over each stage.
 
 The full hero lifecycle for a new feature follows six stages. Each stage is owned by a specific hero, and each produces artifacts consumed by the next. Every stage has an **execution mode** -- either `[human]` (driven by the operator) or `[swarm]` (run autonomously by the agent swarm).
 
@@ -146,8 +177,8 @@ The [Developer (Cobalt-Crush)](/docs/getting-started/developer/) creates the tec
 - Generate tasks: `/speckit.tasks`
 - Run cross-artifact analysis: `/speckit.analyze`
 - Validate checklists: `/speckit.checklist`
-- Execute implementation: `/speckit.implement` or `/cobalt-crush`
-- For parallel work: use `/unleash` which handles parallel task execution automatically
+- Execute implementation: `/speckit.implement` or `/uf.cobalt-crush`
+- For parallel work: use `/uf.unleash` which handles parallel task execution automatically
 - Mark each task `[x]` in tasks.md as it completes
 - Run tests after each phase checkpoint
 
@@ -168,7 +199,7 @@ The [Developer (Cobalt-Crush)](/docs/getting-started/developer/) creates the tec
 
 [The Divisor](/docs/team/the-divisor/) reviews the code through its specialized personas.
 
-- Invoke the review council: `/review-council`
+- Invoke the review council: `/uf.review-council`
 - Review personas evaluate in parallel:
   - **Guard**: Intent drift, constitution alignment, zero-waste
   - **Architect**: Coding conventions, pattern adherence, DRY
@@ -325,6 +356,74 @@ This context is automatic -- heroes query Dewey's MCP tools as part of their nor
 
 Dewey operates on a [3-tier graceful degradation](/docs/getting-started/knowledge/#graceful-degradation) model: full semantic search when Dewey and Ollama are available, structured graph queries when only the knowledge graph is indexed, and direct file reads when Dewey is not configured. Every hero functions at all three tiers -- Dewey enriches the workflow but never blocks it.
 
+## Issue Triage (`/uf.triage-issue`)
+
+`/uf.triage-issue` evaluates a GitHub issue through 5 Divisor agents, each assessing the issue from a different perspective. The agents produce a consolidated triage recommendation with classification, severity, priority, and suggested labels.
+
+```text
+/uf.triage-issue 42
+/uf.triage-issue owner/repo#42
+```
+
+### Triage Agents
+
+| Agent          | Focus Area                                                        |
+| -------------- | ----------------------------------------------------------------- |
+| **Architect**  | Architectural impact, design implications, scope assessment       |
+| **Adversary**  | Security risks, attack surface, resilience concerns               |
+| **Guard**      | Intent alignment, scope discipline, duplicate detection           |
+| **SRE**        | Operational impact, deployment risk, monitoring implications      |
+| **Testing**    | Testability, regression risk, coverage gaps                       |
+
+### Classification Categories
+
+Each agent classifies the issue into one of 7 categories: **bug**, **feature**, **enhancement**, **question**, **opinion**, **duplicate**, or **needs-info**. The agents' assessments are aggregated into a final triage verdict with a consolidated severity, priority recommendation, and suggested labels.
+
+### Human-Gated Label Mutations
+
+Label changes are gated behind a confirmation prompt — the command never adds or removes labels on the issue automatically. After presenting the triage verdict, `/uf.triage-issue` asks for explicit approval before applying any label mutations to the GitHub issue.
+
+## Swarm Coordination (`/forge`)
+
+`/forge` orchestrates parallel task execution across isolated git worktrees. It decomposes a task into subtasks, spawns worker agents in separate worktrees, and coordinates their execution with file reservation to prevent conflicts. Use `/forge` when you have multiple independent tasks that can be implemented concurrently by separate agents.
+
+```text
+/forge "implement auth module and dashboard widget"
+```
+
+## Swarm Status (`/forge:status`)
+
+`/forge:status` (a subcommand of `/forge`) checks the status of an active swarm execution. It reports progress for each spawned worker — including completion percentage, files touched, and any blockers — so you can monitor parallel work without switching between worktrees.
+
+```text
+/forge:status
+```
+
+## Work Item Management (`/org`)
+
+`/org` queries and manages work items in the org database. It supports tasks, bugs, features, epics, and chores with priority scoring and dependency tracking. Use `/org` to list open items, filter by status or type, create new work items, or check what's ready to pick up next.
+
+```text
+/org                    # list open items
+/org --ready            # show unblocked items
+```
+
+## Agent Inbox (`/inbox`)
+
+`/inbox` checks the inter-agent communications inbox for messages from other agents in the swarm. Messages include progress updates, blockers, context broadcasts, and coordination signals. Use `/inbox` at session start to catch up on activity from parallel workers or previous sessions.
+
+```text
+/inbox
+```
+
+## Session Handoff (`/handoff`)
+
+`/handoff` ends the current work session with structured handoff notes for the next session. It captures what was accomplished, what's in progress, any blockers encountered, and recommended next steps. The handoff notes are persisted so the next session can resume with full context.
+
+```text
+/handoff
+```
+
 ## Bug Fix (Tactical)
 
 For bug fixes and small changes (fewer than 3 user stories), use the OpenSpec tactical workflow instead of the full Speckit pipeline.
@@ -350,17 +449,17 @@ This creates an `opsx/fix-auth-timeout` branch and checks it out automatically. 
 Invoke Cobalt-Crush to implement with convention pack adherence:
 
 ```text
-/cobalt-crush
+/uf.cobalt-crush
 ```
 
-`/cobalt-crush` detects the active OpenSpec change and implements the tasks through the `cobalt-crush-dev` agent, which loads [convention packs](/docs/getting-started/developer/#convention-packs) and applies the project's coding standards. This gives you the quality enforcement that a bare `/opsx-apply` would skip. Before proceeding, it validates that you are on the correct `opsx/<name>` branch.
+`/uf.cobalt-crush` detects the active OpenSpec change and implements the tasks through the `cobalt-crush-dev` agent, which loads [convention packs](/docs/getting-started/developer/#convention-packs) and applies the project's coding standards. This gives you the quality enforcement that a bare `/opsx-apply` would skip. Before proceeding, it validates that you are on the correct `opsx/<name>` branch.
 
 ### 3. Review
 
 Run the review council to validate the fix:
 
 ```text
-/review-council
+/uf.review-council
 ```
 
 The Divisor personas review the changes. Address any REQUEST CHANGES findings.
@@ -382,8 +481,8 @@ The review council brings multiple specialized perspectives to every code review
 ### Invoking the Council
 
 ```text
-/review-council
-/review-council 42    # optionally specify a PR number
+/uf.review-council
+/uf.review-council 42    # optionally specify a PR number
 ```
 
 The council discovers available Divisor persona agents in `.opencode/agents/divisor-*.md` and launches all of them in parallel. When a PR number is provided, the council posts its consolidated findings as a GitHub PR review after the local review completes. Without a PR number, the review runs locally only. See the [Code Review Tutorial](/docs/getting-started/code-review-tutorial/#optional-post-to-github) for the full GitHub posting workflow.
@@ -405,13 +504,26 @@ The council discovers available Divisor persona agents in `.opencode/agents/divi
 
 Before delegating to Divisor agents, the review council runs a two-phase CI gate:
 
-**Phase 1a — CI Hard Gate**: Derives build, test, vet, lint, and vulnerability check commands from `.github/workflows/` files and executes them locally. Any non-zero exit code is a gate failure — the review stops before invoking Divisor agents. This ensures the code compiles, tests pass, and static analysis is clean before spending review tokens.
+**Phase 1a — CI Soft Gate with Causality Analysis**: Derives build, test, vet, lint, and vulnerability check commands from `.github/workflows/` files and executes them locally. When a check fails, the council determines whether the failure is *new* (introduced by your branch) or *pre-existing* (already broken on `main`):
+
+| Your Branch | `main` Baseline | Classification | Effect |
+| ----------- | --------------- | -------------- | ------ |
+| Fail | Pass | **New failure** | Blocks the review — fix before proceeding |
+| Fail | Fail | **Pre-existing** | Informational only — does not block |
+| Fail | No data | **Unknown** | Treated as new (conservative) |
+
+To establish the `main` baseline, the council uses a two-tier strategy:
+
+1. **GitHub CI API** — checks recent CI results for the `main` branch via the GitHub API. This is fast and requires no local work.
+2. **Git worktree fallback** — if the API returns no data (no recent runs, no `gh` CLI, private repo restrictions), the council creates a temporary worktree of `main`, runs the same commands locally, and compares results. The worktree is cleaned up automatically.
+
+Pre-existing failures appear in an informational section of the council report. They are visible but do not count toward the verdict. New failures (regressions your branch introduced) remain blocking — the review stops before invoking Divisor agents.
 
 **Phase 1b — Conditional Gaze Quality Analysis**: If Gaze is installed, runs `gaze report` to generate CRAP scores, contract coverage, and quality findings. The results are passed as context to Divisor agents — the Testing persona uses Gaze data as evidence for coverage assessment. If Gaze is not installed, Phase 1b is skipped with an informational note.
 
 ### The Review Loop
 
-1. Phase 1a CI gate must pass before reviews begin
+1. Phase 1a CI gate must pass (only new failures block — pre-existing failures are informational)
 2. All personas review in parallel and return APPROVE or REQUEST CHANGES
 3. If any persona returns REQUEST CHANGES, the developer addresses the findings
 4. All personas re-review after fixes
@@ -423,6 +535,61 @@ Before delegating to Divisor agents, the review council runs a two-phase CI gate
 The council returns **APPROVE** only when all active personas approve. A single REQUEST CHANGES means the council verdict is REQUEST CHANGES. When all personas approve but one or more include advisory findings (LOW-severity observations), the verdict is **APPROVE WITH ADVISORIES**. Missing personas (agent files not found) don't block the verdict but are noted in the report.
 
 When posting to GitHub via `/review-council N`, the council verdict maps to a GitHub review event: APPROVE maps to `APPROVE`, REQUEST CHANGES maps to `REQUEST_CHANGES`, and APPROVE WITH ADVISORIES maps to `COMMENT` (ensuring advisory findings are visible on the PR without blocking merge).
+
+### GitHub Review Posting
+
+After the council reaches a verdict, it can post the consolidated findings as a GitHub PR review. This bridges local review quality with the PR conversation on GitHub.
+
+```text
+/uf.review-council [PR-number]
+```
+
+The optional PR number argument targets a specific PR. If omitted, the council auto-detects the open PR for your current branch.
+
+**How it works**:
+
+1. The council completes its normal review (CI gate + Divisor personas)
+2. If a PR is detected, the council offers to post findings as a GitHub review
+3. All persona findings are aggregated into a single review with per-persona sections
+4. The council asks for **human confirmation** before posting — it never posts automatically
+
+**Verdict mapping**:
+
+| Council Verdict | GitHub Review State | When |
+| --------------- | ------------------- | ---- |
+| APPROVE | `APPROVE` | All personas approve |
+| REQUEST CHANGES | `REQUEST_CHANGES` | Any persona returns REQUEST CHANGES with HIGH/CRITICAL findings |
+| Mixed (LOW/MEDIUM only) | `COMMENT` | Findings exist but none are HIGH or CRITICAL |
+
+**Pre-posting checks**: Before offering to post, the council verifies the PR exists, the branch matches, and you have write permissions to the repository.
+
+**Graceful degradation**: If the `gh` CLI is not installed, the PR is not found, or permissions are insufficient, the review proceeds normally without posting. The council report is still displayed locally — GitHub posting is an optional enhancement, not a requirement.
+
+### Post-PR Review (`/uf.review-pr`)
+
+`/uf.review-pr` reviews a pull request with full CI context — fetching check results, classifying failures by causality, and running a scoped diff review informed by what CI already validated.
+
+```text
+/uf.review-pr
+```
+
+This auto-detects the open PR for your current branch. To review a specific PR (including someone else's):
+
+```text
+/uf.review-pr 42
+```
+
+**What it does**:
+
+1. Resolves the PR and fetches metadata (title, description, changed files)
+2. Retrieves CI check results and classifies each failure as PR-caused or pre-existing (causality analysis)
+3. Runs local tool checks only for what CI did not already cover
+4. Fetches the scoped diff and performs an AI review with severity-classified findings
+5. Posts the verdict as a GitHub PR review
+
+**Verdict posting for all outcomes**: The verdict posting step runs for every review outcome — APPROVE, REQUEST_CHANGES, and COMMENT verdicts are all posted to the PR. Previously, verdict posting was skipped when a review had only MEDIUM/LOW findings or zero findings. Now, clean reviews receive an explicit APPROVE post on the PR, giving the author clear signal that the review passed.
+
+**CI causality analysis**: When CI checks fail, `/uf.review-pr` determines whether your PR caused the failure or whether it was pre-existing on the base branch. Pre-existing failures are reported separately and do not block the verdict. See the [Code Review Tutorial](/docs/getting-started/code-review-tutorial/#step-3-post-pr-review-with-review-pr) for a full walkthrough with example output.
 
 ## Environment Setup
 
@@ -485,7 +652,7 @@ Open OpenCode and start with the Speckit pipeline for a new feature:
 Then run the full autonomous pipeline:
 
 ```text
-/unleash
+/uf.unleash
 ```
 
 ## Next Steps

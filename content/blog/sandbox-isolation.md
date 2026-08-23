@@ -61,12 +61,12 @@ You are now inside the sandbox. The TUI looks identical to a normal OpenCode ses
 Run any workflow command as usual:
 
 ```text
-/unleash
+/uf.unleash
 ```
 
 The agent reads your spec, plans the implementation, writes code, runs tests, and reviews its own work — all inside the container. Every file modification, every `git commit`, every test run happens in the container's overlay filesystem. Your host repo is untouched.
 
-When `/unleash` finishes, detach from the sandbox with `Ctrl+C` or let it complete naturally.
+When `/uf.unleash` finishes, detach from the sandbox with `Ctrl+C` or let it complete naturally.
 
 ### 3. Extract Changes
 

@@ -49,7 +49,7 @@ This is not a suggestion — it is enforced. If an agent attempts to write code 
 The enforcement mechanisms are concrete:
 - Branch naming conventions gate pipeline entry
 - All spec artifacts must be committed before implementation begins (the Spec Commit Gate)
-- The [/unleash](/docs/getting-started/common-workflows/#autonomous-pipeline-unleash) command has six defined exit points where human judgment is required
+- The [/uf.unleash](/docs/getting-started/common-workflows/#autonomous-pipeline-unleash) command has six defined exit points where human judgment is required
 
 Liu's article describes plan/execute separation as a two-phase concern. Unbound Force has eight phases with hard gates between them — significantly more granular than anything described in the three teams.
 

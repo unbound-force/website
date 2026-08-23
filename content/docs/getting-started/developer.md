@@ -81,15 +81,15 @@ For features that need architectural planning:
 3. **Unleash** (build mode): The swarm takes it from here -- clarification, planning, implementation, testing, and review
 
    ```text
-   /unleash
+   /uf.unleash
    ```
 
-   If `/unleash` pauses (unanswerable question, spec finding, build failure), fix the issue and re-run. If the spec needs refinement, run `/speckit.clarify` then `/unleash` again.
+   If `/uf.unleash` pauses (unanswerable question, spec finding, build failure), fix the issue and re-run. If the spec needs refinement, run `/speckit.clarify` then `/uf.unleash` again.
 
 4. **Finale** (build mode): Wrap up -- commit, push, and create a PR for review
 
    ```text
-   /finale
+   /uf.finale
    ```
 
 ### Small Tasks (Tactical)
@@ -107,20 +107,20 @@ For bug fixes and changes that don't need the full Speckit pipeline:
 3. **Implement** (build mode): Invoke Cobalt-Crush to implement with convention pack adherence
 
    ```text
-   /cobalt-crush
+   /uf.cobalt-crush
    ```
 
-   `/cobalt-crush` delegates to the `cobalt-crush-dev` agent, which loads [convention packs](/docs/getting-started/developer/#convention-packs) and applies the project's coding standards. This gives you the quality enforcement that a bare `/opsx-apply` would skip.
+   `/uf.cobalt-crush` delegates to the `cobalt-crush-dev` agent, which loads [convention packs](/docs/getting-started/developer/#convention-packs) and applies the project's coding standards. This gives you the quality enforcement that a bare `/opsx-apply` would skip.
 
 4. **Finale** (build mode): Ship it
 
    ```text
-   /finale
+   /uf.finale
    ```
 
 ## Working with Speckit
 
-Speckit is the strategic specification pipeline for features that need architectural planning. For autonomous execution of the entire pipeline, run [`/unleash`](/docs/getting-started/common-workflows/#autonomous-pipeline-unleash) -- it handles clarification, planning, implementation, testing, and review in a single command, pausing only when human judgment is needed.
+Speckit is the strategic specification pipeline for features that need architectural planning. For autonomous execution of the entire pipeline, run [`/uf.unleash`](/docs/getting-started/common-workflows/#autonomous-pipeline-unleash) -- it handles clarification, planning, implementation, testing, and review in a single command, pausing only when human judgment is needed.
 
 For step-by-step control, use the individual commands:
 
@@ -155,11 +155,11 @@ Both workflows enforce branch conventions: Speckit uses `NNN-<short-name>` branc
 
 ### Replicator + Speckit Integration
 
-When a `tasks.md` file exists from the Speckit pipeline, Replicator uses it as the authoritative task decomposition instead of generating its own. It maps each phase to an epic and respects the `[P]` parallel markers and phase dependencies. The `/unleash` command orchestrates this automatically.
+When a `tasks.md` file exists from the Speckit pipeline, Replicator uses it as the authoritative task decomposition instead of generating its own. It maps each phase to an epic and respects the `[P]` parallel markers and phase dependencies. The `/uf.unleash` command orchestrates this automatically.
 
 ### Parallel Workers
 
-When `/unleash` encounters `[P]`-marked tasks, Replicator spawns parallel workers in dedicated git worktrees. Each worker:
+When `/uf.unleash` encounters `[P]`-marked tasks, Replicator spawns parallel workers in dedicated git worktrees. Each worker:
 
 1. Calls `swarmmail_reserve()` to lock their files
 2. Implements their subtask
@@ -196,15 +196,16 @@ This prevents conflicts when multiple workers are active. Reservations auto-rele
 
 Every session follows this ritual:
 
-| Step      | Command                               | Purpose                                 |
-| --------- | ------------------------------------- | --------------------------------------- |
-| **Start** | `/speckit.specify` or `/opsx-propose` | Define the work                         |
-| **Work**  | `/unleash` or `/cobalt-crush`         | Execute the work                        |
-| **End**   | `/finale`                             | Commit, push, create PR with structured description |
+| Step        | Command                               | Purpose                                 |
+| ----------- | ------------------------------------- | --------------------------------------- |
+| **Start**   | `/speckit.specify` or `/opsx-propose` | Define the work                         |
+| **Work**    | `/uf.unleash` or `/uf.cobalt-crush`   | Execute the work                        |
+| **Monitor** | `/forge:status` or `/inbox`           | Check parallel work or agent messages   |
+| **End**     | `/uf.finale` or `/handoff`            | Ship the PR or hand off to next session |
 
 ## Cobalt-Crush Persona
 
-[Cobalt-Crush](/docs/team/cobalt-crush/) is the developer persona -- the Engineering Core of the swarm. When you invoke `/speckit.implement` or `/cobalt-crush`, you're working with an agent that follows six core principles:
+[Cobalt-Crush](/docs/team/cobalt-crush/) is the developer persona -- the Engineering Core of the swarm. When you invoke `/speckit.implement` or `/uf.cobalt-crush`, you're working with an agent that follows six core principles:
 
 - **Clean Code**: Single-purpose functions, intent-revealing names, no dead code
 - **SOLID**: Applied at function, type, and package levels
@@ -358,16 +359,16 @@ After completion, `uf init` shows a summary with file dispositions (`+` created,
 
 ## Session Ritual
 
-The most important habit: **always end your session properly**. The daily workflow follows a specify → unleash → finale loop. When you are done working, run `/finale` to commit, push, and create a PR for review:
+The most important habit: **always end your session properly**. The daily workflow follows a specify → unleash → finale loop. When you are done working, run `/uf.finale` to commit, push, and create a PR for review:
 
 ```text
-/finale        # commit → push → PR → main
+/uf.finale     # commit → push → PR → main
 ```
 
-`/finale` handles the full end-of-branch workflow: staging changes, generating a conventional commit message with AI attribution, pushing to remote, creating a PR with a [structured description](/docs/getting-started/common-workflows/#structured-pr-descriptions), watching CI checks, and returning to `main`. The PR stays open for human review — `/finale` never merges. The session is not complete until `git push` succeeds — this ensures your work items, semantic memory learnings, and file reservation state are available for your next session and for other team members who may pick up where you left off.
+`/uf.finale` handles the full end-of-branch workflow: staging changes, generating a conventional commit message with AI attribution, pushing to remote, creating a PR with a [structured description](/docs/getting-started/common-workflows/#structured-pr-descriptions), watching CI checks, and returning to `main`. The PR stays open for human review — `/uf.finale` never merges. The session is not complete until `git push` succeeds — this ensures your work items, semantic memory learnings, and file reservation state are available for your next session and for other team members who may pick up where you left off.
 
 ## Next Steps
 
 - Read the [Common Workflows](/docs/getting-started/common-workflows/) page to understand how your work flows through the full hero lifecycle
 - Explore the [Cobalt-Crush](/docs/team/cobalt-crush/) team page for the full persona details
-- Run `uf doctor` to verify your environment, then try `/unleash` on your first feature
+- Run `uf doctor` to verify your environment, then try `/uf.unleash` on your first feature
