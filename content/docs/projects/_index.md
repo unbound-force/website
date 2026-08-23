@@ -12,7 +12,7 @@ toc: false
 
 ### [Gaze](/docs/projects/gaze/)
 
-Test quality analysis via side effect detection for Go. Gaze detects every observable side effect a function produces, classifies each effect as contractual or incidental, and measures whether your tests actually assert on the things that matter. It introduces three metrics -- Contract Coverage, Over-Specification Score, and GazeCRAP -- that go beyond line coverage to reveal the real quality of your test suite.
+Test quality analysis via side effect detection — Go-native, with multi-language support via external analyzers. Gaze detects every observable side effect a function produces, classifies each effect as contractual or incidental, and measures whether your tests actually assert on the things that matter. It introduces three metrics -- Contract Coverage, Over-Specification Score, and GazeCRAP -- that go beyond line coverage to reveal the real quality of your test suite.
 
 ### [Dewey](/docs/projects/dewey/)
 
