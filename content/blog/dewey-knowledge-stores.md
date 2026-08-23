@@ -18,7 +18,7 @@ AI agents accumulate knowledge across sessions. Decisions made during code revie
 
 The loss of structured knowledge is only half the problem. Organizations generate vast amounts of unstructured content — meeting notes, Slack exports, GitHub discussions, design documents — that contain critical decisions and patterns buried in prose. No agent can extract those insights without reading every document, every time. The knowledge exists, but it's locked inside formats that resist automated extraction.
 
-This is the third post in our Dewey blog arc. In [The Librarian vs The Index](/blog/dewey-librarian-vs-index/), we explored why semantic search alone isn't enough. In [How Dewey Became a Knowledge Curator](/blog/dewey-knowledge-curator/), we showed how Dewey moved beyond retrieval into active knowledge management. Now we tackle the two remaining gaps: durability and automated extraction.
+This is the third post in our Dewey blog arc. In [The Librarian vs The Index](/blog/dewey-vs-karpathy/), we explored why semantic search alone isn't enough. In [How Dewey Became a Knowledge Curator](/blog/dewey-curator/), we showed how Dewey moved beyond retrieval into active knowledge management. Now we tackle the two remaining gaps: durability and automated extraction.
 
 ## Two Complementary Solutions
 
@@ -48,34 +48,27 @@ A `knowledge-stores.yaml` file defines which indexed sources feed into which sto
 
 ```yaml
 stores:
-  architecture-decisions:
+  - name: architecture-decisions
     description: "Architectural decisions from design docs and discussions"
     sources:
-      - id: github-discussions
-        filter: "label:architecture"
-      - id: design-docs
-        path: "docs/architecture/**/*.md"
-    extraction:
-      categories:
-        - decision
-        - pattern
-        - constraint
-      min_confidence: 0.7
+      - github-discussions
+      - design-docs
+    settings:
+      min_confidence: high
+      extract_decisions: true
+      extract_patterns: true
 
-  operational-runbooks:
+  - name: operational-runbooks
     description: "Operational patterns from incident reports and postmortems"
     sources:
-      - id: incident-reports
-        path: "docs/incidents/**/*.md"
-    extraction:
-      categories:
-        - pattern
-        - gotcha
-        - procedure
-      min_confidence: 0.6
+      - incident-reports
+    settings:
+      min_confidence: medium
+      extract_decisions: false
+      extract_patterns: true
 ```
 
-Each store targets a specific knowledge domain. The `sources` field maps to Dewey's indexed content — the same sources you configure in `.uf/dewey/sources.yaml`. The `extraction` block controls what the LLM looks for and the minimum confidence threshold for inclusion.
+Each store targets a specific knowledge domain. The `sources` field references source IDs from your `sources.yaml` — the same sources you configure for Dewey's index. The `settings` block controls extraction behavior and the minimum confidence threshold for inclusion.
 
 ### Step 2: Run Curation
 
@@ -154,7 +147,7 @@ The combination of file-backed persistence and curated extraction differs from t
 |-----------|-------------|--------------|
 | Knowledge quality | Retrieves fragments without quality assessment | Extracts with confidence scoring and quality flags |
 | Provenance | Chunk ID, sometimes source file | Full source traceability to specific documents and excerpts |
-| Trust model | All retrieved content treated equally | 4-tier trust system (authored → curated → draft → untrusted) |
+| Trust model | All retrieved content treated equally | 5-tier trust system (authored → validated → curated → draft → untrusted) |
 | Data locality | Usually cloud-hosted vector DB | Local-only (SQLite + Ollama) |
 | Durability | Database is the single source of truth | File-backed dual-write survives database deletion |
 | Portability | Tied to the vector DB instance | Git-compatible files travel with the repository |

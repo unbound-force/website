@@ -26,7 +26,7 @@ The `/review-pr` command takes a different approach. Instead of dumping a wall o
 
 The classification works by comparing the failure against the base branch. If a test also fails on main, it's pre-existing — not your regression. If a lint violation exists in files you didn't touch, it's pre-existing. If a check fails only on your branch, in code your commits modified, it's PR-caused and needs your attention.
 
-```
+```text
 /review-pr
 ```
 
@@ -63,4 +63,4 @@ Every minute spent investigating a pre-existing CI failure is a minute not spent
 
 The pattern is straightforward. Run one command after creating your PR. Get a classified report that separates your regressions from inherited problems. Fix what's yours, forward what isn't, and move on.
 
-If your team loses hours per week to CI forensics, try `/review-pr` on your next pull request. Check the [Unbound Force documentation](/docs/getting-started/) to get started, or explore the [review-pr command source](https://github.com/unbound-force/unbound-force) to see how causality classification works under the hood.
+If your team loses hours per week to CI forensics, try `/review-pr` on your next pull request. Run `/review-pr` after creating a PR to get a classified report that separates your regressions from inherited problems. See the [Quick Start guide](/docs/getting-started/quick-start/) for installation, or explore the [Unbound Force repository](https://github.com/unbound-force/unbound-force) to see how causality classification works under the hood.

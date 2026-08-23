@@ -32,7 +32,7 @@ Before configuring knowledge stores, verify that you have the following tools in
     dewey index  # Index all configured sources
     ```
 
-    If you have not configured any sources yet, see the [Dewey Getting Started guide](/docs/getting-started/dewey/) before continuing.
+    If you have not configured any sources yet, see the [Dewey project documentation](/docs/projects/dewey/) for setup instructions before continuing.
 
 ## Creating a Knowledge Store
 
@@ -171,9 +171,9 @@ Once curation completes, curated knowledge is searchable through Dewey's semanti
 
 ### Search curated content only
 
-Use the `tier` filter to restrict results to curated knowledge:
+Use the `tier` filter to restrict results to curated knowledge. Run this MCP tool call in your AI agent session:
 
-```bash
+```text
 dewey_semantic_search_filtered(query: "authentication flow", tier: "curated")
 ```
 
@@ -191,9 +191,9 @@ Dewey organizes content into trust tiers. Each tier represents a different level
 | `draft` | Raw learnings stored via `dewey_store_learning` before compilation | Work-in-progress insights |
 | `untrusted` | Unverified external content | Background research, third-party docs |
 
-Search a specific tier:
+Search a specific tier (MCP tool calls, run in your AI agent session):
 
-```bash
+```text
 dewey_semantic_search_filtered(query: "deployment strategy", tier: "authored")
 dewey_semantic_search_filtered(query: "deployment strategy", tier: "curated")
 dewey_semantic_search_filtered(query: "deployment strategy", tier: "draft")
@@ -319,10 +319,15 @@ Extract mode identifies the most important decisions, patterns, and action items
 
 ### Verifying stored knowledge
 
-After storing ad-hoc knowledge, verify it appears in search results:
+After storing ad-hoc knowledge, verify it appears in search results (MCP tool call, run in your AI agent session):
 
-```bash
+```text
 dewey_semantic_search(query: "JWT authentication")
 ```
 
 Stored learnings are immediately searchable. They start in the `draft` tier and move to `validated` after human review via `dewey promote`.
+
+## Further Reading
+
+- [Your AI Agent's Memory Survives Database Deletion](/blog/dewey-knowledge-stores/) — the design rationale behind file-backed learnings and curated knowledge stores
+- [Dewey](/docs/projects/dewey/) — project overview, installation, and architecture

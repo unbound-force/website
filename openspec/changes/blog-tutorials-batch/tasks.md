@@ -36,7 +36,7 @@ All tutorials are independent files under the tutorials section created in group
 - [x] 3.1 [P] Create `content/docs/tutorials/dewey-knowledge-stores.md` — Setting up knowledge stores (issue #70, weight: 10)
 - [x] 3.2 [P] Create `content/docs/tutorials/dewey-provider-configuration.md` — Configuring embedding/synthesis providers (issue #114, weight: 20)
 - [x] 3.3 [P] Create `content/docs/tutorials/gaze-crap-baseline-ci.md` — CRAP baseline comparison in CI (issue #151, weight: 30)
-- [x] 3.4 [P] Create `content/docs/tutorials/pinkman-oss-scout.md` — Getting started with /scout (issue #45, weight: 40)
+- [x] ~~3.4 [P] Create `content/docs/tutorials/pinkman-oss-scout.md` — Getting started with /scout (issue #45, weight: 40)~~ **Removed per user direction**
 - [x] 3.5 [P] Create `content/docs/tutorials/onboard-customization.md` — Getting started with /onboard (issue #46, weight: 50)
 
 ## 4. Validation

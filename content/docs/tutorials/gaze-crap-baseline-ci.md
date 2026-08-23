@@ -198,3 +198,8 @@ Do not refresh the baseline on every PR. The baseline should change deliberately
 **Cause**: gaze identifies functions by their fully qualified name (`package.Function`). A rename creates a new identity that has no baseline entry.
 
 **Fix**: Refresh the baseline after renaming functions. If you rename functions frequently during a refactoring PR, refresh the baseline in a preparatory commit on `main` before opening the refactoring PR.
+
+## Further Reading
+
+- [Your CI Just Got Smarter](/blog/gaze-baseline-comparison/) — the design rationale behind convention-over-configuration baseline comparison
+- [Gaze](/docs/projects/gaze/) — project overview, metrics, and architecture

@@ -310,3 +310,8 @@ A **draft** profile has `status: draft` and is missing one or more interview pha
 A **complete** profile has `status: complete` and all three phases finished. Heroes read complete profiles without additional questions. Complete profiles produce the most consistent hero behavior because every hero has the full context from the start.
 
 Upgrade a draft to complete by running `/onboard` and finishing the remaining phases. The status field updates automatically when all three phases are present.
+
+## Further Reading
+
+- [The Team](/docs/team/) — meet the five heroes and understand their roles
+- [Getting Started](/docs/getting-started/) — installation, setup, and common workflows

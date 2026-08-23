@@ -34,7 +34,7 @@ The slash command file acts as a decision tree. When a user invokes `/dewey-stor
 
 Power users who know their tag taxonomy and category system can bypass all guidance. They provide everything upfront, and the agent executes without negotiation.
 
-```
+```text
 /dewey-store --tag auth-design --category decision
 
 We decided to use short-lived JWTs with a 15-minute expiry
@@ -48,7 +48,7 @@ The agent calls `store_learning` with the exact tag and category provided. No su
 
 The most common mode. The user provides content but no metadata. The agent analyzes the content and proposes tags ranked by specificity, plus a category based on content patterns.
 
-```
+```text
 /dewey-store
 
 We tried using WebSockets for the real-time dashboard but
@@ -60,7 +60,7 @@ operational complexity dropped significantly.
 
 The agent responds with ranked suggestions:
 
-```
+```text
 Proposed tag (ranked by specificity):
   1. sse-migration        — matches the specific technology switch
   2. real-time-dashboard  — matches the feature context
@@ -79,7 +79,7 @@ The ranking by specificity matters. Generic tags like "infrastructure" appear la
 
 The highest-value mode for meeting transcripts, Slack threads, and design discussions. The user pastes a long conversation, and the agent breaks it into multiple distinct learnings, each with its own tag and category proposal.
 
-```
+```text
 /dewey-store --extract
 
 [Pasted Slack thread about authentication redesign, 47 messages]
@@ -87,7 +87,7 @@ The highest-value mode for meeting transcripts, Slack threads, and design discus
 
 The agent identifies distinct knowledge units and presents them individually:
 
-```
+```text
 Extracted 4 learnings from this thread:
 
 Learning 1/4:
@@ -129,7 +129,7 @@ Each learning gets individual review. The user can store all four, edit specific
 
 **Before `/dewey-store`**: The developer pastes a Slack thread and says "remember this." The agent calls `store_learning` once with `tag: "auth"` and `category: "context"`. One monolithic entry. Unfindable in six months.
 
-```go
+```text
 // What the agent did before
 store_learning({
   information: "[entire 47-message Slack thread pasted verbatim]",
@@ -141,7 +141,7 @@ store_learning({
 
 **After `/dewey-store`**: The same thread produces four distinct learnings. Each has a specific tag that matches its content. Each has a category that reflects whether it's a decision, a gotcha, or background context. Each is individually reviewable before storage.
 
-```go
+```text
 // What the agent does now
 store_learning({
   information: "JWT refresh tokens must be opaque...",
