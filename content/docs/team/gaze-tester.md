@@ -1,8 +1,8 @@
 ---
 title: "Gaze"
 slug: "gaze-tester"
-description: "Gaze is the Tester of the Unbound Force swarm — a quality analysis tool for Go that measures test quality through side effect detection and contract coverage."
-lead: "The Quality Sentinel — Test Quality Analysis for Go"
+description: "Gaze is the Tester — a quality analysis tool measuring test quality via side effect detection and contract coverage. Go-native with multi-language support."
+lead: "The Quality Sentinel — Test Quality Analysis"
 date: 2026-02-23T00:00:00+00:00
 draft: false
 weight: 40
@@ -13,13 +13,13 @@ toc: true
 
 ## The Quality Sentinel
 
-Gaze is the Tester of the Unbound Force swarm -- a static analysis tool for Go that answers a question line coverage cannot: are your tests actually verifying the behavior that matters?
+Gaze is the Tester of the Unbound Force swarm -- a static analysis tool that answers a question line coverage cannot: are your tests actually verifying the behavior that matters? Go-native, Gaze also supports other languages through the [external analyzer protocol](/docs/projects/gaze/#external-analyzers).
 
 Traditional coverage metrics tell you what code executed during tests. Gaze goes further by detecting the **observable side effects** of each function (return values, state mutations, I/O operations) and checking whether your tests actually assert on those effects. The result is **contract coverage** -- a measure of what was verified, not just what ran.
 
 ## What Gaze Does Today
 
-Gaze provides three core capabilities for Go codebases:
+Gaze provides three core capabilities — Go-native, with multi-language support via external analyzers:
 
 - **Contract Coverage** -- Measures the percentage of a function's observable side effects that are verified by assertions in tests. A function that writes to a database but whose tests never check the database state has low contract coverage even with 100% line coverage.
 - **GazeCRAP Scores** -- Combines cyclomatic complexity with contract coverage (not line coverage) to identify functions that are both complex and poorly verified. High GazeCRAP scores indicate the riskiest code in your project.
