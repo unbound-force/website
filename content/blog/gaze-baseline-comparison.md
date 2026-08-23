@@ -25,7 +25,7 @@ Gaze now handles baseline comparison natively. The design follows a convention-o
 Generating the initial baseline is a single command:
 
 ```bash
-gaze crap --json > .gaze/baseline.json
+gaze crap --format=json > .gaze/baseline.json
 ```
 
 Commit that file to your repository. On subsequent runs, `gaze crap` detects `.gaze/baseline.json`, loads it, and compares every function in the current run against the baseline. Each function receives a classification:
@@ -104,9 +104,9 @@ jobs:
   crap-check:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
-      - uses: actions/setup-go@v5
+      - uses: actions/setup-go@d35c59abb061a4a6fb18e82ac0862c26744d6ab5 # v5.5.0
         with:
           go-version: "1.23"
 
@@ -127,16 +127,16 @@ No wrapper scripts. No reusable workflow dependency. No post-processing step to 
 To update the baseline after intentional changes (refactoring that temporarily increases a score, or accepting a justified complexity increase), regenerate and commit:
 
 ```bash
-gaze crap --json > .gaze/baseline.json
+gaze crap --format=json > .gaze/baseline.json
 git add .gaze/baseline.json
 git commit -m "chore: update CRAP baseline"
 ```
 
 ## Constitution Alignment
 
-This feature directly fulfills Principle III (Actionable Output) from the Unbound Force constitution. Principle III requires that tool output be comparable across runs — a single-run CRAP report is informative, but it cannot answer the question "did this change make things worse?" without a reference point. Baseline comparison closes that gap by making cross-run comparability a native capability rather than an external integration concern.
+This feature directly fulfills Principle III (Observable Quality) from the Unbound Force constitution. Principle III requires that tool output be comparable across runs — a single-run CRAP report is informative, but it cannot answer the question "did this change make things worse?" without a reference point. Baseline comparison closes that gap by making cross-run comparability a native capability rather than an external integration concern.
 
-The classification model (regression, improvement, new, removed) also satisfies the actionability requirement. Each classification maps to a concrete action: regressions must be fixed, improvements validate refactoring effort, new functions are evaluated against the threshold, and removed functions confirm cleanup. No classification leaves the engineer wondering "what do I do with this information?"
+The classification model (regression, improvement, new, removed) also satisfies the observability requirement. Each classification maps to a concrete action: regressions must be fixed, improvements validate refactoring effort, new functions are evaluated against the threshold, and removed functions confirm cleanup. No classification leaves the engineer wondering "what do I do with this information?"
 
 ## Try It
 
@@ -147,7 +147,7 @@ Install Gaze and generate your first baseline:
 ```bash
 go install github.com/unbound-force/gaze/cmd/gaze@latest
 go test -coverprofile=coverage.out ./...
-gaze crap --json > .gaze/baseline.json
+gaze crap --format=json > .gaze/baseline.json
 git add .gaze/baseline.json
 git commit -m "chore: add CRAP baseline"
 ```

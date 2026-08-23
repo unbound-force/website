@@ -22,7 +22,7 @@ The original architecture forced an all-or-nothing choice. You ran everything lo
 
 ## Pluggable Provider Interfaces
 
-The `016-pluggable-providers` branch introduces two provider interfaces — `Embedder` and `Synthesizer` — that decouple Dewey's intelligence layer from any specific LLM backend. Each interface has exactly one job: `Embedder` converts text into vector embeddings for semantic search, and `Synthesizer` generates natural language output for knowledge compilation.
+Dewey introduces two provider interfaces — `Embedder` and `Synthesizer` — that decouple Dewey's intelligence layer from any specific LLM backend. Each interface has exactly one job: `Embedder` converts text into vector embeddings for semantic search, and `Synthesizer` generates natural language output for knowledge compilation.
 
 Factory functions `NewEmbedderFromConfig()` and `NewSynthesizerFromConfig()` centralize provider construction. They read the configuration, select the correct backend, and return a ready-to-use provider. Callers never import provider-specific packages directly. Adding a new backend — Anthropic, OpenAI, a future local model — means implementing the interface and registering it in the factory. No call sites change.
 
@@ -36,19 +36,19 @@ Ollama remains the zero-config default. If you install Dewey and do nothing else
 
 ## Configuration: Two New Fields
 
-Two new fields in Dewey's configuration control provider selection: `embedding.provider` and `synthesis.provider`. Each accepts `ollama` or `vertex-ai` as values.
+Two new fields in Dewey's configuration control provider selection: `embedding.provider` and `synthesis.provider`. Each accepts `ollama` or `vertexai` as values.
 
 ```yaml
-# Per-vault config: .dewey/config.yaml
+# Per-vault config: config.yaml (in Dewey vault directory)
 embedding:
   provider: ollama
   model: nomic-embed-text
 
 synthesis:
-  provider: vertex-ai
-  model: gemini-2.5-flash
-  project: my-gcp-project
-  location: us-central1
+  provider: vertexai
+  model: claude-sonnet-4-20250514
+  project: your-project-id
+  location: us-east5
 ```
 
 For teams running multiple vaults, a global configuration file at `~/.config/dewey/config.yaml` sets defaults that individual vaults can override. This prevents duplicating Vertex AI credentials across every project. The vault-level config takes precedence when both exist.
@@ -56,10 +56,10 @@ For teams running multiple vaults, a global configuration file at `~/.config/dew
 ```yaml
 # Global config: ~/.config/dewey/config.yaml
 synthesis:
-  provider: vertex-ai
-  model: gemini-2.5-flash
-  project: my-gcp-project
-  location: us-central1
+  provider: vertexai
+  model: claude-sonnet-4-20250514
+  project: your-project-id
+  location: us-east5
 ```
 
 ### Config Precedence: A Deliberate Asymmetry
@@ -89,15 +89,15 @@ embedding:
   model: nomic-embed-text
 
 synthesis:
-  provider: vertex-ai
-  model: gemini-2.5-flash
-  project: my-gcp-project
-  location: us-central1
+  provider: vertexai
+  model: claude-sonnet-4-20250514
+  project: your-project-id
+  location: us-east5
 ```
 
-This combination plays to each provider's strengths. Ollama's `nomic-embed-text` produces high-quality embeddings with low latency on commodity hardware — no GPU required for the embedding model. Vertex AI's Gemini models handle the heavy reasoning that knowledge compilation demands. Your raw data stays local for indexing and search; only the synthesis prompts (which contain aggregated, anonymized learnings) leave the machine.
+This combination plays to each provider's strengths. Ollama's `nomic-embed-text` produces high-quality embeddings with low latency on commodity hardware — no GPU required for the embedding model. Vertex AI's Claude models handle the heavy reasoning that knowledge compilation demands. Your raw data stays local for indexing and search; only the synthesis prompts (which contain aggregated, anonymized learnings) leave the machine.
 
-Teams that need full data sovereignty can set both providers to `ollama` and accept the synthesis quality trade-off. Teams that want maximum quality can set both to `vertex-ai`. The pluggable architecture makes this a configuration decision, not a code change.
+Teams that need full data sovereignty can set both providers to `ollama` and accept the synthesis quality trade-off. Teams that want maximum quality can set both to `vertexai`. The pluggable architecture makes this a configuration decision, not a code change.
 
 ## Closing the Compilation Loop: `store_compiled`
 
@@ -110,7 +110,7 @@ With `store_compiled`, the workflow becomes a closed loop:
 3. Agent calls `dewey_store_compiled` with the synthesized article, source learnings, and topic tag
 4. Dewey persists the compiled article with full provenance metadata
 
-```
+```text
 compile → synthesize → store_compiled → searchable knowledge
 ```
 
@@ -126,7 +126,7 @@ Constitutional amendments in the Unbound Force ecosystem are not taken lightly. 
 
 ## Get Started
 
-Upgrade to the latest Dewey build from the `016-pluggable-providers` branch:
+Install or upgrade Dewey to the latest release:
 
 ```bash
 go install github.com/unbound-force/dewey/cmd/dewey@latest
@@ -139,14 +139,16 @@ To add Vertex AI synthesis to an existing vault:
 gcloud auth application-default login
 
 # Add synthesis config to your vault
-cat >> .dewey/config.yaml << 'EOF'
+cat >> config.yaml << 'EOF'
 synthesis:
-  provider: vertex-ai
-  model: gemini-2.5-flash
+  provider: vertexai
+  model: claude-sonnet-4-20250514
   project: YOUR_PROJECT
-  location: us-central1
+  location: us-east5
 EOF
 ```
+
+For a detailed walkthrough of provider configuration, follow the companion tutorial: [Configuring Dewey Embedding and Synthesis Providers](/docs/tutorials/dewey-provider-configuration/).
 
 Run `dewey_compile` through your MCP client to test the synthesis quality difference. Compare the output against a pure Ollama compilation of the same learnings. The difference in reasoning depth is the reason this architecture exists.
 

@@ -283,3 +283,9 @@ dewey reindex
 ```
 
 This drops all existing embeddings and regenerates them with the new model. The operation is safe — it does not modify your vault content, only the derived vector index.
+
+## Further Reading
+
+- [Pluggable LLM Providers](/blog/pluggable-llm-providers/) — the design rationale behind the Embedder and Synthesizer interfaces
+- [Setting Up Dewey Knowledge Stores](/docs/tutorials/dewey-knowledge-stores/) — configure automated knowledge extraction from indexed sources
+- [Dewey](/docs/projects/dewey/) — project overview, installation, and architecture
