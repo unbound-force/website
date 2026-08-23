@@ -1,140 +1,107 @@
 ---
 title: "Your AI Agent's First Read — Why AGENTS.md Quality Determines Code Quality"
-description: "AGENTS.md is the first file every AI coding agent reads. A weak one means the agent starts with wrong assumptions. /agent-brief creates or audits yours with a 5-tier scoring rubric."
-lead: "Garbage in, garbage out. Your AGENTS.md is the prompt that shapes every line of AI-generated code. Audit it, do not guess."
+description: "AGENTS.md is the first file every AI coding agent reads. A weak or missing AGENTS.md means wrong assumptions about conventions, build commands, and project structure — leading to code that compiles but doesn't fit."
+lead: "Garbage in, garbage out. Your AGENTS.md is the prompt that shapes all agent output. /agent-brief tells you exactly where your project context is weak."
 slug: "agents-md-quality"
-date: 2026-05-03T00:00:00+00:00
+date: 2026-08-23T00:00:00+00:00
 draft: false
-weight: 55
+weight: 102
 toc: true
 categories: ["Engineering"]
-tags: ["agents-md", "context", "quality", "agent-brief"]
+tags: ["agents-md", "agent-brief", "developer-experience", "context"]
 contributors: ["Unbound Force"]
 ---
 
-## The Problem
+## The File Your Agent Reads Before Your Code
 
-Every AI coding agent — Claude Code, Cursor, OpenCode, Copilot — reads a context file at the start of each session. That file tells the agent how to build the project, what conventions to follow, where the tests live, and what constraints to respect. In the Unbound Force ecosystem, this file is `AGENTS.md`. Other tools use `.cursorrules`, `CLAUDE.md`, or similar formats. The name varies; the problem is universal.
+Every AI coding agent — Claude, GPT, Gemini, Copilot — follows the same pattern when it enters a repository. It looks for context files. `AGENTS.md` sits at the top of that list. Before the agent reads a single line of your source code, it reads `AGENTS.md` to learn your project's conventions, build commands, testing strategy, and architectural boundaries.
 
-When this file is weak, missing, or stale, the agent starts every session with wrong assumptions. It guesses at build commands. It invents conventions that conflict with the team's standards. It writes code that compiles and passes linting but does not fit — wrong error handling patterns, wrong directory structure, wrong import organization. The code looks correct to a tool but wrong to a human reviewer.
+This makes `AGENTS.md` the most consequential file in your repository for AI-assisted development. Not your README. Not your CI config. The file that tells the agent *how to behave in your codebase* determines whether the code it produces fits your project or fights it.
 
-The fix is not "be more specific in your prompts." The fix is treating your project context file as production infrastructure — structured, auditable, and maintained.
+A missing `AGENTS.md` means the agent guesses. A weak one means it guesses wrong with confidence.
 
-## What Makes a Good AGENTS.md
+## Garbage In, Garbage Out
 
-A complete AGENTS.md has three tiers of sections, each serving a different purpose:
+When your `AGENTS.md` is incomplete, the failure mode is subtle. The agent still produces code that compiles. It still writes tests that pass. But the code uses the wrong error handling pattern. The tests follow a naming convention nobody on the team recognizes. The new package lands in a directory that breaks your architectural layering.
 
-### Tier 1: Essential Sections
+These are not bugs. They are context failures. The agent did exactly what it was told — or more precisely, exactly what it *wasn't* told. Without explicit conventions, the agent falls back to generic best practices that may contradict your project's established patterns. You end up reviewing code that is technically correct but structurally wrong, and the review cycle burns more time than writing the code manually would have.
 
-Every AGENTS.md needs these. Without them, the agent is guessing at fundamentals.
+The cost compounds across sessions. Every agent session that starts with weak context produces output that drifts further from your project's norms. By the time you notice the drift, you have a codebase with three different error handling patterns and two competing package structures.
 
-| Section | Purpose | What to Include |
-|---------|---------|-----------------|
-| **Project Overview** | What is this project? | Type (CLI, library, API), domain, license |
-| **Build & Test Commands** | How do I build and test? | Exact commands with flags, in fenced code blocks |
-| **Project Structure** | Where is everything? | Directory tree with annotations |
-| **Code Conventions** | How should I write code? | Commit format, naming, error handling, import order |
-| **Technology Stack** | What tools and versions? | Language versions, key dependencies, frameworks |
+## What Makes an AGENTS.md Effective
 
-These five sections are the minimum. An agent with all five can produce code that builds, follows conventions, and lands in the right directory.
+An effective `AGENTS.md` answers the questions an agent asks implicitly every time it starts working. What build system does this project use? What does the test command look like? Where do new files go? What naming conventions apply? What are the non-negotiable rules?
 
-### Tier 1C: Context-Sensitive Sections
+Concretely, a strong `AGENTS.md` covers these structural elements:
 
-These sections are triggered by project signals. They are essential *when applicable* but irrelevant otherwise.
+- **Build and dev commands** — the exact commands to build, test, lint, and run the project
+- **Project structure** — a directory tree showing where code, tests, config, and assets live
+- **Code style guidelines** — naming conventions, import ordering, error handling patterns
+- **Testing conventions** — how tests are named, organized, and run
+- **Behavioral constraints** — rules the agent must never violate, regardless of what it thinks is "better"
+- **Active technologies** — the specific frameworks, libraries, and versions in use
 
-- **Constitution / Governance**: Only needed when the project has a constitution file (`.specify/memory/constitution.md`). Summarizes the governing principles that all work must align with.
-- **Spec Framework**: Only needed when the project uses Speckit (`specs/` directory) or OpenSpec (`openspec/config.yaml`). Describes the specification workflow and pipeline stages.
-
-An AGENTS.md that omits a Tier 1C section when the trigger exists is incomplete — the agent will not know about governance constraints or spec requirements that other tools enforce.
-
-### Tier 2: Advanced Sections
-
-These sections differentiate a strong AGENTS.md from an adequate one. They capture the institutional knowledge that takes weeks to discover.
-
-| Section | Purpose |
-|---------|---------|
-| **Architecture** | Patterns, design decisions, module boundaries |
-| **Testing Conventions** | Test organization, fixture patterns, coverage expectations |
-| **Git & Workflow** | Branching strategy, PR requirements, branch protection |
-| **Behavioral Constraints** | Things agents must NEVER do (often more impactful than positive instructions) |
-
-A Behavioral Constraints section is particularly valuable. Negative instructions like "never modify coverage thresholds to make tests pass" and "never commit directly to main" prevent entire categories of agent mistakes.
-
-## The 5-Tier Scoring Rubric
-
-How do you know if your AGENTS.md is good enough? The `/agent-brief` command uses a deterministic scoring rubric:
-
-| Score | Criteria |
-|-------|----------|
-| **Excellent** | 5/5 Tier 1 + 4/4 Tier 2 + all applicable Tier 1C |
-| **Strong** | 5/5 Tier 1 + 2-3/4 Tier 2 |
-| **Adequate** | 4-5/5 Tier 1 |
-| **Weak** | 2-3/5 Tier 1 |
-| **Missing** | 0-1/5 Tier 1 |
-
-If Tier 1C sections are applicable (the project has a constitution or spec framework) but missing, the score is downgraded by one level. An otherwise "Strong" AGENTS.md becomes "Adequate" if it ignores governance constraints that the project enforces.
-
-The scoring is structural, not subjective. It counts section headers, checks for code blocks in the Build section, verifies that directory trees match the actual filesystem, and confirms that constitution references exist when a constitution is present. Twelve checks in total — no AI judgment involved in the score.
+Each missing section is a gap the agent fills with assumptions. Some assumptions will be right. Enough will be wrong to create real friction.
 
 ## Audit, Don't Guess
 
+The problem with `AGENTS.md` quality is that it is invisible until something goes wrong. You do not know your build commands section is missing until an agent runs `make build` on a project that uses `npm run build`. You do not know your testing conventions are vague until an agent writes table-driven tests in a project that uses behavior-driven specs.
+
+`/agent-brief` makes this visible. It audits your `AGENTS.md` against 12 structural checks — section headers, code blocks, line count, bridge file references — and scores the result on a 5-tier rubric:
+
+| Tier | Score | Meaning |
+|------|-------|---------|
+| **Excellent** | 90–100 | Comprehensive context, agents operate with high autonomy |
+| **Strong** | 70–89 | Solid foundation, minor gaps that rarely cause issues |
+| **Adequate** | 50–69 | Functional but agents will make avoidable mistakes |
+| **Weak** | 25–49 | Significant gaps, expect frequent context failures |
+| **Missing** | 0–24 | Agents are guessing on nearly everything |
+
+Before `/agent-brief`, the check was binary: does `AGENTS.md` exist or not? That distinction is almost useless. A 10-line `AGENTS.md` that says "this is a Go project, run `go test`" exists, but it leaves the agent blind to your package structure, naming conventions, CI requirements, and architectural boundaries. The granular scoring replaces a yes/no gate with actionable diagnostics.
+
+Each check that fails comes with a specific recommendation. Not "improve your AGENTS.md" but "add a Project Structure section with a directory tree" or "include fenced code blocks for build commands so agents can execute them directly."
+
+## Context-Sensitive, Not One-Size-Fits-All
+
+Not every project uses the same tools. A solo developer's weekend project does not need a constitution section. A team running the full Speckit pipeline does. `/agent-brief` adapts its checks to what your project actually uses.
+
+When `/agent-brief` detects a `.specify/memory/constitution.md` file, it checks whether your `AGENTS.md` references the constitution and explains its authority. When it detects a `specs/` directory, it checks for spec workflow documentation. When neither exists, those checks are skipped entirely — no false negatives for tools you have not adopted.
+
+This context sensitivity matters because prescriptive checklists create noise. If every project gets flagged for missing constitution documentation, teams without constitutions learn to ignore the audit. By scoping checks to detected project signals — `go.mod`, `Makefile`, `.github/workflows/`, `package.json` — the audit stays relevant regardless of project size or tooling choices.
+
+## The 12 Structural Checks
+
+`/agent-brief` evaluates your `AGENTS.md` across 12 dimensions that map to the questions agents ask most frequently:
+
 ```text
-/agent-brief audit
+1.  Project Overview          — What does this project do?
+2.  Build & Dev Commands      — How do I build, test, and run it?
+3.  Project Structure         — Where do files go?
+4.  Code Style Guidelines     — What conventions apply?
+5.  Testing Conventions       — How are tests written and organized?
+6.  Behavioral Constraints    — What must I never do?
+7.  Active Technologies       — What frameworks and versions are in use?
+8.  Recent Changes            — What changed recently that I should know about?
+9.  Common Tasks              — Step-by-step guides for frequent operations
+10. CI/CD                     — What does the pipeline check?
+11. Constitution Reference    — (conditional) Where is the governance doc?
+12. Spec Workflow Reference   — (conditional) How does the spec pipeline work?
 ```
 
-The audit command reads your existing AGENTS.md and produces a quality report:
+Each check looks for more than a section header. It verifies that the section contains substantive content — code blocks for commands, directory trees for structure, concrete rules for constraints. A section that says "follow standard Go conventions" scores lower than one that specifies `gofumpt` formatting, `golangci-lint` with a named config, and `go test -race -count=1 ./...` as the test command.
 
-- **Section coverage**: Which Tier 1 / 1C / 2 sections are present vs. missing
-- **Quality metrics**: Line count, build code blocks, directory tree accuracy, staleness checks
-- **Overall score**: One of the 5 tiers, with justification
-- **Recommendations**: For each missing section, generated content you can review and apply
+## Beyond Unbound Force
 
-The audit is read-only — it does not modify your file. You decide what to accept.
+This problem is not specific to any particular agent framework. Every AI coding tool — whether it is an IDE extension, a CLI agent, or a chat-based assistant — performs better with explicit project context. The `AGENTS.md` pattern has emerged as a de facto standard across the industry precisely because the alternative (letting agents infer context from code alone) produces inconsistent results.
 
-## Create from Project Signals
+If you use AI coding agents in any capacity, auditing your project context is one of the highest-leverage improvements you can make. The time investment is small — most `AGENTS.md` files are 100–300 lines — and the payoff is immediate. Every agent session that starts with strong context produces output that requires less review, fewer corrections, and fewer "why did it do that?" moments.
 
-```text
-/agent-brief create
-```
-
-When no AGENTS.md exists, `/agent-brief` analyzes your project and generates one from actual project data:
-
-- **`go.mod`**, **`package.json`**, **`Cargo.toml`** → language, dependencies, versions
-- **`Makefile`**, **`.github/workflows/`** → exact build, test, and lint commands (CI files are the source of truth)
-- **`.golangci.yml`**, **`ruff.toml`**, **`.eslintrc`** → linter rules and conventions
-- **`README.md`**, **`LICENSE`**, **`.git/config`** → project description, license, organization
-- **`.specify/memory/constitution.md`**, **`specs/`**, **`openspec/`** → governance and spec framework (Tier 1C triggers)
-
-The generated file has two quality levels: Tier 1 sections are filled from actual project data (concrete commands, real directory trees, detected conventions). Tier 2 sections are stubs with detailed TODO comments explaining what to fill and why it matters. The result is a complete skeleton that you can review and flesh out.
-
-## Bridge Files
-
-AGENTS.md is the canonical project context file, but different AI tools read different files. `/agent-brief` ensures cross-tool compatibility by verifying bridge files:
-
-- **CLAUDE.md**: Should contain `@AGENTS.md` to import the project context into Claude Code sessions
-- **.cursorrules**: Should reference AGENTS.md for Cursor IDE integration
-
-Bridge file creation is handled by `uf init`. If bridge files are missing or misconfigured, `/agent-brief` reports the status and suggests running `uf init` to create them.
-
-## This Applies to Every AI Coding Tool
-
-AGENTS.md is not an Unbound Force concept — it is a convention adopted across multiple AI coding tools. Claude Code reads `CLAUDE.md` and `AGENTS.md`. Cursor reads `.cursorrules`. Copilot reads context from repository structure. The names differ, but the principle is the same: the quality of your context file determines the quality of your AI-generated code.
-
-The section taxonomy (Tier 1 / 1C / 2), the scoring rubric, and the structural checks apply regardless of which tool you use. If your `.cursorrules` file has no build commands and no project structure, your Cursor agent is guessing — just like an OpenCode agent with a weak AGENTS.md.
+The pattern extends beyond `AGENTS.md` itself. Any file that shapes agent behavior — convention packs, constitution documents, spec templates — benefits from the same audit discipline. If the file is a prompt (and context files are prompts), treat it with the same rigor you would apply to production code.
 
 ## Get Started
 
-Install the Unbound Force CLI and audit your project:
+Run `/agent-brief` in your project to see where your context stands. The audit takes seconds and produces a scored report with specific recommendations for each gap it finds.
 
-```bash
-brew install unbound-force/tap/unbound-force
-/agent-brief audit
-```
+If you do not have an `AGENTS.md` yet, `/agent-brief` generates one from your project's existing signals — `go.mod`, `package.json`, `Makefile`, CI workflows, and README. The generated file is a starting point, not a finished product. Review it, refine the conventions to match your team's actual practices, and commit it alongside your code.
 
-Find out where your project context is weak. Fix it. Watch the quality of AI-generated code improve.
-
-## See Also
-
-- [Common Workflows](/docs/getting-started/common-workflows/) -- `/agent-brief` create and audit documentation
-- [Quick Start](/docs/getting-started/quick-start/) -- Install and verify the toolchain
-- [Developer Guide](/docs/getting-started/developer/) -- Daily workflow with the `uf` CLI
+Your agents are reading `AGENTS.md` whether you wrote a good one or not. Make sure what they read is worth following.
