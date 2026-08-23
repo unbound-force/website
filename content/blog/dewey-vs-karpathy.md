@@ -76,7 +76,7 @@ These approaches are not competing — they solve different parts of the same pr
 
 **The compiled wiki becomes a Dewey source.** If you use Karpathy's approach to maintain a curated research wiki, that wiki is a folder of markdown files. Dewey indexes markdown files. Point a Dewey disk source at your compiled wiki and every agent in your swarm can search it.
 
-**Dewey's `store_learning` is a primitive compilation step.** When the [/unleash](/docs/getting-started/common-workflows/#autonomous-pipeline-unleash) pipeline completes a task, its retrospective step stores a narrative learning in Dewey via `store_learning`. These learnings accumulate over sessions and surface via semantic search in future sessions. This is not full LLM-driven compilation — it is a single learning per session, not a synthesized wiki — but it serves the same purpose: the system remembers what it learned.
+**Dewey's `store_learning` is a primitive compilation step.** When the [/uf.unleash](/docs/getting-started/common-workflows/#autonomous-pipeline-unleash) pipeline completes a task, its retrospective step stores a narrative learning in Dewey via `store_learning`. These learnings accumulate over sessions and surface via semantic search in future sessions. This is not full LLM-driven compilation — it is a single learning per session, not a synthesized wiki — but it serves the same purpose: the system remembers what it learned.
 
 **The ideal system could use both.** Karpathy's LLM-as-librarian for active knowledge synthesis on curated research. Dewey for cross-repo semantic search on the full organizational knowledge base. The compiled wiki feeds into the searchable index.
 

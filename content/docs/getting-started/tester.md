@@ -102,7 +102,7 @@ Gaze is stage 3 (validate) in the [hero lifecycle](/docs/getting-started/common-
 As a tester, you can invoke the review council to get a comprehensive code review:
 
 ```
-/review-council
+/uf.review-council
 ```
 
 The council launches 6 Divisor personas in parallel. The **Testing persona** is particularly relevant -- it evaluates:

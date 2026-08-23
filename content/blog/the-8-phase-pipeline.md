@@ -102,4 +102,4 @@ This granularity is expensive. Eight phases mean more artifacts, more reviews, m
 
 But for complex features — the kind that involve multiple files, architectural decisions, and coordination across components — the eight-phase pipeline prevents a specific class of failures: cascading errors from uncheckpointed decisions. Every decision point becomes a review point. Every review point becomes an opportunity to catch mistakes before they compound.
 
-The [/unleash](/docs/getting-started/common-workflows/#autonomous-pipeline-unleash) command orchestrates all eight phases with six defined exit points where human judgment is required. See the [operational walkthrough](/blog/unleash-in-practice/) for how the pipeline works in practice.
+The [/uf.unleash](/docs/getting-started/common-workflows/#autonomous-pipeline-unleash) command orchestrates all eight phases with six defined exit points where human judgment is required. See the [operational walkthrough](/blog/unleash-in-practice/) for how the pipeline works in practice.

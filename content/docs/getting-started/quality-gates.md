@@ -30,7 +30,7 @@ For Go projects, the CI layer typically includes:
 - `govulncheck ./...` — known vulnerability scanning
 - OSV-Scanner and Trivy — dependency vulnerability scanning
 
-CI is a hard gate. If any check fails, the pipeline stops. No amount of reasoning or justification overrides a failing test. This is the foundational layer that all other quality checks build on.
+CI is a soft gate with causality analysis. When a check fails, the pipeline determines whether the failure is *new* (introduced by your branch) or *pre-existing* (already broken on `main`). New failures block the pipeline — no amount of reasoning or justification overrides a new regression. Pre-existing failures are reported as informational findings but do not block, preventing inherited CI debt from stalling your work. This is the foundational layer that all other quality checks build on.
 
 The CI commands are not hardcoded — they are derived from `.github/workflows/` files, which are the source of truth. Agents read the workflow files to determine exactly which checks to run locally before declaring a task complete (the CI Parity Gate).
 

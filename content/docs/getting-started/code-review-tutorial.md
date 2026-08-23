@@ -1,7 +1,7 @@
 ---
 title: "Code Review Tutorial"
-description: "Step-by-step walkthrough of the complete code review lifecycle — /review-council before pushing, /review-pr after creating a PR."
-lead: "Two commands, one review lifecycle. Use /review-council to validate locally before pushing, then /review-pr to review the PR with CI results."
+description: "Step-by-step walkthrough of the complete code review lifecycle — /uf.review-council before pushing, /uf.review-pr after creating a PR."
+lead: "Two commands, one review lifecycle. Use /uf.review-council to validate locally before pushing, then /uf.review-pr to review the PR with CI results."
 date: 2026-05-03T00:00:00+00:00
 draft: false
 weight: 72
@@ -13,7 +13,7 @@ toc: true
 Before starting this tutorial, ensure:
 
 1. **`uf init` completed** — your project has Divisor review agents deployed (`.opencode/agents/divisor-*.md`)
-2. **`gh` CLI installed and authenticated** — `/review-pr` uses `gh` to fetch PR metadata and CI results
+2. **`gh` CLI installed and authenticated** — `/uf.review-pr` uses `gh` to fetch PR metadata and CI results
 
 ```bash
 which gh && gh auth status
@@ -21,14 +21,14 @@ which gh && gh auth status
 
 If `gh` is not installed, get it from [cli.github.com](https://cli.github.com/). If not authenticated, run `gh auth login`.
 
-## Step 1: Pre-PR Review with `/review-council`
+## Step 1: Pre-PR Review with `/uf.review-council` {#step-1-pre-pr-review-with-review-council}
 
-Before you push your changes and create a PR, run `/review-council` to catch issues locally:
+Before you push your changes and create a PR, run `/uf.review-council` to catch issues locally:
 
 ```text
-/review-council
-/review-council [N]        # optionally specify a PR number
-/review-council code [N]   # explicitly select code review mode
+/uf.review-council
+/uf.review-council [N]        # optionally specify a PR number
+/uf.review-council code [N]   # explicitly select code review mode
 ```
 
 When a PR number is provided, the council posts its consolidated findings as a GitHub PR review after completing the local review. Without a PR number, the review runs locally only.
@@ -37,7 +37,7 @@ When a PR number is provided, the council posts its consolidated findings as a G
 
 The review council runs in two phases:
 
-**Phase 1: CI Gate** — runs your project's build, test, and lint commands (derived from `.github/workflows/`). If the build fails, the review stops immediately. This is a hard gate — no point reviewing code that does not compile.
+**Phase 1: CI Soft Gate** — runs your project's build, test, and lint commands (derived from `.github/workflows/`). When a check fails, the council determines whether the failure is *new* (introduced by your branch) or *pre-existing* (already broken on `main`). New failures block the review — no point reviewing code that introduces regressions. Pre-existing failures are reported as informational findings but do not block. The council checks the `main` baseline via the GitHub CI API first, falling back to a temporary git worktree if API data is unavailable.
 
 **Phase 2: Divisor Review** — launches 5+ review personas in parallel, each with a different focus:
 
@@ -73,7 +73,7 @@ If any persona returns **REQUEST CHANGES**, the council verdict is REQUEST CHANG
 
 ### Optional: Post to GitHub
 
-When a PR exists for your branch, `/review-council` can post its consolidated findings as a GitHub PR review. The council detects an open PR automatically via `gh pr view`, or you can specify a PR number explicitly with `/review-council N`.
+When a PR exists for your branch, `/uf.review-council` can post its consolidated findings as a GitHub PR review. The council detects an open PR automatically via `gh pr view`, or you can specify a PR number explicitly with `/uf.review-council N`.
 
 **How it works**: After all personas complete their local review, the council aggregates their findings into a single GitHub review with per-persona sections. The council verdict maps to a GitHub review event:
 
@@ -91,14 +91,14 @@ When a PR exists for your branch, `/review-council` can post its consolidated fi
 
 Before posting, the council asks for **human confirmation**. No review is posted without your explicit approval.
 
-**Graceful degradation**: If `gh` is not installed, not authenticated, or no PR exists for the current branch, `/review-council` runs the full local review without errors. GitHub posting is strictly optional — the local review workflow is unchanged.
+**Graceful degradation**: If `gh` is not installed, not authenticated, or no PR exists for the current branch, `/uf.review-council` runs the full local review without errors. GitHub posting is strictly optional — the local review workflow is unchanged.
 
 ## Step 2: Push and Create a PR
 
 Once the review council approves, push your changes and create a PR:
 
 ```bash
-/finale
+/uf.finale
 ```
 
 Or manually:
@@ -108,23 +108,23 @@ git push -u origin my-branch
 gh pr create --title "feat: add user auth" --body "..."
 ```
 
-## Step 3: Post-PR Review with `/review-pr`
+## Step 3: Post-PR Review with `/uf.review-pr` {#step-3-post-pr-review-with-review-pr}
 
 After the PR is created and CI has run, review the PR:
 
 ```text
-/review-pr
+/uf.review-pr
 ```
 
 This auto-detects the open PR for your current branch. To review a specific PR (including someone else's):
 
 ```text
-/review-pr 42
+/uf.review-pr 42
 ```
 
 ### What Happens
 
-`/review-pr` runs a structured review informed by CI results:
+`/uf.review-pr` runs a structured review informed by CI results:
 
 1. **Resolve PR** — auto-detect or use the provided PR number
 2. **Fetch metadata** — title, description, changed files, branch info
@@ -135,6 +135,7 @@ This auto-detects the open PR for your current branch. To review a specific PR (
 7. **Spec alignment** — locate the associated spec for intent checking
 8. **AI review** — judgment on alignment, security, and architecture
 9. **Structured report** — severity-classified findings
+10. **Verdict posting** — posts the verdict as a GitHub PR review for all outcomes (APPROVE, REQUEST_CHANGES, or COMMENT)
 
 ### Expected Output
 
@@ -166,7 +167,7 @@ Verdict: 2 findings (1 HIGH, 1 MEDIUM)
 
 When CI checks fail on your PR, the key question is: *did my changes cause this?*
 
-`/review-pr` answers this by checking whether the same check also fails on the base branch:
+`/uf.review-pr` answers this by checking whether the same check also fails on the base branch:
 
 | Base Branch | PR Check | Classification |
 |-------------|----------|----------------|
@@ -176,11 +177,11 @@ When CI checks fail on your PR, the key question is: *did my changes cause this?
 
 **PR-caused failures** are reported as HIGH or CRITICAL findings. These are your regressions.
 
-**Pre-existing failures** are reported separately and do not block the PR verdict. They are not your problem — but `/review-pr` can help fix them.
+**Pre-existing failures** are reported separately and do not block the PR verdict. They are not your problem — but `/uf.review-pr` can help fix them.
 
 ## Step 5: Fix Branches for Pre-existing Failures
 
-When pre-existing failures are found, `/review-pr` offers to create a fix branch:
+When pre-existing failures are found, `/uf.review-pr` offers to create a fix branch:
 
 ```text
 I identified 1 pre-existing CI failure:
@@ -203,13 +204,13 @@ The two review commands fit into the standard development workflow:
 ```text
 /speckit.specify          # define the work
        ↓
-/unleash                  # implement autonomously
+/uf.unleash               # implement autonomously
        ↓
-/review-council           # validate locally (pre-PR)
+/uf.review-council        # validate locally (pre-PR)
        ↓
-/finale                   # commit, push, create PR
+/uf.finale                # commit, push, create PR
        ↓
-/review-pr                # review with CI data (post-PR)
+/uf.review-pr             # review with CI data (post-PR)
        ↓
 Merge                     # after reviewer approval
 ```
@@ -220,17 +221,17 @@ You can use either command independently — they do not depend on each other. B
 
 | Situation | Command | Why |
 |-----------|---------|-----|
-| Before pushing | `/review-council` | Catch issues locally with 5+ parallel reviewers |
-| Post council findings to a PR | `/review-council N` | Multi-persona local review with findings posted as a GitHub PR review |
-| After creating a PR | `/review-pr` | Review with CI results and causality analysis |
-| Reviewing someone else's PR | `/review-pr 42` | Works on any PR by number |
-| CI failed, unsure if my fault | `/review-pr` | Causality classification separates your regressions from noise |
-| Want maximum coverage | Both in sequence | `/review-council` pre-push, `/review-pr` post-PR |
+| Before pushing | `/uf.review-council` | Catch issues locally with 5+ parallel reviewers |
+| Post council findings to a PR | `/uf.review-council N` | Multi-persona local review with findings posted as a GitHub PR review |
+| After creating a PR | `/uf.review-pr` | Review with CI results and causality analysis |
+| Reviewing someone else's PR | `/uf.review-pr 42` | Works on any PR by number |
+| CI failed, unsure if my fault | `/uf.review-pr` | Causality classification separates your regressions from noise |
+| Want maximum coverage | Both in sequence | `/uf.review-council` pre-push, `/uf.review-pr` post-PR |
 
 > **`/review-council N` vs `/review-pr N`**: Both target a specific PR, but they serve different purposes. `/review-council N` runs the full multi-persona local review and posts the aggregated findings to the PR. `/review-pr N` fetches CI results, performs causality analysis (PR-caused vs pre-existing failures), and reviews the PR diff with that context. Use `/review-council N` when you want the council's multi-persona review visible on the PR; use `/review-pr N` when you need CI-aware review with causality classification.
 
 ## See Also
 
-- [Common Workflows](/docs/getting-started/common-workflows/) -- `/review-council` vs `/review-pr` comparison table and full command reference
+- [Common Workflows](/docs/getting-started/common-workflows/) -- `/uf.review-council` vs `/uf.review-pr` comparison table and full command reference
 - [Quick Start](/docs/getting-started/quick-start/) -- Install and verify the toolchain
 - [Developer Guide](/docs/getting-started/developer/) -- Daily workflow with the `uf` CLI

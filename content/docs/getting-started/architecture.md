@@ -40,7 +40,7 @@ Unbound Force layers governance at five levels, from most authoritative to most 
 
 3. **Agent personas** — Individual agent configurations that define each hero's role, capabilities, tool access, and behavioral constraints. Personas are bound by convention packs and the constitution but specialize them for a specific function (development, testing, review, documentation).
 
-4. **Commands** — Slash commands (`/unleash`, `/review-council`, `/speckit.implement`) that orchestrate multi-step workflows. Commands define the sequence of operations, exit points, and handoff protocols. They operate within the constraints set by personas, packs, and the constitution.
+4. **Commands** — Slash commands (`/uf.unleash`, `/uf.review-council`, `/speckit.implement`) that orchestrate multi-step workflows. Commands define the sequence of operations, exit points, and handoff protocols. They operate within the constraints set by personas, packs, and the constitution.
 
 5. **CI pipelines** — Automated checks (linters, test suites, vulnerability scanners) that enforce computational constraints. CI is the final enforcement layer — if code passes all higher layers but fails CI, it does not ship.
 
@@ -91,7 +91,7 @@ The phases enforce a strict progression:
 - You cannot implement before spec review passes
 - All spec artifacts must be committed before implementation begins (Spec Commit Gate)
 
-Phase boundaries are enforced rules, not suggestions. If an agent attempts to make code changes during the planning phase, it triggers a process violation and must stop. The [common workflows page](/docs/getting-started/common-workflows/) describes the full pipeline in detail, including the `/unleash` command that orchestrates all eight phases with six defined exit points where human judgment is required.
+Phase boundaries are enforced rules, not suggestions. If an agent attempts to make code changes during the planning phase, it triggers a process violation and must stop. The [common workflows page](/docs/getting-started/common-workflows/) describes the full pipeline in detail, including the `/uf.unleash` command that orchestrates all eight phases with six defined exit points where human judgment is required.
 
 This separation applies at two levels: the Speckit pipeline separates planning from execution at the feature level, and [OpenSpec](/docs/getting-started/common-workflows/#bug-fix-tactical) provides a lighter workflow for tactical changes that still separates proposal from implementation.
 
