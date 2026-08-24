@@ -10,9 +10,16 @@ toc: true
 
 ## Overview
 
-`uf sandbox` provides containerized development sessions for AI agents. Instead of running OpenCode directly on your host, the sandbox creates a Podman container with your project mounted, OpenCode installed, and API keys forwarded. The agent works inside the container where file changes are isolated (or directly applied, depending on mount mode).
+`uf sandbox` provides containerized development sessions for AI agents. Instead of running OpenCode directly on your host, the sandbox creates an isolated session — either an ephemeral Podman container or a persistent DevPod workspace — with your project mounted, OpenCode installed, and API keys forwarded. The agent works inside the container where file changes are isolated (or directly applied, depending on mount mode).
 
-**Prerequisites**: Podman and DevPod must be installed. Run `uf setup` to install both automatically (Podman at step 14, DevPod at step 15, plus DevPod Podman provider configuration at step 16). On macOS, a Podman machine must be running (`podman machine start`). Run `uf doctor` to verify Podman runtime health, Docker-to-Podman shim, DevPod version (>= 0.5.0), and DevPod provider configuration.
+**Prerequisites** depend on which sandbox mode you use:
+
+- **Ephemeral containers**: Podman must be installed. On macOS, a Podman machine must be running (`podman machine start`).
+- **DevPod persistent workspaces** (provisioned via `uf sandbox create`): Run `uf setup`, which installs DevPod and registers a docker-type provider under the name `podman` (via `DOCKER_PATH=podman`). You do not need a standalone `podman` binary in your `$PATH` — the configured provider handles container runtime resolution automatically.
+
+`uf sandbox start` auto-detects which mode to use: if a persistent workspace exists, it resumes it; otherwise it launches an ephemeral container.
+
+Run `uf doctor` to verify Podman runtime health, Docker-to-Podman shim, DevPod version (>= 0.5.0), and DevPod provider configuration. If `devpod up` fails, the CLI displays a diagnostic hint: run `uf doctor` to diagnose or `uf setup` to configure the provider.
 
 ## Session Management
 
