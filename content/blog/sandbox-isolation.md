@@ -144,7 +144,7 @@ If you use Vertex AI for your LLM provider, the sandbox automatically starts the
 ## Current Limitations
 
 - **Single container at a time**: You cannot run multiple sandbox sessions concurrently for the same project. Parallel agent sessions require separate project directories.
-- **Podman required**: The sandbox uses Podman, not Docker. On macOS, a Podman machine must be running (`podman machine start`).
+- **Podman required for ephemeral containers**: Ephemeral sessions require Podman installed locally; on macOS a Podman machine must be running (`podman machine start`). DevPod persistent workspaces (provisioned via `uf sandbox create`) handle runtime setup automatically via `uf setup` — no standalone `podman` binary needed.
 - **Fixed health check timeout**: The OpenCode server health check waits up to 60 seconds — there is no `--timeout` flag to adjust this.
 
 ## Persistent Workspaces with DevPod
