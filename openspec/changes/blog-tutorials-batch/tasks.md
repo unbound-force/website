@@ -45,3 +45,4 @@ All tutorials are independent files under the tutorials section created in group
 - [x] 4.2 Verify tutorials section appears in sidebar at correct position (between Reference and Changelog) and blog posts appear in blog listing via `npm run dev` visual check
 
 <!-- spec-review: passed -->
+<!-- code-review: passed -->
