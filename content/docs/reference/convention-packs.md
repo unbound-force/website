@@ -47,7 +47,7 @@ Convention packs cover both language-agnostic standards and language-specific ru
 | `ci.md` | CI/CD | CI workflow authoring rules: GitHub Actions pinning, SHA verification, workflow file organization, and secrets handling. |
 | `severity.md` | Cross-cutting | Shared severity definitions for all Divisor personas. Provides the calibration standard for CRITICAL, HIGH, MEDIUM, and LOW findings across every review. |
 
-Not all packs are deployed to every project. `uf init` deploys `default.md`, `severity.md`, and the language-specific pack matching your project's detected language. Other packs (like `ci.md`, `python.md`, or `typescript.md`) are deployed when the corresponding language or context is detected, or can be added manually.
+Not all packs are deployed to every project. `uf init` always deploys a core set of packs regardless of project language: `default.md`, `default-custom.md`, `severity.md`, `content.md`, `content-custom.md`, `ci.md`, and `ci-custom.md`. In addition, the language-specific pack matching your project's detected language (e.g., `go.md` and `go-custom.md`) is deployed automatically. Other language packs (like `python.md` or `typescript.md`) are deployed when their corresponding language is detected, or can be added manually.
 
 Each pack (except `severity.md`) has a corresponding `-custom.md` variant — for example, `default-custom.md`, `go-custom.md`, `content-custom.md`. Custom variants are user-owned files where you add project-specific rules that extend the base pack. They are never overwritten by `uf init` updates, so your customizations persist across toolchain upgrades.
 

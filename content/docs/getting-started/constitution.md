@@ -145,7 +145,7 @@ Violations are CRITICAL severity and non-negotiable -- they must be resolved bef
 
 The `/uf.constitution-check` command automates this assessment. OpenSpec proposals also include a Constitution Alignment section where each principle is evaluated against the proposed change.
 
-The constitution is versioned (currently v1.2.0) and the check validates against the version referenced in the project's `parent_constitution` field. See the [contributing guide](/docs/contributing/) for how this fits into the specification pipeline.
+The constitution is versioned (currently v1.0.0) and the check validates against the version referenced in the project's `parent_constitution` field. See the [contributing guide](/docs/contributing/) for how this fits into the specification pipeline.
 
 ## Governance Hierarchy
 
