@@ -115,6 +115,6 @@ Your CI failures are classified. Your regressions are separated from the noise. 
 
 ## See Also
 
-- [Common Workflows](/docs/getting-started/common-workflows/) -- `/uf.review-council` and `/uf.review-pr` usage
+- [Common Workflows](/docs/getting-started/common-workflows/) -- end-to-end workflow reference
 - [Quick Start](/docs/getting-started/quick-start/) -- Install and verify the toolchain
 - [Developer Guide](/docs/getting-started/developer/) -- Daily workflow with the `uf` CLI
