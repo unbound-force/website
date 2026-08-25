@@ -44,8 +44,14 @@ The website MUST document the `/agent-brief` command.
 - **THEN** both modes MUST be documented: create (generates AGENTS.md from project signals including go.mod, package.json, Makefile, CI config, README) and audit (scores existing AGENTS.md with deterministic structural checks)
 - **AND** the 5-tier scoring rubric (Excellent/Strong/Adequate/Weak/Missing) MUST be described with tier names
 - **AND** context-sensitive section detection (constitution, spec framework) MUST be explained
-- **AND** bridge file management MUST document which files are created (CLAUDE.md, .cursorrules), when they are created vs validated, and their purpose
 - **AND** doctor integration (`uf doctor` structural checks) MUST be documented
+
+> **Spec Amendment (PR #463)**: The original requirement included bridge file
+> management (CLAUDE.md, .cursorrules documentation). Upstream PR
+> unbound-force/unbound-force#463 (merged 2026-08-13) removed bridge file
+> scaffolding from `uf init` and bridge file checks from `uf doctor`. This
+> clause was removed because the feature no longer exists upstream —
+> documenting it would violate Constitution Principle I (Content Accuracy).
 
 ### Requirement: quick-reference-table
 
