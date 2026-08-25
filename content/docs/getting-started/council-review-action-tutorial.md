@@ -62,6 +62,8 @@ The `uf init --divisor` command creates the `.opencode/agents/` directory (if it
 
 You can customize the review scope by adding, removing, or editing persona files. The action picks up changes on the next PR.
 
+> **Note**: The nine personas listed above are the default set shipped by `uf init --divisor`. However, the action discovers personas dynamically by scanning for `divisor-*.md` files at runtime. If your repository adds custom personas beyond the default nine, the action runs all of them automatically -- no configuration change is needed.
+
 ## Step 2: Add the Trigger Workflow
 
 Create `.github/workflows/council-review-trigger.yml` in your repository. This workflow fires on pull request events and dispatches the review workflow:
@@ -276,6 +278,39 @@ env:
   ANTHROPIC_VERTEX_PROJECT_ID: ${{ secrets.VERTEX_PROJECT_ID }}
   CLOUD_ML_REGION: ${{ secrets.VERTEX_REGION }}
 ```
+
+### Google Cloud Vertex AI with Workload Identity Federation (Recommended)
+
+For organization members and production deployments, [Workload Identity Federation (WIF)](https://cloud.google.com/iam/docs/workload-identity-federation) is the recommended authentication method. WIF eliminates static credentials entirely -- GitHub Actions authenticates directly with Google Cloud using OIDC tokens.
+
+Set up WIF authentication by adding the `google-github-actions/auth` step before the review step:
+
+```yaml
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@ba79af03959ebeac9769e648f473a284504d9193 # v2.1.10
+        with:
+          workload_identity_provider: ${{ secrets.WIF_PROVIDER }}
+          service_account: ${{ secrets.WIF_SERVICE_ACCOUNT }}
+
+      - name: Run review council
+        env:
+          CLAUDE_CODE_USE_VERTEX: "1"
+          ANTHROPIC_VERTEX_PROJECT_ID: ${{ secrets.VERTEX_PROJECT_ID }}
+          CLOUD_ML_REGION: ${{ secrets.VERTEX_REGION }}
+        run: |
+          opencode run --agent divisor \
+            --input "Review PR #${{ inputs.pr_number }}" \
+            --headless
+```
+
+| Secret | Value |
+|--------|-------|
+| `WIF_PROVIDER` | Your Workload Identity Provider resource name |
+| `WIF_SERVICE_ACCOUNT` | The service account email to impersonate |
+| `VERTEX_PROJECT_ID` | Your Google Cloud project ID |
+| `VERTEX_REGION` | The Cloud region (e.g., `us-central1`) |
+
+WIF requires a one-time setup in Google Cloud (creating a Workload Identity Pool and Provider), but once configured, no static keys need to be stored as GitHub secrets. The static secrets approach shown in the Vertex AI section above remains available as a fallback for external contributors or BYOK (bring your own key) setups.
 
 ### AWS Bedrock
 

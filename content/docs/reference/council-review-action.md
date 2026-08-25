@@ -89,7 +89,7 @@ Discovery works as follows:
 3. Each matching file is treated as a review persona
 4. The persona's frontmatter defines its review focus area, ownership boundaries, and out-of-scope topics
 
-The default personas ship with `uf init --divisor`: nine agents total (Guard, Architect, Adversary, SRE, Testing, Curator, Scribe, Herald, and Envoy). Repositories can customize the review scope:
+The default personas ship with `uf init --divisor`: nine agents total (Guard, Architect, Adversary, SRE, Testing, Curator, Scribe, Herald, and Envoy). Because discovery is file-based, repositories with custom personas beyond the default nine will have all of them invoked automatically -- no configuration change is needed. Repositories can customize the review scope:
 
 - **Add a persona**: Create a new `divisor-<name>.md` file in `.opencode/agents/` with the appropriate frontmatter. The action picks it up on the next PR.
 - **Remove a persona**: Delete the corresponding `divisor-<name>.md` file. The action stops running that persona.
