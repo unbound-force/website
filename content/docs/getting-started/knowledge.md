@@ -116,7 +116,7 @@ If you used `uf setup` or `uf init` to scaffold your project, Dewey's source con
 
 1. `dewey init` — creates the `.uf/dewey/` directory with a bare default config (single disk source pointing to `.`)
 2. `generateDeweySources()` — overwrites `sources.yaml` with an auto-detected multi-repo config
-3. `dewey index` — indexes all configured sources
+3. `dewey index --no-embeddings` — indexes all configured sources without generating embeddings, for faster initialization. To generate embeddings for semantic search after init, run `dewey index` separately (see [`--no-embeddings`](#global-cli-flags) in the CLI flags table)
 
 The auto-detection scans your workspace and generates sources based on what it finds:
 
