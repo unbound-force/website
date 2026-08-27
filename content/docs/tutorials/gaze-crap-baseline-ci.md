@@ -2,6 +2,7 @@
 title: "Setting Up CRAP Baseline Comparison in CI"
 description: "Step-by-step tutorial for setting up per-function CRAP regression detection using gaze's baseline comparison feature in GitHub Actions."
 lead: "Detect CRAP score regressions on every PR. Create a baseline, add a CI step, and gaze handles the rest — zero wrapper scripts required."
+slug: "gaze-crap-baseline-ci"
 date: 2026-08-23T00:00:00+00:00
 draft: false
 weight: 30
