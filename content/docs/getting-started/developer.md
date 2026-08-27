@@ -277,7 +277,7 @@ Custom rules are loaded by Cobalt-Crush during implementation and by all Divisor
 Cobalt-Crush integrates with two feedback systems:
 
 - **Gaze feedback**: After writing code, checks `.uf/artifacts/quality-report/` for quality findings. High CRAP scores trigger complexity reduction; low contract coverage triggers test improvements.
-- **Divisor feedback**: Before submitting for review, validates against a pre-review checklist. After review, addresses findings by persona and severity (CRITICAL and HIGH first). The review council also supports posting its consolidated findings as a GitHub PR review via `/review-council N` — see the [Code Review Tutorial](/docs/getting-started/code-review-tutorial/#optional-post-to-github) for details.
+- **Divisor feedback**: Before submitting for review, validates against a pre-review checklist. After review, addresses findings by persona and severity (CRITICAL and HIGH first). The review council also supports posting its consolidated findings as a GitHub PR review via `/uf.review-council N` — see the [Code Review Tutorial](/docs/getting-started/code-review-tutorial/#optional-post-to-github) for details.
 
 ### Gatekeeping Value Protection
 
