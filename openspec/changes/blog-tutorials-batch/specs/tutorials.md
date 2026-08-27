@@ -59,15 +59,6 @@ The site MUST include a tutorial at `content/docs/tutorials/gaze-crap-baseline-c
 - **WHEN** a user navigates to `/docs/tutorials/gaze-crap-baseline-ci/`
 - **THEN** the page MUST render with GitHub Actions workflow examples and baseline comparison setup
 
-### Requirement: Pinkman OSS Scout Tutorial (#45)
-
-The site MUST include a tutorial at `content/docs/tutorials/pinkman-oss-scout.md` covering the `/scout` command's four modes: discover, trend, audit, and report.
-
-#### Scenario: Tutorial renders at correct URL
-- **GIVEN** the tutorial file exists in the tutorials directory
-- **WHEN** a user navigates to `/docs/tutorials/pinkman-oss-scout/`
-- **THEN** the page MUST render with usage examples for all four scout modes
-
 ### Requirement: Onboard Customization Tutorial (#46)
 
 The site MUST include a tutorial at `content/docs/tutorials/onboard-customization.md` covering the `/onboard` command's three interview phases and hero experience customization.
@@ -82,9 +73,9 @@ The site MUST include a tutorial at `content/docs/tutorials/onboard-customizatio
 After all content files are created, `npm run build` MUST succeed without errors. All new pages MUST appear in the site output.
 
 #### Scenario: Clean build with all new content
-- **GIVEN** all 9 blog posts, 5 tutorials, and 1 section index have been created
+- **GIVEN** all 9 blog posts, 4 tutorials, and 1 section index have been created
 - **WHEN** `npm run build` is executed
-- **THEN** the build MUST complete successfully with exit code 0 and all 15 new pages MUST be present in the `public/` output directory
+- **THEN** the build MUST complete successfully with exit code 0 and all 14 new pages MUST be present in the `public/` output directory
 
 ## MODIFIED Requirements
 
