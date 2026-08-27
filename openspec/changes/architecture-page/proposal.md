@@ -13,12 +13,15 @@ GitHub Issue: #88
 ## Capabilities
 
 ### New Capabilities
+
 - `architecture-page`: A documentation page that presents the overall system architecture including the three-tier context system, layered governance model, control matrix, doer/judge separation, plan/execute separation, and composability
 
 ### Modified Capabilities
+
 - None
 
 ### Removed Capabilities
+
 - None
 
 ## Impact

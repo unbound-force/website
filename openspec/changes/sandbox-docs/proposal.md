@@ -17,15 +17,18 @@ This change addresses GitHub issues [#39](https://github.com/unbound-force/websi
 ## Capabilities
 
 ### New Capabilities
+
 - `docs/reference/sandbox`: Comprehensive sandbox documentation page covering all subcommands, modes, and platform setup
 - UID mapping prerequisites and troubleshooting section
 - Persistent workspace lifecycle documentation
 - CDE backend documentation (experimental label)
 
 ### Modified Capabilities
+
 - CLI reference page (from `cli-reference-and-positioning` change): sandbox entry links to detailed docs
 
 ### Removed Capabilities
+
 - None
 
 ## Impact

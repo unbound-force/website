@@ -22,15 +22,15 @@ Build the complete Hugo + Doks/Thulite site infrastructure from scratch: package
 
 ## Constitution Check
 
-*GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
+_GATE: Must pass before Phase 0 research. Re-check after Phase 1 design._
 
 ### Pre-Phase 0 Gate
 
-| Principle | Status | Assessment |
-|-----------|--------|------------|
-| I. Content Accuracy | PASS | The Gaze project card description will be derived from the actual Gaze repository README. Research confirms Gaze does P0-P2 side effect detection and CRAP scoring for Go. GazeCRAP (contract-aware coverage) is NOT yet implemented and MUST NOT be claimed. No placeholder or "Coming Soon" content will be created. |
-| II. Minimal Footprint | PASS | The implementation mirrors the complytime-website reference (proven minimal stack). Custom code is limited to `layouts/home.html` (required since Doks has no homepage out of the box), two SCSS files (brand colors + homepage card styles), and standard Hugo config. No additional npm dependencies beyond what complytime-website uses. No blog, analytics, or ancillary features. |
-| III. Visitor Clarity | PASS | The homepage follows a clear 4-section structure (hero, features, projects, CTA) designed for immediate comprehension. Navigation menus provide two-click access to all content sections. Information hierarchy flows homepage -> projects -> detailed docs as required. |
+| Principle             | Status | Assessment                                                                                                                                                                                                                                                                                                                                                                             |
+| --------------------- | ------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| I. Content Accuracy   | PASS   | The Gaze project card description will be derived from the actual Gaze repository README. Research confirms Gaze does P0-P2 side effect detection and CRAP scoring for Go. GazeCRAP (contract-aware coverage) is NOT yet implemented and MUST NOT be claimed. No placeholder or "Coming Soon" content will be created.                                                                 |
+| II. Minimal Footprint | PASS   | The implementation mirrors the complytime-website reference (proven minimal stack). Custom code is limited to `layouts/home.html` (required since Doks has no homepage out of the box), two SCSS files (brand colors + homepage card styles), and standard Hugo config. No additional npm dependencies beyond what complytime-website uses. No blog, analytics, or ancillary features. |
+| III. Visitor Clarity  | PASS   | The homepage follows a clear 4-section structure (hero, features, projects, CTA) designed for immediate comprehension. Navigation menus provide two-click access to all content sections. Information hierarchy flows homepage -> projects -> detailed docs as required.                                                                                                               |
 
 **Gate result: ALL PASS. Proceeding to Phase 0.**
 
@@ -85,20 +85,20 @@ website/
 
 > No constitution violations detected. Table intentionally empty.
 
-| Violation | Why Needed | Simpler Alternative Rejected Because |
-|-----------|------------|-------------------------------------|
-| Custom `layouts/home.html` | Doks does not provide a homepage layout; only docs pages | No simpler alternative exists -- a custom homepage template is the standard Doks pattern |
-| Custom `_custom.scss` | Homepage cards/sections need styling not provided by Doks theme | Using inline styles would be harder to maintain and violate Doks conventions |
-| `module.toml` with explicit mounts | Required to wire Thulite npm packages into Hugo and exclude Doks' default home.html | This is the documented Thulite/Doks architecture, not a custom workaround |
+| Violation                          | Why Needed                                                                          | Simpler Alternative Rejected Because                                                     |
+| ---------------------------------- | ----------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| Custom `layouts/home.html`         | Doks does not provide a homepage layout; only docs pages                            | No simpler alternative exists -- a custom homepage template is the standard Doks pattern |
+| Custom `_custom.scss`              | Homepage cards/sections need styling not provided by Doks theme                     | Using inline styles would be harder to maintain and violate Doks conventions             |
+| `module.toml` with explicit mounts | Required to wire Thulite npm packages into Hugo and exclude Doks' default home.html | This is the documented Thulite/Doks architecture, not a custom workaround                |
 
 ## Constitution Check — Post-Design Re-Evaluation
 
-*Re-check after Phase 1 design completion.*
+_Re-check after Phase 1 design completion._
 
-| Principle | Status | Post-Design Assessment |
-|-----------|--------|------------------------|
-| I. Content Accuracy | PASS | Research verified Gaze's actual capabilities (P0-P2 side effects, CRAP scores). Plan explicitly excludes GazeCRAP and unimplemented features. Homepage content derived from verified repository facts. No placeholder content created. |
-| II. Minimal Footprint | PASS | Custom code limited to: 1 template (home.html — required, Doks has no homepage), 2 SCSS files (brand colors + card styles), standard Hugo config + module.toml (standard Thulite architecture). No additional npm dependencies. No blog, analytics, or ancillary features. |
-| III. Visitor Clarity | PASS | Homepage 4-section structure (hero → features → projects → CTA) provides immediate comprehension. Navigation menus enable two-click access to all sections. Information hierarchy flows homepage → projects → detailed docs. |
+| Principle             | Status | Post-Design Assessment                                                                                                                                                                                                                                                     |
+| --------------------- | ------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| I. Content Accuracy   | PASS   | Research verified Gaze's actual capabilities (P0-P2 side effects, CRAP scores). Plan explicitly excludes GazeCRAP and unimplemented features. Homepage content derived from verified repository facts. No placeholder content created.                                     |
+| II. Minimal Footprint | PASS   | Custom code limited to: 1 template (home.html — required, Doks has no homepage), 2 SCSS files (brand colors + card styles), standard Hugo config + module.toml (standard Thulite architecture). No additional npm dependencies. No blog, analytics, or ancillary features. |
+| III. Visitor Clarity  | PASS   | Homepage 4-section structure (hero → features → projects → CTA) provides immediate comprehension. Navigation menus enable two-click access to all sections. Information hierarchy flows homepage → projects → detailed docs.                                               |
 
 **Post-design gate result: ALL PASS. No new violations introduced by design decisions.**

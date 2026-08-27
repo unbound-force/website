@@ -5,6 +5,7 @@
 The website MUST include a blog post at `content/blog/five-principles-every-ai-agent-harness-discovers.md` that presents Unbound Force's system architecture through the lens of five convergence principles.
 
 The post MUST cover all five principles:
+
 1. Context beats instructions (three-tier context system)
 2. Planning and execution must be separated (8-phase pipeline)
 3. Feedback loops are non-negotiable (layered CI → Gaze → Divisor)

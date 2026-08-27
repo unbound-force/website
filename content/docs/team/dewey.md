@@ -133,7 +133,7 @@ To configure the default Ollama provider, edit `.uf/dewey/config.yaml`:
 embedding:
   provider: ollama
   model: granite-embedding:30m
-  max_chunk_chars: 12288  # Maximum chunk size for embedding (default: 12288)
+  max_chunk_chars: 12288 # Maximum chunk size for embedding (default: 12288)
   # Alternative: granite-embedding:278m for multilingual content
 ```
 

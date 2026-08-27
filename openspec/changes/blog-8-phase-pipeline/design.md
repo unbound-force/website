@@ -5,12 +5,14 @@ The unleash-in-practice post covers the pipeline mechanics. Issue #97 calls for 
 ## Goals / Non-Goals
 
 ### Goals
+
 - Explain why two-phase plan/execute is insufficient for complex features
 - Walk through each of the 8 phases and why each gate exists
 - Cover the enforcement mechanisms (filesystem markers, branch naming, spec commit gate, CI parity gate)
 - Show how the pipeline enforces incrementalism at the specification level
 
 ### Non-Goals
+
 - Duplicating the step-by-step operational guide from unleash-in-practice
 - Adding custom HTML or styling
 - Modifying existing pages

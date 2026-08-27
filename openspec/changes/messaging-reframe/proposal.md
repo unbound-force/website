@@ -13,13 +13,16 @@ GitHub Issue: #90
 ## Capabilities
 
 ### New Capabilities
+
 - `homepage-harness-card`: A feature card on the homepage that speaks to the harness engineering audience
 - `getting-started-design-philosophy`: A section on the getting-started index page explaining the design philosophy
 
 ### Modified Capabilities
+
 - None
 
 ### Removed Capabilities
+
 - None
 
 ## Impact

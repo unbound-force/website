@@ -18,12 +18,15 @@ A new tutorial page at `content/docs/getting-started/config-tutorial.md` coverin
 ## Capabilities
 
 ### New Capabilities
+
 - `docs/getting-started/config-tutorial`: Tutorial page for environment customization with uf config
 
 ### Modified Capabilities
+
 - None
 
 ### Removed Capabilities
+
 - None
 
 ## Impact

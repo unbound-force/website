@@ -41,14 +41,14 @@ The review council runs in two phases:
 
 **Phase 2: Divisor Review** — launches 5+ review personas in parallel, each with a different focus:
 
-| Persona | Focus |
-|---------|-------|
-| **Adversary** | Security, resilience, edge cases |
-| **Architect** | Structure, conventions, patterns |
-| **Guard** | Intent drift, scope discipline |
-| **Testing** | Test coverage, isolation, assertions |
-| **SRE** | Deployment, operational readiness |
-| **Curator** | Documentation gaps |
+| Persona       | Focus                                |
+| ------------- | ------------------------------------ |
+| **Adversary** | Security, resilience, edge cases     |
+| **Architect** | Structure, conventions, patterns     |
+| **Guard**     | Intent drift, scope discipline       |
+| **Testing**   | Test coverage, isolation, assertions |
+| **SRE**       | Deployment, operational readiness    |
+| **Curator**   | Documentation gaps                   |
 
 ### Expected Output
 
@@ -165,15 +165,15 @@ Verdict: 2 findings (1 HIGH, 1 MEDIUM)
 
 ## Step 4: Understanding CI Causality
 
-When CI checks fail on your PR, the key question is: *did my changes cause this?*
+When CI checks fail on your PR, the key question is: _did my changes cause this?_
 
 `/uf.review-pr` answers this by checking whether the same check also fails on the base branch:
 
-| Base Branch | PR Check | Classification |
-|-------------|----------|----------------|
-| Pass | Fail | **PR-caused** — your changes introduced this |
-| Fail | Fail | **Pre-existing** — failure exists independently |
-| No data | Fail | **Unknown** — treated as PR-caused (conservative) |
+| Base Branch | PR Check | Classification                                    |
+| ----------- | -------- | ------------------------------------------------- |
+| Pass        | Fail     | **PR-caused** — your changes introduced this      |
+| Fail        | Fail     | **Pre-existing** — failure exists independently   |
+| No data     | Fail     | **Unknown** — treated as PR-caused (conservative) |
 
 **PR-caused failures** are reported as HIGH or CRITICAL findings. These are your regressions.
 
@@ -193,6 +193,7 @@ Would you like me to create a fix branch?
 If you agree, it creates `fix/pr-42-yamllint` from the base branch with a minimal fix. The branch stays local — you review and push when ready.
 
 **Safety guards**:
+
 - Will not create a fix branch if you have uncommitted changes (dirty-tree guard)
 - Will not overwrite an existing branch with the same name (collision check)
 - Will not attempt non-trivial fixes spanning more than 3 files
@@ -219,14 +220,14 @@ You can use either command independently — they do not depend on each other. B
 
 ## Decision Table
 
-| Situation | Command | Why |
-|-----------|---------|-----|
-| Before pushing | `/uf.review-council` | Catch issues locally with 5+ parallel reviewers |
-| Post council findings to a PR | `/uf.review-council N` | Multi-persona local review with findings posted as a GitHub PR review |
-| After creating a PR | `/uf.review-pr` | Review with CI results and causality analysis |
-| Reviewing someone else's PR | `/uf.review-pr 42` | Works on any PR by number |
-| CI failed, unsure if my fault | `/uf.review-pr` | Causality classification separates your regressions from noise |
-| Want maximum coverage | Both in sequence | `/uf.review-council` pre-push, `/uf.review-pr` post-PR |
+| Situation                        | Command                | Why                                                                   |
+| -------------------------------- | ---------------------- | --------------------------------------------------------------------- |
+| Before pushing                   | `/uf.review-council`   | Catch issues locally with 5+ parallel reviewers                       |
+| Post council findings to a PR    | `/uf.review-council N` | Multi-persona local review with findings posted as a GitHub PR review |
+| After creating a PR              | `/uf.review-pr`        | Review with CI results and causality analysis                         |
+| Reviewing someone else's PR      | `/uf.review-pr 42`     | Works on any PR by number                                             |
+| CI failed, unsure if my fault    | `/uf.review-pr`        | Causality classification separates your regressions from noise        |
+| Want maximum coverage            | Both in sequence       | `/uf.review-council` pre-push, `/uf.review-pr` post-PR               |
 
 > **`/uf.review-council N` vs `/uf.review-pr N`**: Both target a specific PR, but they serve different purposes. `/uf.review-council N` runs the full multi-persona local review and posts the aggregated findings to the PR. `/uf.review-pr N` fetches CI results, performs causality analysis (PR-caused vs pre-existing failures), and reviews the PR diff with that context. Use `/uf.review-council N` when you want the council's multi-persona review visible on the PR; use `/uf.review-pr N` when you need CI-aware review with causality classification.
 

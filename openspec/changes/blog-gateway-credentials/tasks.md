@@ -28,5 +28,5 @@
 - [x] 5.4 Verify all internal links resolve (no dead links)
 - [ ] 5.5 Run `npm run dev` and verify the post renders correctly
 - [ ] 5.6 Verify both light and dark mode rendering
-<!-- spec-review: passed -->
-<!-- code-review: passed -->
+  <!-- spec-review: passed -->
+  <!-- code-review: passed -->

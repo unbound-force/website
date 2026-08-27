@@ -5,11 +5,13 @@ Four existing pages need small enhancements to connect them to the harness engin
 ## Goals / Non-Goals
 
 ### Goals
+
 - Add targeted sections/sentences to 4 pages
 - Use harness engineering as secondary framing, keep existing vocabulary primary
 - Keep additions concise and high-signal
 
 ### Non-Goals
+
 - Rebranding any page
 - Adding decay warnings to feature pages
 - Custom HTML or styling

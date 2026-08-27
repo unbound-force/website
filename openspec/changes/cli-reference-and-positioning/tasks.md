@@ -25,5 +25,5 @@
 - [ ] 5.3 Run `npm run dev` and verify: CLI reference page renders with all command groups and version marker, changelog page renders with current release, stack table shows 4 layers on getting-started index and quick-start, Reference and Changelog sections appear in navigation
 - [x] 5.4 Verify all internal links in new pages resolve to existing pages (no dead links)
 - [ ] 5.5 Verify both light and dark mode rendering for new pages
-<!-- spec-review: passed -->
-<!-- code-review: passed -->
+  <!-- spec-review: passed -->
+  <!-- code-review: passed -->

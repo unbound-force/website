@@ -5,12 +5,14 @@ The Divisor Council enforces doer/judge separation structurally — the Guard ag
 ## Goals / Non-Goals
 
 ### Goals
+
 - Explain why structural enforcement (tool access restrictions) is superior to behavioral instructions
 - Describe the layered feedback stack (CI → Gaze → Divisor agents)
 - Cover the 3-iteration review cap as a pragmatic constraint
 - Attribute Anthropic findings to Liu article
 
 ### Non-Goals
+
 - Detailed Divisor agent persona documentation (that belongs in team pages)
 - Modifying existing pages
 - Adding diagrams or custom HTML

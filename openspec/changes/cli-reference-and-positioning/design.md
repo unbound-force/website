@@ -5,12 +5,14 @@ The `uf` CLI is the primary user interface for Unbound Force — it installs, co
 ## Goals / Non-Goals
 
 ### Goals
+
 - Create a comprehensive CLI reference page listing all commands, subcommands, and flags
 - Add `uf` as a layer in the stack positioning table
 - Create a changelog page for tracking release-level changes
 - Establish a reference section in the docs navigation
 
 ### Non-Goals
+
 - Detailed tutorials for each command (covered by separate tutorial specs)
 - Exhaustive flag documentation for `sandbox` and `gateway` (covered by their own doc specs)
 - Backfilling changelog entries for historical releases (include the current release only)

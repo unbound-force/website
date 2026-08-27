@@ -5,10 +5,12 @@ Seven cross-reference links missing between existing pages. Issue #96 specifies 
 ## Goals / Non-Goals
 
 ### Goals
+
 - Add all 7 cross-reference links specified in the issue
 - Keep additions minimal and contextually appropriate
 
 ### Non-Goals
+
 - Restructuring any page
 - Adding links to pages from other unmerged branches
 

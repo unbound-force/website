@@ -12,11 +12,13 @@ The Sub-Tool Initialization section of `developer.md` MUST document that `uf ini
 The documentation MUST NOT present `specify init` as a standalone user-facing command.
 
 #### Scenario: Developer reads Sub-Tool Initialization section
+
 - **GIVEN** a developer is reading the "Sub-Tool Initialization" section of `developer.md`
 - **WHEN** they review the list of sub-tool initialization steps
 - **THEN** they see specify initialization listed between Dewey initialization and opencode.json configuration, describing that `.specify/` is created with Speckit configuration in offline mode
 
 #### Scenario: Developer encounters .specify/ directory after uf init
+
 - **GIVEN** a developer ran `uf init` and sees a `.specify/` directory they didn't expect
 - **WHEN** they check the developer guide to understand what created it
 - **THEN** the Sub-Tool Initialization section explains that `uf init` creates `.specify/` for the specification framework
@@ -28,6 +30,7 @@ The `init` section of `cli.md` MUST mention that the command also initializes th
 No new flags SHALL be added to the flag table — `--here`, `--integration`, and `--offline` are internal arguments, not user-facing flags.
 
 #### Scenario: Developer looks up uf init in CLI reference
+
 - **GIVEN** a developer is reading the `init` section in the CLI reference
 - **WHEN** they read the command description
 - **THEN** the description mentions specify/Speckit initialization alongside the existing scaffolding description
@@ -37,6 +40,7 @@ No new flags SHALL be added to the flag table — `--here`, `--integration`, and
 The sub-tool initialization summary in `common-workflows.md` (line 436) MUST include specify initialization alongside the existing Dewey and opencode.json mentions.
 
 #### Scenario: Developer reads the setup flow
+
 - **GIVEN** a developer is following the Environment Setup workflow
 - **WHEN** they read the `uf init` summary at the end of setup
 - **THEN** the summary mentions specify initialization alongside Dewey init, config.yaml creation, and opencode.json configuration

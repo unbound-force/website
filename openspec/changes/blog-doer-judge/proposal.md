@@ -13,12 +13,15 @@ GitHub Issue: #91
 ## Capabilities
 
 ### New Capabilities
+
 - `blog-doer-judge`: Blog post on structural doer/judge separation in AI code review
 
 ### Modified Capabilities
+
 - None
 
 ### Removed Capabilities
+
 - None
 
 ## Impact

@@ -36,11 +36,11 @@ uf gateway --detach    # start the proxy in the background
 
 The gateway auto-detects your provider from environment variables:
 
-| Priority | Provider | Detection |
-|----------|----------|-----------|
-| 1 | **Vertex AI** | `CLAUDE_CODE_USE_VERTEX=1` + `ANTHROPIC_VERTEX_PROJECT_ID` |
-| 2 | **Bedrock** | `CLAUDE_CODE_USE_BEDROCK=1` |
-| 3 | **Anthropic** | `ANTHROPIC_API_KEY` |
+| Priority | Provider      | Detection                                                  |
+| -------- | ------------- | ---------------------------------------------------------- |
+| 1        | **Vertex AI** | `CLAUDE_CODE_USE_VERTEX=1` + `ANTHROPIC_VERTEX_PROJECT_ID` |
+| 2        | **Bedrock**   | `CLAUDE_CODE_USE_BEDROCK=1`                                |
+| 3        | **Anthropic** | `ANTHROPIC_API_KEY`                                        |
 
 Once running, any container on the host can call `http://localhost:53147` with a dummy token. The gateway intercepts the request, injects real credentials, translates the request format for the upstream provider, and forwards it. The container's code never changes regardless of which provider you use.
 
@@ -80,14 +80,14 @@ OAuth tokens and session credentials expire. If your agent runs for 2 hours, the
 
 ## Before and After
 
-| Aspect | Before Gateway | With Gateway |
-|--------|---------------|--------------|
-| **Env vars forwarded** | 4-6 (provider-specific) | 2 (`ANTHROPIC_BASE_URL`, `ANTHROPIC_API_KEY`) |
-| **Credential mounts** | gcloud dir, service account keys, AWS config | None |
-| **SDK dependencies** | AWS SDK, gcloud CLI inside container | None |
-| **Token management** | Container-side refresh logic | Host-side, automatic |
-| **Provider switching** | Rebuild container config | Change host env vars, restart gateway |
-| **Container image** | Provider-specific variants | Single universal image |
+| Aspect                 | Before Gateway                               | With Gateway                                  |
+| ---------------------- | -------------------------------------------- | --------------------------------------------- |
+| **Env vars forwarded** | 4-6 (provider-specific)                      | 2 (`ANTHROPIC_BASE_URL`, `ANTHROPIC_API_KEY`) |
+| **Credential mounts**  | gcloud dir, service account keys, AWS config | None                                          |
+| **SDK dependencies**   | AWS SDK, gcloud CLI inside container         | None                                          |
+| **Token management**   | Container-side refresh logic                 | Host-side, automatic                          |
+| **Provider switching** | Rebuild container config                     | Change host env vars, restart gateway         |
+| **Container image**    | Provider-specific variants                   | Single universal image                        |
 
 The container sees the same two environment variables regardless of whether you use Vertex AI, Bedrock, or Anthropic direct. Switching providers is a host-side configuration change — the container image and agent code remain identical.
 

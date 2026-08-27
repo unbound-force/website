@@ -18,7 +18,7 @@ Every component in an AI agent harness exists because someone believed the model
 
 These are bets on model limitations. Some of them are good bets that will remain true for years. Some of them are already becoming unnecessary.
 
-Anthropic demonstrated this concretely: moving from Opus 4.5 to Opus 4.6, they stripped their sprint decomposition mechanism entirely because the newer model handled task breakdown reliably without external scaffolding. The harness component that was essential one model version ago became dead weight the next (as described in Yanli Liu, "Harness Engineering," *AI Advances*, Apr 2026).
+Anthropic demonstrated this concretely: moving from Opus 4.5 to Opus 4.6, they stripped their sprint decomposition mechanism entirely because the newer model handled task breakdown reliably without external scaffolding. The harness component that was essential one model version ago became dead weight the next (as described in Yanli Liu, "Harness Engineering," _AI Advances_, Apr 2026).
 
 The article's advice is blunt: "build to delete." Design every harness component so it can be removed when the time comes. The hard part is not building the harness — it is having the discipline to prune it.
 
@@ -40,7 +40,7 @@ These components will likely persist across multiple generations of model improv
 
 Other components exist specifically because current models have limitations. As those limitations diminish, the components become candidates for removal.
 
-**The 5+ agent Divisor Council.** Five specialized review agents running in parallel, each with exclusive ownership boundaries. This is a powerful quality mechanism, but it is also heavy. As models improve at self-review — and early data from Opus 4.7 suggests they are (Liu, "Harness Engineering," *AI Advances*, Apr 2026) — the multi-agent review structure may be overkill. A future configuration might use three agents instead of five, or a single agent with computational-only validation.
+**The 5+ agent Divisor Council.** Five specialized review agents running in parallel, each with exclusive ownership boundaries. This is a powerful quality mechanism, but it is also heavy. As models improve at self-review — and early data from Opus 4.7 suggests they are (Liu, "Harness Engineering," _AI Advances_, Apr 2026) — the multi-agent review structure may be overkill. A future configuration might use three agents instead of five, or a single agent with computational-only validation.
 
 **Detailed step-by-step instructions in agent personas.** Reading lists, checklists, ordered initialization sequences — these compensate for models that need explicit scaffolding to follow complex procedures. As models require less hand-holding, these instructions become noise rather than signal.
 
@@ -61,6 +61,7 @@ The article recommends a simple protocol: after each model upgrade, test whether
 3. **Delete if quality holds.** Not "deprecate" or "make optional" — delete. Dead harness weight is worse than no harness at all because it consumes context window, adds latency, and gives a false sense of security.
 
 Concrete experiments for Unbound Force:
+
 - Run with 3 Divisor agents instead of 5
 - Skip the Gaze feedback loop for a sprint
 - Remove Dewey knowledge retrieval from agent initialization

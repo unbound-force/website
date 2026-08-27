@@ -74,6 +74,7 @@
 ### Implementation Strategy
 
 Sequential delivery in priority order:
+
 1. Complete Phase 1 (blog post) — the primary deliverable
 2. Complete Phase 2 (docs update) — quick addition referencing the blog post
 3. Complete Phase 3 (verification) — confirm everything works

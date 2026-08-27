@@ -14,7 +14,7 @@ contributors: ["Unbound Force"]
 
 ## The Two-Phase Illusion
 
-Every team building AI agent workflows discovers the same thing: letting an agent plan and execute in the same pass produces unreliable output. The planning step must be separate, with its output reviewed before implementation begins. OpenAI, Anthropic, and ThoughtWorks all arrived at this conclusion independently (Yanli Liu, "Harness Engineering," *AI Advances*, Apr 2026).
+Every team building AI agent workflows discovers the same thing: letting an agent plan and execute in the same pass produces unreliable output. The planning step must be separate, with its output reviewed before implementation begins. OpenAI, Anthropic, and ThoughtWorks all arrived at this conclusion independently (Yanli Liu, "Harness Engineering," _AI Advances_, Apr 2026).
 
 So you separate plan from execute. Two phases. Problem solved.
 

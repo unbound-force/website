@@ -9,12 +9,15 @@
 ## Capabilities
 
 ### New Capabilities
+
 - `<name>`: <description>
 
 ### Modified Capabilities
+
 - `<existing-name>`: <what changes>
 
 ### Removed Capabilities
+
 - `<name>`: <reason for removal>
 
 ## Impact

@@ -5,6 +5,7 @@ The `uf gateway` command implements an LLM reverse proxy with 3 subcommands and 
 ## Goals / Non-Goals
 
 ### Goals
+
 - Document all 3 subcommands with flags and usage
 - Explain the credential isolation model clearly (this is the primary value proposition)
 - Document provider auto-detection and priority order
@@ -12,6 +13,7 @@ The `uf gateway` command implements an LLM reverse proxy with 3 subcommands and 
 - Document token refresh behavior and sandbox integration
 
 ### Non-Goals
+
 - Deep Bedrock SigV4 signing implementation details (internal concern)
 - Troubleshooting every provider-specific error (add as issues arise)
 - Performance benchmarks or latency analysis
@@ -34,6 +36,7 @@ The `uf gateway` command implements an LLM reverse proxy with 3 subcommands and 
 ## Content Sources
 
 Authoritative upstream source files:
+
 - Gateway command: `unbound-force/unbound-force/internal/gateway/` (server, proxy, providers, token refresh)
 - CLI help: `uf gateway --help`, `uf gateway start --help`
 - Sandbox integration: `unbound-force/unbound-force/internal/sandbox/` (autoStartGateway)

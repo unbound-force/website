@@ -5,12 +5,14 @@ The website has a config reference page (PR #75) covering the command surface, l
 ## Goals / Non-Goals
 
 ### Goals
+
 - Create a hands-on tutorial for common customization scenarios
 - Show `uf config init` → edit → `uf config validate` → `uf config show` workflow
 - Include platform-specific examples (Fedora/RHEL, macOS, custom embedding models)
 - Demonstrate precedence with a concrete override scenario
 
 ### Non-Goals
+
 - Duplicate the full config reference (all 7 sections in detail) — link to the reference page
 - Cover every config key — focus on the most commonly customized settings
 - Cover sandbox or gateway config in depth (those have their own reference pages)
@@ -30,6 +32,7 @@ The website has a config reference page (PR #75) covering the command surface, l
 ## Content Sources
 
 Authoritative upstream sources:
+
 - Config implementation: `unbound-force/unbound-force/internal/config/config.go`
 - CLI help: `uf config --help`, `uf config init --help`, `uf config show --help`, `uf config validate --help`
 - Config reference page: `content/docs/reference/config.md` (if PR #75 merged)

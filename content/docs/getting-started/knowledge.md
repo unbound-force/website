@@ -76,15 +76,15 @@ export OLLAMA_EMBED_DIM=256
 export DEWEY_CHUNK_MAX_CHARS=12288
 ```
 
-| Variable | Default | Description |
-| -------- | ------- | ----------- |
-| `OLLAMA_MODEL` | `granite-embedding:30m` | Embedding model name passed to Ollama |
-| `OLLAMA_EMBED_DIM` | `256` | Embedding vector dimension |
-| `DEWEY_CHUNK_MAX_CHARS` | `12288` | Maximum chunk size (in characters) for embedding. Overrides the `embedding.max_chunk_chars` config value when set. |
-| `DEWEY_EMBEDDING_ENDPOINT` | — | Overrides the Ollama endpoint for embedding requests. Takes highest precedence (see [Endpoint Resolution](#endpoint-resolution) below). |
-| `DEWEY_SYNTHESIS_ENDPOINT` | — | Overrides the Ollama endpoint for synthesis (compilation, curation) requests. Fallback chain: `DEWEY_SYNTHESIS_ENDPOINT` → `OLLAMA_HOST` → `http://localhost:11434`. |
-| `DEWEY_AUTHOR` | — | Author tag for learning identities (e.g., `alice`). Used in CI or shared environments to attribute learnings to a specific author. |
-| `OLLAMA_HOST` | — | Standard Ollama environment variable. Dewey reads this as a fallback when `DEWEY_EMBEDDING_ENDPOINT` is not set and no `embedding.endpoint` is configured in `config.yaml`. |
+| Variable                     | Default                 | Description                                                                                                                                                                   |
+| ---------------------------- | ----------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `OLLAMA_MODEL`               | `granite-embedding:30m` | Embedding model name passed to Ollama                                                                                                                                         |
+| `OLLAMA_EMBED_DIM`           | `256`                   | Embedding vector dimension                                                                                                                                                    |
+| `DEWEY_CHUNK_MAX_CHARS`      | `12288`                 | Maximum chunk size (in characters) for embedding. Overrides the `embedding.max_chunk_chars` config value when set.                                                            |
+| `DEWEY_EMBEDDING_ENDPOINT`   | —                       | Overrides the Ollama endpoint for embedding requests. Takes highest precedence (see [Endpoint Resolution](#endpoint-resolution) below).                                       |
+| `DEWEY_SYNTHESIS_ENDPOINT`   | —                       | Overrides the Ollama endpoint for synthesis (compilation, curation) requests. Fallback chain: `DEWEY_SYNTHESIS_ENDPOINT` → `OLLAMA_HOST` → `http://localhost:11434`.           |
+| `DEWEY_AUTHOR`               | —                       | Author tag for learning identities (e.g., `alice`). Used in CI or shared environments to attribute learnings to a specific author.                                            |
+| `OLLAMA_HOST`                | —                       | Standard Ollama environment variable. Dewey reads this as a fallback when `DEWEY_EMBEDDING_ENDPOINT` is not set and no `embedding.endpoint` is configured in `config.yaml`.   |
 
 > **Synthesis vs. embedding precedence**: Synthesis endpoint resolution uses an inverted precedence compared to embedding. For synthesis, `config.yaml` settings take highest priority over environment variables (`config.yaml` > `DEWEY_SYNTHESIS_ENDPOINT` > `OLLAMA_HOST` > default). For embedding, environment variables take highest priority (`DEWEY_EMBEDDING_ENDPOINT` > `config.yaml` > `OLLAMA_HOST` > default). This means setting `DEWEY_SYNTHESIS_ENDPOINT` has no effect if `synthesis.endpoint` is set in `config.yaml`.
 
@@ -663,14 +663,14 @@ Use the `tier` parameter on `dewey_semantic_search_filtered` to filter results b
 
 Common issues and how to resolve them:
 
-| Issue                  | Symptoms                               | Resolution                                                                                                                                  |
-| ---------------------- | -------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
-| MCP server timeout     | OpenCode shows connection timeout      | Check `.gitignore` for large directories being indexed; run `dewey reindex`                                                                 |
-| Ollama not running     | `dewey doctor` shows embedding layer ✗ | Run `ollama serve` or install Ollama (`brew install --cask ollama`)                                                                         |
+| Issue                  | Symptoms                                                                      | Resolution                                                                                                                                  |
+| ---------------------- | ----------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| MCP server timeout     | OpenCode shows connection timeout                                             | Check `.gitignore` for large directories being indexed; run `dewey reindex`                                                                 |
+| Ollama not running     | `dewey doctor` shows embedding layer ✗                                        | Run `ollama serve` or install Ollama (`brew install --cask ollama`)                                                                         |
 | Model not pulled       | Semantic search returns no results; log shows "embedding model not available" | Run `ollama pull granite-embedding:30m`. Dewey continues in keyword-only mode until the model is available.                                 |
-| Lock file conflicts    | "Another dewey instance is running"    | Only one `dewey serve` per vault; check for stale `.uf/dewey/.dewey.lock`                                                                   |
-| Low embedding coverage | Semantic search returns few results    | Run `dewey index` to generate embeddings for new content                                                                                    |
-| Slow startup           | First `dewey serve` takes minutes      | Normal for large repos on first index; subsequent startups are near-instant. Check `.gitignore` to exclude `node_modules/`, `vendor/`, etc. |
+| Lock file conflicts    | "Another dewey instance is running"                                           | Only one `dewey serve` per vault; check for stale `.uf/dewey/.dewey.lock`                                                                   |
+| Low embedding coverage | Semantic search returns few results                                           | Run `dewey index` to generate embeddings for new content                                                                                    |
+| Slow startup           | First `dewey serve` takes minutes                                             | Normal for large repos on first index; subsequent startups are near-instant. Check `.gitignore` to exclude `node_modules/`, `vendor/`, etc. |
 
 If `dewey doctor` shows failures, start by addressing the ✗ items — each diagnostic section includes enough context to identify the root cause.
 

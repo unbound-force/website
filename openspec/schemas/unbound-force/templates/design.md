@@ -5,9 +5,11 @@
 ## Goals / Non-Goals
 
 ### Goals
+
 - <!-- what this design achieves -->
 
 ### Non-Goals
+
 - <!-- what is explicitly out of scope -->
 
 ## Decisions

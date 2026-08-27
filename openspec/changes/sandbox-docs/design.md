@@ -5,6 +5,7 @@ The `uf sandbox` command surface spans 7 subcommands across three capability tie
 ## Goals / Non-Goals
 
 ### Goals
+
 - Create a single, comprehensive sandbox documentation page covering all three capability tiers
 - Include platform-specific setup instructions (macOS Podman machine, Fedora SELinux)
 - Document the security model (rootless Podman, read-only mounts, no push credentials)
@@ -12,6 +13,7 @@ The `uf sandbox` command surface spans 7 subcommands across three capability tie
 - Label CDE backend as experimental with appropriate caveats
 
 ### Non-Goals
+
 - Tutorial-style walkthrough (covered by blog post #40)
 - Container image customization guide (separate concern, references containerfile repo)
 - Gateway integration details (covered by gateway-docs change)
@@ -36,6 +38,7 @@ The `uf sandbox` command surface spans 7 subcommands across three capability tie
 ## Content Sources
 
 Authoritative upstream source files:
+
 - Sandbox core: `unbound-force/unbound-force/internal/sandbox/` (sandbox.go, backend.go, podman.go, workspace.go, git_sync.go)
 - CLI commands: `unbound-force/unbound-force/cmd/unbound-force/sandbox.go` and subcommand files
 - CLI help: `uf sandbox --help`, `uf sandbox <subcommand> --help`

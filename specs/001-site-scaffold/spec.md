@@ -13,7 +13,7 @@
 - Q: What accessibility compliance level should the site target? → A: WCAG 2.1 AA
 - Q: How should domain redirects (theunbound.dev, theunboundforce.dev, thegaze.dev) be implemented? → A: DNS registrar forwarding (fully out of scope for this repo)
 
-## User Scenarios & Testing *(mandatory)*
+## User Scenarios & Testing _(mandatory)_
 
 ### User Story 1 - Site Builds and Deploys (Priority: P1)
 
@@ -109,7 +109,7 @@ As a visitor, I want the site to have a distinctive visual identity with the Unb
 - What if the CNAME file conflicts with GitHub Pages settings? The CNAME file in `static/` must match the domain configured in GitHub Pages repo settings.
 - What if a visitor accesses `http://` (non-HTTPS)? GitHub Pages enforces HTTPS redirect automatically for custom domains.
 
-## Requirements *(mandatory)*
+## Requirements _(mandatory)_
 
 ### Functional Requirements
 
@@ -139,7 +139,7 @@ As a visitor, I want the site to have a distinctive visual identity with the Unb
 - **SCSS Customization**: The two SCSS files that override Doks theme defaults for brand identity.
 - **CI/CD Workflow**: The GitHub Actions YAML file that automates build and deployment.
 
-## Success Criteria *(mandatory)*
+## Success Criteria _(mandatory)_
 
 ### Measurable Outcomes
 

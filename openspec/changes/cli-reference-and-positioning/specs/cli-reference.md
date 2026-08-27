@@ -5,6 +5,7 @@
 The website MUST have a CLI reference page at `content/docs/reference/cli.md` that lists all current `uf` command groups and subcommands, sourced from `uf --help` output at implementation time.
 
 Each command group MUST include:
+
 - Command name and brief description
 - Table of subcommands (if applicable) with flags and descriptions
 - Link to detailed documentation page (if one exists)
@@ -24,6 +25,7 @@ The page MUST include a version marker indicating which `uf` version the referen
 The website MUST have a changelog page at `content/docs/changelog/_index.md` tracking user-facing changes for the current release.
 
 Each release entry MUST include:
+
 - Version number and date
 - Summary of user-facing changes grouped by type (Added, Changed, Fixed)
 
@@ -57,12 +59,12 @@ Previously: The stack table listed 3 layers (Agent: OpenCode, Planning: Speckit,
 
 The updated table MUST show 4 layers:
 
-| Layer | Tool | What It Does |
-|-------|------|-------------|
-| CLI | `uf` | Project scaffolding, environment setup, health checks, configuration, sandboxed execution, LLM gateway |
-| Agent | OpenCode | AI coding environment |
-| Planning | Speckit | Specification pipeline |
-| Coordination | Replicator | Multi-agent coordination |
+| Layer        | Tool       | What It Does                                                                                           |
+| ------------ | ---------- | ------------------------------------------------------------------------------------------------------ |
+| CLI          | `uf`       | Project scaffolding, environment setup, health checks, configuration, sandboxed execution, LLM gateway |
+| Agent        | OpenCode   | AI coding environment                                                                                  |
+| Planning     | Speckit    | Specification pipeline                                                                                 |
+| Coordination | Replicator | Multi-agent coordination                                                                               |
 
 #### Scenario: user reads stack table on getting-started pages
 

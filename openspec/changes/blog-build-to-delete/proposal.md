@@ -11,12 +11,15 @@ GitHub Issue: #92
 ## Capabilities
 
 ### New Capabilities
+
 - `blog-build-to-delete`: Blog post on harness decay and the discipline of pruning agent system components
 
 ### Modified Capabilities
+
 - None
 
 ### Removed Capabilities
+
 - None
 
 ## Impact

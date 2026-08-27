@@ -21,6 +21,7 @@ This walkthrough answers that question. We ran Gaze against [gcal-organizer](htt
 The report below was generated using `/gaze` in OpenCode — the full report mode that combines CRAP analysis, contract quality assessment, side effect classification, and overall health scoring. Every number is reproduced exactly as Gaze produced it.
 
 **Report metadata:**
+
 - **Project**: github.com/jflowers/gcal-organizer
 - **Branch**: 008-decision-extraction
 - **Gaze Version**: v1.2.3
@@ -31,13 +32,13 @@ The report below was generated using `/gaze` in OpenCode — the full report mod
 
 The CRAP (Change Risk Anti-Patterns) summary provides aggregate metrics across all functions in the module.
 
-| Metric | Value |
-|--------|------:|
-| Total functions analyzed | 137 |
-| Average complexity | 4.9 |
-| Average line coverage | 26.2% |
-| Average CRAP score | 29.7 |
-| CRAPload | 40 (functions ≥ threshold 15) |
+| Metric                   |                         Value |
+| ------------------------ | ----------------------------: |
+| Total functions analyzed |                           137 |
+| Average complexity       |                           4.9 |
+| Average line coverage    |                         26.2% |
+| Average CRAP score       |                          29.7 |
+| CRAPload                 | 40 (functions ≥ threshold 15) |
 
 ### What This Tells Us
 
@@ -49,13 +50,13 @@ The average CRAP score of 29.7 is inflated by the tail — a handful of very com
 
 Gaze surfaces the functions with the highest individual CRAP scores — the specific places where change risk is concentrated.
 
-| Function | CRAP | Complexity | Coverage | File |
-|----------|-----:|----------:|---------:|------|
-| (\*Service).CreateDecisionsTab | 650.0 | 25 | 0.0% | internal/docs/service.go:460 |
-| runBrowserScript | 342.0 | 18 | 0.0% | cmd/gcal-organizer/assign_tasks.go:237 |
-| loadDotEnv | 240.0 | 15 | 0.0% | cmd/gcal-organizer/main.go:382 |
-| (\*Service).ListMeetingDocuments | 210.0 | 14 | 0.0% | internal/drive/service.go:113 |
-| (\*Organizer).printSummary | 156.0 | 12 | 0.0% | internal/organizer/organizer.go:227 |
+| Function                         |  CRAP | Complexity | Coverage | File                                   |
+| -------------------------------- | ----: | ---------: | -------: | -------------------------------------- |
+| (\*Service).CreateDecisionsTab   | 650.0 |         25 |     0.0% | internal/docs/service.go:460           |
+| runBrowserScript                 | 342.0 |         18 |     0.0% | cmd/gcal-organizer/assign_tasks.go:237 |
+| loadDotEnv                       | 240.0 |         15 |     0.0% | cmd/gcal-organizer/main.go:382         |
+| (\*Service).ListMeetingDocuments | 210.0 |         14 |     0.0% | internal/drive/service.go:113          |
+| (\*Organizer).printSummary       | 156.0 |         12 |     0.0% | internal/organizer/organizer.go:227    |
 
 ### What This Tells Us
 
@@ -69,18 +70,18 @@ The next three functions (`runBrowserScript`, `loadDotEnv`, `ListMeetingDocument
 
 This is where Gaze goes beyond traditional CRAP. The GazeCRAP quadrant places each function on a 2x2 grid comparing its traditional CRAP score (complexity + line coverage) against its GazeCRAP score (complexity + contract coverage). For a deeper explanation of this distinction, see [Why Contract Coverage](/blog/why-contract-coverage/).
 
-| Quadrant | Count | Meaning |
-|----------|------:|---------|
-| 🟢 Q1 — Safe | 12 | Low complexity, high contract coverage |
-| 🟡 Q2 — Complex But Tested | 0 | High complexity, contracts verified |
-| 🔴 Q4 — Dangerous | 2 | Complex AND contracts not adequately verified |
-| ⚪ Q3 — Needs Tests | 3 | Simple but underspecified |
+| Quadrant                   | Count | Meaning                                       |
+| -------------------------- | ----: | --------------------------------------------- |
+| 🟢 Q1 — Safe               |    12 | Low complexity, high contract coverage        |
+| 🟡 Q2 — Complex But Tested |     0 | High complexity, contracts verified           |
+| 🔴 Q4 — Dangerous          |     2 | Complex AND contracts not adequately verified |
+| ⚪ Q3 — Needs Tests        |     3 | Simple but underspecified                     |
 
 **GazeCRAPload**: 5 (functions ≥ threshold 15) — The 2 Q4 functions (`SyncCalendarAttachments` at GazeCRAP 1482 and `OrganizeDocuments` at 306) have decent line coverage but 0% contract coverage, meaning their side effects are tested incidentally rather than intentionally. The 3 Q3 functions need contract-level assertions added to existing tests, not new test files.
 
 ### What This Tells Us
 
-The quadrant distribution reveals something the raw CRAP scores cannot: the difference between functions that are tested and functions that are *verified*.
+The quadrant distribution reveals something the raw CRAP scores cannot: the difference between functions that are tested and functions that are _verified_.
 
 12 functions land in Q1 (Safe) — these are the functions where both complexity and contract obligations are under control. Zero functions are in Q2 (Complex But Tested), which means there are no complex functions where contracts are being intentionally verified. This is a gap.
 
@@ -126,19 +127,19 @@ The health assessment combines all dimensions into a single scorecard with lette
 
 ### Summary Scorecard
 
-| Dimension | Grade | Details |
-|-----------|-------|---------|
-| CRAPload | 🔴 D | 40/137 functions (29.2%) above threshold |
-| GazeCRAPload | 🟢 A- | 5/17 analyzed functions above threshold |
-| Avg Line Coverage | 🔴 D | 26.2% — 101 of 137 functions have 0% coverage |
-| Contract Coverage | 🟡 C | 52.9% avg across 17 quality-analyzed functions |
-| Complexity | 🟢 B+ | Average 4.9, but 40 functions exceed threshold |
+| Dimension         | Grade | Details                                        |
+| ----------------- | ----- | ---------------------------------------------- |
+| CRAPload          | 🔴 D  | 40/137 functions (29.2%) above threshold       |
+| GazeCRAPload      | 🟢 A- | 5/17 analyzed functions above threshold        |
+| Avg Line Coverage | 🔴 D  | 26.2% — 101 of 137 functions have 0% coverage  |
+| Contract Coverage | 🟡 C  | 52.9% avg across 17 quality-analyzed functions |
+| Complexity        | 🟢 B+ | Average 4.9, but 40 functions exceed threshold |
 
 ### What This Tells Us
 
 The scorecard paints a nuanced picture. Complexity gets a B+ — the project is not over-engineered, and most individual functions are reasonably simple. But line coverage at 26.2% (with 101 functions at 0%) earns a D, and CRAPload at 29.2% confirms that the combination of untested + complex code is widespread.
 
-The interesting contrast is between the two CRAP dimensions: traditional CRAPload gets a D (40 functions above threshold across all 137), but GazeCRAPload gets an A- (only 5 of the 17 quality-analyzed functions above threshold). This suggests that the functions which *do* have tests are generally well-tested at the contract level. The problem is not test quality — it is test *quantity*. Large swaths of the codebase have no tests at all.
+The interesting contrast is between the two CRAP dimensions: traditional CRAPload gets a D (40 functions above threshold across all 137), but GazeCRAPload gets an A- (only 5 of the 17 quality-analyzed functions above threshold). This suggests that the functions which _do_ have tests are generally well-tested at the contract level. The problem is not test quality — it is test _quantity_. Large swaths of the codebase have no tests at all.
 
 Contract Coverage at 52.9% (C grade) across the 17 analyzed functions means about half of the contractual side effects are being verified. For the functions that have tests, there is room to tighten the assertions, but it is not catastrophic.
 

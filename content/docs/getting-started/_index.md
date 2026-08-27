@@ -20,7 +20,7 @@ Unbound Force is built on four complementary tools that form a layered stack:
 
 | Layer            | Tool                                                      | What It Does                                                                                                               |
 | ---------------- | --------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
-| **CLI**          | [`uf`](/docs/reference/cli/)                               | Project scaffolding, environment setup, health checks, configuration, sandboxed execution, LLM gateway.                   |
+| **CLI**          | [`uf`](/docs/reference/cli/)                              | Project scaffolding, environment setup, health checks, configuration, sandboxed execution, LLM gateway.                    |
 | **Agent**        | [OpenCode](https://opencode.ai)                           | The AI coding environment where you interact, write code, and run commands. The personas run inside OpenCode.              |
 | **Planning**     | [Speckit](https://github.com/github/spec-kit) (spec-kit)  | A specification pipeline that turns ideas into structured specs, plans, and tasks before implementation begins.            |
 | **Coordination** | [Replicator](https://github.com/unbound-force/replicator) | Multi-agent coordination: parallel workers, git-backed tracking, file reservations, and semantic memory. Single Go binary. |

@@ -20,9 +20,9 @@ The `uf` CLI (alias for `unbound-force`) manages the full Unbound Force toolchai
 
 **Global flags:**
 
-| Flag | Description |
-|------|-------------|
-| `-h`, `--help` | Help for any command |
+| Flag              | Description          |
+| ----------------- | -------------------- |
+| `-h`, `--help`    | Help for any command |
 | `-v`, `--version` | Print the uf version |
 
 ## init
@@ -35,12 +35,12 @@ User-owned files (templates, scripts, agents, config) are skipped if they alread
 uf init [flags]
 ```
 
-| Flag | Description |
-|------|-------------|
-| `--divisor` | Deploy only Divisor review agents and convention packs |
-| `--force` | Overwrite all existing files and re-index Dewey workspace (with `--no-embeddings` — embedding generation is deferred) |
-| `--lang <string>` | Project language for convention pack selection: `go`, `python`, or `typescript` (auto-detected from `go.mod`, `pyproject.toml`, `setup.py`, `package.json`, etc. if omitted) |
-| `--platform <string>` | Target AI coding platform: `opencode` (default) or `cursor`. Repeatable for dual-platform scaffolding (e.g., `--platform opencode --platform cursor`) |
+| Flag                  | Description                                                                                                                                                               |
+| --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `--divisor`           | Deploy only Divisor review agents and convention packs                                                                                                                    |
+| `--force`             | Overwrite all existing files and re-index Dewey workspace (with `--no-embeddings` — embedding generation is deferred)                                                     |
+| `--lang <string>`     | Project language for convention pack selection: `go`, `python`, or `typescript` (auto-detected from `go.mod`, `pyproject.toml`, `setup.py`, `package.json`, etc. if omitted) |
+| `--platform <string>` | Target AI coding platform: `opencode` (default) or `cursor`. Repeatable for dual-platform scaffolding (e.g., `--platform opencode --platform cursor`)                     |
 
 If any sub-tool fails during initialization, `uf init` displays the actual error output from the failing command so you can diagnose the issue directly.
 
@@ -54,11 +54,11 @@ Install and configure the Unbound Force development toolchain. Detects existing 
 uf setup [flags]
 ```
 
-| Flag | Description |
-|------|-------------|
-| `--dir <string>` | Target directory for setup (default `.`) |
-| `--dry-run` | Print actions without executing |
-| `--yes` | Skip confirmation prompts (does **not** auto-confirm third-party curl installers — see below) |
+| Flag             | Description                                                                                   |
+| ---------------- | --------------------------------------------------------------------------------------------- |
+| `--dir <string>` | Target directory for setup (default `.`)                                                      |
+| `--dry-run`      | Print actions without executing                                                               |
+| `--yes`          | Skip confirmation prompts (does **not** auto-confirm third-party curl installers — see below) |
 
 ### Install cascade
 
@@ -110,9 +110,9 @@ Exit code 0 when all checks pass or only warnings exist. Exit code 1 when any ch
 uf doctor [flags]
 ```
 
-| Flag | Description |
-|------|-------------|
-| `--dir <string>` | Target directory to check (default `.`) |
+| Flag                | Description                                      |
+| ------------------- | ------------------------------------------------ |
+| `--dir <string>`    | Target directory to check (default `.`)          |
 | `--format <string>` | Output format: `text` or `json` (default `text`) |
 
 ### Platform-aware install hints
@@ -143,11 +143,11 @@ uf config [command] [flags]
 
 ### Subcommands
 
-| Subcommand | Description |
-|------------|-------------|
-| `init` | Create or update `.uf/config.yaml` |
-| `show` | Display effective configuration after all layers merge |
-| `validate` | Validate config file against known field values |
+| Subcommand | Description                                            |
+| ---------- | ------------------------------------------------------ |
+| `init`     | Create or update `.uf/config.yaml`                     |
+| `show`     | Display effective configuration after all layers merge |
+| `validate` | Validate config file against known field values        |
 
 ### config init
 
@@ -155,8 +155,8 @@ uf config [command] [flags]
 uf config init [flags]
 ```
 
-| Flag | Description |
-|------|-------------|
+| Flag             | Description                    |
+| ---------------- | ------------------------------ |
 | `--dir <string>` | Target directory (default `.`) |
 
 ### config show
@@ -165,9 +165,9 @@ uf config init [flags]
 uf config show [flags]
 ```
 
-| Flag | Description |
-|------|-------------|
-| `--dir <string>` | Target directory (default `.`) |
+| Flag                | Description                                      |
+| ------------------- | ------------------------------------------------ |
+| `--dir <string>`    | Target directory (default `.`)                   |
 | `--format <string>` | Output format: `text` or `json` (default `text`) |
 
 ### config validate
@@ -176,9 +176,9 @@ uf config show [flags]
 uf config validate [flags]
 ```
 
-| Flag | Description |
-|------|-------------|
-| `--dir <string>` | Target directory (default `.`) |
+| Flag                | Description                                      |
+| ------------------- | ------------------------------------------------ |
+| `--dir <string>`    | Target directory (default `.`)                   |
 | `--format <string>` | Output format: `text` or `json` (default `text`) |
 
 ## sandbox
@@ -191,15 +191,15 @@ uf sandbox [command] [flags]
 
 ### Subcommands
 
-| Subcommand | Description |
-|------------|-------------|
-| `create` | Provision a persistent sandbox workspace |
-| `start` | Launch or resume a sandbox |
-| `stop` | Stop a sandbox (preserves persistent state) |
-| `attach` | Connect to a running sandbox's TUI |
-| `extract` | Extract changes from the sandbox as git patches |
-| `status` | Show sandbox workspace status |
-| `destroy` | Permanently delete a sandbox workspace |
+| Subcommand | Description                                     |
+| ---------- | ----------------------------------------------- |
+| `create`   | Provision a persistent sandbox workspace        |
+| `start`    | Launch or resume a sandbox                      |
+| `stop`     | Stop a sandbox (preserves persistent state)     |
+| `attach`   | Connect to a running sandbox's TUI              |
+| `extract`  | Extract changes from the sandbox as git patches |
+| `status`   | Show sandbox workspace status                   |
+| `destroy`  | Permanently delete a sandbox workspace          |
 
 Key flags available on sandbox subcommands:
 
@@ -224,18 +224,18 @@ Start a local reverse proxy that serves the Anthropic Messages API. The gateway 
 uf gateway [flags]
 ```
 
-| Flag | Description |
-|------|-------------|
-| `--detach` | Run gateway in the background |
-| `--port <int>` | Port to listen on (default `53147`) |
+| Flag                  | Description                                                                       |
+| --------------------- | --------------------------------------------------------------------------------- |
+| `--detach`            | Run gateway in the background                                                     |
+| `--port <int>`        | Port to listen on (default `53147`)                                               |
 | `--provider <string>` | Provider override: `anthropic`, `vertex`, or `bedrock` (auto-detected if omitted) |
 
 ### Subcommands
 
-| Subcommand | Description |
-|------------|-------------|
-| `status` | Show gateway status |
-| `stop` | Stop a running gateway |
+| Subcommand | Description            |
+| ---------- | ---------------------- |
+| `status`   | Show gateway status    |
+| `stop`     | Stop a running gateway |
 
 ## ollama-proxy
 

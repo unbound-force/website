@@ -1,6 +1,6 @@
 ## Why
 
-The `uf sandbox` command shipped in v0.12.0 with 7 subcommands, two mount modes, UID mapping, and persistent workspaces. The reference documentation (PR #79) covers the command surface, but there is no narrative content explaining *why* containerized agent sessions matter. Engineers evaluating Unbound Force need a concrete walkthrough showing the round-trip workflow: start a sandbox, work inside it, extract changes back to the host. The security benefits (read-only mounts, no credential forwarding, resource limits) are significant but not self-evident from a reference page.
+The `uf sandbox` command shipped in v0.12.0 with 7 subcommands, two mount modes, UID mapping, and persistent workspaces. The reference documentation (PR #79) covers the command surface, but there is no narrative content explaining _why_ containerized agent sessions matter. Engineers evaluating Unbound Force need a concrete walkthrough showing the round-trip workflow: start a sandbox, work inside it, extract changes back to the host. The security benefits (read-only mounts, no credential forwarding, resource limits) are significant but not self-evident from a reference page.
 
 This change addresses [GitHub issue #40](https://github.com/unbound-force/website/issues/40).
 
@@ -19,12 +19,15 @@ The blog post follows the content pack narrative arc (BA-001: problem → approa
 ## Capabilities
 
 ### New Capabilities
+
 - `blog/sandbox-isolation`: Blog post covering sandbox motivation, walkthrough, and security model
 
 ### Modified Capabilities
+
 - None
 
 ### Removed Capabilities
+
 - None
 
 ## Impact

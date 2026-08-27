@@ -35,5 +35,5 @@
 - [x] 4.2 Run `npm run dev` and visually verify the three updated pages render correctly with all new content visible and properly formatted.
 
 - [x] 4.3 Verify consistency across all three pages -- ensure env var names, default values, and R2 language are identical wherever they appear.
-<!-- spec-review: passed -->
-<!-- code-review: passed -->
+  <!-- spec-review: passed -->
+  <!-- code-review: passed -->

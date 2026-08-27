@@ -7,12 +7,14 @@ This change updates 3 Markdown files to add specify initialization as a document
 ## Goals / Non-Goals
 
 ### Goals
+
 - Document that `uf init` performs specify initialization as a sub-tool step
 - Describe the behavioral model: offline (no network calls), directory-scoped (`.specify/` created in current directory), OpenCode-targeted
 - Maintain consistent abstraction level across all three affected pages
 - Frame the change from the user's perspective, not as internal implementation detail
 
 ### Non-Goals
+
 - Documenting `specify init` as a standalone user-facing command (users run `uf init`, not `specify init`)
 - Adding troubleshooting content for `.specify/` creation failures (out of scope unless a natural fit exists in the existing structure)
 - Creating new pages or sections — all changes fit within existing content structure

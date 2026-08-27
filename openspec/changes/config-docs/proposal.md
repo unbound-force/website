@@ -18,12 +18,15 @@ A new documentation page for the `uf config` command covering:
 ## Capabilities
 
 ### New Capabilities
+
 - `docs/reference/config`: Comprehensive configuration documentation page
 
 ### Modified Capabilities
+
 - `docs/getting-started/common-workflows`: Updated to reference `uf config` commands alongside existing `.uf/config.yaml` mentions
 
 ### Removed Capabilities
+
 - None
 
 ## Impact

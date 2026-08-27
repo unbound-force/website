@@ -16,13 +16,13 @@ contributors: ["Unbound Force"]
 
 Three independent teams — OpenAI, Anthropic, and ThoughtWorks — each spent months building AI agent harnesses. They started from different assumptions, used different architectures, and optimized for different goals. They arrived at the same five conclusions.
 
-Yanli Liu documented this convergence in ["Harness Engineering: What Every AI Engineer Needs to Know in 2026" (*AI Advances*, Apr 2026)](https://ai.gopubby.com/harness-engineering-what-every-ai-engineer-needs-to-know-in-2026-0ab649e5686a), cataloging the principles that every team discovers when they move from toy demos to production-grade agent systems. The article has 1.7K claps for a reason: if you have built an agent harness, you recognize every finding immediately.
+Yanli Liu documented this convergence in ["Harness Engineering: What Every AI Engineer Needs to Know in 2026" (_AI Advances_, Apr 2026)](https://ai.gopubby.com/harness-engineering-what-every-ai-engineer-needs-to-know-in-2026-0ab649e5686a), cataloging the principles that every team discovers when they move from toy demos to production-grade agent systems. The article has 1.7K claps for a reason: if you have built an agent harness, you recognize every finding immediately.
 
 Unbound Force implements all five principles. In several cases, it goes further than any of the three teams Liu describes. This post walks through each principle with concrete evidence from the codebase.
 
 ## Principle 1: Context Beats Instructions
 
-**The finding**: Showing the agent real file paths, real code patterns, and real progress consistently outperforms abstract instructions. OpenAI learned to "give a map, not a manual." Anthropic built structured feature lists. ThoughtWorks calls it "feedforward" (Liu, "Harness Engineering," *AI Advances*, Apr 2026).
+**The finding**: Showing the agent real file paths, real code patterns, and real progress consistently outperforms abstract instructions. OpenAI learned to "give a map, not a manual." Anthropic built structured feature lists. ThoughtWorks calls it "feedforward" (Liu, "Harness Engineering," _AI Advances_, Apr 2026).
 
 **How Unbound Force implements it**: Through three layers of context, each serving a different purpose.
 
@@ -36,7 +36,7 @@ Most teams implement one of these layers. Unbound Force stacks all three: static
 
 ## Principle 2: Planning and Execution Must Be Separated
 
-**The finding**: Every team discovered that letting an agent plan and execute in the same pass produces unreliable output. The planning step must be separate, with its output reviewed before implementation begins (Liu, "Harness Engineering," *AI Advances*, Apr 2026).
+**The finding**: Every team discovered that letting an agent plan and execute in the same pass produces unreliable output. The planning step must be separate, with its output reviewed before implementation begins (Liu, "Harness Engineering," _AI Advances_, Apr 2026).
 
 **How Unbound Force implements it**: Through an 8-phase pipeline with hard gates between phases.
 
@@ -47,6 +47,7 @@ constitution → specify → clarify → plan → tasks → analyze → checklis
 This is not a suggestion — it is enforced. If an agent attempts to write code during the planning phase, it triggers a process violation and must stop. The phase boundaries are structural: you cannot plan before you specify, cannot create tasks before you plan, and cannot implement before spec review passes.
 
 The enforcement mechanisms are concrete:
+
 - Branch naming conventions gate pipeline entry
 - All spec artifacts must be committed before implementation begins (the Spec Commit Gate)
 - The [/uf.unleash](/docs/getting-started/common-workflows/#autonomous-pipeline-unleash) command has six defined exit points where human judgment is required
@@ -55,7 +56,7 @@ Liu's article describes plan/execute separation as a two-phase concern. Unbound 
 
 ## Principle 3: Feedback Loops Are Non-Negotiable
 
-**The finding**: All three teams agree that a system without a feedback mechanism is "just a prompt with extra steps." They disagree on whether feedback should come from automated tests, another LLM, or both. ThoughtWorks says: use both, layered — computational feedback first (fast, cheap, deterministic), inferential feedback second (slow, expensive, semantic) (Liu, "Harness Engineering," *AI Advances*, Apr 2026).
+**The finding**: All three teams agree that a system without a feedback mechanism is "just a prompt with extra steps." They disagree on whether feedback should come from automated tests, another LLM, or both. ThoughtWorks says: use both, layered — computational feedback first (fast, cheap, deterministic), inferential feedback second (slow, expensive, semantic) (Liu, "Harness Engineering," _AI Advances_, Apr 2026).
 
 **How Unbound Force implements it**: Both, layered — exactly what ThoughtWorks recommends.
 
@@ -69,7 +70,7 @@ The Anthropic finding — separate the doer from the judge — is fully realized
 
 ## Principle 4: One Thing at a Time
 
-**The finding**: Agents that try to do too much at once lose coherence. Forced incrementalism — where the agent completes one unit of work before starting the next — is universal across every successful implementation (Liu, "Harness Engineering," *AI Advances*, Apr 2026).
+**The finding**: Agents that try to do too much at once lose coherence. Forced incrementalism — where the agent completes one unit of work before starting the next — is universal across every successful implementation (Liu, "Harness Engineering," _AI Advances_, Apr 2026).
 
 **How Unbound Force implements it**: At two levels.
 
@@ -79,7 +80,7 @@ At the specification level, the 8-phase pipeline enforces incrementalism on the 
 
 ## Principle 5: The Codebase Is the Documentation
 
-**The finding**: Nobody maintains a separate knowledge base for the agent. The repository is the single source of truth. Teams that invest in code organization, clear module boundaries, and embedded documentation get better agent performance for free (Liu, "Harness Engineering," *AI Advances*, Apr 2026).
+**The finding**: Nobody maintains a separate knowledge base for the agent. The repository is the single source of truth. Teams that invest in code organization, clear module boundaries, and embedded documentation get better agent performance for free (Liu, "Harness Engineering," _AI Advances_, Apr 2026).
 
 **How Unbound Force implements it**: All agent context lives in the repository.
 

@@ -5,6 +5,7 @@
 The website MUST include a documentation page at `content/docs/getting-started/architecture.md` that presents the overall system architecture and design philosophy of Unbound Force.
 
 The page MUST cover the following architectural concepts:
+
 1. Three-tier context system (static docs, versioned rules, dynamic semantic memory)
 2. Layered governance model (constitution > convention packs > agent personas > commands > CI)
 3. Control matrix (feedforward/feedback x computational/inferential)

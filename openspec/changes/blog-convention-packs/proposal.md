@@ -11,12 +11,15 @@ GitHub Issue: #93
 ## Capabilities
 
 ### New Capabilities
+
 - `blog-convention-packs`: Blog post on convention packs as reusable harness templates
 
 ### Modified Capabilities
+
 - None
 
 ### Removed Capabilities
+
 - None
 
 ## Impact
