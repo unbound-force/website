@@ -134,15 +134,15 @@ Both `--ai=opencode` and `--ai=claude` are fully supported AI backends for `gaze
 
 ### CLI Flags
 
-| Flag                   | Commands                      | Description                                                                                                                                                    |
-| ---------------------- | ----------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `--include-unexported` | `analyze`, `quality`          | Include unexported functions in the analysis. Auto-detected per-package for `package main` (see note below). |
-| `--ai-mapper`          | `quality`, `crap`             | Enable AI-assisted assertion mapping as a 5th pass (confidence 50). Uses the configured AI adapter to evaluate structurally disconnected assertions. |
-| `--max-gaze-crapload`  | `report`                      | Fail if more than N functions exceed the GazeCRAP threshold. Similar to `--max-crapload` but uses contract coverage instead of line coverage. |
-| `--coverprofile`       | `report`                      | Pass a pre-generated `go test -coverprofile` to skip Gaze's internal test run. See the [Tester guide](/docs/getting-started/tester/) for the CI pattern. |
-| `--analyzer <binary>`  | `crap`, `quality`, `report`   | Specify an external analyzer binary implementing the JSON-RPC 2.0 protocol. See [External Analyzers](#external-analyzers). |
-| `--language <lang>`    | `crap`, `quality`, `report`   | Specify the target language when using an external analyzer (e.g., `python`, `javascript`). |
-| `--test-short`         | `crap`, `report`, `self-check`| Pass `-short` to `go test` during Gaze's internal coverage run. By default, Gaze now runs the full test suite. |
+| Flag                   | Commands                       | Description                                                                                                                                              |
+| ---------------------- | ------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `--include-unexported` | `analyze`, `quality`           | Include unexported functions in the analysis. Auto-detected per-package for `package main` (see note below).                                             |
+| `--ai-mapper`          | `quality`, `crap`              | Enable AI-assisted assertion mapping as a 5th pass (confidence 50). Uses the configured AI adapter to evaluate structurally disconnected assertions.     |
+| `--max-gaze-crapload`  | `report`                       | Fail if more than N functions exceed the GazeCRAP threshold. Similar to `--max-crapload` but uses contract coverage instead of line coverage.            |
+| `--coverprofile`       | `report`                       | Pass a pre-generated `go test -coverprofile` to skip Gaze's internal test run. See the [Tester guide](/docs/getting-started/tester/) for the CI pattern. |
+| `--analyzer <binary>`  | `crap`, `quality`, `report`    | Specify an external analyzer binary implementing the JSON-RPC 2.0 protocol. See [External Analyzers](#external-analyzers).                               |
+| `--language <lang>`    | `crap`, `quality`, `report`    | Specify the target language when using an external analyzer (e.g., `python`, `javascript`).                                                              |
+| `--test-short`         | `crap`, `report`, `self-check` | Pass `-short` to `go test` during Gaze's internal coverage run. By default, Gaze now runs the full test suite.                                           |
 
 **`--include-unexported` auto-detection**: When analyzing multiple packages, each package is checked individually for `package main`. CLI entry points are included automatically without needing this flag.
 
@@ -224,16 +224,16 @@ Gaze is structured as a set of focused packages:
 | `docscan`  | Documentation file scanner for enhanced classification            |
 | `aireport` | AI CLI adapter integration for `gaze report` AI pipeline          |
 | `scaffold` | OpenCode file scaffolding for `/gaze` command setup               |
-| `protocol` | JSON-RPC 2.0 external analyzer protocol implementation           |
+| `protocol` | JSON-RPC 2.0 external analyzer protocol implementation            |
 | `provider` | Analyzer provider abstraction and discovery logic                 |
 | `adapter`  | Language-specific adapter wiring for external analyzers           |
-| `cliutil`  | Shared CLI utilities and flag handling                             |
+| `cliutil`  | Shared CLI utilities and flag handling                            |
 
 The analysis engine detects side effects across three implemented tiers (P0, P1, P2), covering the most common and impactful effect types — from return values and error returns through mutations, I/O, channel operations, and more.
 
 ### Universal Side Effect Types
 
-With the external analyzer protocol, Gaze's taxonomy has expanded to 48+ types including 10 universal types that apply across languages:
+With the external analyzer protocol, Gaze's taxonomy has expanded to dozens of types including 10 universal types that apply across languages:
 
 - **P0**: `ErrorSignal` — language-agnostic error signaling (exceptions, error returns, panics)
 - **P1**: `GeneratorYield`, `ContainerMutation`, `StreamOutput` — iterator/generator effects, collection mutations, stream writes
@@ -241,7 +241,7 @@ With the external analyzer protocol, Gaze's taxonomy has expanded to 48+ types i
 
 Each side effect can carry a `Detail` metadata field (`map[string]any`) for language-specific context that external analyzers can populate.
 
-For the complete type reference with all 48+ types, see the [protocol documentation](https://github.com/unbound-force/gaze/blob/main/docs/protocol.md).
+For the complete type reference, see the [protocol documentation](https://github.com/unbound-force/gaze/blob/main/docs/protocol.md).
 
 ### Analysis Engine Details
 
@@ -266,13 +266,17 @@ Gaze is actively developed. The current scope has known boundaries:
 
 ## Migration Notes
 
-If you are upgrading from an earlier version of Gaze, the following breaking changes may affect your workflow.
+If you are upgrading to Gaze v1.7.0, the following breaking changes may affect your workflow.
 
 ### JSON Output Changes
 
 - The `go_version` field in all JSON output has been renamed to `language_version`. Update any scripts or CI pipelines that parse this field.
 - A new `language` field has been added to JSON output (e.g., `"language": "go"`).
-- Seven language-neutral `SideEffectType` aliases have been added: `AsyncTaskSpawn`, `FFICall`, `ErrorSignal`, `GeneratorYield`, `ContainerMutation`, `StreamOutput`, and `ResourceManagement`. These are equivalent to existing Go-specific types but use language-agnostic names.
+- Language-neutral `SideEffectType` aliases have been added (e.g., `AsyncTaskSpawn`, `AsyncMessageSend`, `BarrierOp`, `PanicRecovery`, `FFICall`). These are equivalent to existing Go-specific types but use language-agnostic names. See the [protocol documentation](https://github.com/unbound-force/gaze/blob/main/docs/protocol.md) for the full list.
+
+### Protocol Version Bump
+
+- The external analyzer protocol version has been bumped to **v1.1.0**. Existing analyzers implementing v1.0.0 remain compatible; the bump reflects new optional fields (`language`, `Detail` metadata) that v1.0.0 analyzers can safely ignore.
 
 ### Coverage Behavior Change
 

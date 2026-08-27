@@ -36,7 +36,7 @@ gaze report ./... --ai=opencode    # or --ai=claude
 
 | Command        | What It Produces                                                               |
 | -------------- | ------------------------------------------------------------------------------ |
-| `gaze analyze` | Side effect inventory (48+ types across 5 priority tiers)                      |
+| `gaze analyze` | Side effect inventory (dozens of types across 5 priority tiers)                |
 | `gaze quality` | Contract coverage percentage and over-specification score                      |
 | `gaze crap`    | CRAP score (complexity + coverage risk) and GazeCRAP (using contract coverage) |
 | `gaze report`  | Combined analysis formatted as a human-readable markdown report via AI         |
