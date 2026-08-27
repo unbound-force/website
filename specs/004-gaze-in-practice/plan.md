@@ -23,13 +23,13 @@ Both deliverables use real data from `temp/tmp.md` — no fabricated numbers. Th
 
 ## Constitution Check
 
-*GATE: Must pass before implementation.*
+_GATE: Must pass before implementation._
 
-| Principle | Status | Evidence |
-|-----------|--------|----------|
-| I. Content Accuracy | PASS | All data is reproduced verbatim from actual Gaze output (`temp/tmp.md`). No features are fabricated. Warnings about insufficient data are included honestly. Gaze version (v1.2.3) and date (2026-03-02) are identified so content is understood as a point-in-time snapshot. |
-| II. Minimal Footprint | PASS | No custom templates, layouts, CSS, or dependencies. One new Markdown file and one section addition to an existing Markdown file. Uses standard Doks table and code block rendering. |
-| III. Visitor Clarity | PASS | Blog post explains each section of real output for developers evaluating Gaze. Docs page gets a quick visual preview. Cross-links connect the blog post, docs page, and existing "Why Contract Coverage" article. Blog post is reachable in two clicks from homepage (navbar → Blog → article, or "Latest Articles" → article). |
+| Principle             | Status | Evidence                                                                                                                                                                                                                                                                                                                        |
+| --------------------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| I. Content Accuracy   | PASS   | All data is reproduced verbatim from actual Gaze output (`temp/tmp.md`). No features are fabricated. Warnings about insufficient data are included honestly. Gaze version (v1.2.3) and date (2026-03-02) are identified so content is understood as a point-in-time snapshot.                                                   |
+| II. Minimal Footprint | PASS   | No custom templates, layouts, CSS, or dependencies. One new Markdown file and one section addition to an existing Markdown file. Uses standard Doks table and code block rendering.                                                                                                                                             |
+| III. Visitor Clarity  | PASS   | Blog post explains each section of real output for developers evaluating Gaze. Docs page gets a quick visual preview. Cross-links connect the blog post, docs page, and existing "Why Contract Coverage" article. Blog post is reachable in two clicks from homepage (navbar → Blog → article, or "Latest Articles" → article). |
 
 No violations. No complexity tracking needed.
 

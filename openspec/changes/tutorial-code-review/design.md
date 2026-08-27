@@ -5,6 +5,7 @@ The website has reference documentation for both review commands in `common-work
 ## Goals / Non-Goals
 
 ### Goals
+
 - Create a step-by-step tutorial covering both review commands in sequence
 - Show expected output at each step (fenced `text` code blocks)
 - Include the decision table for quick command selection
@@ -12,6 +13,7 @@ The website has reference documentation for both review commands in `common-work
 - Cover CI causality analysis with a concrete example
 
 ### Non-Goals
+
 - Duplicate the full command reference (flags, phases) — link to common-workflows docs
 - Duplicate the blog post's narrative on CI causality — link to the blog post
 - Cover Gaze integration in depth (optional feature, not required for the tutorial)
@@ -34,6 +36,7 @@ The website has reference documentation for both review commands in `common-work
 ## Content Sources
 
 Authoritative upstream sources:
+
 - `/review-council`: `unbound-force/unbound-force/.opencode/command/review-council.md`
 - `/review-pr`: `unbound-force/unbound-force/.opencode/command/review-pr.md`
 - Comparison table: `content/docs/getting-started/common-workflows.md` (if PR #74 merged)

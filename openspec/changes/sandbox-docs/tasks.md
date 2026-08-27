@@ -39,5 +39,5 @@
 - [ ] 6.3 Run `npm run dev` and verify sandbox page renders correctly with all sections
 - [x] 6.4 Verify page appears in Reference section navigation
 - [ ] 6.5 Verify both light and dark mode rendering
-<!-- spec-review: passed -->
-<!-- code-review: passed -->
+  <!-- spec-review: passed -->
+  <!-- code-review: passed -->

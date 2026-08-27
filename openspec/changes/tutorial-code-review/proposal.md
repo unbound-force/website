@@ -19,12 +19,15 @@ A new tutorial page at `content/docs/getting-started/code-review-tutorial.md` co
 ## Capabilities
 
 ### New Capabilities
+
 - `docs/getting-started/code-review-tutorial`: Tutorial page for the complete code review lifecycle
 
 ### Modified Capabilities
+
 - None
 
 ### Removed Capabilities
+
 - None
 
 ## Impact

@@ -223,12 +223,12 @@ uf config show --format json
 
 ## Summary
 
-| Step | Command | Purpose |
-|------|---------|---------|
-| Create | `uf config init` | Generate `.uf/config.yaml` with commented defaults |
-| Edit | Open `.uf/config.yaml` | Uncomment and change the settings you need |
-| Validate | `uf config validate` | Catch typos and invalid values |
-| Verify | `uf config show` | See the effective merged configuration |
+| Step     | Command                | Purpose                                            |
+| -------- | ---------------------- | -------------------------------------------------- |
+| Create   | `uf config init`       | Generate `.uf/config.yaml` with commented defaults |
+| Edit     | Open `.uf/config.yaml` | Uncomment and change the settings you need         |
+| Validate | `uf config validate`   | Catch typos and invalid values                     |
+| Verify   | `uf config show`       | See the effective merged configuration             |
 
 ## See Also
 

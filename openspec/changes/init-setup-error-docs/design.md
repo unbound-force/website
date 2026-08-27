@@ -7,11 +7,13 @@ The website's CLI reference (`content/docs/reference/cli.md`) and developer guid
 ## Goals / Non-Goals
 
 ### Goals
+
 - Add error output behavior documentation to the `init` and `setup` sections of the CLI reference page
 - Add an error output note to the Sub-Tool Initialization section of the developer guide
 - Keep additions minimal — one sentence per location
 
 ### Non-Goals
+
 - Creating a changelog or release notes infrastructure (no such infrastructure exists; tracked separately)
 - Adding troubleshooting pages (no existing troubleshooting content references the old generic error messages — confirmed by triage search)
 - Documenting specific error messages or failure modes (error output is tool-dependent and varies)

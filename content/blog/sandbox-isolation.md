@@ -126,14 +126,14 @@ uf sandbox attach    # reconnect to a running sandbox's TUI
 
 The sandbox provides multiple isolation layers:
 
-| Property | Description |
-|----------|-------------|
-| **Rootless Podman** | Container runs without root privileges on the host |
-| **Read-only mounts** | Isolated mode mounts the project read-only (default) |
-| **No push credentials** | Git push credentials are never forwarded to the container |
-| **Resource limits** | Memory (default 8g) and CPU (default 4) limits prevent runaway processes |
-| **SELinux** | Auto-detects SELinux and applies `:Z` volume labels on enforcing systems |
-| **Non-root user** | Container runs as UID 1000 (non-root) inside the namespace |
+| Property                | Description                                                              |
+| ----------------------- | ------------------------------------------------------------------------ |
+| **Rootless Podman**     | Container runs without root privileges on the host                       |
+| **Read-only mounts**    | Isolated mode mounts the project read-only (default)                     |
+| **No push credentials** | Git push credentials are never forwarded to the container                |
+| **Resource limits**     | Memory (default 8g) and CPU (default 4) limits prevent runaway processes |
+| **SELinux**             | Auto-detects SELinux and applies `:Z` volume labels on enforcing systems |
+| **Non-root user**       | Container runs as UID 1000 (non-root) inside the namespace               |
 
 The agent can read your code but cannot: modify your files (isolated mode), push to your remote, consume unbounded resources, or escalate privileges. The blast radius of any agent mistake is contained to a disposable container.
 

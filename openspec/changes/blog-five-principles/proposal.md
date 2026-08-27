@@ -13,12 +13,15 @@ GitHub Issue: #89
 ## Capabilities
 
 ### New Capabilities
+
 - `blog-five-principles`: A blog post presenting Unbound Force's system architecture through the lens of five convergence principles discovered independently by OpenAI, Anthropic, and ThoughtWorks
 
 ### Modified Capabilities
+
 - None
 
 ### Removed Capabilities
+
 - None
 
 ## Impact

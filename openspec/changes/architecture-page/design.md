@@ -7,6 +7,7 @@ The proposal (proposal.md) established constitution alignment: Content Accuracy 
 ## Goals / Non-Goals
 
 ### Goals
+
 - Present the unified system architecture in a single page that connects existing concepts
 - Cover the six key architectural concepts: three-tier context, layered governance, control matrix, doer/judge separation, plan/execute separation, composability
 - Frame content for a website audience ("why should I care") rather than raw technical detail
@@ -14,6 +15,7 @@ The proposal (proposal.md) established constitution alignment: Content Accuracy 
 - Cross-reference existing pages (constitution, developer, knowledge, common-workflows, team pages) where those pages contain deeper detail
 
 ### Non-Goals
+
 - Rebranding around "harness engineering" -- the superhero team identity remains primary
 - Reproducing the full harness engineering analysis -- this is a website page, not an internal document
 - Adding custom HTML, diagrams, or interactive elements -- pure Markdown only

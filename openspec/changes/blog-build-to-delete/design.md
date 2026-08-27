@@ -5,12 +5,14 @@ Liu's article includes a "build to delete" section about harness decay. The anal
 ## Goals / Non-Goals
 
 ### Goals
+
 - Explain the harness decay concept with concrete examples
 - Classify Unbound Force components into decay-resistant and decay-prone categories
 - Provide a practical pruning methodology
 - Be honest about the system's weight
 
 ### Non-Goals
+
 - Modifying existing pages or components
 - Making predictions about specific model versions
 - Custom HTML or styling

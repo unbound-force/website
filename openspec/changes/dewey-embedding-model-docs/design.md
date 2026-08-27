@@ -11,6 +11,7 @@ The default embedding model remains `granite-embedding:30m` -- the R2 model is n
 ## Goals / Non-Goals
 
 ### Goals
+
 - Document `DEWEY_CHUNK_MAX_CHARS` env var with its default value (12288) and purpose
 - Document `embedding.max_chunk_chars` config field in the YAML config example
 - Document the `dewey doctor` legacy model advisory
@@ -18,6 +19,7 @@ The default embedding model remains `granite-embedding:30m` -- the R2 model is n
 - Keep all existing content accurate -- additive changes only
 
 ### Non-Goals
+
 - Changing the default model in installation commands (R2 is not yet on Ollama)
 - Adding new pages or sections -- all changes fit within existing page structures
 - Updating `ollama pull` commands (will be a follow-up when R2 is published)

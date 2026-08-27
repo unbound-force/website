@@ -5,6 +5,7 @@ The website has a gateway reference page (PR #77) covering the command surface. 
 ## Goals / Non-Goals
 
 ### Goals
+
 - Write a blog post following the BA-001 narrative arc (problem → approach → evidence → CTA)
 - Lead with "your container sees localhost, not Google Cloud" per BA-007
 - Include a concrete before/after comparison (6 env vars → 2)
@@ -12,6 +13,7 @@ The website has a gateway reference page (PR #77) covering the command surface. 
 - Cover token refresh as a key reliability feature
 
 ### Non-Goals
+
 - Duplicate the reference docs (command flags, full Vertex translation details) — link to them instead
 - Deep SigV4 signing implementation details (internal concern)
 - Performance benchmarks or latency analysis
@@ -34,6 +36,7 @@ The website has a gateway reference page (PR #77) covering the command surface. 
 ## Content Sources
 
 Authoritative upstream sources:
+
 - Gateway implementation: `unbound-force/unbound-force/internal/gateway/` (provider.go, refresh.go, gateway.go, sse.go)
 - CLI help: `uf gateway --help`
 - Specs: `unbound-force/unbound-force/specs/033-gateway-command/`, `unbound-force/unbound-force/specs/034-gateway-vertex-translation/`

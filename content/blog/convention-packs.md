@@ -45,13 +45,13 @@ Each rule has three components:
 
 Unbound Force ships with packs for different domains:
 
-| Pack | Domain | Example Rules |
-|------|--------|---------------|
-| `default.md` | All projects | Commit message format, PR conventions, error handling patterns |
-| `go.md` | Go projects | `gofmt`, import organization, `Options`/`Result` pattern, `embed.FS` for assets |
-| `content.md` | Content/docs | Frontmatter requirements, heading structure, link conventions |
-| `typescript.md` | TypeScript projects | Formatting, type safety, module patterns |
-| `severity.md` | Quality gates | CRAP score thresholds, coverage requirements, auto-fix policies |
+| Pack            | Domain              | Example Rules                                                                   |
+| --------------- | ------------------- | ------------------------------------------------------------------------------- |
+| `default.md`    | All projects        | Commit message format, PR conventions, error handling patterns                  |
+| `go.md`         | Go projects         | `gofmt`, import organization, `Options`/`Result` pattern, `embed.FS` for assets |
+| `content.md`    | Content/docs        | Frontmatter requirements, heading structure, link conventions                   |
+| `typescript.md` | TypeScript projects | Formatting, type safety, module patterns                                        |
+| `severity.md`   | Quality gates       | CRAP score thresholds, coverage requirements, auto-fix policies                 |
 
 ## The Extension Pattern
 
@@ -87,7 +87,7 @@ The structure of convention packs — numbered rules, explicit severity, concret
 
 ## Packs as Harness Templates
 
-ThoughtWorks' agent taxonomy includes the concept of "harness templates" — reusable patterns that can be deployed across projects to establish consistent agent behavior (as described in Yanli Liu, "Harness Engineering," *AI Advances*, Apr 2026). Convention packs are a direct implementation of this concept.
+ThoughtWorks' agent taxonomy includes the concept of "harness templates" — reusable patterns that can be deployed across projects to establish consistent agent behavior (as described in Yanli Liu, "Harness Engineering," _AI Advances_, Apr 2026). Convention packs are a direct implementation of this concept.
 
 The key insight is that coding standards are a property of the organization, not the project. An organization that values error chain preservation values it in every Go project, not just the one where someone wrote it down. Convention packs make organizational standards portable, versioned, and consistently deployed — the same way a CI workflow template ensures every project runs the same quality checks.
 

@@ -16,15 +16,18 @@ Update three Dewey documentation pages to reflect the embedding model upgrade:
 ## Capabilities
 
 ### New Capabilities
+
 - `DEWEY_CHUNK_MAX_CHARS documentation`: Environment variable reference for the new chunk size override
 - `max_chunk_chars config documentation`: Configuration field reference for embedding chunk size limits
 - `Legacy model advisory documentation`: Explanation of the `dewey doctor` informational note about Granite Embedding R2
 
 ### Modified Capabilities
+
 - `Embedding Model section`: Updated to mention chunk size configurability and the R2 upgrade path
 - `Doctor section`: Updated to include the legacy model advisory diagnostic
 
 ### Removed Capabilities
+
 - None
 
 ## Impact

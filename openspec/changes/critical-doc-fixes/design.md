@@ -5,11 +5,13 @@ The website has four factual errors or stale data points in its getting-started 
 ## Goals / Non-Goals
 
 ### Goals
+
 - Correct all four factual errors in a single change
 - Ensure corrected text matches the shipped command behavior (source of truth: `.opencode/command/*.md` in the `unbound-force` repo)
 - Preserve page structure, frontmatter, and surrounding content
 
 ### Non-Goals
+
 - Restructuring the getting-started section
 - Adding new documentation pages
 - Updating command reference tables (covered by separate CLI reference change)

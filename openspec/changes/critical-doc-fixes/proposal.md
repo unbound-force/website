@@ -19,9 +19,11 @@ Four surgical text corrections across four documentation pages:
 ## Capabilities
 
 ### New Capabilities
+
 - None
 
 ### Modified Capabilities
+
 - `docs/getting-started/common-workflows`: Corrected `/finale` and `/unleash` descriptions
 - `docs/getting-started/quick-start`: Corrected `/finale` description (both code blocks)
 - `docs/getting-started/developer`: Corrected `/finale` description (4 locations), file count, and command breakdown
@@ -29,6 +31,7 @@ Four surgical text corrections across four documentation pages:
 - `blog/unleash-in-practice`: Corrected `/finale` description in "The Complete Loop" section
 
 ### Removed Capabilities
+
 - None
 
 ## Impact

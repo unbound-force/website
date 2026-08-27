@@ -12,12 +12,15 @@ GitHub Issue: #96
 ## Capabilities
 
 ### New Capabilities
+
 - None
 
 ### Modified Capabilities
-- Enhanced navigation between constitution.md, the-divisor.md, developer.md, common-workflows.md, contributing/_index.md, artifacts.md, and quick-start.md
+
+- Enhanced navigation between constitution.md, the-divisor.md, developer.md, common-workflows.md, contributing/\_index.md, artifacts.md, and quick-start.md
 
 ### Removed Capabilities
+
 - None
 
 ## Impact

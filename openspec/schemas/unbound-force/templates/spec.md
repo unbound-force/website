@@ -5,6 +5,7 @@
 <!-- requirement text using RFC 2119 language -->
 
 #### Scenario: <!-- name -->
+
 - **GIVEN** <!-- precondition -->
 - **WHEN** <!-- action -->
 - **THEN** <!-- expected outcome -->

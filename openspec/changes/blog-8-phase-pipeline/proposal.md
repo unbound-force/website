@@ -11,12 +11,15 @@ GitHub Issue: #97
 ## Capabilities
 
 ### New Capabilities
+
 - `blog-8-phase-pipeline`: Blog post explaining why plan/execute separation extends to 8 phases with hard gates
 
 ### Modified Capabilities
+
 - None
 
 ### Removed Capabilities
+
 - None
 
 ## Impact

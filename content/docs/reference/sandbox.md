@@ -34,18 +34,18 @@ uf sandbox start --detach           # start without attaching
 uf sandbox start --image my-image   # custom container image
 ```
 
-| Flag | Description |
-|------|-------------|
-| `--mode <string>` | Mount mode: `isolated` (read-only, default) or `direct` (read-write) |
-| `--detach` | Start container without attaching the TUI |
-| `--image <string>` | Container image (default from `UF_SANDBOX_IMAGE` or `quay.io/unbound-force/opencode-dev:latest`) |
-| `--memory <string>` | Container memory limit (default `8g`) |
-| `--cpus <string>` | Container CPU limit (default `4`) |
-| `--backend <string>` | Backend: `auto`, `podman`, or `che` (default `auto`) |
-| `--ide <string>` | IDE for DevPod to open after start: `none` (default), `vscode`, `openvscode`, `fleet`, `jupyternotebook`, `cursor` |
-| `--uidmap` | Use explicit UID/GID mapping (macOS escape hatch) |
+| Flag                  | Description                                                                                                                            |
+| --------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| `--mode <string>`     | Mount mode: `isolated` (read-only, default) or `direct` (read-write)                                                                  |
+| `--detach`            | Start container without attaching the TUI                                                                                              |
+| `--image <string>`    | Container image (default from `UF_SANDBOX_IMAGE` or `quay.io/unbound-force/opencode-dev:latest`)                                      |
+| `--memory <string>`   | Container memory limit (default `8g`)                                                                                                  |
+| `--cpus <string>`     | Container CPU limit (default `4`)                                                                                                      |
+| `--backend <string>`  | Backend: `auto`, `podman`, or `che` (default `auto`)                                                                                   |
+| `--ide <string>`      | IDE for DevPod to open after start: `none` (default), `vscode`, `openvscode`, `fleet`, `jupyternotebook`, `cursor`                     |
+| `--uidmap`            | Use explicit UID/GID mapping (macOS escape hatch)                                                                                      |
 | `--provider <string>` | DevPod provider name (default `podman`). References a registered DevPod provider — does not require the binary in PATH. Registered automatically by `uf setup` |
-| `--no-parent` | Mount only the project directory (disable parent directory mount) |
+| `--no-parent`         | Mount only the project directory (disable parent directory mount)                                                                      |
 
 ### sandbox stop
 
@@ -72,8 +72,8 @@ uf sandbox extract          # interactive confirmation
 uf sandbox extract --yes    # skip confirmation
 ```
 
-| Flag | Description |
-|------|-------------|
+| Flag    | Description                  |
+| ------- | ---------------------------- |
 | `--yes` | Skip the confirmation prompt |
 
 ### sandbox status
@@ -163,18 +163,18 @@ uf sandbox create --name my-project-sandbox    # custom name
 uf sandbox create --demo-ports 3000,8080       # expose demo ports
 ```
 
-| Flag | Description |
-|------|-------------|
-| `--name <string>` | Workspace name override (default `uf-sandbox-<project-name>`) |
-| `--backend <string>` | Backend: `auto`, `podman`, or `che` (default `auto`) |
-| `--demo-ports <ints>` | Additional ports to expose for demos (comma-separated) |
-| `--image <string>` | Container image (Podman only) |
-| `--memory <string>` | Memory limit (default `8g`) |
-| `--cpus <string>` | CPU limit (default `4`) |
-| `--detach` | Start without attaching the TUI |
-| `--ide <string>` | IDE for DevPod to open after creation: `none` (default), `vscode`, `openvscode`, `fleet`, `jupyternotebook`, `cursor` |
+| Flag                  | Description                                                                                                                            |
+| --------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| `--name <string>`     | Workspace name override (default `uf-sandbox-<project-name>`)                                                                          |
+| `--backend <string>`  | Backend: `auto`, `podman`, or `che` (default `auto`)                                                                                   |
+| `--demo-ports <ints>` | Additional ports to expose for demos (comma-separated)                                                                                 |
+| `--image <string>`    | Container image (Podman only)                                                                                                          |
+| `--memory <string>`   | Memory limit (default `8g`)                                                                                                            |
+| `--cpus <string>`     | CPU limit (default `4`)                                                                                                                |
+| `--detach`            | Start without attaching the TUI                                                                                                        |
+| `--ide <string>`      | IDE for DevPod to open after creation: `none` (default), `vscode`, `openvscode`, `fleet`, `jupyternotebook`, `cursor`                  |
 | `--provider <string>` | DevPod provider name (default `podman`). References a registered DevPod provider — does not require the binary in PATH. Registered automatically by `uf setup` |
-| `--uidmap` | Use explicit UID/GID mapping |
+| `--uidmap`            | Use explicit UID/GID mapping                                                                                                           |
 
 ### sandbox destroy
 
@@ -186,9 +186,9 @@ uf sandbox destroy --yes    # skip confirmation
 uf sandbox destroy --force  # destroy even if running
 ```
 
-| Flag | Description |
-|------|-------------|
-| `--yes` | Skip the confirmation prompt |
+| Flag      | Description                                    |
+| --------- | ---------------------------------------------- |
+| `--yes`   | Skip the confirmation prompt                   |
 | `--force` | Force destroy even if the workspace is running |
 
 ### Workspace Detection
@@ -223,12 +223,12 @@ uf sandbox create --backend podman  # force Podman/DevPod backend (default)
 
 Backend resolution follows a priority chain:
 
-| Priority | Source | Example |
-|----------|--------|---------|
-| 1 | CLI flag | `--backend podman` |
-| 2 | Environment variable | `UF_SANDBOX_BACKEND=podman` |
-| 3 | Config file | `sandbox.backend: podman` in `.uf/config.yaml` |
-| 4 | Auto-detect | Podman (default) |
+| Priority | Source               | Example                                           |
+| -------- | -------------------- | ------------------------------------------------- |
+| 1        | CLI flag             | `--backend podman`                                |
+| 2        | Environment variable | `UF_SANDBOX_BACKEND=podman`                       |
+| 3        | Config file          | `sandbox.backend: podman` in `.uf/config.yaml`    |
+| 4        | Auto-detect          | Podman (default)                                  |
 
 ### Eclipse Che / Dev Spaces (Legacy — Deprecated)
 
@@ -244,12 +244,12 @@ If you encounter a migration error when using `--backend che`, switch to the def
 
 The `--ide` flag controls which IDE DevPod opens after workspace creation or start. The value is resolved through a priority chain:
 
-| Priority | Source | Example |
-|----------|--------|---------|
-| 1 | CLI flag | `--ide vscode` |
-| 2 | Environment variable | `UF_SANDBOX_IDE=cursor` |
-| 3 | Config file | `sandbox.ide: vscode` in `.uf/config.yaml` |
-| 4 | Default | `none` (no IDE opened) |
+| Priority | Source               | Example                                    |
+| -------- | -------------------- | ------------------------------------------ |
+| 1        | CLI flag             | `--ide vscode`                             |
+| 2        | Environment variable | `UF_SANDBOX_IDE=cursor`                    |
+| 3        | Config file          | `sandbox.ide: vscode` in `.uf/config.yaml` |
+| 4        | Default              | `none` (no IDE opened)                     |
 
 Valid values: `none`, `vscode`, `openvscode`, `fleet`, `jupyternotebook`, `cursor`.
 
@@ -259,14 +259,14 @@ When set to a value other than `none`, DevPod opens the specified IDE and connec
 
 The sandbox provides several isolation layers:
 
-| Property | Description |
-|----------|-------------|
-| **Rootless Podman** | Container runs without root privileges on the host |
-| **Read-only mounts** | Isolated mode mounts the project read-only (default) |
-| **No push credentials** | Git push credentials are never forwarded to the container |
-| **Resource limits** | Memory (default 8g) and CPU (default 4) limits prevent runaway processes |
-| **SELinux** | Auto-detects SELinux and applies `:Z` volume labels on enforcing systems |
-| **Non-root user** | Container runs as UID 1000 (non-root) inside the namespace |
+| Property                | Description                                                              |
+| ----------------------- | ------------------------------------------------------------------------ |
+| **Rootless Podman**     | Container runs without root privileges on the host                       |
+| **Read-only mounts**    | Isolated mode mounts the project read-only (default)                     |
+| **No push credentials** | Git push credentials are never forwarded to the container                |
+| **Resource limits**     | Memory (default 8g) and CPU (default 4) limits prevent runaway processes |
+| **SELinux**             | Auto-detects SELinux and applies `:Z` volume labels on enforcing systems |
+| **Non-root user**       | Container runs as UID 1000 (non-root) inside the namespace               |
 
 ### API Key Forwarding
 

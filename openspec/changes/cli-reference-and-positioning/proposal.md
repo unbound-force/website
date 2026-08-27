@@ -17,16 +17,19 @@ This change addresses GitHub issues #62 (CLI reference page) and #68 (changelog 
 ## Capabilities
 
 ### New Capabilities
+
 - `docs/reference/cli`: Complete CLI reference page with all command groups and subcommands
 - `docs/changelog/`: Release changelog page tracking user-facing changes per version
 
 ### Modified Capabilities
+
 - `docs/getting-started/_index.md`: Stack table and heading updated to include `uf` CLI layer (4 layers)
 - `docs/getting-started/quick-start`: Stack table and prose updated to include `uf` CLI layer
 - `docs/getting-started/common-workflows.md`: Clarifying note added to Code Review persona table
 - `config/_default/menus/menus.en.toml`: Navigation updated for new reference and changelog sections
 
 ### Removed Capabilities
+
 - None
 
 ## Impact

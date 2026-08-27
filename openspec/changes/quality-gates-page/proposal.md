@@ -11,12 +11,15 @@ GitHub Issue: #94
 ## Capabilities
 
 ### New Capabilities
+
 - `quality-gates-page`: Documentation page covering the layered quality feedback stack, gatekeeping value protection, doer/judge separation, and the 3-iteration review cap
 
 ### Modified Capabilities
+
 - None
 
 ### Removed Capabilities
+
 - None
 
 ## Impact

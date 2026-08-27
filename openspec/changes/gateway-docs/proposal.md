@@ -18,12 +18,15 @@ A new documentation page for the `uf gateway` command covering:
 ## Capabilities
 
 ### New Capabilities
+
 - `docs/reference/gateway`: Comprehensive gateway documentation page
 
 ### Modified Capabilities
+
 - None (CLI reference page linkage is handled by the cli-reference-and-positioning change)
 
 ### Removed Capabilities
+
 - None
 
 ## Impact

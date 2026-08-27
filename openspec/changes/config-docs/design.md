@@ -5,6 +5,7 @@ The `uf config` command group was added via the `opsx/unified-config` change. It
 ## Goals / Non-Goals
 
 ### Goals
+
 - Document all 3 subcommands (`init`, `show`, `validate`) with usage examples
 - Explain the layered loading system with precedence rules
 - Describe the 7 configuration sections with key settings
@@ -12,6 +13,7 @@ The `uf config` command group was added via the `opsx/unified-config` change. It
 - Update `common-workflows.md` to reference `uf config` commands
 
 ### Non-Goals
+
 - Exhaustive documentation of every config key (the generated template from `uf config init` serves this purpose)
 - Tutorial-style walkthrough (tracked in GitHub issue #67: Configuration Tutorial)
 - Config migration guide from old `.uf/sandbox.yaml` format
@@ -34,6 +36,7 @@ The `uf config` command group was added via the `opsx/unified-config` change. It
 ## Content Sources
 
 Authoritative upstream source files for documentation content:
+
 - Config struct and loading: `unbound-force/unbound-force/internal/config/config.go`
 - Config init template: `unbound-force/unbound-force/internal/config/template.go`
 - Config validation: `unbound-force/unbound-force/internal/config/validate.go`

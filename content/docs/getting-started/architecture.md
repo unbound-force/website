@@ -16,7 +16,7 @@ This page presents the six architectural principles that shape how Unbound Force
 
 ## Three-Tier Context System
 
-AI agents perform better when given concrete context — real file paths, real code patterns, real project decisions — rather than abstract instructions. Research across multiple AI engineering teams has converged on this finding: showing the agent a map of the territory consistently outperforms giving it a manual of procedures (Yanli Liu, "Harness Engineering," *AI Advances*, Apr 2026).
+AI agents perform better when given concrete context — real file paths, real code patterns, real project decisions — rather than abstract instructions. Research across multiple AI engineering teams has converged on this finding: showing the agent a map of the territory consistently outperforms giving it a manual of procedures (Yanli Liu, "Harness Engineering," _AI Advances_, Apr 2026).
 
 Unbound Force implements context delivery through three tiers, each serving a different purpose:
 
@@ -48,28 +48,28 @@ Each layer constrains the layers below it. An agent persona cannot override a co
 
 ## Control Matrix
 
-How do you classify the different types of controls in an agent system? One useful framework organizes controls along two axes (adapted from ThoughtWorks' agent taxonomy, as described in Liu, "Harness Engineering," *AI Advances*, Apr 2026):
+How do you classify the different types of controls in an agent system? One useful framework organizes controls along two axes (adapted from ThoughtWorks' agent taxonomy, as described in Liu, "Harness Engineering," _AI Advances_, Apr 2026):
 
-- **Feedforward vs. feedback**: Does the control guide agents *before* they act (feedforward), or evaluate what they produced *after* (feedback)?
+- **Feedforward vs. feedback**: Does the control guide agents _before_ they act (feedforward), or evaluate what they produced _after_ (feedback)?
 - **Computational vs. inferential**: Is the control deterministic and fast (computational), or does it require judgment and semantic understanding (inferential)?
 
 This produces four quadrants:
 
-|  | Computational | Inferential |
-|---|---|---|
-| **Feedforward** (guides before action) | Type systems, linter rules, convention packs, JSON Schema validation | AGENTS.md, constitution, spec artifacts, agent persona instructions, Dewey knowledge retrieval |
-| **Feedback** (evaluates after action) | Test suites, [Gaze](/docs/team/gaze-tester/) CRAP scores, coverage analysis, vulnerability scanners | [Divisor Council](/docs/team/the-divisor/) reviews, constitution check, retrospective learnings |
+|                                        | Computational                                                                                       | Inferential                                                                                     |
+| -------------------------------------- | --------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| **Feedforward** (guides before action) | Type systems, linter rules, convention packs, JSON Schema validation                                | AGENTS.md, constitution, spec artifacts, agent persona instructions, Dewey knowledge retrieval  |
+| **Feedback** (evaluates after action)  | Test suites, [Gaze](/docs/team/gaze-tester/) CRAP scores, coverage analysis, vulnerability scanners | [Divisor Council](/docs/team/the-divisor/) reviews, constitution check, retrospective learnings |
 
 Most teams have strong computational controls (tests, linters) but weak inferential ones (relying on human code review as the only semantic check). Unbound Force invests in all four quadrants — Dewey provides inferential feedforward (semantic context before work begins), and the Divisor Council provides inferential feedback (multi-agent semantic review after work completes).
 
 ## Doer/Judge Separation
 
-When the same entity both produces and evaluates work, the evaluation is compromised. An agent that wrote code and then reviews its own code is likely to rationalize its choices rather than find genuine issues. This is a well-documented finding across AI agent research: separating the doer from the judge produces higher-quality output (Anthropic's multi-agent architecture, as described in Liu, "Harness Engineering," *AI Advances*, Apr 2026).
+When the same entity both produces and evaluates work, the evaluation is compromised. An agent that wrote code and then reviews its own code is likely to rationalize its choices rather than find genuine issues. This is a well-documented finding across AI agent research: separating the doer from the judge produces higher-quality output (Anthropic's multi-agent architecture, as described in Liu, "Harness Engineering," _AI Advances_, Apr 2026).
 
 Unbound Force enforces this separation structurally, not just procedurally:
 
 - **[Cobalt-Crush](/docs/team/cobalt-crush/)** writes code. It has full tool access: read, write, edit, bash.
-- **[The Divisor](/docs/team/the-divisor/)** reviews code. The Guard agent operates at temperature 0.1 with `write: false`, `edit: false`, `bash: false` — it structurally *cannot* modify files. It can only read and report.
+- **[The Divisor](/docs/team/the-divisor/)** reviews code. The Guard agent operates at temperature 0.1 with `write: false`, `edit: false`, `bash: false` — it structurally _cannot_ modify files. It can only read and report.
 
 The tool access restriction is the key design choice. A process rule ("don't modify files during review") can be violated. A structural restriction (the agent literally lacks write permissions) cannot. The judge is physically unable to fix what it finds, forcing findings to go through the implementation agent with full visibility.
 
@@ -77,7 +77,7 @@ The Divisor Council extends this further with 5+ specialized review agents runni
 
 ## Plan/Execute Separation
 
-Letting an agent plan and execute in the same pass produces unreliable output. Every major AI engineering team has independently discovered this: the planning step must be separate from execution, with its output reviewed before implementation begins (Liu, "Harness Engineering," *AI Advances*, Apr 2026).
+Letting an agent plan and execute in the same pass produces unreliable output. Every major AI engineering team has independently discovered this: the planning step must be separate from execution, with its output reviewed before implementation begins (Liu, "Harness Engineering," _AI Advances_, Apr 2026).
 
 Unbound Force implements this as an 8-phase pipeline with hard gates between phases:
 
@@ -86,6 +86,7 @@ constitution → specify → clarify → plan → tasks → analyze → checklis
 ```
 
 The phases enforce a strict progression:
+
 - You cannot plan before you specify
 - You cannot create tasks before you plan
 - You cannot implement before spec review passes

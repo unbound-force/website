@@ -14,15 +14,18 @@ GitHub Issue: #95
 ## Capabilities
 
 ### New Capabilities
+
 - None (enhancements to existing pages)
 
 ### Modified Capabilities
+
 - `divisor-page`: Enhanced with architectural rationale section
 - `constitution-page`: Enhanced with governance hierarchy context
 - `knowledge-page`: Enhanced with three-tier context framing
 - `developer-page`: Enhanced with feedforward framing for convention packs
 
 ### Removed Capabilities
+
 - None
 
 ## Impact

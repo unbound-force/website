@@ -13,25 +13,28 @@ Currently, the Sub-Tool Initialization section (`developer.md`, lines 317-327) d
 ## What Changes
 
 ### New Capabilities
+
 - None — no new website features
 
 ### Modified Capabilities
+
 - `developer.md Sub-Tool Initialization`: Add specify initialization as a documented sub-tool step, describing the behavioral model (offline, directory-scoped, OpenCode-targeted)
 - `cli.md init section`: Add a note that `uf init` also initializes the Speckit specification framework via specify
 - `common-workflows.md setup flow`: Update the sub-tool initialization summary to include specify initialization
 
 ### Removed Capabilities
+
 - None
 
 ## Impact
 
 **Files affected** (content changes only — no templates, SCSS, or configuration):
 
-| File | Section | Change |
-|------|---------|--------|
-| `content/docs/getting-started/developer.md` | Sub-Tool Initialization (lines 317-327) | Add specify initialization bullet describing offline, directory-scoped behavior |
-| `content/docs/reference/cli.md` | init section (lines 28-43) | Add mention that init also runs specify initialization |
-| `content/docs/getting-started/common-workflows.md` | Setup flow (line 436) | Update sub-tool initialization summary to include specify |
+| File                                               | Section                                 | Change                                                                          |
+| -------------------------------------------------- | --------------------------------------- | ------------------------------------------------------------------------------- |
+| `content/docs/getting-started/developer.md`        | Sub-Tool Initialization (lines 317-327) | Add specify initialization bullet describing offline, directory-scoped behavior |
+| `content/docs/reference/cli.md`                    | init section (lines 28-43)              | Add mention that init also runs specify initialization                          |
+| `content/docs/getting-started/common-workflows.md` | Setup flow (line 436)                   | Update sub-tool initialization summary to include specify                       |
 
 **Framing guidance**: Document the behavioral change from the user's perspective — what `uf init` does differently — rather than exposing internal `specify init` CLI flags. Users run `uf init`, not `specify init` directly. If the internal invocation is mentioned, frame it as implementation context, not a user-facing command.
 
@@ -56,5 +59,3 @@ The change is scoped to updating existing Markdown content in 3 files. No new pa
 **Assessment**: PASS
 
 The update improves visitor understanding of what `uf init` does during sub-tool initialization. Framing the specify step at the behavioral level (offline, directory-scoped) rather than exposing raw CLI flags serves the visitor's needs without adding implementation noise.
-
-

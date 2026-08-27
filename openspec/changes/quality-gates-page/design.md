@@ -5,12 +5,14 @@ Quality information is scattered across 5 pages. Issue #94 calls for a consolida
 ## Goals / Non-Goals
 
 ### Goals
+
 - Present the 4-layer feedback stack in order (CI → Gaze → Divisor Council → Constitution Check)
 - Explain computational-first, inferential-second ordering
 - Cover gatekeeping value protection, doer/judge separation, 3-iteration cap
 - Link to existing pages for deeper detail on individual components
 
 ### Non-Goals
+
 - Duplicating content from the-divisor.md or tester.md
 - Adding custom HTML or styling
 - Modifying existing pages

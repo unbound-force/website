@@ -27,10 +27,10 @@ uf gateway --port 9090        # custom port
 uf gateway --provider vertex  # override auto-detection
 ```
 
-| Flag | Description |
-|------|-------------|
-| `--detach` | Run in the background as a daemon |
-| `--port <int>` | Port to listen on (default `53147`) |
+| Flag                  | Description                                                                       |
+| --------------------- | --------------------------------------------------------------------------------- |
+| `--detach`            | Run in the background as a daemon                                                 |
+| `--port <int>`        | Port to listen on (default `53147`)                                               |
 | `--provider <string>` | Provider override: `anthropic`, `vertex`, or `bedrock` (auto-detected if omitted) |
 
 ### gateway status
@@ -53,11 +53,11 @@ uf gateway stop
 
 The gateway scans environment variables to detect your cloud provider. The first match wins:
 
-| Priority | Provider | Detection Condition |
-|----------|----------|-------------------|
-| 1 | **Vertex AI** | `CLAUDE_CODE_USE_VERTEX=1` + `ANTHROPIC_VERTEX_PROJECT_ID` set |
-| 2 | **Bedrock** | `CLAUDE_CODE_USE_BEDROCK=1` |
-| 3 | **Anthropic** | `ANTHROPIC_API_KEY` set |
+| Priority | Provider      | Detection Condition                                            |
+| -------- | ------------- | -------------------------------------------------------------- |
+| 1        | **Vertex AI** | `CLAUDE_CODE_USE_VERTEX=1` + `ANTHROPIC_VERTEX_PROJECT_ID` set |
+| 2        | **Bedrock**   | `CLAUDE_CODE_USE_BEDROCK=1`                                    |
+| 3        | **Anthropic** | `ANTHROPIC_API_KEY` set                                        |
 
 Vertex AI is checked first because a developer may have both `ANTHROPIC_API_KEY` and Vertex env vars set — the more specific provider wins.
 

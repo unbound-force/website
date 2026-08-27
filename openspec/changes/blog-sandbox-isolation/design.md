@@ -5,6 +5,7 @@ The website has 7 blog posts covering Gaze, Dewey, /unleash, and the Curator. No
 ## Goals / Non-Goals
 
 ### Goals
+
 - Write a blog post following the BA-001 narrative arc (problem → approach → evidence → CTA)
 - Include a step-by-step walkthrough of the round-trip: start → work → extract → verify
 - Lead with benefit framing per BA-007 ("your repo is untouchable" not "we added a sandbox")
@@ -12,6 +13,7 @@ The website has 7 blog posts covering Gaze, Dewey, /unleash, and the Curator. No
 - Be honest about current limitations per VB-004
 
 ### Non-Goals
+
 - Duplicate the reference docs (commands, flags, UID mapping details) — link to them instead
 - Cover CDE/Che backend (experimental, not ready for a public blog post)
 - Cover persistent workspaces in depth (the walkthrough uses ephemeral sessions)
@@ -34,6 +36,7 @@ The website has 7 blog posts covering Gaze, Dewey, /unleash, and the Curator. No
 ## Content Sources
 
 Authoritative upstream sources for walkthrough content:
+
 - CLI help: `uf sandbox --help`, `uf sandbox start --help`, `uf sandbox extract --help`
 - Sandbox implementation: `unbound-force/unbound-force/internal/sandbox/`
 - Manual test script: `unbound-force/unbound-force/temp/uf-sandbox-manual-test.md` (22 test scenarios)

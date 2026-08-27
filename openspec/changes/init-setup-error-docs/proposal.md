@@ -17,13 +17,16 @@ Two small documentation updates:
 ## Capabilities
 
 ### New Capabilities
+
 - None
 
 ### Modified Capabilities
+
 - `docs/reference/cli`: `init` and `setup` sections updated with error reporting behavior
 - `docs/getting-started/developer`: Sub-Tool Initialization section updated with error output note
 
 ### Removed Capabilities
+
 - None
 
 ## Impact

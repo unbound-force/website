@@ -5,12 +5,14 @@ Convention packs are versioned rule sets deployed via `uf init`. They use number
 ## Goals / Non-Goals
 
 ### Goals
+
 - Explain the problem (prose standards in AGENTS.md that drift across projects)
 - Show pack structure with real examples from go.md
 - Cover the -custom.md extension pattern
 - Connect to the ThoughtWorks "harness templates" concept
 
 ### Non-Goals
+
 - Full pack reference documentation (that's for a dedicated docs page)
 - Modifying existing pages
 

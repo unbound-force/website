@@ -35,15 +35,15 @@ The envelope format ensures that every artifact is machine-parseable (Constituti
 
 The swarm defines 7 artifact types. Each has a designated producer hero and one or more consumer heroes:
 
-| Type                  | Producer            | Consumers                     | Description                                                                                      |
-| --------------------- | ------------------- | ----------------------------- | ------------------------------------------------------------------------------------------------ |
-| `quality-report`      | Gaze                | Mx F, Muti-Mind, Cobalt-Crush | Test results, contract coverage data, CRAP scores, and risk analysis from quality validation     |
+| Type                  | Producer                               | Consumers                     | Description                                                                                      |
+| --------------------- | -------------------------------------- | ----------------------------- | ------------------------------------------------------------------------------------------------ |
+| `quality-report`      | Gaze                                   | Mx F, Muti-Mind, Cobalt-Crush | Test results, contract coverage data, CRAP scores, and risk analysis from quality validation     |
 | `review-verdict`      | [The Divisor](/docs/team/the-divisor/) | Mx F, Cobalt-Crush, Muti-Mind | APPROVE or REQUEST CHANGES verdict with per-persona findings from the review council             |
-| `backlog-item`        | Muti-Mind           | Mx F, Cobalt-Crush            | Feature or bug descriptions with priority scores (5-dimension composite) and acceptance criteria |
-| `acceptance-decision` | Muti-Mind           | Mx F, Cobalt-Crush            | ACCEPT, REJECT, or CONDITIONAL decision with rationale after reviewing the completed increment   |
-| `metrics-snapshot`    | Mx F                | Muti-Mind                     | Velocity, quality trends, review efficiency, and CI health metrics for the current period        |
-| `coaching-record`     | Mx F                | All heroes                    | Learning feedback, actionable recommendations, and convention pack update suggestions            |
-| `workflow-record`     | Swarm Orchestration | Mx F, Muti-Mind               | Complete workflow trace with per-stage timings, artifacts produced, and iteration history        |
+| `backlog-item`        | Muti-Mind                              | Mx F, Cobalt-Crush            | Feature or bug descriptions with priority scores (5-dimension composite) and acceptance criteria |
+| `acceptance-decision` | Muti-Mind                              | Mx F, Cobalt-Crush            | ACCEPT, REJECT, or CONDITIONAL decision with rationale after reviewing the completed increment   |
+| `metrics-snapshot`    | Mx F                                   | Muti-Mind                     | Velocity, quality trends, review efficiency, and CI health metrics for the current period        |
+| `coaching-record`     | Mx F                                   | All heroes                    | Learning feedback, actionable recommendations, and convention pack update suggestions            |
+| `workflow-record`     | Swarm Orchestration                    | Mx F, Muti-Mind               | Complete workflow trace with per-stage timings, artifacts produced, and iteration history        |
 
 Each artifact type has a registered JSON schema that defines the structure of its `payload` field. Schemas are versioned independently (the `schema_version` envelope field), allowing artifact formats to evolve without breaking consumers.
 

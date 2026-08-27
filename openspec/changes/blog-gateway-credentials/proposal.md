@@ -20,12 +20,15 @@ A new blog post at `content/blog/gateway-credentials.md` with the narrative arc:
 ## Capabilities
 
 ### New Capabilities
+
 - `blog/gateway-credentials`: Blog post covering gateway credential isolation design
 
 ### Modified Capabilities
+
 - None
 
 ### Removed Capabilities
+
 - None
 
 ## Impact

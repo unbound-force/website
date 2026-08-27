@@ -7,6 +7,7 @@ The proposal (proposal.md) established constitution alignment: Content Accuracy 
 ## Goals / Non-Goals
 
 ### Goals
+
 - Present each of Liu's five convergence principles with concrete Unbound Force evidence
 - Show how the principles reinforce each other (not independent)
 - Be honest about harness weight and the "build to delete" concern
@@ -15,6 +16,7 @@ The proposal (proposal.md) established constitution alignment: Content Accuracy 
 - Link to getting-started guide as CTA
 
 ### Non-Goals
+
 - Reproducing the full harness engineering analysis document
 - Adding diagrams or custom HTML elements
 - Modifying existing blog posts or pages

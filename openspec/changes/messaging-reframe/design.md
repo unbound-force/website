@@ -7,12 +7,14 @@ The proposal (proposal.md) established constitution alignment: Content Accuracy 
 ## Goals / Non-Goals
 
 ### Goals
+
 - Add one feature card to the homepage "Why Unbound Force?" section
 - Add a "Design Philosophy" section to the getting-started index page
 - Use harness engineering as secondary framing, superhero identity stays primary
 - Attribute any Liu article data points to their source
 
 ### Non-Goals
+
 - Rebranding the homepage or site around harness engineering
 - Adding custom CSS or new visual elements
 - Modifying the hero section, project cards, or other existing content
@@ -24,7 +26,7 @@ The proposal (proposal.md) established constitution alignment: Content Accuracy 
 
 **Card content**: "Built as a Harness, Not a Wrapper" — feedforward controls guide agents before they write code, feedback controls catch what slips through. This conveys the core architectural concept without requiring knowledge of Liu's article.
 
-**Design philosophy section**: Add after the "Get Started" section in _index.md. Three paragraphs: the Agent = Model + Harness equation, the three-tier context system, and layered feedback. Link to the architecture page only if it exists on this branch (it won't — #88 is a separate PR).
+**Design philosophy section**: Add after the "Get Started" section in \_index.md. Three paragraphs: the Agent = Model + Harness equation, the three-tier context system, and layered feedback. Link to the architecture page only if it exists on this branch (it won't — #88 is a separate PR).
 
 ## Risks / Trade-offs
 

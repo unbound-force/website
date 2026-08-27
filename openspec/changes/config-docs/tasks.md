@@ -33,5 +33,5 @@
 - [x] 6.3 Verify page appears in Reference section navigation
 - [ ] 6.4 Verify both light and dark mode rendering
 - [x] 6.5 Verify all internal links resolve (no dead links)
-<!-- spec-review: passed -->
-<!-- code-review: passed -->
+  <!-- spec-review: passed -->
+  <!-- code-review: passed -->
