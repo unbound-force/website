@@ -42,7 +42,7 @@ The `.opencode/` directory receives:
 - **MCP server configuration** -- entries for Dewey (knowledge retrieval) and Replicator (multi-agent coordination) in `opencode.json`
 - **Convention packs** -- numbered, severity-classified coding rules in `.opencode/uf/packs/` (e.g., `default.md`, `go.md`, `content.md` plus user-owned `*-custom.md` variants)
 - **Agent definitions** -- Divisor review personas, Cobalt-Crush, Constitution Check, and other hero agents
-- **Commands** -- Speckit pipeline commands (`/speckit.specify`, `/unleash`, `/finale`, etc.)
+- **Commands** -- Speckit pipeline commands (`/speckit.specify`, `/uf.unleash`, `/uf.finale`, etc.)
 
 See the [Developer Guide](/docs/getting-started/developer/#project-scaffolding-with-uf-init) for the full list of deployed files and the file ownership model.
 

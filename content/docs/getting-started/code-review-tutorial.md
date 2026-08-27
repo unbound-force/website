@@ -215,7 +215,7 @@ The two review commands fit into the standard development workflow:
 Merge                     # after reviewer approval
 ```
 
-You can use either command independently — they do not depend on each other. But together they catch issues at two different points: before the code leaves your machine and after it runs through CI. Additionally, `/review-council N` can optionally post its findings to an existing PR, bridging the pre-PR and post-PR stages when you want multi-persona review results visible on the PR itself.
+You can use either command independently — they do not depend on each other. But together they catch issues at two different points: before the code leaves your machine and after it runs through CI. Additionally, `/uf.review-council N` can optionally post its findings to an existing PR, bridging the pre-PR and post-PR stages when you want multi-persona review results visible on the PR itself.
 
 ## Decision Table
 
@@ -228,7 +228,7 @@ You can use either command independently — they do not depend on each other. B
 | CI failed, unsure if my fault | `/uf.review-pr` | Causality classification separates your regressions from noise |
 | Want maximum coverage | Both in sequence | `/uf.review-council` pre-push, `/uf.review-pr` post-PR |
 
-> **`/review-council N` vs `/review-pr N`**: Both target a specific PR, but they serve different purposes. `/review-council N` runs the full multi-persona local review and posts the aggregated findings to the PR. `/review-pr N` fetches CI results, performs causality analysis (PR-caused vs pre-existing failures), and reviews the PR diff with that context. Use `/review-council N` when you want the council's multi-persona review visible on the PR; use `/review-pr N` when you need CI-aware review with causality classification.
+> **`/uf.review-council N` vs `/uf.review-pr N`**: Both target a specific PR, but they serve different purposes. `/uf.review-council N` runs the full multi-persona local review and posts the aggregated findings to the PR. `/uf.review-pr N` fetches CI results, performs causality analysis (PR-caused vs pre-existing failures), and reviews the PR diff with that context. Use `/uf.review-council N` when you want the council's multi-persona review visible on the PR; use `/uf.review-pr N` when you need CI-aware review with causality classification.
 
 ## See Also
 
