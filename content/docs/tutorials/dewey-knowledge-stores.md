@@ -2,6 +2,7 @@
 title: "Setting Up Dewey Knowledge Stores"
 description: "Step-by-step guide to configuring and using Dewey's curated knowledge stores — from configuration to semantic search with quality-scored, source-traced knowledge."
 lead: "Configure knowledge stores, run automated curation, and search structured knowledge extracted from your indexed sources."
+slug: "dewey-knowledge-stores"
 date: 2026-08-23T00:00:00+00:00
 draft: false
 weight: 10

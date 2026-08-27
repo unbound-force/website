@@ -2,6 +2,7 @@
 title: "Configuring Dewey Embedding and Synthesis Providers"
 description: "Step-by-step guide for configuring Dewey's pluggable embedding and synthesis providers — covering both Ollama (default, local) and Vertex AI (cloud)."
 lead: "Switch between local Ollama and cloud Vertex AI for embeddings and synthesis. Mix providers for the best of both worlds."
+slug: "dewey-provider-configuration"
 date: 2026-08-23T00:00:00+00:00
 draft: false
 weight: 20

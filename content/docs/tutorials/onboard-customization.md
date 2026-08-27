@@ -1,7 +1,8 @@
 ---
-title: "Getting Started with /onboard — Customizing Your Hero Experience"
+title: "Getting Started with onboard — Customizing Your Hero Experience"
 description: "Step-by-step tutorial for using the /onboard command to capture your preferences and customize how Unbound Force heroes respond to your working style."
 lead: "Tell the heroes what matters to you. /onboard captures your inspiration, interests, and objectives into a profile that every hero reads — so they work the way you work."
+slug: "onboard-customization"
 date: 2026-08-23T00:00:00+00:00
 draft: false
 weight: 50
