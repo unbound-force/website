@@ -1,4 +1,16 @@
 [[docs]]
+  name = "Vision"
+  weight = 5
+  identifier = "vision"
+  url = "/docs/vision/"
+
+[[docs]]
+  name = "Roadmap"
+  weight = 6
+  identifier = "roadmap"
+  url = "/docs/roadmap/"
+
+[[docs]]
   name = "Getting Started"
   weight = 10
   identifier = "getting-started"
@@ -33,6 +45,16 @@
   weight = 40
   identifier = "contributing"
   url = "/docs/contributing/"
+
+[[main]]
+  name = "Vision"
+  url = "/docs/vision/"
+  weight = 2
+
+[[main]]
+  name = "Roadmap"
+  url = "/docs/roadmap/"
+  weight = 3
 
 [[main]]
   name = "Blog"
