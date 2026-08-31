@@ -97,7 +97,7 @@ With the factory foundation operational, the next horizon builds the governance,
 
 The largest gap in the current system. Gaze measures whether tests are good. Vibe-check measures whether design is sound. Neither measures whether agent *output* satisfies the *success criteria* that motivated the work.
 
-The eval harness closes this loop. Given a specification and an agent's implementation, the harness evaluates whether the implementation fulfills the spec — not just whether it compiles and passes tests, but whether it achieves the stated objectives. This is the cross-cutting capability that the factory pattern demands most urgently.
+The eval harness closes this loop. Given a specification and an agent's implementation, the harness evaluates whether the implementation fulfills the spec — not just whether it compiles and passes tests, but whether it achieves the stated objectives. This is the cross-cutting capability that the factory pattern demands most urgently. A concrete first instance: the review council validating that a PR addresses the originating issue's acceptance criteria — the output-side mirror of intake-kit's input-side validation. ([#563](https://github.com/unbound-force/unbound-force/issues/563))
 
 Evaluation spans two complementary layers that share infrastructure — the same headless driver, rubric-based LLM judge, and comparable-results store:
 
@@ -145,8 +145,8 @@ The architecture already supports this in principle: convention packs, agents, a
 
 The long-term architecture for requirements flowing into Unbound Force is a three-layer system:
 
-1. **Domain Intake** — product-specific toolkits (PRDs, ADRs, domain-specific review panels) capture requirements in their native format. Intake-kit provides CUE-validated PRD authoring with a 5-specialist review panel. Domain-specific convention packs (e.g., `spog.md`) encode product rules without modifying the core agent layer.
-2. **SDD Bridge** — OpenSpec and Speckit translate domain requirements into stories (GitHub Issues) and capability-level specs. The complytime RFC defines the long-term bridge: a PRD+ADR-to-task adapter folded into `/unleash`, run per story under ADR constraints, with spec/task artifacts as disposable scaffolding.
+1. **Domain Intake** — intake-kit provides CUE-validated PRD authoring with a 5-specialist review council (Guard, Adversary, Tester, Operator, Curator) that gates requirements on testability, completeness, and security before any code is written. Domain-specific convention packs (e.g., `spog.md`) extend the intake layer for particular products without modifying the core agent layer. This forms the input side of a symmetric two-council architecture: intake-kit validates requirements in; the Divisor review council validates implementations out.
+2. **SDD Bridge** — OpenSpec and Speckit translate domain requirements into stories (GitHub Issues) and capability-level specs. The complytime RFC defines the long-term bridge: a PRD+ADR-to-task adapter folded into `/unleash`, run per story under ADR constraints, with spec/task artifacts as disposable scaffolding. The GitHub Issue — carrying FR/AC IDs from the PRD — is the durable anchor that connects the intake council's input validation to the review council's output validation.
 3. **Execution Engine** — `/uf.unleash` through `/uf.finale`: the agent pipeline that produces and validates code from specs.
 
 Each layer is independently valuable. The bridge makes them composable. The adapter pattern ensures domain intake tooling does not need to know about Unbound Force's internals — it produces structured requirements; the bridge translates them; the engine executes them.
@@ -155,7 +155,9 @@ Each layer is independently valuable. The bridge makes them composable. The adap
 
 The pipeline has a gap at the very beginning: the path from a raw request-for-enhancement to a strategic decision to pursue it. Today, this is informal — someone writes an issue, it gets discussed, work starts. The front-end formalizes the intake: structured RFE capture, strategic prioritization, and routing into the SDD bridge.
 
-This is uf's domain and differentiator — the part of the pipeline that no infrastructure platform provides. It is also the least-defined capability on the roadmap, deliberately left open for community input on what the right interface looks like.
+Intake-kit already provides the core authoring and review machinery (CUE-validated PRDs with a 5-specialist review council). The complytime RFC defines the workflow spine: PRD → ADR → AAC Review → Story (GitHub Issue) → OpenSpec. The remaining work is the strategic prioritization layer — the rules and tooling that help organizations decide *which* validated requirements to pursue and in what order — and tighter integration between intake-kit's output and the SDD bridge's input.
+
+This is uf's domain and differentiator — the part of the pipeline that no infrastructure platform provides.
 
 ### Asynchronous Agent Coordination and Typed Guardrails
 

@@ -26,13 +26,13 @@ Unbound Force is a spec-driven AI agent swarm for software engineering. It is a 
 
 The swarm is organized around hero personas, each with a distinct role:
 
-- **Muti-Mind** — the Product Owner. Generates stories from requirements, maintains the backlog, gates acceptance criteria.
 - **Cobalt-Crush** — the Developer. Implements approved specifications, follows convention packs, produces tested code.
 - **Gaze** — the Quality Sentinel. Measures test quality through CRAP scores, contract coverage, and side-effect classification. Does not measure whether code "looks good" — measures whether tests verify the contractual behavior of the code they exercise.
 - **The Divisor** — the Review Council. A panel of specialized reviewers (Guard, Architect, Adversary, SRE, Testing, Curator, Scribe, Herald, Envoy) that evaluate pull requests from orthogonal quality dimensions in parallel.
-- **Mx F** — the Flow Facilitator. Tracks metrics, coaches teams, manages sprints.
 
-These personas scaffold into any repository via `uf init`, deploying agents, commands, skills, and convention packs into the consuming project's `.opencode/` directory. Each tool — `uf`, `gaze`, `dewey`, `replicator`, `vibe-check` — is independently installable and useful on its own. Combining them produces additive value without mandatory dependencies.
+Requirements intake is handled by **intake-kit** — a CUE-validated PRD authoring and review system with its own 5-specialist council (Guard, Adversary, Tester, Operator, Curator) that validates requirements are well-formed, testable, and unambiguous before any code is written. This creates a symmetric two-council architecture: intake-kit validates inputs, the Divisor validates outputs, with the GitHub Issue as the durable anchor between them.
+
+These personas and tools scaffold into any repository via `uf init`, deploying agents, commands, skills, and convention packs into the consuming project's `.opencode/` directory. Each tool — `uf`, `gaze`, `dewey`, `replicator`, `vibe-check`, `intake-kit` — is independently installable and useful on its own. Combining them produces additive value without mandatory dependencies.
 
 ## The Problem
 
@@ -104,7 +104,7 @@ This boundary is deliberate. By not owning infrastructure, Unbound Force inherit
 
 The broader ecosystem forms three layers:
 
-1. **Domain Intake** — domain-specific requirements enter the system (PRDs, ADRs, product-specific toolkits). This is where organizational context lives.
+1. **Domain Intake** — intake-kit provides CUE-validated PRD authoring with a 5-specialist review council. Domain-specific toolkits and convention packs extend it for particular products. ADRs formalize architectural decisions. This is where organizational context enters the system and is validated before any code is written.
 2. **Spec-Driven Development Bridge** — OpenSpec and Speckit decompose requirements into stories (GitHub Issues) and capability-level specs that drive implementation. This is the translation layer between human intent and agent-executable work.
 3. **Execution Engine** — `/uf.unleash` through `/uf.finale`: branching, clarification, planning, task decomposition, spec review, parallel implementation, code review, and commit/PR/CI workflows. This is where agents produce and validate code.
 
