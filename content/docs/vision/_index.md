@@ -34,6 +34,8 @@ Requirements intake is handled by **intake-kit** — a CUE-validated PRD authori
 
 These personas and tools scaffold into any repository via `uf init`, deploying agents, commands, skills, and convention packs into the consuming project's `.opencode/` directory. Each tool — `uf`, `gaze`, `dewey`, `replicator`, `vibe-check`, `intake-kit` — is independently installable and useful on its own. Combining them produces additive value without mandatory dependencies.
 
+**OpenCode-first.** Unbound Force is designed and tested to operate with [OpenCode](https://opencode.ai/). The commands, skills, agents, and scaffolding assume OpenCode's tool system, sub-agent delegation, and headless execution model. While the underlying concepts — convention packs, constitutions, spec-driven workflows — are agent-runtime agnostic, using UF with other coding agents (Claude Code, Cursor, etc.) is not officially supported and may require significant adaptation work. This alignment is deliberate: deep integration with one runtime produces better outcomes than shallow compatibility with many.
+
 ## The Problem
 
 AI coding agents are powerful but not self-directing.
