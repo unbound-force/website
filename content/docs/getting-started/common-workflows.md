@@ -1,6 +1,6 @@
 ---
 title: "Common Workflows"
-description: "The /uf.unleash autonomous pipeline, /uf.finale shipping workflow, manual feature flows, bug fixes, code reviews, environment setup, and uf setup / uf init lifecycle."
+description: "The /uf.unleash autonomous pipeline, /uf.finale shipping workflow, manual feature flows, bug fixes, code reviews, and environment setup."
 lead: "End-to-end workflows that show how all five heroes collaborate across the development lifecycle."
 date: 2026-03-22T00:00:00+00:00
 draft: false
@@ -93,23 +93,6 @@ If the repository contains a PR template (`.github/PULL_REQUEST_TEMPLATE.md`), `
 - Never creates a PR without user approval
 - Uses `--body-file` instead of inline `--body` to safely handle AI-generated content containing shell metacharacters
 - If any step fails, stops immediately with context and options
-
-### Structured PR Descriptions
-
-When creating a PR, `/uf.finale` generates a structured body with four sections:
-
-| Section              | Content                                                                 |
-| -------------------- | ----------------------------------------------------------------------- |
-| **Summary**          | What changed and why, derived from the diff and commit messages.        |
-| **How to Test**      | Steps to verify the changes locally.                                    |
-| **How to Demo**      | Steps to demonstrate the feature to stakeholders.                       |
-| **Key Files Changed**| List of modified files grouped by purpose.                              |
-
-**PR template detection**: If the repository contains `.github/PULL_REQUEST_TEMPLATE.md`, `/uf.finale` reads the template and maps its generated content into the template's sections instead of using the default structure.
-
-**Review council integration**: If a `/uf.review-council` report exists from a prior run, known issues are included in the PR body under a **Known Issues** section.
-
-**AI attribution**: Every PR created by `/uf.finale` includes an AI attribution footer in the PR body and an `AI-assisted-by: /uf.finale` git trailer in the commit metadata.
 
 ### Conflict Recovery
 
