@@ -84,7 +84,7 @@ Execute the plan task by task, with CI checkpoints between task phases.
 
 Phase boundaries are enforced through multiple mechanisms, not just instructions:
 
-**Branch naming conventions** gate pipeline entry. A branch named `003-feature-name` signals that the project has a specification with that number. The branch name is checked at every pipeline step.
+**Branch naming conventions** gate pipeline entry. Current Speckit branches use `speckit/003-feature-name`; the `003` signals that the project has a specification with that number. Earlier pipeline versions used bare `003-feature-name` branches, so historical references may omit the `speckit/` prefix. The branch name is checked at every pipeline step.
 
 **The Spec Commit Gate** requires all spec artifacts (spec.md, plan.md, tasks.md) to be committed and pushed before implementation begins. This preserves the planning record in version control and provides a clean baseline if implementation drifts from the plan.
 

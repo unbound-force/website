@@ -25,7 +25,7 @@ Include steps to reproduce, expected behavior, and actual behavior. For feature 
 We follow the standard GitHub pull request workflow:
 
 1. Fork the repository
-2. Create a feature branch named with a number prefix (e.g., `003-feature-name`)
+2. Create a new Speckit feature branch with the `speckit/` prefix (e.g., `speckit/003-feature-name`). Existing branches are not renamed; this convention applies only to new branches.
 3. Make your changes
 4. Submit a pull request against the `main` branch
 5. Address any review feedback from The Divisor council

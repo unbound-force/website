@@ -48,7 +48,7 @@ toc: true
 
 ### Branch Safety
 
-`/uf.unleash` works with both Speckit (`NNN-*`) and OpenSpec (`opsx/*`) feature branches. It never runs on `main`. For Speckit branches, it validates that `spec.md` exists. For OpenSpec branches, it detects the change name from the branch (`opsx/<name>`) and reads tasks from `openspec/changes/<name>/tasks.md`.
+`/uf.unleash` works with both Speckit (`speckit/NNN-*`, also accepting legacy `NNN-*`) and OpenSpec (`opsx/*`) feature branches. It never runs on `main`. For Speckit branches, it validates that `spec.md` exists. For OpenSpec branches, it detects the change name from the branch (`opsx/<name>`) and reads tasks from `openspec/changes/<name>/tasks.md`.
 
 After `/uf.unleash` completes, the demo step suggests running `/uf.finale` to commit, push, and create a PR.
 
@@ -121,7 +121,7 @@ When the push step (step 4) fails because the remote branch has diverged, `/uf.f
 
 The AI-assisted option (5) spawns a `cobalt-crush-dev` sub-agent that merges the target branch into your feature branch, analyzes the intent of both sides using the diff context, resolves conflict markers programmatically, and creates a merge commit. After resolution, the normal push flow resumes. If the sub-agent cannot resolve the conflicts, `/uf.finale` falls back to manual resolution instructions.
 
-`/uf.finale` works with both Speckit (`NNN-*`) and OpenSpec (`opsx/*`) branches. It is the natural complement to `/uf.unleash` — `/uf.unleash` builds, `/uf.finale` wraps up the branch and creates a PR for review.
+`/uf.finale` works with both Speckit (`speckit/NNN-*`, also accepting legacy `NNN-*`) and OpenSpec (`opsx/*`) branches. It is the natural complement to `/uf.unleash` — `/uf.unleash` builds, `/uf.finale` wraps up the branch and creates a PR for review.
 
 ## New Feature (End-to-End) {#new-feature-end-to-end}
 

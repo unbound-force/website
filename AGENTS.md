@@ -306,14 +306,14 @@ specs/
   scripts/bash/                  # Automation scripts
 ```
 
-Branch names follow the same numbering pattern (e.g., `001-feature-name`).
+Current Speckit branches use the `speckit/NNN-<short-name>` naming pattern (e.g., `speckit/001-feature-name`). Existing unprefixed `NNN-<short-name>` branches are not renamed.
 
 ### Branch Conventions
 
 Both tiers enforce branch-based workflows:
 
-- **Speckit** branches: `NNN-<short-name>`
-  (e.g., `013-binary-rename`). Created automatically by
+- **Speckit** branches: `speckit/NNN-<short-name>`
+  (e.g., `speckit/013-binary-rename`). Created automatically by
   `/speckit.specify`. Validated by `check-prerequisites.sh`
   at every pipeline step (hard gate).
 - **OpenSpec** branches: `opsx/<change-name>`
@@ -324,7 +324,7 @@ Both tiers enforce branch-based workflows:
 The `opsx/` prefix namespace ensures OpenSpec branches
 are visually distinct from Speckit branches in
 `git branch` output and do not collide with the
-`NNN-*` numbering pattern.
+`speckit/NNN-*` naming pattern.
 
 ### Task Completion Bookkeeping
 
