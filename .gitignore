@@ -23,6 +23,9 @@ Thumbs.db
 # ─── Netlify ─────────────────────────────────────────────────────────
 .netlify
 
+# opencode plugin install state: opencode rewrites this per machine on every start
+.opencode/package-lock.json
+
 # Unbound Force — managed by uf init
 # Runtime data under .uf/ (databases, caches, locks, logs)
 .uf/workflows/
