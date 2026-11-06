@@ -26,6 +26,9 @@ Thumbs.db
 # opencode plugin install state: opencode rewrites this per machine on every start
 .opencode/package-lock.json
 
+# opencode run logs written under an unresolved path (.opencode/undefined/)
+.opencode/undefined/
+
 # Unbound Force — managed by uf init
 # Runtime data under .uf/ (databases, caches, locks, logs)
 .uf/workflows/
