@@ -307,11 +307,13 @@ Review a pull request on GitHub with CI causality analysis. Auto-detects the ope
 
 Unlike `/review-council` (which runs locally before pushing), `/review-pr` operates on an existing GitHub PR and incorporates CI results.
 
+**Re-reviews**: before planning reviewers, `/review-pr` calls the `resolve_review_mode` tool. When you already reviewed an earlier commit of the PR and the push since then is small and contained (at most 200 changed lines, no added, removed, renamed, or copied files, no sensitive paths such as `.github/`, `AGENTS.md`, the constitution, or convention packs, no CRITICAL finding in the earlier review, and no failing check), it runs a **light check** instead of the full council. The light check verifies that the earlier CRITICAL, HIGH, and unlabelled findings are fixed, reads only the new commits, and can approve. If it finds a new CRITICAL or HIGH problem, it hands over to the full council. Any input the tool cannot read decides the full council.
+
 See the [Code Review Tutorial](/docs/getting-started/code-review-tutorial/) for a hands-on walkthrough of both commands in practice.
 
 ### /address-feedback
 
-Triage and address PR review feedback with a structured four-phase workflow. Fetches all unresolved review comments from GitHub, classifies each item, presents a triage plan, then executes approved changes as a batch.
+Triage and address PR review feedback with a structured four-phase workflow. Fetches all unresolved review comments from GitHub, classifies each item, presents a triage plan, then executes approved changes as a batch. Code changes are limited to CRITICAL and HIGH findings; MEDIUM and LOW findings are filed as issues or answered.
 
 ```text
 /address-feedback [PR_NUMBER]
@@ -327,10 +329,16 @@ Triage and address PR review feedback with a structured four-phase workflow. Fet
 |-------|------|---------|
 | 1 | **Ingest** | Fetch all unresolved review comments, inline suggestions, and requested changes from the PR |
 | 2 | **Assess** | Classify each item against project standards (constitution, convention packs, spec requirements) with evidence |
-| 3 | **Triage** | Present classified items to the author for decision: Accept, Modify, Reject, or Keep (with justification) |
-| 4 | **Execute** | Apply accepted changes as grouped commits, run `/review-council` gate, push, and reply to each comment with the resolution |
+| 3 | **Triage** | Present each item for a decision. CRITICAL, HIGH, and unlabelled items: Accept, Modify, Reject, or Ask. MEDIUM and LOW items: File issue, Reply, or Ask |
+| 4 | **Execute** | Commit the accepted changes, run the pre-flight checks as a hard gate (up to 3 attempts), push, file issues, post replies, and resolve the addressed threads |
 
-The command integrates with the review lifecycle: after `/review-pr` or the council-review-action posts findings, use `/address-feedback` to systematically work through the feedback rather than manually addressing comments one by one.
+**Severity scope**: an item's severity comes from the label the reviewer gave it. An item with no label, such as most human comments, counts as HIGH. MEDIUM and LOW items never change code in this run; their File issue and Reply threads are resolved so they do not start another feedback run. Reject and Ask threads stay open.
+
+**One council per cycle**: `/address-feedback` does not run `/review-council` before pushing. The re-review that follows (`/review-pr`) is the cycle's council, or a light check when the push qualifies.
+
+**Learnings**: Dewey learnings the command stores stay untracked on the PR branch. They reach `main` through a separate `chore/dewey-learnings-*` PR.
+
+The command integrates with the review lifecycle: after `/review-pr` or the council-review-action posts findings, use `/address-feedback` to systematically work through the feedback rather than manually addressing comments one by one. See [A Converging Review and Feedback Cycle](/docs/tutorials/converging-review-cycle/) for a full walkthrough.
 
 ## See Also
 

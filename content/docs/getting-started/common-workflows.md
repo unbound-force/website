@@ -17,7 +17,8 @@ toc: true
 | `/uf.unleash` | Run the full autonomous pipeline — routes to Speckit, OpenSpec, or the quick tier when no spec exists |
 | `/uf.cobalt-crush` | Implement an OpenSpec change with convention pack adherence |
 | `/uf.review-council` | Pre-PR review with 5+ Divisor personas in parallel |
-| `/uf.review-pr [N]` | Post-PR review with CI causality analysis and fix branch offering |
+| `/uf.review-pr [N]` | Post-PR review with CI causality analysis and fix branch offering; a small re-review push gets a light check |
+| `/uf.address-feedback [N]` | Triage PR review feedback: fix CRITICAL and HIGH findings, file or answer MEDIUM and LOW ones |
 | `/agent-brief` | Create or audit AGENTS.md — the project briefing for AI agents |
 | `/uf.finale` | Stage, commit, push, create PR, watch CI, and return to main |
 
@@ -81,6 +82,8 @@ See also: [From Spec to Demo in One Command](/blog/unleash-in-practice/) — a n
 | 6    | **Watch CI Checks**         | `gh pr checks --watch`. Stops on failure with options.                              |
 | 7    | **Return to Main**          | `git checkout main && git pull`.                                                    |
 | 8    | **Summary**                 | Displays completion report: branch, commit, PR, checks, status.                     |
+
+**Dewey learnings stay off the branch**: the staging step stages everything except `.uf/dewey/learnings/`. Learnings stay untracked and reach `main` through a separate `chore/dewey-learnings-*` PR, so they never add commits to the PR under review. Compiled articles under `.uf/dewey/compiled/` still go in the feature PR.
 
 ### Structured PR Descriptions
 
@@ -617,6 +620,17 @@ See the [Code Review Tutorial](/docs/getting-started/code-review-tutorial/#step-
 
 If HIGH or CRITICAL findings are found, `/uf.review-pr` offers to post them as in-line comments on the PR so the author sees them in context. Comments are always shown for your approval before posting. A cap of 15 in-line comments prevents noisy reviews — findings beyond the cap are consolidated into a summary comment.
 
+#### Re-reviews: Light Check or Full Council
+
+When you run `/uf.review-pr` again after fixes are pushed, it first calls the `resolve_review_mode` tool. The tool picks a **light check** only when all of these hold:
+
+- You reviewed an earlier commit of the PR, and that commit is still an ancestor of the head (no rebase)
+- The push is at most 200 changed lines, with no file added, removed, renamed, or copied
+- No sensitive path changed: `.github/`, `AGENTS.md`, the constitution, the convention packs, or any path naming auth, tokens, secrets, or credentials
+- The earlier review had no CRITICAL finding, and no check is failing
+
+Anything else, including any input the tool cannot read, gets the full council. The light check dispatches no reviewers: it verifies each earlier CRITICAL, HIGH, and unlabelled finding against the head code, reads only the new commits, and approves when everything is fixed. A new CRITICAL or HIGH problem in the new commits hands the review over to the full council before anything is posted.
+
 #### `/uf.review-council` vs `/uf.review-pr`
 
 | Aspect | `/uf.review-council` | `/uf.review-pr` |
@@ -630,6 +644,41 @@ If HIGH or CRITICAL findings are found, `/uf.review-pr` offers to post them as i
 | **Gaze integration** | Phase 1b quality analysis (if available) | Not included — uses CI results instead |
 
 **Decision guide**: Use `/uf.review-council` while developing (before pushing), use `/uf.review-pr` after the PR is open. They complement each other — `/uf.review-council` catches issues early, `/uf.review-pr` validates the PR in context with CI data.
+
+### Address Review Feedback (`/uf.address-feedback`) {#address-review-feedback-ufaddress-feedback}
+
+After reviewers post findings on your PR, `/uf.address-feedback` works through them:
+
+```text
+/uf.address-feedback        # auto-detect PR from current branch
+/uf.address-feedback 42     # address feedback on a specific PR
+```
+
+The command runs four phases:
+
+1. **Ingest** — fetches the unresolved review threads, groups threaded conversations, and identifies each reviewer's authority
+2. **Assess** — classifies each item as data-driven or subjective against project conventions. Complex CRITICAL and HIGH items can be escalated to Divisor agents; MEDIUM and LOW items are always assessed directly
+3. **Triage** — presents each item for your decision
+4. **Execute** — commits fixes, runs the pre-flight checks, pushes, files issues, posts replies, and resolves the addressed threads
+
+#### Severity Sets the Options
+
+The command changes code only for CRITICAL and HIGH findings. Each item's severity comes from the label the reviewer gave it; an item with no label, such as most human comments, counts as HIGH.
+
+| Item | Triage options | Changes code? |
+|------|----------------|---------------|
+| CRITICAL, HIGH, or no label | Accept, Modify, Reject, Ask | Accept and Modify do |
+| MEDIUM or LOW | File issue, Reply, Ask | Never in this run |
+
+**File issue** opens a GitHub issue for the finding and replies with the link. **Reply** acknowledges the finding and says why it is not changed here. After the replies are posted, the command offers to resolve the threads of Accept, Modify, File issue, and Reply items, so they do not start another feedback run. Reject and Ask threads stay open.
+
+#### Pre-flight Instead of a Second Council
+
+Before pushing, the command runs the `pre-flight` skill in hard-gate mode, the same checks `/uf.unleash` gates on. A failing check is fixed in a new commit and the checks run again, up to 3 attempts; if they still fail, nothing is pushed. The command does not run `/uf.review-council`: the `/uf.review-pr` re-review that follows is the cycle's one council, or a light check when the push qualifies.
+
+Dewey learnings the command stores stay untracked and reach `main` through a separate `chore/dewey-learnings-*` PR, never on the PR branch.
+
+See [A Converging Review and Feedback Cycle](/docs/tutorials/converging-review-cycle/) for one PR walked through review, feedback, and a light re-review.
 
 ## Project Context Management (`/agent-brief`)
 
