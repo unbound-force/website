@@ -21,7 +21,7 @@ Automate the end-of-branch workflow. Stages all changes,
 generates a conventional commit message, pushes, creates
 a PR, watches CI checks, and returns to `main`. The PR
 stays open for human review. Works with both Speckit
-(`NNN-*` or `NNN-*` legacy) and OpenSpec
+(`speckit/NNN-*`, or legacy `NNN-*`) and OpenSpec
 (`opsx/*`) branches.
 
 ## Usage
@@ -89,7 +89,7 @@ git rev-parse --abbrev-ref HEAD
 
 - If on `main`: **STOP** with error:
   > "Cannot run /uf.finale on main. Switch to a feature
-   > branch (e.g., `opsx/*` or `NNN-*`) first."
+   > branch (e.g., `speckit/NNN-*`, legacy `NNN-*`, or `opsx/*`) first."
 - Otherwise: proceed. Note the branch name for the
   summary.
 
@@ -331,7 +331,7 @@ gh pr view --json number,url 2>/dev/null
     If on an `opsx/*` branch, read
     `openspec/changes/*/specs/*.md` for acceptance
     scenarios and translate them into concrete
-    verification commands. If on a `NNN-*` or
+    verification commands. If on a `speckit/NNN-*` or
     `NNN-*` (legacy) branch,
     check for `quickstart.md` in the feature directory.
     Otherwise, synthesize test steps from the diff.
