@@ -1,6 +1,6 @@
 ---
 title: "The Divisor"
-description: "The Divisor is the PR Reviewer Council — nine sub-personas for code review and content creation, serving as the Code Integrity Guardian."
+description: "The Divisor is the PR Reviewer Council — nine canonical sub-personas for code review and content creation, plus two repo-local instruction reviewers."
 lead: "The Architectural Conscience and Code Integrity Guardian"
 date: 2026-02-23T00:00:00+00:00
 draft: false
@@ -14,7 +14,7 @@ toc: true
 
 The Divisor is the PR Reviewer of the Unbound Force swarm — the architectural conscience and code integrity guardian. Their mission is to ensure that all code changes proposed by Cobalt-Crush, once validated by Gaze, adhere strictly to established architectural standards, best practices, security policies, and maintainability requirements.
 
-The Divisor acts as the final technical gate before integration, translating high-level architectural standards into actionable review criteria. What makes The Divisor unique is its structure: it operates as a **council of nine dynamically discovered personas** -- nine canonical roles ship by default (six review, three content creation), with users able to add or remove personas freely. Each provides a different lens on every code submission.
+The Divisor acts as the final technical gate before integration, translating high-level architectural standards into actionable review criteria. What makes The Divisor unique is its structure: it operates as a **council of dynamically discovered personas** -- nine canonical roles ship by default (six review, three content creation), with users able to add or remove personas freely. The `unbound-force/unbound-force` repository adds two repo-local instruction reviewers, [The Linguist and The Determinist](#repo-local-personas), for a council of 11. Each persona provides a different lens on every code submission.
 
 ## Why a Council?
 
@@ -130,6 +130,32 @@ The Curator is the first Divisor persona with bash access, restricted to `gh iss
 
 **Important**: The Curator triages — it identifies what needs documenting and files tracking issues. It does not write documentation, blog posts, or communications. Those responsibilities belong to The Scribe, The Herald, and The Envoy respectively.
 
+## Repo-Local Personas
+
+A repository can add its own personas next to the canonical nine. The `unbound-force/unbound-force` repository adds two that review the instruction text its agents execute: commands, agents, skills, convention packs, and `AGENTS.md`. Both depend on tooling that lives only in that repository (the instruction linter, the determinism pack, and `tool-inventory`), so `uf init` does not deliver them. With them, the council in that repository has 11 personas: 9 canonical and 2 repo-local.
+
+### The Linguist — Instruction Quality
+
+The Linguist (`divisor-linguist`) focuses on _"Will an agent read this the way the author meant?"_ It reviews instruction prose the way a compiler reviews code: first with deterministic evidence from the instruction linter, then with judgment where no tool can decide:
+
+- Reporting instruction-lint findings: frontmatter, references, RFC 2119 marker and body agreement, vague qualifiers, token budgets, and near-duplicate paragraphs
+- Checking instruction clarity: when an artifact runs, what counts as done, where inputs come from, when to stop and ask, what happens on failure, and whether external text is treated as data
+- Quoting the text for every finding, with the concrete misreading an executing agent could make
+
+Temperature: **0.1** (precision). Its shell access is limited to the linter wrapper and read-only `git diff` and `git status`.
+
+### The Determinist — Deterministic Execution
+
+The Determinist (`divisor-determinism`) focuses on _"Does work that runs the same way every time live in a tool?"_ It owns determinism pack rules DE-001 through DE-008 and applies the twice-test to every changed step: if a competent agent follows the step twice and gets the same result, the step belongs in a tool.
+
+- Flagging fixed procedures written as prose, output templates the agent is told to reproduce, and judgment-free chains of tool calls (DE-001, DE-003, DE-005)
+- Checking that instruction changes record their line and token deltas (DE-004), using `instruction-lint --base`
+- Checking that prose-to-tool migrations test their seams: registration, documented output shape, and round trips (DE-007), using `tool-inventory --seams`
+- Checking that delegated work carries its `task_classification` and skill contract through the delegation tool's parameters (DE-008), using the linter's IL-042 hint
+- Naming the existing tool that should own each mechanical step, using `tool-inventory --match`
+
+Temperature: **0.1** (precision). It cites tool output instead of re-deriving it, and its shell access is limited to the linter wrapper and `tool-inventory`. Read [The Determinist](/blog/the-determinist/) for why the review moved onto tool-backed evidence, and [Verifying Deterministic Instruction](/docs/tutorials/verifying-deterministic-instruction/) to run the same checks before you push.
+
 ## Exclusive Ownership Boundaries
 
 Each review dimension is owned by exactly one Divisor persona, eliminating duplicate findings across personas:
@@ -146,13 +172,15 @@ Each review dimension is owned by exactly one Divisor persona, eliminating dupli
 | File permissions/hardcoded config           | SRE                                                                                                                     |
 | Efficiency/performance (O(n²), allocations) | SRE                                                                                                                     |
 | Architectural patterns/conventions          | Architect                                                                                                               |
+| Instruction lint and clarity (repo-local)   | Linguist                                                                                                                |
+| Determinism rules DE-001–DE-008 (repo-local) | Determinist                                                                                                            |
 | **The Curator**                             | Documentation & content pipeline triage — gap detection, website issue filing, blog/tutorial opportunity identification |
 
-This ownership model ensures that a finding like "missing error handling" is raised by exactly one persona (Adversary), not duplicated across Adversary and Architect.
+This ownership model ensures that a finding like "missing error handling" is raised by exactly one persona (Adversary), not duplicated across Adversary and Architect. The same split applies to instruction review: the linter's determinism hints (IL-040 to IL-042) go to The Determinist, and every other lint rule goes to The Linguist.
 
 ## Shared Severity Standard
 
-All nine personas share a calibration standard defined in the `severity.md` convention pack (`.opencode/uf/packs/severity.md`):
+All Divisor personas share a calibration standard defined in the `severity.md` convention pack (`.opencode/uf/packs/severity.md`):
 
 | Level        | Definition                                                                           | Auto-Fix?                    |
 | ------------ | ------------------------------------------------------------------------------------ | ---------------------------- |
@@ -165,7 +193,7 @@ Each level includes domain-specific examples per persona — for example, an Adv
 
 ## Prior Learnings Integration
 
-All nine Divisor personas include a "Prior Learnings" step at the start of their review workflow:
+All Divisor personas include a "Prior Learnings" step at the start of their review workflow:
 
 1. Search Dewey for learnings tagged with the repo name and relevant file paths
 2. Include found learnings as prior knowledge in the review context
@@ -177,11 +205,11 @@ This means the review council learns from past reviews. If a particular pattern 
 
 The Divisor holds the ultimate authority to approve and merge code into the main branch. Approval requires collective consensus — **no outstanding REQUEST CHANGES from any persona** is mandatory. Gaze's functional validation serves as a prerequisite: the CI pipeline must be green before The Divisor begins review.
 
-This structure ensures that only code which passes all nine lenses — intent, architecture, resilience, operational readiness, test quality, documentation governance, documentation accuracy, narrative clarity, and public communication — is deployed.
+This structure ensures that only code which passes every lens — intent, architecture, resilience, operational readiness, test quality, documentation governance, documentation accuracy, narrative clarity, and public communication, plus instruction quality and deterministic execution where the repo-local personas are enrolled — is deployed.
 
 ## How The Divisor Serves the Team
 
-**For Developers (Cobalt-Crush):** Cobalt-Crush relies on The Divisor for the final technical sign-off. The multi-faceted feedback from the nine personas provides a holistic critique covering intent, structure, security, operational readiness, test quality, documentation governance, and content accuracy. Clear architectural standards minimize uncertainty, allowing Cobalt-Crush to code with confidence.
+**For Developers (Cobalt-Crush):** Cobalt-Crush relies on The Divisor for the final technical sign-off. The multi-faceted feedback from the council's personas provides a holistic critique covering intent, structure, security, operational readiness, test quality, documentation governance, and content accuracy. Clear architectural standards minimize uncertainty, allowing Cobalt-Crush to code with confidence.
 
 **For the Tester ([Gaze](/docs/team/gaze-tester/)):** Gaze relies on The Divisor to establish the architectural and non-functional requirements against which testability must be measured. Gaze's green light on functional tests is the entry criterion for The Divisor's review, ensuring review time is spent on high-level risk and structure rather than defect finding.
 

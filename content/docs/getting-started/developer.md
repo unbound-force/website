@@ -365,7 +365,7 @@ The most important habit: **always end your session properly**. The daily workfl
 /uf.finale     # commit → push → PR → main
 ```
 
-`/uf.finale` handles the full end-of-branch workflow: staging changes, generating a conventional commit message with AI attribution, pushing to remote, creating a PR with a [structured description](/docs/getting-started/common-workflows/#structured-pr-descriptions), watching CI checks, and returning to `main`. The PR stays open for human review — `/uf.finale` never merges. The session is not complete until `git push` succeeds — this ensures your work items, semantic memory learnings, and file reservation state are available for your next session and for other team members who may pick up where you left off.
+`/uf.finale` handles the full end-of-branch workflow: staging changes, generating a conventional commit message with AI attribution, pushing to remote, creating a PR with a [structured description](/docs/getting-started/common-workflows/#structured-pr-descriptions), watching CI checks, and returning to `main`. The PR stays open for human review — `/uf.finale` never merges. The session is not complete until `git push` succeeds — this ensures your work items and file reservation state are available for your next session and for other team members who may pick up where you left off. Dewey learnings are the exception: `/uf.finale` leaves `.uf/dewey/learnings/` unstaged, and they reach `main` through a separate `chore/dewey-learnings-*` PR rather than your feature PR.
 
 ## Next Steps
 
