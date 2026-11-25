@@ -16,12 +16,12 @@ Each junior project lives in its own repository and installs on its own, the sam
 
 ## Projects
 
-| Project                                                            | What it does                                                                                    | Trains with                            | Get it                                                                 |
-| ------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------- | -------------------------------------- | ---------------------------------------------------------------------- |
-| [vibe-check](https://github.com/zero-dot-force/vibe-check)         | Coupling, cohesion and dependency-cycle metrics for Go, Python and TypeScript, emitted as JSON. | —                                      | [Releases](https://github.com/zero-dot-force/vibe-check/releases)      |
-| [reading-stone](https://github.com/zero-dot-force/reading-stone)   | TypeScript analyzer for Gaze: side effects, coverage and test-to-assertion mapping.             | [Gaze](/docs/team/gaze-tester/)        | [npm](https://www.npmjs.com/package/reading-stone)                     |
-| [snake-eyes](https://github.com/zero-dot-force/snake-eyes)         | Python analyzer for Gaze: side effects, coverage and test-to-assertion mapping.                 | [Gaze](/docs/team/gaze-tester/)        | [PyPI](https://pypi.org/project/snake-eyes-analyzer/)                  |
-| [review-council](https://github.com/zero-dot-force/review-council) | Six specialist AI reviewers that review a change in parallel and return one verdict.            | [The Divisor](/docs/team/the-divisor/) | [Lola module](https://github.com/zero-dot-force/review-council#readme) |
+| Project                                                            | What it does                                                                                                                    | Trains with                            | Get it                                                                 |
+| ------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------- | ---------------------------------------------------------------------- |
+| [vibe-check](https://github.com/zero-dot-force/vibe-check)         | Coupling, cohesion and dependency-cycle metrics for Go, Python and TypeScript, emitted as JSON.                                 | —                                      | [Releases](https://github.com/zero-dot-force/vibe-check/releases)      |
+| [reading-stone](https://github.com/zero-dot-force/reading-stone)   | TypeScript analyzer for Gaze: side effects, coverage and test-to-assertion mapping.                                             | [Gaze](/docs/team/gaze-tester/)        | [npm](https://www.npmjs.com/package/reading-stone)                     |
+| [snake-eyes](https://github.com/zero-dot-force/snake-eyes)         | Python analyzer for Gaze: side effects, coverage and test-to-assertion mapping.                                                 | [Gaze](/docs/team/gaze-tester/)        | [PyPI](https://pypi.org/project/snake-eyes-analyzer/)                  |
+| [review-council](https://github.com/zero-dot-force/review-council) | Six specialist AI reviewers (security, architecture, testing and more) that review a change in parallel and return one verdict. | [The Divisor](/docs/team/the-divisor/) | [Lola module](https://github.com/zero-dot-force/review-council#readme) |
 
 ### vibe-check
 

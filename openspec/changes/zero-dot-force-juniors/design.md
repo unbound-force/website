@@ -19,7 +19,7 @@ Zero Dot Force is a separate GitHub org that incubates tools for Unbound Force. 
 
 - **Own docs section, not a Projects subpage**: `content/docs/projects/` holds Unbound Force's own projects. Zero Dot Force is a separate org with its own team identity, so it gets a sibling section (`/docs/zero-dot-force/`, docs menu weight 25, between Projects and The Team). The Projects index carries a short "Incubating" pointer to it.
 - **Main nav entry**: the site's footer partial is overridden and renders no footer menu, so the link goes in `[[main]]` (weight 4, after Roadmap).
-- **"Trains with" column**: matches the org profile README — reading-stone and snake-eyes with Gaze, review-council with The Divisor; vibe-check has none.
+- **"Trains with" column**: matches the org profile README in zero-dot-force/.github#41 — reading-stone and snake-eyes with Gaze, review-council with The Divisor; vibe-check has none.
 
 ## Risks / Trade-offs
 

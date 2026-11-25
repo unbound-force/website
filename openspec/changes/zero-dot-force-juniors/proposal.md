@@ -1,6 +1,6 @@
 ## Why
 
-Zero Dot Force (https://github.com/zero-dot-force) is Unbound Force's incubator, framed as its junior hero team. The website mentions vibe-check, reading-stone and snake-eyes in the vision and roadmap but never introduces the org, and the Gaze and Divisor pages do not point at the junior projects that extend them. The Zero Dot Force org profile already calls itself "the junior hero team of Unbound Force" and links back to unboundforce.dev; the website should link the other way.
+Zero Dot Force (https://github.com/zero-dot-force) is Unbound Force's incubator, framed as its junior hero team. The website mentions vibe-check, reading-stone and snake-eyes in the vision and roadmap but never introduces the org, and the Gaze and Divisor pages do not point at the junior projects that extend them. The Zero Dot Force org profile rewrite ([zero-dot-force/.github#41](https://github.com/zero-dot-force/.github/pull/41)) calls the org "The junior hero team of Unbound Force" and links back to unboundforce.dev; the website should link the other way with matching wording.
 
 ## What Changes
 
