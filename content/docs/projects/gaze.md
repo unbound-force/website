@@ -158,6 +158,11 @@ Gaze discovers external analyzers through a three-tier mechanism:
 
 Use the `--language <lang>` flag to specify the target language when running with an external analyzer. Gaze also supports a streaming mode for large codebases; see [the protocol documentation](https://github.com/unbound-force/gaze/blob/main/docs/protocol.md) for details.
 
+Two analyzers from [Zero Dot Force](/docs/zero-dot-force/), Unbound Force's junior hero team, implement this protocol today:
+
+- **[reading-stone](https://github.com/zero-dot-force/reading-stone)** — TypeScript analyzer, on npm as `reading-stone`
+- **[snake-eyes](https://github.com/zero-dot-force/snake-eyes)** — Python analyzer, on PyPI as `snake-eyes-analyzer`
+
 ### The `/gaze fix` Command
 
 The `/gaze fix` command provides AI-assisted test generation to close coverage gaps. It reads quality data — contract coverage gaps and fix strategy labels — and generates Go test functions using the `gaze-test-generator` agent.

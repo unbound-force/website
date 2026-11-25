@@ -25,6 +25,8 @@ Gaze provides three core capabilities — Go-native, with multi-language support
 - **GazeCRAP Scores** -- Combines cyclomatic complexity with contract coverage (not line coverage) to identify functions that are both complex and poorly verified. High GazeCRAP scores indicate the riskiest code in your project.
 - **Side Effect Classification** -- Categorizes every function by its side effect profile (P0 pure through P4 global state) so you know where to focus testing effort.
 
+Gaze reads TypeScript and Python through two junior heroes from [Zero Dot Force](/docs/zero-dot-force/): [reading-stone](https://github.com/zero-dot-force/reading-stone) (TypeScript) and [snake-eyes](https://github.com/zero-dot-force/snake-eyes) (Python) analyze the code and hand Gaze the side effects, coverage and test mappings it scores.
+
 See the [Gaze project page](/docs/projects/gaze/) for detailed metrics, CLI usage, and current limitations.
 
 ## How Gaze Serves the Team

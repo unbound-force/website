@@ -56,14 +56,14 @@ This follows a five-increment progression, each building trust before the next a
 
 ### Vibe-Check GA
 
-Vibe-check reaches general availability as an independent project measuring design and architectural quality. The universal metrics model is complete — Instability, Abstractness, Distance from main sequence, LCOM, zone classification — with a cross-language adapter architecture (JSON-RPC 2.0 over stdin/stdout). The remaining work: the Entropy Sentinel agent for Boy Scout enforcement (structural delta tracking base-vs-PR), the architectural design convention pack (AD-001 through AD-010), and the `/vibe-check` reporter command. Vibe-check deploys into consuming repos via `vibe-check init`, the same scaffolding pattern as `uf init`.
+Vibe-check, incubating in [Zero Dot Force](/docs/zero-dot-force/), reaches general availability as an independent project measuring design and architectural quality. The universal metrics model is complete — Instability, Abstractness, Distance from main sequence, LCOM, zone classification — with a cross-language adapter architecture (JSON-RPC 2.0 over stdin/stdout). The remaining work: the Entropy Sentinel agent for Boy Scout enforcement (structural delta tracking base-vs-PR), the architectural design convention pack (AD-001 through AD-010), and the `/vibe-check` reporter command. Vibe-check deploys into consuming repos via `vibe-check init`, the same scaffolding pattern as `uf init`.
 
 ### Gaze Multi-Language Backends
 
-Gaze's test-quality measurement — CRAP scores, contract coverage, side-effect classification — extends beyond Go to Python and TypeScript/JavaScript through dedicated backend projects:
+Gaze's test-quality measurement — CRAP scores, contract coverage, side-effect classification — extends beyond Go to Python and TypeScript/JavaScript through dedicated backend projects from [Zero Dot Force](/docs/zero-dot-force/):
 
-- **Snake-eyes** (Python): JSON-RPC server implementing the Gaze analyzer protocol. Taxonomy of 48 side-effect types, side-effect detection, complexity scoring, coverage analysis, classification signal extraction, and test mapping pipeline.
-- **Reading-stone** (TypeScript): The same protocol, adapted for TypeScript and JavaScript codebases.
+- **[Snake-eyes](https://github.com/zero-dot-force/snake-eyes)** (Python): JSON-RPC server implementing the Gaze analyzer protocol. Taxonomy of 48 side-effect types, side-effect detection, complexity scoring, coverage analysis, classification signal extraction, and test mapping pipeline.
+- **[Reading-stone](https://github.com/zero-dot-force/reading-stone)** (TypeScript): The same protocol, adapted for TypeScript and JavaScript codebases.
 
 Both backends communicate with the Gaze frontend via the same JSON-RPC interface, producing metrics that are directly comparable across languages — a requirement of Constitution Principle III (Observable Quality: metrics MUST be comparable across runs).
 
@@ -73,7 +73,7 @@ Vibe-check's design and architectural metrics — instability, abstractness, dis
 
 - **Go** (native): `vibe-check analyze` computes package-level coupling metrics directly. ([vibe-check#2](https://github.com/zero-dot-force/vibe-check/issues/2))
 - **rattler** (Python): a coupling adapter bringing the same Martin-metrics analysis to Python codebases. ([vibe-check#9](https://github.com/zero-dot-force/vibe-check/issues/9))
-- **TypeScript/JavaScript**: a coupling adapter over the same protocol, planned alongside the other cross-language work. ([vibe-check#14](https://github.com/zero-dot-force/vibe-check/issues/14))
+- **TypeScript/JavaScript**: vibe-check already analyzes TypeScript through the external [ripwire](https://github.com/redhat-et/ripwire) tool, as it does Python; a dedicated TS/JS coupling adapter over the same protocol is planned alongside the other cross-language work. ([vibe-check#14](https://github.com/zero-dot-force/vibe-check/issues/14))
 
 As with Gaze, every backend produces metrics directly comparable across languages — the universal model guarantees an identical unit of analysis (the module) and identical metric definitions regardless of source language, satisfying Constitution Principle III. This is the design-quality counterpart to Gaze's test-quality backends: one measures whether tests verify contractual behavior, the other whether the architecture stays on the main sequence, and both speak the same adapter protocol so a polyglot repository gets consistent measurement from a single toolchain.
 

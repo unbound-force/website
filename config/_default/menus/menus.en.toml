@@ -23,6 +23,12 @@
   url = "/docs/projects/"
 
 [[docs]]
+  name = "Zero Dot Force"
+  weight = 25
+  identifier = "zero-dot-force"
+  url = "/docs/zero-dot-force/"
+
+[[docs]]
   name = "The Team"
   weight = 30
   identifier = "team"
@@ -61,6 +67,11 @@
   name = "Roadmap"
   url = "/docs/roadmap/"
   weight = 3
+
+[[main]]
+  name = "Zero Dot Force"
+  url = "/docs/zero-dot-force/"
+  weight = 4
 
 [[main]]
   name = "Blog"

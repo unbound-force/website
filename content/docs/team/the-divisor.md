@@ -192,3 +192,4 @@ This structure ensures that only code which passes all nine lenses — intent, a
 - See [Common Workflows: Code Review](/docs/getting-started/common-workflows/#code-review) for how to invoke the review council and the review loop
 - Read the [Developer getting-started guide](/docs/getting-started/developer/#convention-packs) for convention packs that The Divisor enforces
 - Learn about [hero artifacts](/docs/getting-started/artifacts/) -- The Divisor produces `review-verdict` artifacts consumed by other heroes
+- Want the council without the rest of the swarm? [review-council](https://github.com/zero-dot-force/review-council) from [Zero Dot Force](/docs/zero-dot-force/) is a standalone take on it: six specialist reviewers that return one verdict, installed as a Lola module

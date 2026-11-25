@@ -21,3 +21,7 @@ Semantic knowledge retrieval for AI agents. Dewey combines structured graph trav
 ### [Replicator](/docs/projects/replicator/)
 
 Multi-agent coordination for AI coding agents. Replicator provides 53 MCP tools for work tracking, parallel orchestration with git worktrees, file reservations, and semantic memory -- all in a single Go binary with zero runtime dependencies. Install via Homebrew and connect any MCP-compatible AI agent.
+
+## Incubating
+
+Newer tools start in [Zero Dot Force](/docs/zero-dot-force/), Unbound Force's junior hero team: vibe-check (design and architecture metrics), reading-stone and snake-eyes (TypeScript and Python analyzers for Gaze), and review-council (a standalone review council).
