@@ -1,0 +1,44 @@
+# CI: build the site on every pull request, the same way
+# deploy-gh-pages.yml builds it for GitHub Pages, without deploying.
+# "Build" is a required check on main (safe-settings in unbound-force/.github),
+# so nothing merges, by hand or by gh-hud's auto-merge, until the site builds.
+name: CI
+
+on:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@75d2e84710de30f6ff7268e08f310b60ef14033f # v3
+        with:
+          hugo-version: '0.155.1'
+          extended: true
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: hugo --minify --gc --baseURL "https://unboundforce.dev/"
