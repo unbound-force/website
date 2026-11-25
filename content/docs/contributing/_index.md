@@ -25,7 +25,7 @@ Include steps to reproduce, expected behavior, and actual behavior. For feature 
 We follow the standard GitHub pull request workflow:
 
 1. Fork the repository
-2. Create a feature branch named with a number prefix (e.g., `003-feature-name`)
+2. Create a feature branch named for the change's workflow tier: `NNN-<name>` for Speckit, `opsx/<name>` for OpenSpec, or `quick/<name>` for Quick (see [Workflow Tiers](#workflow-tiers))
 3. Make your changes
 4. Submit a pull request against the `main` branch
 5. Address any review feedback from The Divisor council
@@ -52,9 +52,21 @@ Valid types:
 | `refactor:` | Code restructuring | `refactor: simplify homepage template logic`  |
 | `ci:`       | CI/CD changes      | `ci: add build verification step`             |
 
+## Workflow Tiers
+
+Every change follows a workflow, but which one is decided per change. No single tier is mandatory: pick the one that fits the change's scope and risk. [`/uf.unleash`](/docs/getting-started/common-workflows/#tier-routing) makes this choice automatically.
+
+| Tier | Choose when | Artifacts | Branch |
+| ---- | ----------- | --------- | ------ |
+| **Speckit** | New capability or cross-cutting change: 3+ user stories, multiple subsystems | `specs/NNN-name/` | `NNN-<name>` |
+| **OpenSpec** | Focused feature or non-trivial fix: 1–2 user stories, bounded blast radius | `openspec/changes/name/` | `opsx/<name>` |
+| **Quick** | Trivial fix, chore, or docs change where ceremony exceeds value | None | `quick/<name>` |
+
+Changes that touch security-sensitive code, authentication or authorization, data-loss paths, or a public API contract use OpenSpec at minimum, never Quick. When a change could fit two tiers, use the heavier one. Every tier, Quick included, needs passing CI and code review before merge.
+
 ## The Speckit Workflow
 
-All non-trivial feature work goes through the [Speckit](https://github.com/github/spec-kit) pipeline. This ensures structured planning before implementation:
+Changes routed to the Speckit tier go through the full [Speckit](https://github.com/github/spec-kit) pipeline, which ensures structured planning before implementation:
 
 ```text
 constitution -> specify -> clarify -> plan -> tasks -> analyze -> checklist -> implement
