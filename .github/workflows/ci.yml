@@ -1,7 +1,9 @@
 # CI: build the site on every pull request, the same way
 # deploy-gh-pages.yml builds it for GitHub Pages, without deploying.
-# "Build" is a required check on main (safe-settings in unbound-force/.github),
+# "CI OK" is the required check on main (safe-settings in unbound-force/.github),
 # so nothing merges, by hand or by gh-hud's auto-merge, until the site builds.
+# Chore PRs (Dewey learnings, gh-hud toolkit rollouts) skip the build: see the
+# scope job.
 name: CI
 
 on:
@@ -17,8 +19,17 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  # code == 'false' only for PRs that touch nothing but Dewey learnings
+  # or a gh-hud toolkit rollout's .opencode/ files.
+  scope:
+    uses: jflowers/ship/.github/workflows/pr-scope.yml@3b0ce8bf47183be402df9eaec16644c213eee5f7 # main, after v0.11.0
+    permissions:
+      contents: read
+
   build:
     name: Build
+    needs: scope
+    if: needs.scope.outputs.code == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -42,3 +53,29 @@ jobs:
 
       - name: Build
         run: hugo --minify --gc --baseURL "https://unboundforce.dev/"
+
+  # Required check. Passes only when scope succeeded and Build ran and
+  # passed (code PRs) or was skipped (chore PRs). A skipped job counts as
+  # passing, so a failed scope job must fail here.
+  ci-ok:
+    name: CI OK
+    needs: [scope, build]
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check needed jobs
+        env:
+          SCOPE: ${{ needs.scope.result }}
+          CODE: ${{ needs.scope.outputs.code }}
+          BUILD: ${{ needs.build.result }}
+        run: |
+          echo "scope=$SCOPE code=$CODE build=$BUILD"
+          [ "$SCOPE" = success ] || { echo "::error::scope: $SCOPE"; exit 1; }
+          case "$CODE" in
+            true) want=success ;;
+            false) want=skipped ;;
+            *) echo "::error::scope code '$CODE'"; exit 1 ;;
+          esac
+          [ "$BUILD" = "$want" ] || { echo "::error::Build: $BUILD, want $want"; exit 1; }
+          echo "CI passed."
