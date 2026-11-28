@@ -1,7 +1,8 @@
 # CI: build the site on every pull request, the same way
 # deploy-gh-pages.yml builds it for GitHub Pages, without deploying.
-# "CI OK" is the required check on main (safe-settings in unbound-force/.github),
-# so nothing merges, by hand or by gh-hud's auto-merge, until the site builds.
+# "CI OK" becomes the required check on main once the safe-settings change
+# lands in unbound-force/.github; until then "Build" remains required, so
+# nothing merges, by hand or by gh-hud's auto-merge, until the site builds.
 # Chore PRs (Dewey learnings, gh-hud toolkit rollouts) skip the build: see the
 # scope job.
 name: CI
@@ -29,7 +30,7 @@ jobs:
   build:
     name: Build
     needs: scope
-    if: needs.scope.outputs.code == 'true'
+    if: ${{ !cancelled() && !(needs.scope.result == 'success' && needs.scope.outputs.code == 'false') }}
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
